@@ -75,13 +75,13 @@ public struct CV: Codable, Identifiable {
         )
     }
 
-    private static func rank(_ role: Role) -> Int {
-        switch role {
-        case .junior: return 0
-        case .mid: return 1
-        case .senior: return 2
-        }
-    }
+//    private static func rank(_ role: Role) -> Int {
+//        switch role {
+//        case .junior: return 0
+//        case .mid: return 1
+//        case .senior: return 2
+//        }
+//    }
 
     // Optional helper if you still want to print or debug flat project info
     public func allProjectExperiences() -> [ProjectExperience] {
