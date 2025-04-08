@@ -36,7 +36,7 @@ public struct Project: Codable, Identifiable, Hashable {
         private var company: Company? = nil
         private var descriptions: [String] = []
         private var techs: [Tech] = []
-        private var role: Role = Role.midIOS // Default to mid iOS developer
+        private var role: Role = Role.none
         private var period: Period? = nil
         private var urls: [URL]? = nil
         

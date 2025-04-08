@@ -45,7 +45,7 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     }
     
     // Common role factory methods
-//    public static let juniorIOS = Role(title: "iOS Developer", seniority: .junior)
+    public static let none = Role(title: "Unknown", seniority: .junior)
 //    public static let midIOS = Role(title: "iOS Developer", seniority: .mid)
 //    public static let seniorIOS = Role(title: "iOS Developer", seniority: .senior)
 //    public static let leadIOS = Role(title: "iOS Developer", seniority: .lead)

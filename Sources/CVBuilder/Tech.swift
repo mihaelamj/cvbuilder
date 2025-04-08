@@ -22,10 +22,10 @@ public struct Tech: Codable, Identifiable, Hashable, Sendable {
         case other
     }
 
-    public static let swift = Tech(name: "Swift", category: .language)
-    public static let swiftUI = Tech(name: "SwiftUI", category: .framework)
-    public static let objc = Tech(name: "Objective-C", category: .language)
-    public static let uiKit = Tech(name: "UIKit", category: .framework)
+//    public static let swift = Tech(name: "Swift", category: .language)
+//    public static let swiftUI = Tech(name: "SwiftUI", category: .framework)
+//    public static let objc = Tech(name: "Objective-C", category: .language)
+//    public static let uiKit = Tech(name: "UIKit", category: .framework)
     
     public static func techsGroupedByCategory(_ techs: [Tech]) -> [Category?: [Tech]] {
         return Dictionary(grouping: techs, by: { $0.category })
