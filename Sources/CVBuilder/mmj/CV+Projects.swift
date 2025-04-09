@@ -12,7 +12,7 @@ public extension CV {
         let cherishingStudio = Company(name: "Cherishing Studio")
         let iolap = Company(name: "iOLAP")
         let codeWeaver = Company(name: "Code Weaver")
-        let personal = Company(name: "Personal Projects")
+//        let personal = Company(name: "Personal Projects")
         
         // Create tech skills
         let ai = Tech(name: "Artificial Intelligence", category: .concept)
@@ -112,7 +112,7 @@ public extension CV {
             .addDescription("Developed 90% of the app")
             .addDescription("Designed REST APIs and implemented them in the app")
             .addDescription("Implemented custom UI design code")
-            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest, cocoapods])
             .build()
         result.append(kindergarten)
         
@@ -123,7 +123,7 @@ public extension CV {
             .withPeriod(start: (month: 7, year: 2014), end: (month: 10, year: 2014))
             .addDescription("iOS app for a social network")
             .addDescription("Developed custom expandable TextView with links and tagging")
-            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest, coreAnimation])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest, coreAnimation, cocoapods])
             .build()
         result.append(whatt)
         
@@ -179,7 +179,7 @@ public extension CV {
             .addDescription("Developer in Swift, UIKit, Auto Layout")
             .addDescription("Worked on parts of the app including barcode scanning, QR code scanning and creation, and general bug fixing")
             .addURL(URL(string: "https://itunes.apple.com/us/app/shop-savvy-barcode-scanner/id338828953")!)
-            .withTechs([swift, uiKit, uiInCode, coreAnimation, rest, unittest, autoLayout, barcodes, rest, unittest])
+            .withTechs([swift, uiKit, uiInCode, coreAnimation, rest, unittest, autoLayout, barcodes, rest, unittest, swiftpm])
             .build()
         result.append(shopsavvy)
         
@@ -208,7 +208,7 @@ public extension CV {
             .addDescription("Demographics screens (dynamic radio control screens using Core Animation)")
             .addDescription("Home and dynamic filter screens")
             .addDescription("Sharing functionality")
-            .withTechs([swift, uiKit, uiInCode, coreData, autoLayout, rest])
+            .withTechs([swift, uiKit, uiInCode, coreData, autoLayout, rest, cocoapods])
             .build()
         result.append(huxly)
         
@@ -305,7 +305,7 @@ public extension CV {
             .addDescription("Designed using modular architecture with 10+ local packages handling UI styling, message management, socket communication, and speech recognition")
             .addDescription("Built with Combine for reactive programming, protocol-oriented design, and comprehensive testing infrastructure")
             .addDescription("Implemented platform-specific components with shared protocols ensuring consistent behavior")
-            .withTechs([webSocket, swift, uiKit, ai, swiftpm, macos, unittest])
+            .withTechs([webSocket, swift, uiKit, ai, swiftpm, macos, unittest, appKit])
             .build()
         result.append(responsumchat)
         
@@ -319,7 +319,7 @@ public extension CV {
             .addDescription("Created a modular Swift package to encapsulate networking logic, designed for clean separation of concerns, testability, and reuse across projects")
             .addDescription("Integrated Swift OpenAPI Generator to automatically generate type-safe API client code from OpenAPI specs, enabling seamless updates and minimizing manual maintenance")
             .addDescription("Streamlined the build process to regenerate client code automatically upon spec changes, aligning with CI/CD pipelines and reducing the risk of contract drift")
-            .withTechs([swift, swiftUI, rest, openapi, swiftpm, unittest, uitest])
+            .withTechs([swift, swiftUI, rest, openapi, swiftpm, unittest, uitest, structConcurrency])
             .build()
         result.append(germanProject)
         
