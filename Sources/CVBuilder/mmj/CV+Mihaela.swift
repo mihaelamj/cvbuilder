@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  CVBuilder
-//
-//  Created by Mihaela Mihaljevic Jakic on 10.04.2025..
-//
-
 import Foundation
 public extension CV {
     static func createForMihaela() -> CV {

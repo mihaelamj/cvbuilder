@@ -84,3 +84,24 @@ public struct CV: Codable, Identifiable {
         Set(experience.flatMap { $0.projects.flatMap { $0.project.techs } }).sorted { $0.name < $1.name }
     }
 }
+
+public extension CV {
+    /// Generic CV creation function that can be used by anyone
+    static func create(
+        name: String,
+        title: String,
+        summary: String,
+        contactInfo: ContactInfo,
+        education: [Education],
+        projects: [Project]
+    ) -> CV {
+        return CV.createFromProjects(
+            name: name,
+            title: title,
+            summary: summary,
+            contactInfo: contactInfo,
+            education: education,
+            projects: projects
+        )
+    }
+}
