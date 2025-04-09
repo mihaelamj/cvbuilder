@@ -55,7 +55,7 @@ public extension CV {
             .withName("Tito")
             .withCompany(undabot)
             .withRole(juniorIOS)
-            .withPeriod(start: (month: 9, year: 2013), end: (month: 12, year: 2020))
+            .withPeriod(start: (month: 9, year: 2013), end: (month: 12, year: 2013))
             .addDescription("iOS (iPad) book application about the life of Josip Broz Tito")
             .addDescription("Objective-C, CocoaPods")
             .addDescription("Implemented custom UI in code (from design sheets)")

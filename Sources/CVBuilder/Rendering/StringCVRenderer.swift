@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MarkdownCVRenderer: CVRendering {
+public struct StringCVRenderer: CVRendering {
     public var experienceTitle: String { "EXPERIENCE" }
     public var skillsTitle: String { "SKILLS" }
     
@@ -9,46 +9,39 @@ public struct MarkdownCVRenderer: CVRendering {
     public func render(cv: CV) -> String {
         var output = ""
 
-        // Header
-        output += "# \(cv.name)\n"
-        output += "## \(cv.title)\n\n"
-
-        // Summary
+        output += "Name: \(cv.name)\n"
+        output += "Title: \(cv.title)\n\n"
         output += "\(cv.summary)\n\n"
 
-        // Contact
         output += contactSection(from: cv.contactInfo)
 
-        // Education
         if let edu = cv.education.first {
             output += "\(edu.institution), \(edu.degree) in \(edu.field)\n\n"
         }
 
-        // Experience
-        output += "## \(experienceTitle)\n\n"
+        output += "\(experienceTitle)\n\n"
         for exp in cv.experience.sorted(by: { $0.period.end > $1.period.end }) {
-            output += "### \(exp.company.name) (\(exp.formattedDateRange)) – \(exp.role.name)\n\n"
+            output += "\(exp.company.name) (\(exp.formattedDateRange)) – \(exp.role.name)\n\n"
             for projectExp in exp.projects {
                 let project = projectExp.project
-                output += "#### \(project.name)\n"
+                output += "\(project.name)\n"
                 for desc in project.descriptions {
                     output += "- \(desc)\n"
                 }
                 if let urls = project.urls, !urls.isEmpty {
                     for url in urls {
-                        output += "- [\(url.absoluteString)](\(url.absoluteString))\n"
+                        output += "- \(url.absoluteString)\n"
                     }
                 }
                 if !project.techs.isEmpty {
                     let techLine = project.techs.map { $0.name }.joined(separator: " | ")
                     output += "- | \(techLine) |\n"
                 }
-                output += "\n" // Space between projects
+                output += "\n"
             }
-            output += "\n" // Space after each company
+            output += "\n"
         }
 
-        // Skills
         if !cv.skills.isEmpty {
             output += "### \(skillsTitle)\n"
             let techLine = cv.skills.map { $0.name }.joined(separator: " | ")
@@ -64,13 +57,13 @@ public struct MarkdownCVRenderer: CVRendering {
         output += "\(info.phone)\n"
         output += "\(info.location)\n"
         if let linkedIn = info.linkedIn {
-            output += "[LinkedIn](\(linkedIn.absoluteString))\n"
+            output += "LinkedIn: \(linkedIn.absoluteString)\n"
         }
         if let github = info.github {
-            output += "[GitHub](\(github.absoluteString))\n"
+            output += "GitHub: \(github.absoluteString)\n"
         }
         if let website = info.website {
-            output += "[Website](\(website.absoluteString))\n"
+            output += "Website: \(website.absoluteString)\n"
         }
         output += "\n"
         return output
@@ -80,7 +73,31 @@ public struct MarkdownCVRenderer: CVRendering {
         let content = render(cv: cv)
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
+
+    public func printToConsole(cv: CV) {
+        print(render(cv: cv))
+    }
+}
+
+// MARK: - ConsoleCVRenderer
+
+import Foundation
+
+public struct ConsoleCVRenderer: CVRendering {
+    public var experienceTitle: String { "EXPERIENCE" }
+    public var skillsTitle: String { "SKILLS" }
     
+    public init() {}
+
+    public func render(cv: CV) -> String {
+        return StringCVRenderer().render(cv: cv)
+    }
+
+    public func save(to url: URL, cv: CV) throws {
+        // Console renderer doesn't support saving
+        throw NSError(domain: "ConsoleRenderer", code: 1, userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."])
+    }
+
     public func printToConsole(cv: CV) {
         print(render(cv: cv))
     }
