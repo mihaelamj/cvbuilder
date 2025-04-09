@@ -46,9 +46,6 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     
     // Common role factory methods
     public static let none = Role(title: "Unknown", seniority: .junior)
-//    public static let midIOS = Role(title: "iOS Developer", seniority: .mid)
-//    public static let seniorIOS = Role(title: "iOS Developer", seniority: .senior)
-//    public static let leadIOS = Role(title: "iOS Developer", seniority: .lead)
     
     // Helper to compare roles by seniority
     public static func hasHigherSeniority(_ role1: Role, than role2: Role) -> Bool {

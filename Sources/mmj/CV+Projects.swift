@@ -94,7 +94,7 @@ public extension CV {
             .addDescription("Custom app for personal trainers and coaches")
             .addDescription("Objective-C, AFNetworking, REST services, CocoaPods")
             .addDescription("Implemented custom UI in code")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest])
             .build()
         result.append(coachlette)
         
@@ -107,7 +107,7 @@ public extension CV {
             .addDescription("Developed 90% of the app")
             .addDescription("Designed REST APIs and implemented them in the app")
             .addDescription("Implemented custom UI design code")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest])
             .build()
         result.append(kindergarten)
         
@@ -118,7 +118,7 @@ public extension CV {
             .withPeriod(start: (month: 1, year: 2020), end: (month: 12, year: 2020))
             .addDescription("iOS app for a social network")
             .addDescription("Developed custom expandable TextView with links and tagging")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest, coreAnimation])
             .build()
         result.append(whatt)
         
@@ -132,7 +132,7 @@ public extension CV {
             .addDescription("Created design in Sketch and implemented it in the application, with dynamic UI for iPhone 4, iPhone 5, iPhone 6, iPhone 6 Plus, and iPad")
             .addDescription("Used Core Animation, Auto Layout, AFNetworking, remote audio streaming")
             .addDescription("Client changed parts of the UI afterward")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, afNet, autoLayout, rest, carthage, unittest, avFoundation, coreGraphics])
             .build()
         result.append(christresources)
         
@@ -146,7 +146,7 @@ public extension CV {
             .addDescription("Implemented custom UI design code (from design sheets)")
             .addDescription("REST API implementation")
             .addDescription("Used Core Animation, Auto Layout, AFNetworking, Push Notifications")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, pushNotifications, coreAnimation, rest, unittest, autoLayout, barcodes])
             .build()
         result.append(consumr)
         
@@ -158,7 +158,7 @@ public extension CV {
             .addDescription("Objective-C, custom UI in code")
             .addDescription("QR code scanning and creation")
             .addDescription("Added custom sharing and feedback functionality")
-            .withTechs([])
+            .withTechs([objc, uiKit, uiInCode, coreAnimation, rest, unittest, autoLayout, barcodes])
             .build()
         result.append(qrcode)
         
@@ -170,7 +170,7 @@ public extension CV {
             .addDescription("App for shopping and barcode scanning")
             .addDescription("Developer in Swift, UIKit, Auto Layout")
             .addDescription("Worked on parts of the app including barcode scanning, QR code scanning and creation, and general bug fixing")
-            .withTechs([])
+            .withTechs([swift, uiKit, uiInCode, coreAnimation, rest, unittest, autoLayout, barcodes, rest, unittest])
             .build()
         result.append(shopsavvy)
         
@@ -183,7 +183,7 @@ public extension CV {
             .addDescription("Refactored the entire app")
             .addDescription("Created a form factory for the app which uses many screens with input fields")
             .addDescription("Used the latest Auto Layout best practices")
-            .withTechs([])
+            .withTechs([swift, uiKit, uiInCode, coreData, autoLayout])
             .build()
         result.append(birthdayrama)
         
@@ -198,7 +198,7 @@ public extension CV {
             .addDescription("Demographics screens (dynamic radio control screens using Core Animation)")
             .addDescription("Home and dynamic filter screens")
             .addDescription("Sharing functionality")
-            .withTechs([])
+            .withTechs([swift, uiKit, uiInCode, coreData, autoLayout, rest])
             .build()
         result.append(huxly)
         
@@ -211,7 +211,7 @@ public extension CV {
             .addDescription("Built UI in code using UIKit and Auto Layout")
             .addDescription("Implemented networking layer using URLSession")
             .addDescription("ARKit integration")
-            .withTechs([])
+            .withTechs([swift, uiKit, uiInCode, coreData, autoLayout, rest, arkit])
             .build()
         result.append(breckWorld)
         
@@ -223,7 +223,7 @@ public extension CV {
             .addDescription("Added custom features using Objective-C, UIKit")
             .addDescription("Dynamic Content Framework Developer – designed and implemented a template-based dynamic content creation system that allowed for real-time content generation and updates without requiring app redeployment")
             .addDescription("Increased development efficiency by 35%")
-            .withTechs([])
+            .withTechs([objc, uiInCode, uiKit, coreData, rest, unittest])
             .build()
         result.append(servicepal)
         
@@ -236,7 +236,7 @@ public extension CV {
             .addDescription("Improved maintainability and fixed bugs")
             .addDescription("Simplified login flow to enhance user experience and reduce authentication friction")
             .addDescription("Developed custom UIKit components to improve app performance and user interface")
-            .withTechs([])
+            .withTechs([[objc, swift, uiKit, uiInCode, pushNotifications, rest, afNet, openapi, unittest, uitest])
             .build()
         result.append(wheelsup)
         
@@ -247,7 +247,7 @@ public extension CV {
             .withPeriod(start: (month: 1, year: 2020), end: (month: 12, year: 2020))
             .addDescription("Led the refactoring of a legacy iOS app’s UI and networking stack using modern Swift paradigms")
             .addDescription("Reorganized the codebase into scalable, feature-driven modules to improve team velocity and onboarding")
-            .withTechs([])
+            .withTechs([swift, rest, uiKit, uiInCode])
             .build()
         result.append(budtz)
         
@@ -261,7 +261,7 @@ public extension CV {
             .addDescription("Built a comprehensive networking library with complete test coverage")
             .addDescription("Organized code into feature-based modules")
             .addDescription("Improved code quality through formatting, linting, and testing infrastructure")
-            .withTechs([])
+            .withTechs([swift, rest, uiKit, coreAnimation, uiInCode, unittest, uitest])
             .build()
         result.append(birch)
         
@@ -275,7 +275,7 @@ public extension CV {
             .addDescription("Refactored legacy applications and unit-tested critical components")
             .addDescription("Implemented a custom lightweight GraphQL client without external dependencies, featuring type-safe request handling, efficient query utilities, custom GraphQL schema parsing, and sophisticated error management")
             .addDescription("Designed and implemented a modular filtering system with dynamic UI components, supporting complex data sorting and real-time updates")
-            .withTechs([])
+            .withTechs([swift, rest, openapi, graphql, uiKit, uiInCode, swiftpm, unittest])
             .build()
         result.append(zumiez)
         
@@ -289,7 +289,7 @@ public extension CV {
             .addDescription("Designed using modular architecture with 10+ local packages handling UI styling, message management, socket communication, and speech recognition")
             .addDescription("Built with Combine for reactive programming, protocol-oriented design, and comprehensive testing infrastructure")
             .addDescription("Implemented platform-specific components with shared protocols ensuring consistent behavior")
-            .withTechs([])
+            .withTechs([webSocket, swift, uiKit, ai, swiftpm, macos, unittest])
             .build()
         result.append(responsumchat)
         
@@ -303,7 +303,7 @@ public extension CV {
             .addDescription("Created a modular Swift package to encapsulate networking logic, designed for clean separation of concerns, testability, and reuse across projects")
             .addDescription("Integrated Swift OpenAPI Generator to automatically generate type-safe API client code from OpenAPI specs, enabling seamless updates and minimizing manual maintenance")
             .addDescription("Streamlined the build process to regenerate client code automatically upon spec changes, aligning with CI/CD pipelines and reducing the risk of contract drift")
-            .withTechs([])
+            .withTechs([swift, swiftUI, rest, openapi, swiftpm, unittest, uitest])
             .build()
         result.append(germanProject)
         
@@ -315,7 +315,7 @@ public extension CV {
             .addDescription("Objective-C, Swift, SwiftUI, UIKit, C++")
             .addDescription("Added features for the onboarding process")
             .addDescription("Automated localization")
-            .withTechs([])
+            .withTechs([swift, swiftUI, swiftpm, objc, uiKit, uiInCode, unittest])
             .build()
         result.append(irobot)
         return result
