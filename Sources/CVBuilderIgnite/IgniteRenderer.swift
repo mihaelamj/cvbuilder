@@ -1,7 +1,6 @@
 import Foundation
-
-#if canImport(Ignite)
 import Ignite
+import CVBuilder
 
 public struct IgniteRenderer {
     let cv: CV
@@ -172,4 +171,3 @@ public struct IgniteRenderer {
         .horizontalAlignment(.leading)
     }
 }
-#endif
