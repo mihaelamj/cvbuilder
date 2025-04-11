@@ -6,6 +6,10 @@ import Ignite
 public struct IgniteRenderer {
     let cv: CV
     
+    public init(cv: CV) {
+        self.cv = cv
+    }
+    
     private func formatDate(_ date: Period.SimpleDate) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM yyyy"
