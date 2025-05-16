@@ -5,6 +5,10 @@ public struct MarkdownCVRenderer: CVRendering {
     public var skillsTitle: String { "SKILLS" }
     
     public init() {}
+    
+    private func renderAttribution() -> String {
+        "\n\n---\nCreated with [CVBuilder](https://github.com/mihaelamj/cvbuilder)"
+    }
 
     public func render(cv: CV) -> String {
         var output = ""
@@ -54,6 +58,9 @@ public struct MarkdownCVRenderer: CVRendering {
             let techLine = cv.skills.map { $0.name }.joined(separator: " | ")
             output += "- | \(techLine) |\n\n"
         }
+        
+        // Attribution
+        output += renderAttribution()
 
         return output
     }
