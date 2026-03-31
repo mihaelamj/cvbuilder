@@ -1,7 +1,7 @@
 # Mihaela Mihaljević Jakić
 ## Senior iOS Architect & Developer
 
-Experienced iOS engineer with a deep commitment to modular architecture and elegant code. I specialize in OpenAPI-driven development, building robust, multi-platform Swift applications that scale gracefully. My work is defined by clean structure, extreme attention to testability, and the kind of modularization that makes features easy to extend, reason about, and maintain. I take pride in shipping polished, production-grade software that balances design clarity with engineering precision.
+Experienced iOS engineer with a deep commitment to modular architecture and elegant code. I specialize in OpenAPI-driven development and AI-augmented tooling, building robust, multi-platform Swift applications that scale gracefully. From MCP servers that bring Apple documentation to AI assistants, to native AI-powered apps, I bridge the gap between Apple platform engineering and modern AI workflows. My work is defined by clean structure, extreme attention to testability, and the kind of modularization that makes features easy to extend, reason about, and maintain. I take pride in shipping polished, production-grade software that balances design clarity with engineering precision.
 
 **Contact:**
 - Email: mihaelamj@me.com
