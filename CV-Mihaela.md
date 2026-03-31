@@ -233,6 +233,22 @@ Experienced iOS engineer with a deep commitment to modular architecture and eleg
 
 **Technologies:** Objective-C, UIKit, UI in code, AFNetworking, AutoLayout, REST, Carthage, Unit Testing
 
+### Independent (Nov 2025 - Present) – Senior iOS Architect
+
+#### Cupertino
+- A local Apple Documentation crawler and MCP server, written in Swift
+- CLI tool providing offline access to Apple developer documentation for AI assistants
+- [https://github.com/mihaelamj/cupertino](https://github.com/mihaelamj/cupertino)
+
+**Technologies:** Swift, Swift Package Manager, MCP, AI Tooling
+
+#### iRelay
+- Apple-native personal AI assistant, pure Swift
+- Cross-platform macOS and iOS application
+- [https://github.com/mihaelamj/iRelay](https://github.com/mihaelamj/iRelay)
+
+**Technologies:** Swift, SwiftUI, AppKit, AI, AI Tooling
+
 ## CONFERENCES
 
 ### iOSKonf26 (May 2026) – Speaker
@@ -245,22 +261,6 @@ Experienced iOS engineer with a deep commitment to modular architecture and eleg
 - NSSpain XIII, Logroño, Spain
 - [NSSpain](https://nsspain.com)
 - [Talk recording](https://www.youtube.com/watch?v=RyRKItIIADc&list=PLztE34GS_piKKQ6y1dkkuhW76jLBHm3NV&index=17)
-
-## OPEN SOURCE
-
-### Cupertino
-- A local Apple Documentation crawler and MCP server, written in Swift
-- CLI tool providing offline access to Apple developer documentation for AI assistants
-- [GitHub](https://github.com/mihaelamj/cupertino)
-
-**Technologies:** Swift, Swift Package Manager, MCP
-
-### iRelay
-- Apple-native personal AI assistant, pure Swift
-- Cross-platform macOS and iOS application
-- [GitHub](https://github.com/mihaelamj/iRelay)
-
-**Technologies:** Swift, SwiftUI, AppKit
 
 ## SKILLS
 
