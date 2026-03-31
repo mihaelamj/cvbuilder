@@ -264,4 +264,4 @@ Experienced iOS engineer with a deep commitment to modular architecture and eleg
 
 ## SKILLS
 
-AFNetworking | ARKit | AVFoundation | AppKit | Artificial Intelligence | AutoLayout | Barcodes & QRCodes | Carthage | CocoaPods | CoreAnimation | CoreData | CoreGraphics | CoreText | GraphQL | In-App Purchase | MCP | Objective-C | OpenAPI | Push Notifications | REST | SSE | Structured Concurrency | Swift | Swift Package Manager | Swift Server | SwiftUI | UI Testing | UI in code | UIKit | Unit Testing | WebSockets | macOS
+AFNetworking | AI | AI Tooling | ARKit | AVFoundation | AppKit | Artificial Intelligence | AutoLayout | Barcodes & QRCodes | Carthage | CocoaPods | CoreAnimation | CoreData | CoreGraphics | CoreText | GraphQL | In-App Purchase | MCP | Objective-C | OpenAPI | Push Notifications | REST | SSE | Structured Concurrency | Swift | Swift Package Manager | Swift Server | SwiftUI | UI Testing | UI in code | UIKit | Unit Testing | WebSockets | macOS
