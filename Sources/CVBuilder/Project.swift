@@ -9,7 +9,8 @@ public struct Project: Codable, Identifiable, Hashable {
     public let role: Role
     public let period: Period
     public let urls: [URL]?
-    
+    public let isCurrent: Bool
+
     public init(
         id: UUID = UUID(),
         name: String,
@@ -18,7 +19,8 @@ public struct Project: Codable, Identifiable, Hashable {
         techs: [Tech],
         role: Role,
         period: Period,
-        urls: [URL]? = nil
+        urls: [URL]? = nil,
+        isCurrent: Bool = false
     ) {
         self.id = id
         self.name = name
@@ -28,6 +30,7 @@ public struct Project: Codable, Identifiable, Hashable {
         self.role = role
         self.period = period
         self.urls = urls
+        self.isCurrent = isCurrent
     }
     
     public class Builder {
@@ -39,7 +42,8 @@ public struct Project: Codable, Identifiable, Hashable {
         private var role: Role = Role.none
         private var period: Period? = nil
         private var urls: [URL]? = nil
-        
+        private var isCurrent: Bool = false
+
         public init() {}
         
         @discardableResult
@@ -105,6 +109,14 @@ public struct Project: Codable, Identifiable, Hashable {
             return self
         }
         
+        /// Marks the role as ongoing. An end date is still required (used for
+        /// sorting), but renderers display the range as "... - Present".
+        @discardableResult
+        public func withCurrent(_ isCurrent: Bool = true) -> Builder {
+            self.isCurrent = isCurrent
+            return self
+        }
+
         @discardableResult
         public func withURLs(_ urls: [URL]?) -> Builder {
             self.urls = urls
@@ -141,7 +153,8 @@ public struct Project: Codable, Identifiable, Hashable {
                 techs: techs,
                 role: role,
                 period: period,
-                urls: urls
+                urls: urls,
+                isCurrent: isCurrent
             )
         }
         

@@ -52,12 +52,14 @@ public struct CV: Codable, Identifiable {
             let period = Period(start: start, end: end)
 
             let highestRole = projectExperiences.map(\.role).max(by: { rank($0) < rank($1) })!
+            let isCurrent = companyProjects.contains { $0.isCurrent }
 
             return WorkExperience(
                 company: company,
                 role: highestRole,
                 period: period,
-                projects: projectExperiences.sorted { $0.period.start < $1.period.start }
+                projects: projectExperiences.sorted { $0.period.start < $1.period.start },
+                isCurrent: isCurrent
             )
         }
         .sorted { $0.period.end > $1.period.end } // most recent first
