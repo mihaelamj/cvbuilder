@@ -30,6 +30,18 @@ public struct CV: Codable, Identifiable {
         self.skills = skills
     }
 
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        name = try c.decode(String.self, forKey: .name)
+        title = try c.decode(String.self, forKey: .title)
+        summary = try c.decode(String.self, forKey: .summary)
+        contactInfo = try c.decode(ContactInfo.self, forKey: .contactInfo)
+        experience = try c.decodeIfPresent([WorkExperience].self, forKey: .experience) ?? []
+        education = try c.decodeIfPresent([Education].self, forKey: .education) ?? []
+        skills = try c.decodeIfPresent([Tech].self, forKey: .skills) ?? []
+    }
+
     public static func createFromProjects(
         name: String,
         title: String,

@@ -20,4 +20,13 @@ public struct Education: Codable, Identifiable, Hashable {
         self.field = field
         self.period = period
     }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        institution = try c.decode(String.self, forKey: .institution)
+        degree = try c.decode(String.self, forKey: .degree)
+        field = try c.decode(String.self, forKey: .field)
+        period = try c.decode(Period.self, forKey: .period)
+    }
 }

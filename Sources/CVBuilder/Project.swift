@@ -32,7 +32,20 @@ public struct Project: Codable, Identifiable, Hashable {
         self.urls = urls
         self.isCurrent = isCurrent
     }
-    
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        name = try c.decode(String.self, forKey: .name)
+        company = try c.decode(Company.self, forKey: .company)
+        descriptions = try c.decodeIfPresent([String].self, forKey: .descriptions) ?? []
+        techs = try c.decodeIfPresent([Tech].self, forKey: .techs) ?? []
+        role = try c.decode(Role.self, forKey: .role)
+        period = try c.decode(Period.self, forKey: .period)
+        urls = try c.decodeIfPresent([URL].self, forKey: .urls)
+        isCurrent = try c.decodeIfPresent(Bool.self, forKey: .isCurrent) ?? false
+    }
+
     public class Builder {
         private var id: UUID = UUID()
         private var name: String = ""

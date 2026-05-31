@@ -17,6 +17,14 @@ public struct ProjectExperience: Codable, Identifiable, Hashable {
         self.role = role
         self.period = period
     }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        project = try c.decode(Project.self, forKey: .project)
+        role = try c.decode(Role.self, forKey: .role)
+        period = try c.decode(Period.self, forKey: .period)
+    }
 }
 
 public extension ProjectExperience {

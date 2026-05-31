@@ -24,6 +24,16 @@ public struct WorkExperience: Codable, Identifiable, Hashable {
         self.isCurrent = isCurrent
     }
 
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        company = try c.decode(Company.self, forKey: .company)
+        role = try c.decode(Role.self, forKey: .role)
+        period = try c.decode(Period.self, forKey: .period)
+        projects = try c.decode([ProjectExperience].self, forKey: .projects)
+        isCurrent = try c.decodeIfPresent(Bool.self, forKey: .isCurrent) ?? false
+    }
+
     public var formattedDateRange: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM yyyy"

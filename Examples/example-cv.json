@@ -1,0 +1,64 @@
+{
+  "frontMatter": {
+    "slug": "cv",
+    "title": "Curriculum Vitae"
+  },
+  "cv": {
+    "name": "Ada Lovelace",
+    "title": "Analytical Engine Programmer",
+    "summary": "First to publish an algorithm intended for a machine. Builds correct, well-documented programs from first principles.",
+    "contactInfo": {
+      "email": "ada@example.com",
+      "phone": "+44 000 000000",
+      "location": "London, UK",
+      "linkedIn": "https://www.linkedin.com/in/ada",
+      "github": "https://github.com/ada",
+      "website": "https://ada.example.com"
+    },
+    "education": [
+      { "institution": "Self-directed study", "degree": "B.Sc.", "field": "Mathematics",
+        "period": { "start": { "month": 9, "year": 1833 }, "end": { "month": 6, "year": 1840 } } }
+    ],
+    "experience": [
+      {
+        "company": { "name": "Analytical Engine Project" },
+        "role": { "title": "Lead Programmer", "seniority": "Lead" },
+        "period": { "start": { "month": 1, "year": 1842 }, "end": { "month": 12, "year": 1843 } },
+        "isCurrent": false,
+        "projects": [
+          {
+            "project": {
+              "name": "Bernoulli Numbers",
+              "company": { "name": "Analytical Engine Project" },
+              "role": { "title": "Lead Programmer", "seniority": "Lead" },
+              "period": { "start": { "month": 1, "year": 1842 }, "end": { "month": 12, "year": 1843 } },
+              "descriptions": [
+                "Designed the first published algorithm for a machine.",
+                "Documented operation tables in full."
+              ],
+              "techs": [ { "name": "Algorithms" }, { "name": "Mathematics" } ]
+            },
+            "role": { "title": "Lead Programmer", "seniority": "Lead" },
+            "period": { "start": { "month": 1, "year": 1842 }, "end": { "month": 12, "year": 1843 } }
+          }
+        ]
+      }
+    ],
+    "skills": [ { "name": "Algorithms" }, { "name": "Mathematics" }, { "name": "Technical Writing" } ]
+  },
+  "links": {
+    "twitter": "https://x.com/ada",
+    "resumePDF": "/assets/ada-cv.pdf",
+    "companyURLs": { "Analytical Engine Project": "https://ada.example.com/engine" }
+  },
+  "speaking": [
+    { "event": "Babbage Society", "date": "1843", "role": "Speaker",
+      "title": "Notes on the Analytical Engine", "location": "London, UK",
+      "website": { "label": "Society", "url": "https://example.com/babbage" } }
+  ],
+  "openSource": [
+    { "name": "Bernoulli", "description": "The first machine algorithm, transcribed.",
+      "url": "https://github.com/ada/bernoulli", "techs": ["Algorithms"] }
+  ],
+  "rendering": { "recentCompanyCount": 4, "maxBulletsPerProject": 4 }
+}

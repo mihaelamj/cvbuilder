@@ -10,7 +10,14 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
         self.title = title
         self.seniority = seniority
     }
-    
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        title = try c.decode(String.self, forKey: .title)
+        seniority = try c.decode(Seniority.self, forKey: .seniority)
+    }
+
     // For backward compatibility with existing code using the role.name
     public var name: String {
         return "\(seniority.rawValue) \(title)"
