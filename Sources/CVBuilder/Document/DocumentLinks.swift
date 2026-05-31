@@ -11,6 +11,12 @@ public struct DocumentLinks: Codable, Equatable, Sendable {
     public let downloads: [Link]
     public let companyURLs: [String: String]
 
+    private enum CodingKeys: String, CodingKey {
+        case profiles
+        case downloads
+        case companyURLs
+    }
+
     public init(
         profiles: [Link] = [],
         downloads: [Link] = [],
@@ -19,5 +25,13 @@ public struct DocumentLinks: Codable, Equatable, Sendable {
         self.profiles = profiles
         self.downloads = downloads
         self.companyURLs = companyURLs
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        profiles = try container.decode([Link].self, forKey: .profiles, defaultIfMissing: [])
+        downloads = try container.decode([Link].self, forKey: .downloads, defaultIfMissing: [])
+        companyURLs = try container.decode([String: String].self, forKey: .companyURLs, defaultIfMissing: [:])
     }
 }

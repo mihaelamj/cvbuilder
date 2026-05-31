@@ -9,16 +9,29 @@ import Foundation
  ```
  */
 
-
 public struct Tech: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let name: String
     public let category: Category?
-    
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case category
+    }
+
     public init(id: UUID = UUID(), name: String, category: Category? = nil) {
         self.id = id
         self.name = name
         self.category = category
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        name = try container.decode(String.self, forKey: .name)
+        category = try container.decodeIfPresent(Category.self, forKey: .category)
     }
 
     public enum Category: String, Codable, Sendable {

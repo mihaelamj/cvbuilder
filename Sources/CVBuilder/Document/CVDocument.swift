@@ -14,6 +14,15 @@ public struct CVDocument: Codable, Equatable, Sendable {
     public let publicEvidence: [PublicEvidence]
     public let rendering: RenderingOptions
 
+    private enum CodingKeys: String, CodingKey {
+        case frontMatter
+        // swiftlint:disable:next identifier_name
+        case cv
+        case links
+        case publicEvidence
+        case rendering
+    }
+
     public init(
         frontMatter: [String: String] = [:],
         // swiftlint:disable:next identifier_name
@@ -27,5 +36,15 @@ public struct CVDocument: Codable, Equatable, Sendable {
         self.links = links
         self.publicEvidence = publicEvidence
         self.rendering = rendering
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        frontMatter = try container.decode([String: String].self, forKey: .frontMatter, defaultIfMissing: [:])
+        cv = try container.decode(CV.self, forKey: .cv)
+        links = try container.decode(DocumentLinks.self, forKey: .links, defaultIfMissing: .init())
+        publicEvidence = try container.decode([PublicEvidence].self, forKey: .publicEvidence, defaultIfMissing: [])
+        rendering = try container.decode(RenderingOptions.self, forKey: .rendering, defaultIfMissing: .init())
     }
 }
