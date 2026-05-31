@@ -1,12 +1,12 @@
 import Foundation
 
-public struct Education: Codable, Identifiable, Hashable {
+public struct Education: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let institution: String
     public let degree: String
     public let field: String
     public let period: Period
-    
+
     public init(
         id: UUID = UUID(),
         institution: String,
