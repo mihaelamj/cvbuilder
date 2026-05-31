@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CV: Codable, Identifiable {
+public struct CV: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let name: String
     public let title: String

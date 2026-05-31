@@ -1,12 +1,13 @@
 import Foundation
 
-public struct WorkExperience: Codable, Identifiable, Hashable {
+public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let company: Company
     public let role: Role // Keep highest role for company-level summary
     public let period: Period
     public let projects: [ProjectExperience]
     public let isCurrent: Bool
+    public let technicalFocus: TechnicalFocus?
 
     public init(
         id: UUID = UUID(),
@@ -14,7 +15,8 @@ public struct WorkExperience: Codable, Identifiable, Hashable {
         role: Role,
         period: Period,
         projects: [ProjectExperience],
-        isCurrent: Bool = false
+        isCurrent: Bool = false,
+        technicalFocus: TechnicalFocus? = nil
     ) {
         self.id = id
         self.company = company
@@ -22,6 +24,7 @@ public struct WorkExperience: Codable, Identifiable, Hashable {
         self.period = period
         self.projects = projects
         self.isCurrent = isCurrent
+        self.technicalFocus = technicalFocus
     }
 
     public var formattedDateRange: String {

@@ -1,8 +1,8 @@
 import Foundation
 
-public struct Period: Codable, Identifiable, Equatable, Hashable {
+public struct Period: Codable, Identifiable, Equatable, Hashable, Sendable {
     
-    public struct SimpleDate: Codable, Identifiable, Hashable, Equatable {
+    public struct SimpleDate: Codable, Identifiable, Hashable, Equatable, Sendable {
         
         public let month: Int
         public let year: Int
@@ -27,7 +27,7 @@ public struct Period: Codable, Identifiable, Equatable, Hashable {
     public var id: String {
         "\(start.id)_to_\(end.id)"
     }
-    
+
     public init(start: Period.SimpleDate, end: Period.SimpleDate) {
         self.start = start
         self.end = end

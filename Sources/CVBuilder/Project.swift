@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Project: Codable, Identifiable, Hashable {
+public struct Project: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let name: String
     public let company: Company
@@ -10,6 +10,7 @@ public struct Project: Codable, Identifiable, Hashable {
     public let period: Period
     public let urls: [URL]?
     public let isCurrent: Bool
+    public let technicalFocus: TechnicalFocus?
 
     public init(
         id: UUID = UUID(),
@@ -20,7 +21,8 @@ public struct Project: Codable, Identifiable, Hashable {
         role: Role,
         period: Period,
         urls: [URL]? = nil,
-        isCurrent: Bool = false
+        isCurrent: Bool = false,
+        technicalFocus: TechnicalFocus? = nil
     ) {
         self.id = id
         self.name = name
@@ -31,6 +33,7 @@ public struct Project: Codable, Identifiable, Hashable {
         self.period = period
         self.urls = urls
         self.isCurrent = isCurrent
+        self.technicalFocus = technicalFocus
     }
     
     public class Builder {
@@ -43,6 +46,7 @@ public struct Project: Codable, Identifiable, Hashable {
         private var period: Period? = nil
         private var urls: [URL]? = nil
         private var isCurrent: Bool = false
+        private var technicalFocus: TechnicalFocus?
 
         public init() {}
         
@@ -117,6 +121,13 @@ public struct Project: Codable, Identifiable, Hashable {
             return self
         }
 
+        /// Attaches technical areas and tags to the concrete project.
+        @discardableResult
+        public func withTechnicalFocus(_ technicalFocus: TechnicalFocus?) -> Builder {
+            self.technicalFocus = technicalFocus
+            return self
+        }
+
         @discardableResult
         public func withURLs(_ urls: [URL]?) -> Builder {
             self.urls = urls
@@ -154,7 +165,8 @@ public struct Project: Codable, Identifiable, Hashable {
                 role: role,
                 period: period,
                 urls: urls,
-                isCurrent: isCurrent
+                isCurrent: isCurrent,
+                technicalFocus: technicalFocus
             )
         }
         
