@@ -44,14 +44,14 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
         name = try container.decode(String.self, forKey: .name)
         title = try container.decode(String.self, forKey: .title)
         summary = try container.decode(String.self, forKey: .summary)
         contactInfo = try container.decode(ContactInfo.self, forKey: .contactInfo)
-        experience = try container.decodeIfPresent([WorkExperience].self, forKey: .experience, default: [])
-        education = try container.decodeIfPresent([Education].self, forKey: .education, default: [])
-        skills = try container.decodeIfPresent([Tech].self, forKey: .skills, default: [])
+        experience = try container.decode([WorkExperience].self, forKey: .experience, defaultIfMissing: [])
+        education = try container.decode([Education].self, forKey: .education, defaultIfMissing: [])
+        skills = try container.decode([Tech].self, forKey: .skills, defaultIfMissing: [])
     }
 
     public static func createFromProjects(

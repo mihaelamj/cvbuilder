@@ -30,8 +30,8 @@ public struct DocumentLinks: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        profiles = try container.decodeIfPresent([Link].self, forKey: .profiles, default: [])
-        downloads = try container.decodeIfPresent([Link].self, forKey: .downloads, default: [])
-        companyURLs = try container.decodeIfPresent([String: String].self, forKey: .companyURLs, default: [:])
+        profiles = try container.decode([Link].self, forKey: .profiles, defaultIfMissing: [])
+        downloads = try container.decode([Link].self, forKey: .downloads, defaultIfMissing: [])
+        companyURLs = try container.decode([String: String].self, forKey: .companyURLs, defaultIfMissing: [:])
     }
 }

@@ -22,7 +22,7 @@ public struct TechnicalFocus: Codable, Equatable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        areas = try container.decodeIfPresent([String].self, forKey: .areas, default: [])
-        tags = try container.decodeIfPresent([String].self, forKey: .tags, default: [])
+        areas = try container.decode([String].self, forKey: .areas, defaultIfMissing: [])
+        tags = try container.decode([String].self, forKey: .tags, defaultIfMissing: [])
     }
 }

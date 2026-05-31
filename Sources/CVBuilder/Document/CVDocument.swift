@@ -41,10 +41,10 @@ public struct CVDocument: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        frontMatter = try container.decodeIfPresent([String: String].self, forKey: .frontMatter, default: [:])
+        frontMatter = try container.decode([String: String].self, forKey: .frontMatter, defaultIfMissing: [:])
         cv = try container.decode(CV.self, forKey: .cv)
-        links = try container.decodeIfPresent(DocumentLinks.self, forKey: .links, default: .init())
-        publicEvidence = try container.decodeIfPresent([PublicEvidence].self, forKey: .publicEvidence, default: [])
-        rendering = try container.decodeIfPresent(RenderingOptions.self, forKey: .rendering, default: .init())
+        links = try container.decode(DocumentLinks.self, forKey: .links, defaultIfMissing: .init())
+        publicEvidence = try container.decode([PublicEvidence].self, forKey: .publicEvidence, defaultIfMissing: [])
+        rendering = try container.decode(RenderingOptions.self, forKey: .rendering, defaultIfMissing: .init())
     }
 }

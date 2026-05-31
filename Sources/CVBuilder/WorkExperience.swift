@@ -40,12 +40,12 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
         company = try container.decode(Company.self, forKey: .company)
         role = try container.decode(Role.self, forKey: .role)
         period = try container.decode(Period.self, forKey: .period)
-        projects = try container.decodeIfPresent([ProjectExperience].self, forKey: .projects, default: [])
-        isCurrent = try container.decodeIfPresent(Bool.self, forKey: .isCurrent, default: false)
+        projects = try container.decode([ProjectExperience].self, forKey: .projects, defaultIfMissing: [])
+        isCurrent = try container.decode(Bool.self, forKey: .isCurrent, defaultIfMissing: false)
         technicalFocus = try container.decodeIfPresent(TechnicalFocus.self, forKey: .technicalFocus)
     }
 

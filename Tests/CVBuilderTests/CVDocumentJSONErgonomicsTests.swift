@@ -104,6 +104,16 @@ struct CVDocumentJSONErgonomicsTests {
         try expectNormalizedRoundTrip(document)
     }
 
+    @Test("explicit null IDs are rejected instead of synthesized")
+    func rejectsNullID() throws {
+        try expectDecodeFails(nullIDDocumentJSON)
+    }
+
+    @Test("explicit null collections are rejected instead of defaulted")
+    func rejectsNullCollection() throws {
+        try expectDecodeFails(nullCollectionDocumentJSON)
+    }
+
     private func decode(_ json: String) throws -> CVDocument {
         let data = try #require(json.data(using: .utf8))
         return try JSONDecoder().decode(CVDocument.self, from: data)
@@ -114,6 +124,19 @@ struct CVDocumentJSONErgonomicsTests {
         let decoded = try JSONDecoder().decode(CVDocument.self, from: encoded)
 
         #expect(decoded == document)
+    }
+
+    private func expectDecodeFails(_ json: String) throws {
+        let data = try #require(json.data(using: .utf8))
+
+        do {
+            _ = try JSONDecoder().decode(CVDocument.self, from: data)
+            Issue.record("Expected CVDocument decoding to fail")
+        } catch is DecodingError {
+            return
+        } catch {
+            Issue.record("Expected DecodingError, got \(error)")
+        }
     }
 
     private func uuid(_ value: String) throws -> UUID {

@@ -40,27 +40,27 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        mode = try container.decodeIfPresent(
+        mode = try container.decode(
             RenderingMode.self,
             forKey: .mode,
-            default: .experiencedTechnical
+            defaultIfMissing: .experiencedTechnical
         )
         recentCompanyCount = try container.decodeIfPresent(Int.self, forKey: .recentCompanyCount)
         maxBulletsPerProject = try container.decodeIfPresent(Int.self, forKey: .maxBulletsPerProject)
-        nestProjectsUnderRoles = try container.decodeIfPresent(
+        nestProjectsUnderRoles = try container.decode(
             Bool.self,
             forKey: .nestProjectsUnderRoles,
-            default: true
+            defaultIfMissing: true
         )
-        compactGroupedSkills = try container.decodeIfPresent(
+        compactGroupedSkills = try container.decode(
             Bool.self,
             forKey: .compactGroupedSkills,
-            default: true
+            defaultIfMissing: true
         )
-        omitEmptySections = try container.decodeIfPresent(
+        omitEmptySections = try container.decode(
             Bool.self,
             forKey: .omitEmptySections,
-            default: true
+            defaultIfMissing: true
         )
     }
 }

@@ -306,3 +306,35 @@ let projectCollectionsDocumentJSON = """
   }
 }
 """
+
+let nullIDDocumentJSON = """
+{
+  "cv": {
+    "id": null,
+    "name": "Taylor Example",
+    "title": "Senior iOS Developer",
+    "summary": "Builds Swift applications and developer tools.",
+    "contactInfo": {
+      "email": "taylor@example.com",
+      "phone": "+1 555 010 0101",
+      "location": "Example City"
+    }
+  }
+}
+"""
+
+let nullCollectionDocumentJSON = """
+{
+  "cv": {
+    "name": "Taylor Example",
+    "title": "Senior iOS Developer",
+    "summary": "Builds Swift applications and developer tools.",
+    "contactInfo": {
+      "email": "taylor@example.com",
+      "phone": "+1 555 010 0101",
+      "location": "Example City"
+    },
+    "experience": null
+  }
+}
+"""

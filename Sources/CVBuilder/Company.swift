@@ -17,7 +17,7 @@ public struct Company: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
         name = try container.decode(String.self, forKey: .name)
     }
 }

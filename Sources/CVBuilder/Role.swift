@@ -20,7 +20,7 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
         title = try container.decode(String.self, forKey: .title)
         seniority = try container.decode(Seniority.self, forKey: .seniority)
     }

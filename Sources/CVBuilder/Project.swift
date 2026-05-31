@@ -52,15 +52,15 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
         name = try container.decode(String.self, forKey: .name)
         company = try container.decode(Company.self, forKey: .company)
-        descriptions = try container.decodeIfPresent([String].self, forKey: .descriptions, default: [])
-        techs = try container.decodeIfPresent([Tech].self, forKey: .techs, default: [])
+        descriptions = try container.decode([String].self, forKey: .descriptions, defaultIfMissing: [])
+        techs = try container.decode([Tech].self, forKey: .techs, defaultIfMissing: [])
         role = try container.decode(Role.self, forKey: .role)
         period = try container.decode(Period.self, forKey: .period)
         urls = try container.decodeIfPresent([URL].self, forKey: .urls)
-        isCurrent = try container.decodeIfPresent(Bool.self, forKey: .isCurrent, default: false)
+        isCurrent = try container.decode(Bool.self, forKey: .isCurrent, defaultIfMissing: false)
         technicalFocus = try container.decodeIfPresent(TechnicalFocus.self, forKey: .technicalFocus)
     }
 
