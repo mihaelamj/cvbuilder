@@ -23,6 +23,8 @@ The core boundary is:
   - source matrix from the deeper literature pass
 - `cvbuilder-proof-grade-audit.md`
   - stricter proof-grade audit plan for the next research pass
+- `cvbuilder-proof-matrix.md`
+  - proof-grade rule audit with source-level evidence and final decisions
 
 ## Issue Map
 
@@ -60,9 +62,13 @@ For technical CVs, the strongest current rules are:
 - use one source-order reading path
 - use explicit, predictable headings
 - lead experienced technical CVs with experience
+- treat early-career ordering as a separate rendering mode, not a universal
+  rule
 - support early-career ordering separately
 - nest projects/products under the relevant job
 - attach technologies and technical focus areas to concrete work
 - summarize public technical evidence instead of relying on raw links
 - avoid scores, skill bars, personality labels, photos, demographic metadata,
   and layout-only semantics
+- mark pure renderer invariants, such as escaping and deterministic output, as
+  engineering requirements rather than scientific hiring claims

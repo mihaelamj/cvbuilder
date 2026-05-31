@@ -4,8 +4,8 @@ Status date: 2026-05-31
 
 Related issue: #11
 
-This document is the plan for the next research pass. It is stricter than the
-completed deep review in `cvbuilder-source-matrix.md`.
+This document defines the proof-grade audit. The completed proof matrix and
+final rule decisions live in `cvbuilder-proof-matrix.md`.
 
 ## Goal
 
