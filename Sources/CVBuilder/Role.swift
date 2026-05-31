@@ -4,18 +4,32 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let title: String
     public let seniority: Seniority
-    
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case seniority
+    }
+
     public init(id: UUID = UUID(), title: String, seniority: Seniority) {
         self.id = id
         self.title = title
         self.seniority = seniority
     }
-    
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        title = try container.decode(String.self, forKey: .title)
+        seniority = try container.decode(Seniority.self, forKey: .seniority)
+    }
+
     // For backward compatibility with existing code using the role.name
     public var name: String {
         return "\(seniority.rawValue) \(title)"
     }
-    
+
     // Seniority level enum (can be extended)
     public enum Seniority: String, Codable, Comparable, Sendable {
         case intern = "Intern"
@@ -25,12 +39,12 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
         case lead = "Lead"
         case principal = "Principal"
         case chief = "Chief"
-        
+
         // Support for comparing seniority levels
         public static func < (lhs: Seniority, rhs: Seniority) -> Bool {
             return lhs.rank < rhs.rank
         }
-        
+
         public var rank: Int {
             switch self {
             case .intern: return 0
@@ -43,10 +57,10 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
             }
         }
     }
-    
+
     // Common role factory methods
     public static let none = Role(title: "Unknown", seniority: .junior)
-    
+
     // Helper to compare roles by seniority
     public static func hasHigherSeniority(_ role1: Role, than role2: Role) -> Bool {
         return role1.seniority > role2.seniority

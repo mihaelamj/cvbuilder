@@ -12,6 +12,15 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public let compactGroupedSkills: Bool
     public let omitEmptySections: Bool
 
+    private enum CodingKeys: String, CodingKey {
+        case mode
+        case recentCompanyCount
+        case maxBulletsPerProject
+        case nestProjectsUnderRoles
+        case compactGroupedSkills
+        case omitEmptySections
+    }
+
     public init(
         mode: RenderingMode = .experiencedTechnical,
         recentCompanyCount: Int? = nil,
@@ -26,5 +35,32 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         self.nestProjectsUnderRoles = nestProjectsUnderRoles
         self.compactGroupedSkills = compactGroupedSkills
         self.omitEmptySections = omitEmptySections
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        mode = try container.decodeIfPresent(
+            RenderingMode.self,
+            forKey: .mode,
+            default: .experiencedTechnical
+        )
+        recentCompanyCount = try container.decodeIfPresent(Int.self, forKey: .recentCompanyCount)
+        maxBulletsPerProject = try container.decodeIfPresent(Int.self, forKey: .maxBulletsPerProject)
+        nestProjectsUnderRoles = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .nestProjectsUnderRoles,
+            default: true
+        )
+        compactGroupedSkills = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .compactGroupedSkills,
+            default: true
+        )
+        omitEmptySections = try container.decodeIfPresent(
+            Bool.self,
+            forKey: .omitEmptySections,
+            default: true
+        )
     }
 }

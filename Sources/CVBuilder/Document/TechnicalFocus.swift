@@ -9,8 +9,20 @@ public struct TechnicalFocus: Codable, Equatable, Hashable, Sendable {
     public let areas: [String]
     public let tags: [String]
 
+    private enum CodingKeys: String, CodingKey {
+        case areas
+        case tags
+    }
+
     public init(areas: [String] = [], tags: [String] = []) {
         self.areas = areas
         self.tags = tags
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        areas = try container.decodeIfPresent([String].self, forKey: .areas, default: [])
+        tags = try container.decodeIfPresent([String].self, forKey: .tags, default: [])
     }
 }

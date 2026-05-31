@@ -17,6 +17,20 @@ public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
     public let highlights: [String]
     public let technicalFocus: TechnicalFocus?
 
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case kind
+        case role
+        case summary
+        case url
+        case technologies
+        case date
+        case period
+        case highlights
+        case technicalFocus
+    }
+
     public init(
         id: UUID = UUID(),
         title: String,
@@ -41,5 +55,21 @@ public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
         self.period = period
         self.highlights = highlights
         self.technicalFocus = technicalFocus
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        title = try container.decode(String.self, forKey: .title)
+        kind = try container.decode(PublicEvidenceKind.self, forKey: .kind)
+        role = try container.decode(String.self, forKey: .role)
+        summary = try container.decode(String.self, forKey: .summary)
+        url = try container.decode(String.self, forKey: .url)
+        technologies = try container.decodeIfPresent([String].self, forKey: .technologies, default: [])
+        date = try container.decodeIfPresent(String.self, forKey: .date)
+        period = try container.decodeIfPresent(Period.self, forKey: .period)
+        highlights = try container.decodeIfPresent([String].self, forKey: .highlights, default: [])
+        technicalFocus = try container.decodeIfPresent(TechnicalFocus.self, forKey: .technicalFocus)
     }
 }

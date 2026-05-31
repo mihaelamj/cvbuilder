@@ -10,6 +10,17 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
     public let education: [Education]
     public let skills: [Tech]
 
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case title
+        case summary
+        case contactInfo
+        case experience
+        case education
+        case skills
+    }
+
     public init(
         id: UUID = UUID(),
         name: String,
@@ -28,6 +39,19 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
         self.experience = experience
         self.education = education
         self.skills = skills
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decodeIfPresent(UUID.self, forKey: .id, default: UUID())
+        name = try container.decode(String.self, forKey: .name)
+        title = try container.decode(String.self, forKey: .title)
+        summary = try container.decode(String.self, forKey: .summary)
+        contactInfo = try container.decode(ContactInfo.self, forKey: .contactInfo)
+        experience = try container.decodeIfPresent([WorkExperience].self, forKey: .experience, default: [])
+        education = try container.decodeIfPresent([Education].self, forKey: .education, default: [])
+        skills = try container.decodeIfPresent([Tech].self, forKey: .skills, default: [])
     }
 
     public static func createFromProjects(
