@@ -4,6 +4,8 @@
 [![Swift macOS](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml)
 [![Swift Linux](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml)
 
+Follow project updates at [@diyamantina](https://x.com/diyamantina).
+
 CVBuilder is a Pure Swift technical CV generator. It keeps CV data in typed
 Swift or JSON, renders deterministic Markdown, and provides a Linux-facing
 TileDown adapter for Markdown publishing workflows.
@@ -218,10 +220,6 @@ swift build --target CVBuilderTileDown
 - No default Ignite or other HTML renderer dependency.
 - Linux support through Foundation and Swift Package Manager.
 - Small, testable public API.
-
-## Updates
-
-Follow project updates at [@diyamantina](https://x.com/diyamantina).
 
 ## License
 
