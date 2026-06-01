@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   advances.
 - Resource-backed JSON fixtures for early-career, hostile Markdown, minimal, and
   senior technical CV rendering proof cases.
+- JSON-to-Markdown workflow documentation covering CLI generation, `--check`,
+  static-site integration, rendering modes, public evidence, and non-goals.
 
 ### Changed
 

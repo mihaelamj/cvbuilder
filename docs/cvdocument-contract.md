@@ -1,6 +1,6 @@
 # CVDocument Contract
 
-Status date: 2026-06-01
+Status date: 2026-06-02
 
 `CVDocument` is the durable JSON contract for `cvbuilder`. The JSON document is
 the source of truth. Markdown and normalized JSON are generated artifacts.
@@ -98,6 +98,9 @@ Supported `mode` values:
 
 See [docs/rendering-modes.md](rendering-modes.md) for the policy names,
 evidence mapping, and fixture coverage for each mode.
+
+See [docs/json-workflow.md](json-workflow.md) for the file-driven CLI workflow,
+`--check` usage, front matter passthrough, and static-site-generator boundary.
 
 ## Decoding Rules
 
