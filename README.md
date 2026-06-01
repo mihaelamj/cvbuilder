@@ -219,6 +219,10 @@ swift build --target CVBuilderTileDown
 - Linux support through Foundation and Swift Package Manager.
 - Small, testable public API.
 
+## Updates
+
+Follow project updates at [@diyamantina](https://x.com/diyamantina).
+
 ## License
 
 See [LICENSE](LICENSE).
