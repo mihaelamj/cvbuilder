@@ -18,7 +18,7 @@ CVBuilder is a modular Swift package designed to represent and render CV (curric
 
 ## 🧱 Package Structure
 
-This package includes two main libraries:
+This package includes two main libraries and one command-line executable:
 
 ### 1. `CVBuilder` (core)
 
@@ -47,6 +47,10 @@ Provides `IgniteRenderer` for HTML rendering, using the [Ignite](https://github.
 
 > 🔥 Note: This target depends on `Ignite` and is **separated** to avoid pulling in C dependencies in projects that don’t need HTML rendering.
 
+### 3. `cvbuilder` (executable)
+
+Generates Markdown or normalized JSON from one `CVDocument` JSON file.
+
 ---
 
 ## 📦 Usage
@@ -64,11 +68,33 @@ Then add the desired product:
 .product(name: "CVBuilderIgnite", package: "cvbuilder") // if using Ignite
 ```
 
+The package also exposes the `cvbuilder` executable product for `swift run cvbuilder`.
+
 ---
 
 ## 🛠 How to Generate a Markdown CV
 
-Currently, the best way to generate a Markdown CV is through Swift code:
+Use the `cvbuilder` command when your CV data lives in a JSON file:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md
+```
+
+To write normalized `CVDocument` JSON instead of Markdown:
+
+```sh
+swift run cvbuilder --data cv.json --out cv.normalized.json --format json
+```
+
+To verify that a checked-in output file is current without writing it:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md --check
+```
+
+The CLI supports `--format markdown` and `--format json`. It does not generate PDF output, ATS scores, or resume-optimizer content.
+
+You can also generate Markdown through Swift code:
 
 ```swift
 import CVBuilder
@@ -85,8 +111,6 @@ if let markdownFile = CV.convertTMarkdownAndSave(cv) {
     print("Markdown saved to: \(markdownFile)")
 }
 ```
-
-> ℹ️ A command-line interface to generate and export Markdown or HTML versions of your CV is currently **in progress**.
 
 ---
 
@@ -242,4 +266,3 @@ MIT. See `LICENSE` file for details.
 ## 👩‍💻 Author
 
 Built with ❤️ by [Mihaela Mihaljević](https://github.com/mihaelamj)
-
