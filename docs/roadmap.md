@@ -66,7 +66,7 @@ Ordered roadmap issues:
 2. #29 - done: stabilize the `CVDocument` data contract.
 3. #30 - done: build technical CV rendering modes.
 4. #31 - done: document and harden the TileDown Markdown contract.
-5. #32 - in progress: add roadmap quality gates and release hygiene.
+5. #32 - in review: add roadmap quality gates and release hygiene.
 
 ```mermaid
 flowchart TD
@@ -74,7 +74,7 @@ flowchart TD
     P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
-    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>In progress"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
@@ -85,7 +85,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5 active;
+    class P5 review;
 ```
 
 ## Roadmap
@@ -201,7 +201,7 @@ Deliverables:
 - keep Linux and macOS CI on every PR: done
 - keep style and namespacing CI on every PR: done
 - keep SwiftFormat and SwiftLint checks on macOS CI: done
-- add a fixture freshness command if snapshots become checked in: in progress
+- add a fixture freshness command if snapshots become checked in: in review
 - document local verification commands in README: done
 - add issue-body links from roadmap phases to GitHub issues as they are filed:
   done
@@ -210,7 +210,7 @@ Deliverables:
 
 Acceptance:
 
-- every PR says which roadmap phase it advances: in progress
+- every PR says which roadmap phase it advances: in review
 - every production behavior change has tests
 - every generated artifact can be reproduced from source data
 - roadmap state is updated when a phase starts, lands, or changes scope
