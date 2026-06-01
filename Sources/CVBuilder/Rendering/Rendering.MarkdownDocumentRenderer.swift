@@ -1,13 +1,13 @@
 import Foundation
 
-extension Rendering {
+public extension Rendering {
     /// Renders a complete `CVDocument` into factual, source-order Markdown.
     ///
     /// `MarkdownDocumentRenderer` is intentionally conservative: it emits flat
     /// front matter, predictable headings, paragraphs, and labelled lines. It
     /// does not render tables, columns, images, scores, demographic metadata, or
     /// inferred fit labels.
-    public struct MarkdownDocumentRenderer: Sendable {
+    struct MarkdownDocumentRenderer: Sendable {
         /// Creates a renderer with the default evidence-backed Markdown policy.
         public init() {}
 
@@ -27,7 +27,7 @@ extension Rendering {
                         document.cv.experience,
                         links: document.links,
                         options: document.rendering,
-                        writer: &writer
+                        writer: &writer,
                     )
                 case .education:
                     renderEducation(document.cv.education, writer: &writer)

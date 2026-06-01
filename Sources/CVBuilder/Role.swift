@@ -25,12 +25,12 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
         seniority = try container.decode(Seniority.self, forKey: .seniority)
     }
 
-    // For backward compatibility with existing code using the role.name
+    /// For backward compatibility with existing code using the role.name
     public var name: String {
-        return "\(seniority.rawValue) \(title)"
+        "\(seniority.rawValue) \(title)"
     }
 
-    // Seniority level enum (can be extended)
+    /// Seniority level enum (can be extended)
     public enum Seniority: String, Codable, Comparable, Sendable {
         case intern = "Intern"
         case junior = "Junior"
@@ -40,36 +40,36 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
         case principal = "Principal"
         case chief = "Chief"
 
-        // Support for comparing seniority levels
+        /// Support for comparing seniority levels
         public static func < (lhs: Seniority, rhs: Seniority) -> Bool {
-            return lhs.rank < rhs.rank
+            lhs.rank < rhs.rank
         }
 
         public var rank: Int {
             switch self {
-            case .intern: return 0
-            case .junior: return 1
-            case .mid: return 2
-            case .senior: return 3
-            case .lead: return 4
-            case .principal: return 5
-            case .chief: return 6
+            case .intern: 0
+            case .junior: 1
+            case .mid: 2
+            case .senior: 3
+            case .lead: 4
+            case .principal: 5
+            case .chief: 6
             }
         }
     }
 
-    // Common role factory methods
+    /// Common role factory methods
     public static let none = Role(title: "Unknown", seniority: .junior)
 
-    // Helper to compare roles by seniority
+    /// Helper to compare roles by seniority
     public static func hasHigherSeniority(_ role1: Role, than role2: Role) -> Bool {
-        return role1.seniority > role2.seniority
+        role1.seniority > role2.seniority
     }
 }
 
-// Extension to support the CV.rank function from the original code
+/// Extension to support the CV.rank function from the original code
 public extension CV {
     static func rank(_ role: Role) -> Int {
-        return role.seniority.rank
+        role.seniority.rank
     }
 }

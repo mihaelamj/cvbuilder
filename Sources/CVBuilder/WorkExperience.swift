@@ -26,7 +26,7 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
         period: Period,
         projects: [ProjectExperience],
         isCurrent: Bool = false,
-        technicalFocus: TechnicalFocus? = nil
+        technicalFocus: TechnicalFocus? = nil,
     ) {
         self.id = id
         self.company = company
@@ -50,14 +50,33 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     }
 
     public var formattedDateRange: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM yyyy"
-        let startDate = Calendar.current.date(from: DateComponents(year: period.start.year, month: period.start.month))!
-        let startString = dateFormatter.string(from: startDate)
+        let startString = Self.format(period.start)
         if isCurrent {
             return "\(startString) - Present"
         }
-        let endDate = Calendar.current.date(from: DateComponents(year: period.end.year, month: period.end.month))!
-        return "\(startString) - \(dateFormatter.string(from: endDate))"
+        return "\(startString) - \(Self.format(period.end))"
+    }
+
+    private static func format(_ date: Period.SimpleDate) -> String {
+        let monthNames = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ]
+
+        guard (1 ... monthNames.count).contains(date.month) else {
+            return "\(date.year)-\(String(format: "%02d", date.month))"
+        }
+
+        return "\(monthNames[date.month - 1]) \(date.year)"
     }
 }

@@ -13,14 +13,14 @@ struct CVBuilderCLITests {
             "--out=cv/index.md",
             "--format",
             "json",
-            "--check"
+            "--check",
         ])
 
         let expected = try CVBuilderCLI.Options(
             dataPath: "cv.json",
             outputPath: "cv/index.md",
             format: .json,
-            check: true
+            check: true,
         )
 
         #expect(options == expected)
@@ -77,7 +77,7 @@ struct CVBuilderCLITests {
         try makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
-            format: .json
+            format: .json,
         ))
 
         let outputData = try Data(contentsOf: outputURL)
@@ -103,7 +103,7 @@ struct CVBuilderCLITests {
         try makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
-            check: true
+            check: true,
         ))
 
         try "stale\n".write(to: outputURL, atomically: true, encoding: .utf8)
@@ -111,7 +111,7 @@ struct CVBuilderCLITests {
         try expectFailure(makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
-            check: true
+            check: true,
         ))) { failure in
             #expect(failure == .outputStale(path: outputURL.path))
         }
@@ -128,19 +128,19 @@ struct CVBuilderCLITests {
         try makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
-            format: .json
+            format: .json,
         ))
         try makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
             format: .json,
-            check: true
+            check: true,
         ))
 
         try expectFailure(makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
-            check: true
+            check: true,
         ))) { failure in
             #expect(failure == .outputStale(path: outputURL.path))
         }
@@ -159,7 +159,7 @@ struct CVBuilderCLITests {
 
         try expectFailure(makeRunner().run(.init(
             dataPath: invalidInputURL.path,
-            outputPath: missingOutputURL.path
+            outputPath: missingOutputURL.path,
         ))) { failure in
             guard case let .invalidJSON(path, reason) = failure else {
                 Issue.record("Expected invalidJSON, got \(failure)")
@@ -172,14 +172,14 @@ struct CVBuilderCLITests {
         try expectFailure(makeRunner().run(.init(
             dataPath: validInputURL.path,
             outputPath: missingOutputURL.path,
-            check: true
+            check: true,
         ))) { failure in
             #expect(failure == .outputMissing(path: missingOutputURL.path))
         }
 
         try expectFailure(makeRunner().run(.init(
             dataPath: validInputURL.path,
-            outputPath: unwritableOutputURL.path
+            outputPath: unwritableOutputURL.path,
         ))) { failure in
             guard case let .outputWriteFailed(path, reason) = failure else {
                 Issue.record("Expected outputWriteFailed, got \(failure)")
@@ -207,7 +207,7 @@ struct CVBuilderCLITests {
 
     private func expectFailure(
         _ operation: @autoclosure () throws -> some Any,
-        validate: (CVBuilderCLI.Failure) -> Void
+        validate: (CVBuilderCLI.Failure) -> Void,
     ) throws {
         do {
             _ = try operation()
@@ -226,7 +226,7 @@ private struct TemporaryDirectory {
     init() throws {
         url = FileManager.default.temporaryDirectory.appendingPathComponent(
             "CVBuilderCLITests-\(UUID().uuidString)",
-            isDirectory: true
+            isDirectory: true,
         )
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
     }

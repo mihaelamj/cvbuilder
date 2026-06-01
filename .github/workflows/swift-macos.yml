@@ -20,6 +20,12 @@ jobs:
       - name: Swift version
         run: swift --version
 
+      - name: Format and lint
+        run: |
+          brew install swiftformat swiftlint
+          swiftformat . --config .swiftformat --lint
+          swiftlint --config .swiftlint.yml --strict
+
       - name: Build
         run: |
           swift build --target CVBuilder

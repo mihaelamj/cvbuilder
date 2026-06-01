@@ -92,7 +92,7 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func limitedExperience(
         _ experience: [WorkExperience],
-        recentCompanyCount: Int?
+        recentCompanyCount: Int?,
     ) -> [WorkExperience] {
         guard let recentCompanyCount else {
             return experience
@@ -139,7 +139,7 @@ extension Rendering.MarkdownDocumentRenderer {
             "Sep",
             "Oct",
             "Nov",
-            "Dec"
+            "Dec",
         ]
 
         guard (1 ... monthNames.count).contains(date.month) else {
@@ -157,7 +157,7 @@ extension Rendering.MarkdownDocumentRenderer {
             .platform,
             .concept,
             .other,
-            nil
+            nil,
         ]
 
         return preferredOrder.filter { category in

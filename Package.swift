@@ -4,24 +4,24 @@ import PackageDescription
 
 let packagePlatforms: [SupportedPlatform] = [
     .macOS(.v13),
-    .iOS(.v16)
+    .iOS(.v16),
 ]
 
 #if os(Linux)
     let tileDownProducts: [Product] = [
         .library(
             name: "CVBuilderTileDown",
-            targets: ["CVBuilderTileDown"]
-        )
+            targets: ["CVBuilderTileDown"],
+        ),
     ]
     let tileDownTargets: [Target] = [
         .target(
             name: "CVBuilderTileDown",
-            dependencies: ["CVBuilder"]
-        )
+            dependencies: ["CVBuilder"],
+        ),
     ]
     let tileDownTestDependencies: [Target.Dependency] = [
-        "CVBuilderTileDown"
+        "CVBuilderTileDown",
     ]
 #else
     let tileDownProducts: [Product] = []
@@ -32,12 +32,12 @@ let packagePlatforms: [SupportedPlatform] = [
 let packageProducts: [Product] = [
     .library(
         name: "CVBuilder",
-        targets: ["CVBuilder"]
+        targets: ["CVBuilder"],
     ),
     .executable(
         name: "cvbuilder",
-        targets: ["CVBuilderTool"]
-    )
+        targets: ["CVBuilderTool"],
+    ),
 ] + tileDownProducts
 
 let packageDependencies: [Package.Dependency] = []
@@ -45,26 +45,26 @@ let packageDependencies: [Package.Dependency] = []
 let packageTargets: [Target] = [
     .target(
         name: "CVBuilder",
-        dependencies: []
+        dependencies: [],
     ),
     .target(
         name: "CVBuilderCLI",
-        dependencies: ["CVBuilder"]
+        dependencies: ["CVBuilder"],
     ),
     .executableTarget(
         name: "CVBuilderTool",
-        dependencies: ["CVBuilderCLI"]
+        dependencies: ["CVBuilderCLI"],
     ),
     .testTarget(
         name: "CVBuilderTests",
         dependencies: [
-            "CVBuilder"
-        ] + tileDownTestDependencies
+            "CVBuilder",
+        ] + tileDownTestDependencies,
     ),
     .testTarget(
         name: "CVBuilderCLITests",
-        dependencies: ["CVBuilder", "CVBuilderCLI"]
-    )
+        dependencies: ["CVBuilder", "CVBuilderCLI"],
+    ),
 ] + tileDownTargets
 
 let package = Package(
@@ -72,5 +72,5 @@ let package = Package(
     platforms: packagePlatforms,
     products: packageProducts,
     dependencies: packageDependencies,
-    targets: packageTargets
+    targets: packageTargets,
 )

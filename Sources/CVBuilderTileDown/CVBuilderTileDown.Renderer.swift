@@ -1,15 +1,15 @@
 import CVBuilder
 
-extension CVBuilderTileDown {
+public extension CVBuilderTileDown {
     /// Renders CVBuilder data into Markdown suitable for a TileDown-driven publishing pipeline.
-    public struct Renderer: Sendable {
+    struct Renderer: Sendable {
         private let documentRenderer: Rendering.MarkdownDocumentRenderer
         private let legacyRenderer: MarkdownCVRenderer
 
         /// Creates a renderer that delegates to CVBuilder's deterministic Markdown renderers.
         public init(
             documentRenderer: Rendering.MarkdownDocumentRenderer = .init(),
-            legacyRenderer: MarkdownCVRenderer = .init()
+            legacyRenderer: MarkdownCVRenderer = .init(),
         ) {
             self.documentRenderer = documentRenderer
             self.legacyRenderer = legacyRenderer

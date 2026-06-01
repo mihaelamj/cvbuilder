@@ -1,0 +1,15 @@
+# Mechanical enforcement of rules a machine can decide.
+#
+# Tests are excluded for now because existing fixtures intentionally use force
+# try and force unwraps to keep test data compact.
+only_rules:
+  - force_unwrapping
+  - force_try
+  - force_cast
+force_unwrapping: error
+force_try: error
+force_cast: error
+excluded:
+  - .build
+  - DerivedData
+  - Tests

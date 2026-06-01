@@ -1,6 +1,6 @@
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// Output formats supported by the `cvbuilder` command.
-    public enum Format: String, CaseIterable, Equatable, Sendable {
+    enum Format: String, CaseIterable, Equatable, Sendable {
         case markdown
         case json
 

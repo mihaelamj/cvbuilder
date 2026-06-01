@@ -1,8 +1,8 @@
 import Foundation
 
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// File operations required by `Runner` to read inputs, compare checked outputs, and write rendered artifacts.
-    public protocol FileSystem {
+    protocol FileSystem {
         /// Reads the complete file contents at `path`.
         func readFile(atPath path: String) throws -> Data
 

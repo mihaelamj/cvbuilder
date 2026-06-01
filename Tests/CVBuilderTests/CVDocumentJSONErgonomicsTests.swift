@@ -1,6 +1,6 @@
+@testable import CVBuilder
 import Foundation
 import Testing
-@testable import CVBuilder
 
 @Suite("CVDocument JSON ergonomics")
 struct CVDocumentJSONErgonomicsTests {

@@ -14,7 +14,7 @@ public struct ContactInfo: Codable, Hashable, Sendable {
         linkedIn: URL? = nil,
         github: URL? = nil,
         website: URL? = nil,
-        location: String
+        location: String,
     ) {
         self.email = email
         self.phone = phone

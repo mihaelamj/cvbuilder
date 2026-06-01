@@ -46,7 +46,7 @@ struct MarkdownDocumentRendererTests {
             cv: experiencedDocument.cv,
             links: experiencedDocument.links,
             publicEvidence: experiencedDocument.publicEvidence,
-            rendering: RenderingOptions(mode: .earlyCareerTechnical)
+            rendering: RenderingOptions(mode: .earlyCareerTechnical),
         )
         let renderer = Rendering.MarkdownDocumentRenderer()
         let experienced = renderer.render(experiencedDocument)
@@ -99,8 +99,8 @@ struct MarkdownDocumentRendererTests {
             publicEvidence: document.publicEvidence,
             rendering: RenderingOptions(
                 recentCompanyCount: -1,
-                maxBulletsPerProject: -1
-            )
+                maxBulletsPerProject: -1,
+            ),
         )
         let output = Rendering.MarkdownDocumentRenderer().render(documentWithInvalidLimits)
         let roleHeading = "### [Example Systems](https://example.com/company) - Senior Mobile Architect"
@@ -145,8 +145,8 @@ struct MarkdownDocumentRendererTests {
             frontMatter: [
                 "": "empty key",
                 "slug": "hostile cv",
-                "title": "Demo: ---\n# forged"
-            ]
+                "title": "Demo: ---\n# forged",
+            ],
         )
         let output = Rendering.MarkdownDocumentRenderer().render(document)
 
@@ -163,7 +163,7 @@ struct MarkdownDocumentRendererTests {
     @Test("non-compact skills are escaped as an engineering invariant")
     func nonCompactSkillsEscapeHostileSkillNames() {
         let output = Rendering.MarkdownDocumentRenderer().render(
-            makeHostileDocument(rendering: RenderingOptions(compactGroupedSkills: false))
+            makeHostileDocument(rendering: RenderingOptions(compactGroupedSkills: false)),
         )
 
         #expect(output.contains("\\*OpenAPI\\*"))
@@ -205,13 +205,13 @@ struct MarkdownDocumentRendererTests {
 private func makeHostileDocument(
     frontMatter: [String: String] = [
         "slug": "hostile cv",
-        "title": "Demo: ---\n# forged"
+        "title": "Demo: ---\n# forged",
     ],
-    rendering: RenderingOptions = .init()
+    rendering: RenderingOptions = .init(),
 ) -> CVDocument {
     let period = Period(
         start: .init(month: 1, year: 2024),
-        end: .init(month: 6, year: 2026)
+        end: .init(month: 6, year: 2026),
     )
     let company = Company(name: "ACME | Labs [evil](x)")
     let role = Role(title: "1. Architect *API*", seniority: .senior)
@@ -222,7 +222,7 @@ private func makeHostileDocument(
         role: role,
         period: period,
         projects: [projectExperience],
-        isCurrent: true
+        isCurrent: true,
     )
 
     return CVDocument(
@@ -230,7 +230,7 @@ private func makeHostileDocument(
         cv: makeHostileCV(period: period, work: work),
         links: makeHostileLinks(),
         publicEvidence: makeHostilePublicEvidence(),
-        rendering: rendering
+        rendering: rendering,
     )
 }
 
@@ -240,12 +240,12 @@ private func makeHostileProject(company: Company, role: Role, period: Period) ->
         company: company,
         descriptions: [
             "---",
-            "# heading\n- list\n1. Ordered\n+ plus\n| a | b |\n<admin@example.com>\n[text](https://bad)"
+            "# heading\n- list\n1. Ordered\n+ plus\n| a | b |\n<admin@example.com>\n[text](https://bad)",
         ],
         techs: [Tech(name: "Swift|Table", category: .language)],
         role: role,
         period: period,
-        technicalFocus: .init(areas: ["# Architecture", "A|B"], tags: ["-tag", "1. item"])
+        technicalFocus: .init(areas: ["# Architecture", "A|B"], tags: ["-tag", "1. item"]),
     )
 }
 
@@ -257,31 +257,31 @@ private func makeHostileCV(period: Period, work: WorkExperience) -> CV {
         contactInfo: ContactInfo(
             email: "mallory@example.com",
             phone: "+1 555 010 0105",
-            location: "Example City"
+            location: "Example City",
         ),
         experience: [work],
         education: [
-            Education(institution: "# University", degree: "MSc", field: "Security|Parsing", period: period)
+            Education(institution: "# University", degree: "MSc", field: "Security|Parsing", period: period),
         ],
         skills: [
             Tech(name: "*OpenAPI*", category: .tool),
-            Tech(name: "_internal_", category: .tool)
-        ]
+            Tech(name: "_internal_", category: .tool),
+        ],
     )
 }
 
 private func makeHostileLinks() -> DocumentLinks {
     DocumentLinks(
         profiles: [
-            Link(label: "[Profile](bad)", url: "https://example.com/profile path(1)\nnext")
+            Link(label: "[Profile](bad)", url: "https://example.com/profile path(1)\nnext"),
         ],
         downloads: [
             Link(label: "CV (PDF)", url: "/assets/CV (final).pdf"),
-            Link(label: "Existing", url: "https://example.com/already%20encoded")
+            Link(label: "Existing", url: "https://example.com/already%20encoded"),
         ],
         companyURLs: [
-            "ACME | Labs [evil](x)": "https://example.com/company path(1)\u{0007}"
-        ]
+            "ACME | Labs [evil](x)": "https://example.com/company path(1)\u{0007}",
+        ],
     )
 }
 
@@ -295,7 +295,7 @@ private func makeHostilePublicEvidence() -> [PublicEvidence] {
             url: "https://example.com/evidence path(1)\n#bad",
             technologies: ["Swift|Table", "*OpenAPI*"],
             highlights: ["- shipped", "1. measured"],
-            technicalFocus: .init(areas: ["Developer|Tooling"], tags: ["[contracts]"])
-        )
+            technicalFocus: .init(areas: ["Developer|Tooling"], tags: ["[contracts]"]),
+        ),
     ]
 }

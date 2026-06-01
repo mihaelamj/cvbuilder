@@ -1,6 +1,6 @@
+@testable import CVBuilder
 import Foundation
 import Testing
-@testable import CVBuilder
 
 @Suite("CVDocument Schema")
 struct CVDocumentSchemaTests {
@@ -39,7 +39,7 @@ struct CVDocumentSchemaTests {
         let options = RenderingOptions(
             mode: .experiencedTechnical,
             recentCompanyCount: 3,
-            maxBulletsPerProject: 4
+            maxBulletsPerProject: 4,
         )
 
         #expect(options.mode == .experiencedTechnical)
@@ -56,16 +56,16 @@ struct CVDocumentSchemaTests {
         let projectExperience = try makeProjectExperience(project: project, role: role, period: period)
         let work = try makeWork(company: company, role: role, period: period, projectExperience: projectExperience)
 
-        return CVDocument(
+        return try CVDocument(
             frontMatter: makeFrontMatter(),
-            cv: try makeResume(period: period, work: work),
+            cv: makeResume(period: period, work: work),
             links: makeLinks(),
-            publicEvidence: [try makePublicEvidence()],
+            publicEvidence: [makePublicEvidence()],
             rendering: RenderingOptions(
                 mode: .experiencedTechnical,
                 recentCompanyCount: 3,
-                maxBulletsPerProject: 4
-            )
+                maxBulletsPerProject: 4,
+            ),
         )
     }
 
@@ -73,7 +73,7 @@ struct CVDocumentSchemaTests {
         [
             "layout": "cv",
             "slug": "demo-cv",
-            "title": "Demo Curriculum Vitae"
+            "title": "Demo Curriculum Vitae",
         ]
     }
 
@@ -81,14 +81,14 @@ struct CVDocumentSchemaTests {
         DocumentLinks(
             profiles: [Link(label: "GitHub", url: "https://example.com/github")],
             downloads: [Link(label: "PDF", url: "/assets/demo-cv.pdf")],
-            companyURLs: ["Northbridge Systems": "https://example.com/northbridge"]
+            companyURLs: ["Northbridge Systems": "https://example.com/northbridge"],
         )
     }
 
     private func makeCompany() throws -> Company {
         try Company(
             id: uuid("00000000-0000-0000-0000-000000000101"),
-            name: "Northbridge Systems"
+            name: "Northbridge Systems",
         )
     }
 
@@ -96,14 +96,14 @@ struct CVDocumentSchemaTests {
         try Role(
             id: uuid("00000000-0000-0000-0000-000000000102"),
             title: "Mobile Architect",
-            seniority: .senior
+            seniority: .senior,
         )
     }
 
     private func makePeriod() -> Period {
         Period(
             start: .init(month: 9, year: 2025),
-            end: .init(month: 5, year: 2026)
+            end: .init(month: 5, year: 2026),
         )
     }
 
@@ -117,12 +117,12 @@ struct CVDocumentSchemaTests {
                 Tech(
                     id: uuid("00000000-0000-0000-0000-000000000104"),
                     name: "Swift",
-                    category: .language
-                )
+                    category: .language,
+                ),
             ],
             role: role,
             period: period,
-            technicalFocus: .init(areas: ["API tooling"], tags: ["openapi"])
+            technicalFocus: .init(areas: ["API tooling"], tags: ["openapi"]),
         )
     }
 
@@ -132,7 +132,7 @@ struct CVDocumentSchemaTests {
             project: project,
             role: role,
             period: period,
-            technicalFocus: .init(areas: ["Package design"], tags: ["openapi", "spm"])
+            technicalFocus: .init(areas: ["Package design"], tags: ["openapi", "spm"]),
         )
     }
 
@@ -140,7 +140,7 @@ struct CVDocumentSchemaTests {
         company: Company,
         role: Role,
         period: Period,
-        projectExperience: ProjectExperience
+        projectExperience: ProjectExperience,
     ) throws -> WorkExperience {
         try WorkExperience(
             id: uuid("00000000-0000-0000-0000-000000000106"),
@@ -149,7 +149,7 @@ struct CVDocumentSchemaTests {
             period: period,
             projects: [projectExperience],
             isCurrent: true,
-            technicalFocus: .init(areas: ["Modular architecture"], tags: ["swift"])
+            technicalFocus: .init(areas: ["Modular architecture"], tags: ["swift"]),
         )
     }
 
@@ -165,11 +165,11 @@ struct CVDocumentSchemaTests {
                 linkedIn: URL(string: "https://example.com/linkedin"),
                 github: URL(string: "https://example.com/github"),
                 website: URL(string: "https://example.com"),
-                location: "Example City"
+                location: "Example City",
             ),
             experience: [work],
-            education: [try makeEducation(period: period)],
-            skills: [try makeSkill()]
+            education: [makeEducation(period: period)],
+            skills: [makeSkill()],
         )
     }
 
@@ -179,7 +179,7 @@ struct CVDocumentSchemaTests {
             institution: "Example Metropolitan University",
             degree: "MSc",
             field: "Human-Computer Information Systems",
-            period: period
+            period: period,
         )
     }
 
@@ -187,7 +187,7 @@ struct CVDocumentSchemaTests {
         try Tech(
             id: uuid("00000000-0000-0000-0000-000000000109"),
             name: "OpenAPI",
-            category: .tool
+            category: .tool,
         )
     }
 
@@ -202,7 +202,7 @@ struct CVDocumentSchemaTests {
             technologies: ["Swift", "OpenAPI"],
             date: "2026",
             highlights: ["Designed the package boundary and test fixtures."],
-            technicalFocus: .init(areas: ["Developer tooling"], tags: ["code-generation", "contracts"])
+            technicalFocus: .init(areas: ["Developer tooling"], tags: ["code-generation", "contracts"]),
         )
     }
 

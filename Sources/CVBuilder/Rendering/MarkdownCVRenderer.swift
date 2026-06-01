@@ -103,7 +103,10 @@ public extension CV {
         let generator = MarkdownCVRenderer()
 
         let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Failed to save Markdown: documents directory is unavailable.")
+            return nil
+        }
         let outputURL = documentsURL.appendingPathComponent("CV.md")
 
         do {

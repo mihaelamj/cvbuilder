@@ -186,6 +186,8 @@ Useful local checks from the repository root:
 ```sh
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
+swiftformat . --config .swiftformat --lint
+swiftlint --config .swiftlint.yml --strict
 ```
 
 On Linux, also verify the TileDown adapter:

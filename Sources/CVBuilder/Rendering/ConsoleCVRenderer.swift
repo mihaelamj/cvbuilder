@@ -20,7 +20,7 @@ public struct ConsoleCVRenderer: CVRendering, Sendable {
         throw NSError(
             domain: "ConsoleRenderer",
             code: 1,
-            userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."]
+            userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."],
         )
     }
 

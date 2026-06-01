@@ -20,7 +20,7 @@ public struct ProjectExperience: Codable, Identifiable, Hashable, Sendable {
         project: Project,
         role: Role,
         period: Period,
-        technicalFocus: TechnicalFocus? = nil
+        technicalFocus: TechnicalFocus? = nil,
     ) {
         self.id = id
         self.project = project

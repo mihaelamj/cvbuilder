@@ -1,6 +1,6 @@
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// User-facing failures reported by the `cvbuilder` command.
-    public enum Failure: Swift.Error, Equatable, Sendable {
+    enum Failure: Swift.Error, Equatable, Sendable {
         case missingRequiredOption(String)
         case missingValue(option: String)
         case unknownOption(String)

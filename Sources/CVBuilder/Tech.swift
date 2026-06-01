@@ -1,6 +1,6 @@
 import Foundation
 
-/**
+/*
  ```swift
      public static let swift = Tech(name: "Swift", category: .language)
      public static let swiftUI = Tech(name: "SwiftUI", category: .framework)
@@ -44,6 +44,6 @@ public struct Tech: Codable, Identifiable, Hashable, Sendable {
     }
 
     public static func techsGroupedByCategory(_ techs: [Tech]) -> [Category?: [Tech]] {
-        return Dictionary(grouping: techs, by: { $0.category })
+        Dictionary(grouping: techs, by: { $0.category })
     }
 }

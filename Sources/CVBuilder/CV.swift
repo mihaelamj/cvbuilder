@@ -29,7 +29,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
         contactInfo: ContactInfo,
         experience: [WorkExperience],
         education: [Education],
-        skills: [Tech]
+        skills: [Tech],
     ) {
         self.id = id
         self.name = name
@@ -60,22 +60,26 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
         summary: String,
         contactInfo: ContactInfo,
         education: [Education],
-        projects: [Project]
+        projects: [Project],
     ) -> CV {
         // Group by company
         let grouped = Dictionary(grouping: projects, by: \.company)
 
         // Create WorkExperience entries
-        let experiences: [WorkExperience] = grouped.map { company, companyProjects in
+        let experiences: [WorkExperience] = grouped.compactMap { company, companyProjects in
             let projectExperiences = companyProjects.map {
                 ProjectExperience(project: $0, role: $0.role, period: $0.period)
             }
 
-            let start = projectExperiences.map { $0.period.start }.min()!
-            let end = projectExperiences.map { $0.period.end }.max()!
+            guard let firstProjectExperience = projectExperiences.first else {
+                return nil
+            }
+
+            let start = projectExperiences.map(\.period.start).min() ?? firstProjectExperience.period.start
+            let end = projectExperiences.map(\.period.end).max() ?? firstProjectExperience.period.end
             let period = Period(start: start, end: end)
 
-            let highestRole = projectExperiences.map(\.role).max(by: { rank($0) < rank($1) })!
+            let highestRole = projectExperiences.map(\.role).max(by: { rank($0) < rank($1) }) ?? firstProjectExperience.role
             let isCurrent = companyProjects.contains { $0.isCurrent }
 
             return WorkExperience(
@@ -83,7 +87,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
                 role: highestRole,
                 period: period,
                 projects: projectExperiences.sorted { $0.period.start < $1.period.start },
-                isCurrent: isCurrent
+                isCurrent: isCurrent,
             )
         }
         .sorted { $0.period.end > $1.period.end } // most recent first
@@ -97,17 +101,17 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
             contactInfo: contactInfo,
             experience: experiences,
             education: education,
-            skills: uniqueSkills
+            skills: uniqueSkills,
         )
     }
 
-    // Optional helper if you still want to print or debug flat project info
+    /// Optional helper if you still want to print or debug flat project info
     public func allProjectExperiences() -> [ProjectExperience] {
         experience.flatMap(\.projects)
     }
 
     public func allUniqueSkills() -> [Tech] {
-        Set(experience.flatMap { $0.projects.flatMap { $0.project.techs } }).sorted { $0.name < $1.name }
+        Set(experience.flatMap { $0.projects.flatMap(\.project.techs) }).sorted { $0.name < $1.name }
     }
 }
 
@@ -119,15 +123,15 @@ public extension CV {
         summary: String,
         contactInfo: ContactInfo,
         education: [Education],
-        projects: [Project]
+        projects: [Project],
     ) -> CV {
-        return CV.createFromProjects(
+        CV.createFromProjects(
             name: name,
             title: title,
             summary: summary,
             contactInfo: contactInfo,
             education: education,
-            projects: projects
+            projects: projects,
         )
     }
 }

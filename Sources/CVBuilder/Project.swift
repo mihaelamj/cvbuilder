@@ -35,7 +35,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         period: Period,
         urls: [URL]? = nil,
         isCurrent: Bool = false,
-        technicalFocus: TechnicalFocus? = nil
+        technicalFocus: TechnicalFocus? = nil,
     ) {
         self.id = id
         self.name = name
@@ -65,12 +65,12 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
     }
 
     public class Builder {
-        private var id: UUID = UUID()
+        private var id: UUID = .init()
         private var name: String = ""
         private var company: Company?
         private var descriptions: [String] = []
         private var techs: [Tech] = []
-        private var role: Role = Role.none
+        private var role: Role = .none
         private var period: Period?
         private var urls: [URL]?
         private var isCurrent: Bool = false
@@ -98,7 +98,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
 
         @discardableResult
         public func addDescription(_ description: String) -> Builder {
-            self.descriptions.append(description)
+            descriptions.append(description)
             return self
         }
 
@@ -110,7 +110,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
 
         @discardableResult
         public func addTech(_ tech: Tech) -> Builder {
-            self.techs.append(tech)
+            techs.append(tech)
             return self
         }
 
@@ -122,7 +122,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
 
         @discardableResult
         public func withCustomRole(title: String, seniority: Role.Seniority) -> Builder {
-            self.role = Role(title: title, seniority: seniority)
+            role = Role(title: title, seniority: seniority)
             return self
         }
 
@@ -134,9 +134,9 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
 
         @discardableResult
         public func withPeriod(start: (month: Int, year: Int), end: (month: Int, year: Int)) -> Builder {
-            self.period = Period(
+            period = Period(
                 start: .init(month: start.month, year: start.year),
-                end: .init(month: end.month, year: end.year)
+                end: .init(month: end.month, year: end.year),
             )
             return self
         }
@@ -164,10 +164,10 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
 
         @discardableResult
         public func addURL(_ url: URL) -> Builder {
-            if self.urls == nil {
-                self.urls = []
+            if urls == nil {
+                urls = []
             }
-            self.urls?.append(url)
+            urls?.append(url)
             return self
         }
 
@@ -176,11 +176,11 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
                 throw BuilderError.missingName
             }
 
-            guard let company = company else {
+            guard let company else {
                 throw BuilderError.missingCompany
             }
 
-            guard let period = period else {
+            guard let period else {
                 throw BuilderError.missingPeriod
             }
 
@@ -194,7 +194,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
                 period: period,
                 urls: urls,
                 isCurrent: isCurrent,
-                technicalFocus: technicalFocus
+                technicalFocus: technicalFocus,
             )
         }
 

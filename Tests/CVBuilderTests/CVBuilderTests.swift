@@ -14,7 +14,7 @@ import Testing
         .appendingPathComponent("cvbuilder-\(UUID().uuidString)")
     try FileManager.default.createDirectory(
         at: outputDirectory,
-        withIntermediateDirectories: true
+        withIntermediateDirectories: true,
     )
     let outputURL = outputDirectory.appendingPathComponent("CV.md")
     try MarkdownCVRenderer().save(to: outputURL, cv: resume)
@@ -29,7 +29,7 @@ import Testing
         let resume = try makeDemoCV()
         let document = CVDocument(
             frontMatter: ["slug": "tile-down-cv"],
-            cv: resume
+            cv: resume,
         )
         let renderer = CVBuilderTileDown.Renderer()
 
@@ -51,7 +51,7 @@ import Testing
 private func makeDemoCV() throws -> CV {
     let period = Period(
         start: .init(month: 1, year: 2024),
-        end: .init(month: 6, year: 2026)
+        end: .init(month: 6, year: 2026),
     )
 
     return try CV(
@@ -62,7 +62,7 @@ private func makeDemoCV() throws -> CV {
         contactInfo: ContactInfo(
             email: "demo.candidate@example.com",
             phone: "+1 555 010 0701",
-            location: "Example City"
+            location: "Example City",
         ),
         experience: [],
         education: [
@@ -71,16 +71,16 @@ private func makeDemoCV() throws -> CV {
                 institution: "Example University",
                 degree: "MSc",
                 field: "Software Engineering",
-                period: period
-            )
+                period: period,
+            ),
         ],
         skills: [
             Tech(
                 id: uuid("00000000-0000-0000-0000-000000000703"),
                 name: "Swift",
-                category: .language
-            )
-        ]
+                category: .language,
+            ),
+        ],
     )
 }
 

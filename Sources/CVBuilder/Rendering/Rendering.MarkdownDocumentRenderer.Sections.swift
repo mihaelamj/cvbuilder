@@ -56,7 +56,7 @@ extension Rendering.MarkdownDocumentRenderer {
         writer.block([
             "# \(escapedMarkdownText(resume.name))",
             escapedMarkdownText(resume.title),
-            escapedMarkdownText(resume.summary)
+            escapedMarkdownText(resume.summary),
         ])
     }
 
@@ -80,7 +80,7 @@ extension Rendering.MarkdownDocumentRenderer {
         _ experience: [WorkExperience],
         links: DocumentLinks,
         options: RenderingOptions,
-        writer: inout Writer
+        writer: inout Writer,
     ) {
         let visibleExperience = limitedExperience(experience, recentCompanyCount: options.recentCompanyCount)
         guard !visibleExperience.isEmpty else {
@@ -179,7 +179,7 @@ extension Rendering.MarkdownDocumentRenderer {
     func appendNestedProjects(
         _ projects: [ProjectExperience],
         options: RenderingOptions,
-        to lines: inout [String]
+        to lines: inout [String],
     ) {
         for projectExperience in projects {
             appendProject(projectExperience, headingLevel: "####", options: options, to: &lines)
@@ -189,7 +189,7 @@ extension Rendering.MarkdownDocumentRenderer {
     func appendStandaloneProjects(
         from experience: [WorkExperience],
         options: RenderingOptions,
-        to lines: inout [String]
+        to lines: inout [String],
     ) {
         let projects = experience.flatMap(\.projects)
         guard !projects.isEmpty else {
@@ -206,7 +206,7 @@ extension Rendering.MarkdownDocumentRenderer {
         _ projectExperience: ProjectExperience,
         headingLevel: String,
         options: RenderingOptions,
-        to lines: inout [String]
+        to lines: inout [String],
     ) {
         let project = projectExperience.project
         lines.append("\(headingLevel) \(escapedMarkdownText(project.name))")

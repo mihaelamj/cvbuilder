@@ -1,6 +1,6 @@
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// Parsed command-line options for a `cvbuilder` invocation.
-    public struct Options: Equatable, Sendable {
+    struct Options: Equatable, Sendable {
         /// Path to the input `CVDocument` JSON file.
         public let dataPath: String
         /// Path where the rendered Markdown or normalized JSON should be written or checked.
@@ -15,7 +15,7 @@ extension CVBuilderCLI {
             dataPath: String,
             outputPath: String,
             format: Format = .markdown,
-            check: Bool = false
+            check: Bool = false,
         ) throws {
             guard !dataPath.isEmpty else {
                 throw Failure.missingValue(option: "--data")

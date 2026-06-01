@@ -1,8 +1,8 @@
 import Foundation
 
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// Production filesystem adapter backed by Foundation `FileManager` and `Data` file IO.
-    public struct LocalFileSystem: FileSystem {
+    struct LocalFileSystem: FileSystem {
         private let fileManager: FileManager
 
         /// Creates a local filesystem adapter with its `FileManager` supplied by the composition root.
@@ -24,7 +24,7 @@ extension CVBuilderCLI {
         public func createDirectory(at url: URL, withIntermediateDirectories: Bool) throws {
             try fileManager.createDirectory(
                 at: url,
-                withIntermediateDirectories: withIntermediateDirectories
+                withIntermediateDirectories: withIntermediateDirectories,
             )
         }
 

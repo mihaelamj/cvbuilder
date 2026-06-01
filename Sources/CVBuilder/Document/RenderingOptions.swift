@@ -43,24 +43,24 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         mode = try container.decode(
             RenderingMode.self,
             forKey: .mode,
-            defaultIfMissing: .experiencedTechnical
+            defaultIfMissing: .experiencedTechnical,
         )
         recentCompanyCount = try container.decodeIfPresent(Int.self, forKey: .recentCompanyCount)
         maxBulletsPerProject = try container.decodeIfPresent(Int.self, forKey: .maxBulletsPerProject)
         nestProjectsUnderRoles = try container.decode(
             Bool.self,
             forKey: .nestProjectsUnderRoles,
-            defaultIfMissing: true
+            defaultIfMissing: true,
         )
         compactGroupedSkills = try container.decode(
             Bool.self,
             forKey: .compactGroupedSkills,
-            defaultIfMissing: true
+            defaultIfMissing: true,
         )
         omitEmptySections = try container.decode(
             Bool.self,
             forKey: .omitEmptySections,
-            defaultIfMissing: true
+            defaultIfMissing: true,
         )
     }
 }

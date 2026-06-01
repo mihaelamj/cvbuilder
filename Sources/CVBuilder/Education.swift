@@ -20,7 +20,7 @@ public struct Education: Codable, Identifiable, Hashable, Sendable {
         institution: String,
         degree: String,
         field: String,
-        period: Period
+        period: Period,
     ) {
         self.id = id
         self.institution = institution

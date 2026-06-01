@@ -1,9 +1,9 @@
 import CVBuilder
 import Foundation
 
-extension CVBuilderCLI {
+public extension CVBuilderCLI {
     /// Executes validated `cvbuilder` options against an injected file-system boundary.
-    public struct Runner {
+    struct Runner {
         private let fileSystem: any FileSystem
 
         /// Creates a runner with its file-system dependency supplied by the caller.
@@ -85,7 +85,7 @@ extension CVBuilderCLI {
             do {
                 try fileSystem.createDirectory(
                     at: outputDirectory,
-                    withIntermediateDirectories: true
+                    withIntermediateDirectories: true,
                 )
                 try fileSystem.write(outputData, to: outputURL)
             } catch {
