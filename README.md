@@ -162,7 +162,7 @@ flowchart TD
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
-    P8["Phase 8<br/>#20 Workflow documentation<br/>In progress"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
@@ -174,7 +174,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7 done;
-    class P8 active;
+    class P8 review;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.

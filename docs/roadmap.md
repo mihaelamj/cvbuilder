@@ -62,7 +62,8 @@ Relevant links:
 - Issue #30: closed technical CV rendering modes.
 - Issue #40: realistic fixture coverage for omitted and selected jobs.
 - Issue #19: closed evidence fixture proof coverage.
-- Issue #20: active JSON workflow and research-boundary documentation.
+- Issue #20: in-review JSON workflow and research-boundary documentation in
+  PR #45.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -75,7 +76,7 @@ Ordered roadmap issues:
 5. #32 - done: add roadmap quality gates and release hygiene.
 6. #40 - done: expand realistic fixture coverage.
 7. #19 - done: add evidence-backed renderer fixture proofs.
-8. #20 - in progress: document the JSON workflow and research-backed boundaries.
+8. #20 - in review: document the JSON workflow and research-backed boundaries.
 
 ```mermaid
 flowchart TD
@@ -86,7 +87,7 @@ flowchart TD
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
-    P8["Phase 8<br/>#20 Workflow documentation<br/>In progress"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
@@ -98,7 +99,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7 done;
-    class P8 active;
+    class P8 review;
 ```
 
 ## Roadmap
@@ -281,15 +282,15 @@ Issue: [#20](https://github.com/mihaelamj/cvbuilder/issues/20).
 
 Deliverables:
 
-- document the authoring workflow from JSON to generated Markdown: in progress
-- document what the renderer deliberately does not generate: in progress
-- link the workflow docs back to the research proof matrix: in progress
+- document the authoring workflow from JSON to generated Markdown: in review
+- document what the renderer deliberately does not generate: in review
+- link the workflow docs back to the research proof matrix: in review
 
 Acceptance:
 
-- README and docs explain the intended user path: in progress
+- README and docs explain the intended user path: in review
 - docs keep PDF, TileDown implementation, ATS scoring, and static-site
-  generation outside the core CVBuilder contract: in progress
+  generation outside the core CVBuilder contract: in review
 
 ## Research Rules
 
