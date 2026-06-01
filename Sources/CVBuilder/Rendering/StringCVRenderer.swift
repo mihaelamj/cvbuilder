@@ -83,32 +83,3 @@ public struct StringCVRenderer: CVRendering, Sendable {
         print(render(cv: resume))
     }
 }
-
-public struct ConsoleCVRenderer: CVRendering, Sendable {
-    public var experienceTitle: String {
-        "EXPERIENCE"
-    }
-
-    public var skillsTitle: String {
-        "SKILLS"
-    }
-
-    public init() {}
-
-    public func render(cv resume: CV) -> String {
-        StringCVRenderer().render(cv: resume)
-    }
-
-    public func save(to _: URL, cv _: CV) throws {
-        // Console renderer doesn't support saving
-        throw NSError(
-            domain: "ConsoleRenderer",
-            code: 1,
-            userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."]
-        )
-    }
-
-    public func printToConsole(cv resume: CV) {
-        print(render(cv: resume))
-    }
-}

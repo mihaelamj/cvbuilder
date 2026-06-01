@@ -1,5 +1,6 @@
 # CVBuilder
 
+[![Style and namespacing](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml)
 [![Swift macOS](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml)
 [![Swift Linux](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml)
 
