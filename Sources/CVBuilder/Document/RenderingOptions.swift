@@ -9,6 +9,8 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public let mode: RenderingMode
     /// Maximum number of work-experience entries to render. Non-positive values mean unlimited.
     public let recentCompanyCount: Int?
+    /// Explicit work-experience IDs to render. Empty values render all work entries before other limits.
+    public let selectedExperienceIDs: [UUID]
     /// Maximum number of project description paragraphs to render. Non-positive values mean unlimited.
     public let maxBulletsPerProject: Int?
     /// Whether projects render under each role instead of in a standalone `Projects` section.
@@ -24,6 +26,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case mode
         case recentCompanyCount
+        case selectedExperienceIDs
         case maxBulletsPerProject
         case nestProjectsUnderRoles
         case compactGroupedSkills
@@ -33,6 +36,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public init(
         mode: RenderingMode = .experiencedTechnical,
         recentCompanyCount: Int? = nil,
+        selectedExperienceIDs: [UUID] = [],
         maxBulletsPerProject: Int? = nil,
         nestProjectsUnderRoles: Bool = true,
         compactGroupedSkills: Bool = true,
@@ -40,6 +44,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     ) {
         self.mode = mode
         self.recentCompanyCount = recentCompanyCount
+        self.selectedExperienceIDs = selectedExperienceIDs
         self.maxBulletsPerProject = maxBulletsPerProject
         self.nestProjectsUnderRoles = nestProjectsUnderRoles
         self.compactGroupedSkills = compactGroupedSkills
@@ -55,6 +60,11 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
             defaultIfMissing: .experiencedTechnical,
         )
         recentCompanyCount = try container.decodeIfPresent(Int.self, forKey: .recentCompanyCount)
+        selectedExperienceIDs = try container.decode(
+            [UUID].self,
+            forKey: .selectedExperienceIDs,
+            defaultIfMissing: [],
+        )
         maxBulletsPerProject = try container.decodeIfPresent(Int.self, forKey: .maxBulletsPerProject)
         nestProjectsUnderRoles = try container.decode(
             Bool.self,

@@ -5,8 +5,8 @@
   },
   "cv": {
     "name": "Alex Rivera",
-    "title": "Senior Mobile Architect",
-    "summary": "Builds modular Swift applications, server-side tooling, and documentation workflows.",
+    "title": "Senior Swift Platform Engineer",
+    "summary": "Builds modular Swift applications, typed API tooling, and Linux-safe publishing workflows for product teams that need auditable delivery paths.",
     "contactInfo": {
       "email": "alex.rivera@example.com",
       "phone": "+1 555 010 0199",
@@ -17,11 +17,12 @@
     },
     "experience": [
       {
+        "id": "00000000-0000-0000-0000-000000000301",
         "company": {
           "name": "Northbridge Systems"
         },
         "role": {
-          "title": "Mobile Architect",
+          "title": "Swift Platform Engineer",
           "seniority": "Senior"
         },
         "period": {
@@ -42,11 +43,14 @@
               ],
               "techs": [
                 { "name": "Swift", "category": "language" },
+                { "name": "SwiftUI", "category": "framework" },
+                { "name": "UIKit", "category": "framework" },
                 { "name": "Swift Package Manager", "category": "tool" },
-                { "name": "OpenAPI", "category": "tool" }
+                { "name": "OpenAPI", "category": "tool" },
+                { "name": "Structured Concurrency", "category": "concept" }
               ],
               "role": {
-                "title": "Mobile Architect",
+                "title": "Swift Platform Engineer",
                 "seniority": "Senior"
               },
               "period": {
@@ -57,12 +61,12 @@
                 "https://example.com/northbridge-identity"
               ],
               "technicalFocus": {
-                "areas": ["Modular architecture", "API contracts"],
-                "tags": ["swift", "openapi", "testing"]
+                "areas": ["Identity capture", "Package architecture", "API contracts"],
+                "tags": ["swift", "openapi", "testing", "concurrency"]
               }
             },
             "role": {
-              "title": "Mobile Architect",
+              "title": "Swift Platform Engineer",
               "seniority": "Senior"
             },
             "period": {
@@ -73,12 +77,384 @@
               "areas": ["Package design"],
               "tags": ["spm", "ci"]
             }
+          },
+          {
+            "project": {
+              "name": "API Contract Tooling",
+              "company": {
+                "name": "Northbridge Systems"
+              },
+              "descriptions": [
+                "Built a Swift command-line workflow that compares generated clients against checked-in API contracts.",
+                "Added deterministic fixture checks for contract drift before release branches are cut.",
+                "Documented Linux setup steps for CI jobs that validate generated Markdown and JSON artifacts."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "Swift Package Manager", "category": "tool" },
+                { "name": "OpenAPI", "category": "tool" },
+                { "name": "Linux", "category": "platform" },
+                { "name": "CI", "category": "tool" }
+              ],
+              "role": {
+                "title": "Swift Platform Engineer",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 1, "year": 2026 },
+                "end": { "month": 6, "year": 2026 }
+              },
+              "urls": [
+                "https://example.com/northbridge-contract-tooling"
+              ],
+              "isCurrent": true,
+              "technicalFocus": {
+                "areas": ["Developer tooling", "Contract validation"],
+                "tags": ["swift", "linux", "fixtures"]
+              }
+            },
+            "role": {
+              "title": "Swift Platform Engineer",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 1, "year": 2026 },
+              "end": { "month": 6, "year": 2026 }
+            },
+            "technicalFocus": {
+              "areas": ["Release automation"],
+              "tags": ["ci", "contracts"]
+            }
           }
         ],
         "isCurrent": true,
         "technicalFocus": {
-          "areas": ["Architecture"],
-          "tags": ["swift", "linux"]
+          "areas": ["Modular architecture", "Linux CI"],
+          "tags": ["swift", "linux", "openapi"]
+        }
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000302",
+        "company": {
+          "name": "Lumen Works"
+        },
+        "role": {
+          "title": "iOS Developer",
+          "seniority": "Senior"
+        },
+        "period": {
+          "start": { "month": 5, "year": 2024 },
+          "end": { "month": 8, "year": 2025 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Field Service App",
+              "company": {
+                "name": "Lumen Works"
+              },
+              "descriptions": [
+                "Delivered offline-first work-order flows for technicians working with unstable connectivity.",
+                "Split navigation, persistence, and synchronization code into separately tested Swift packages.",
+                "Reduced release risk by moving high-volume workflows behind fixture-backed integration tests."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "SwiftUI", "category": "framework" },
+                { "name": "Core Data", "category": "framework" },
+                { "name": "Unit Testing", "category": "concept" }
+              ],
+              "role": {
+                "title": "iOS Developer",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 5, "year": 2024 },
+                "end": { "month": 8, "year": 2025 }
+              },
+              "urls": [
+                "https://example.com/lumen-field-service"
+              ],
+              "technicalFocus": {
+                "areas": ["Offline data", "Release safety"],
+                "tags": ["swiftui", "testing", "sync"]
+              }
+            },
+            "role": {
+              "title": "iOS Developer",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 5, "year": 2024 },
+              "end": { "month": 8, "year": 2025 }
+            }
+          },
+          {
+            "project": {
+              "name": "Design System Migration",
+              "company": {
+                "name": "Lumen Works"
+              },
+              "descriptions": [
+                "Replaced duplicated UIKit screens with shared components that kept accessibility labels and dynamic type behavior intact.",
+                "Mapped legacy screen variants to reusable SwiftUI surfaces with explicit ownership boundaries.",
+                "Built sample screens for designers and QA to review state coverage before implementation."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "SwiftUI", "category": "framework" },
+                { "name": "UIKit", "category": "framework" },
+                { "name": "Accessibility", "category": "concept" }
+              ],
+              "role": {
+                "title": "iOS Developer",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 9, "year": 2024 },
+                "end": { "month": 6, "year": 2025 }
+              },
+              "technicalFocus": {
+                "areas": ["Component architecture", "Accessibility"],
+                "tags": ["swiftui", "uikit", "design-system"]
+              }
+            },
+            "role": {
+              "title": "iOS Developer",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 9, "year": 2024 },
+              "end": { "month": 6, "year": 2025 }
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["Mobile architecture", "Offline workflows"],
+          "tags": ["swift", "swiftui", "testing"]
+        }
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000303",
+        "company": {
+          "name": "Clearpath Digital"
+        },
+        "role": {
+          "title": "iOS Developer",
+          "seniority": "Senior"
+        },
+        "period": {
+          "start": { "month": 11, "year": 2022 },
+          "end": { "month": 3, "year": 2025 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Retail Loyalty App",
+              "company": {
+                "name": "Clearpath Digital"
+              },
+              "descriptions": [
+                "Rebuilt enrollment and rewards flows around typed state machines and predictable screen ownership.",
+                "Moved networking contracts into generated clients so app and server teams could review API changes together.",
+                "Added smoke tests for app-store release candidates and high-risk account migration paths."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "UIKit", "category": "framework" },
+                { "name": "REST", "category": "tool" },
+                { "name": "OpenAPI", "category": "tool" },
+                { "name": "UI Testing", "category": "concept" }
+              ],
+              "role": {
+                "title": "iOS Developer",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 11, "year": 2022 },
+                "end": { "month": 3, "year": 2025 }
+              },
+              "urls": [
+                "https://example.com/clearpath-loyalty"
+              ],
+              "technicalFocus": {
+                "areas": ["State management", "API integration"],
+                "tags": ["uikit", "openapi", "testing"]
+              }
+            },
+            "role": {
+              "title": "iOS Developer",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 11, "year": 2022 },
+              "end": { "month": 3, "year": 2025 }
+            }
+          },
+          {
+            "project": {
+              "name": "Chat SDK",
+              "company": {
+                "name": "Clearpath Digital"
+              },
+              "descriptions": [
+                "Created a Swift package that wrapped messaging, attachments, and speech input for multiple product apps.",
+                "Separated transport, persistence, and presentation layers so product teams could adopt features incrementally.",
+                "Published integration notes that explained threading rules, retry behavior, and app lifecycle constraints."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "Swift Package Manager", "category": "tool" },
+                { "name": "WebSockets", "category": "tool" },
+                { "name": "macOS", "category": "platform" }
+              ],
+              "role": {
+                "title": "iOS Developer",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 2, "year": 2023 },
+                "end": { "month": 12, "year": 2024 }
+              },
+              "technicalFocus": {
+                "areas": ["SDK design", "Realtime messaging"],
+                "tags": ["spm", "websockets", "appkit"]
+              }
+            },
+            "role": {
+              "title": "iOS Developer",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 2, "year": 2023 },
+              "end": { "month": 12, "year": 2024 }
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["Product architecture", "SDK packaging"],
+          "tags": ["swift", "uikit", "spm"]
+        }
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000304",
+        "company": {
+          "name": "Signal Gate"
+        },
+        "role": {
+          "title": "iOS Engineer",
+          "seniority": "Mid"
+        },
+        "period": {
+          "start": { "month": 6, "year": 2019 },
+          "end": { "month": 8, "year": 2022 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Fleet Operations App",
+              "company": {
+                "name": "Signal Gate"
+              },
+              "descriptions": [
+                "Maintained dispatch and route-review screens for operations teams.",
+                "Modernized Objective-C features into Swift while keeping release branches stable.",
+                "Improved crash triage by adding structured logs around synchronization and push-notification paths."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "Objective-C", "category": "language" },
+                { "name": "UIKit", "category": "framework" },
+                { "name": "Push Notifications", "category": "tool" }
+              ],
+              "role": {
+                "title": "iOS Engineer",
+                "seniority": "Mid"
+              },
+              "period": {
+                "start": { "month": 6, "year": 2019 },
+                "end": { "month": 8, "year": 2022 }
+              },
+              "technicalFocus": {
+                "areas": ["Legacy modernization", "Operational reliability"],
+                "tags": ["objective-c", "uikit", "sync"]
+              }
+            },
+            "role": {
+              "title": "iOS Engineer",
+              "seniority": "Mid"
+            },
+            "period": {
+              "start": { "month": 6, "year": 2019 },
+              "end": { "month": 8, "year": 2022 }
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["UIKit maintenance", "Migration planning"],
+          "tags": ["swift", "objective-c"]
+        }
+      },
+      {
+        "id": "00000000-0000-0000-0000-000000000305",
+        "company": {
+          "name": "BrightApps Lab"
+        },
+        "role": {
+          "title": "iOS Developer",
+          "seniority": "Mid"
+        },
+        "period": {
+          "start": { "month": 9, "year": 2016 },
+          "end": { "month": 5, "year": 2019 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Event Companion App",
+              "company": {
+                "name": "BrightApps Lab"
+              },
+              "descriptions": [
+                "Built schedule, speaker, and venue screens for recurring conference apps.",
+                "Added reusable UI components for sponsor lists, maps, and agenda filters.",
+                "Maintained release checklists for white-label app submissions."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "UIKit", "category": "framework" },
+                { "name": "Core Animation", "category": "framework" },
+                { "name": "App Store Connect", "category": "tool" }
+              ],
+              "role": {
+                "title": "iOS Developer",
+                "seniority": "Mid"
+              },
+              "period": {
+                "start": { "month": 9, "year": 2016 },
+                "end": { "month": 5, "year": 2019 }
+              },
+              "urls": [
+                "https://example.com/brightapps-events"
+              ],
+              "technicalFocus": {
+                "areas": ["Reusable UI", "Release operations"],
+                "tags": ["uikit", "release"]
+              }
+            },
+            "role": {
+              "title": "iOS Developer",
+              "seniority": "Mid"
+            },
+            "period": {
+              "start": { "month": 9, "year": 2016 },
+              "end": { "month": 5, "year": 2019 }
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["UI delivery"],
+          "tags": ["swift", "uikit"]
         }
       }
     ],
@@ -91,13 +467,35 @@
           "start": { "month": 9, "year": 2016 },
           "end": { "month": 6, "year": 2018 }
         }
+      },
+      {
+        "institution": "Example State College",
+        "degree": "BSc",
+        "field": "Software Engineering",
+        "period": {
+          "start": { "month": 9, "year": 2012 },
+          "end": { "month": 6, "year": 2016 }
+        }
       }
     ],
     "skills": [
       { "name": "Swift", "category": "language" },
+      { "name": "Objective-C", "category": "language" },
+      { "name": "SwiftUI", "category": "framework" },
+      { "name": "UIKit", "category": "framework" },
+      { "name": "AppKit", "category": "framework" },
+      { "name": "Core Data", "category": "framework" },
       { "name": "Linux", "category": "platform" },
+      { "name": "macOS", "category": "platform" },
       { "name": "OpenAPI", "category": "tool" },
-      { "name": "Unit Testing", "category": "concept" }
+      { "name": "Swift Package Manager", "category": "tool" },
+      { "name": "REST", "category": "tool" },
+      { "name": "WebSockets", "category": "tool" },
+      { "name": "CI", "category": "tool" },
+      { "name": "Unit Testing", "category": "concept" },
+      { "name": "UI Testing", "category": "concept" },
+      { "name": "Structured Concurrency", "category": "concept" },
+      { "name": "Accessibility", "category": "concept" }
     ]
   },
   "links": {
@@ -109,16 +507,28 @@
       {
         "label": "Blog",
         "url": "https://example.com/alex-rivera-notes"
+      },
+      {
+        "label": "Talks",
+        "url": "https://example.com/alex-rivera-talks"
       }
     ],
     "downloads": [
       {
-        "label": "PDF",
-        "url": "/assets/demo-cv.pdf"
+        "label": "Markdown",
+        "url": "/cv/index.md"
+      },
+      {
+        "label": "Source data",
+        "url": "/cv/cv.json"
       }
     ],
     "companyURLs": {
-      "Northbridge Systems": "https://example.com/northbridge"
+      "Northbridge Systems": "https://example.com/northbridge",
+      "Lumen Works": "https://example.com/lumen",
+      "Clearpath Digital": "https://example.com/clearpath",
+      "Signal Gate": "https://example.com/signal-gate",
+      "BrightApps Lab": "https://example.com/brightapps"
     }
   },
   "publicEvidence": [
@@ -137,6 +547,57 @@
       "technicalFocus": {
         "areas": ["Developer tooling"],
         "tags": ["code-generation", "contracts"]
+      }
+    },
+    {
+      "title": "Modular Swift Architecture Notes",
+      "kind": "technicalWriting",
+      "role": "Author",
+      "summary": "Published a practical guide for splitting app features into package-owned boundaries.",
+      "url": "https://example.com/modular-swift-notes",
+      "technologies": ["Swift", "Swift Package Manager"],
+      "date": "2025",
+      "highlights": [
+        "Explained ownership, test fixtures, and release boundaries.",
+        "Included example migration plans for mixed UIKit and SwiftUI codebases."
+      ],
+      "technicalFocus": {
+        "areas": ["Package architecture", "Testing strategy"],
+        "tags": ["spm", "modularity"]
+      }
+    },
+    {
+      "title": "Linux Swift CI Workshop",
+      "kind": "talk",
+      "role": "Speaker",
+      "summary": "Presented a workshop on keeping Swift package checks portable across macOS and Linux.",
+      "url": "https://example.com/linux-swift-ci-workshop",
+      "technologies": ["Swift", "Linux", "CI"],
+      "date": "2025",
+      "highlights": [
+        "Showed how to separate platform-specific targets from portable library code.",
+        "Covered deterministic fixture generation and stale-output checks."
+      ],
+      "technicalFocus": {
+        "areas": ["Portable Swift", "Continuous integration"],
+        "tags": ["linux", "ci", "fixtures"]
+      }
+    },
+    {
+      "title": "Open Source Release Checklist",
+      "kind": "openSource",
+      "role": "Maintainer",
+      "summary": "Maintains a checklist for repeatable package releases, changelog updates, and public issue handoff.",
+      "url": "https://example.com/release-checklist",
+      "technologies": ["Swift", "GitHub Actions"],
+      "date": "2024",
+      "highlights": [
+        "Tracks verification commands that must run before merging.",
+        "Keeps release notes tied to user-facing changes."
+      ],
+      "technicalFocus": {
+        "areas": ["Release hygiene", "Documentation"],
+        "tags": ["github-actions", "changelog"]
       }
     }
   ],

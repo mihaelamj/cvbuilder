@@ -81,6 +81,7 @@ Supported `kind` values are `openSource`, `talk`, `publication`, `app`,
 |---|---:|---|---|
 | `mode` | No | `experiencedTechnical` | Controls section order. |
 | `recentCompanyCount` | No | Unlimited | Limits rendered work entries when positive. Non-positive values mean unlimited. |
+| `selectedExperienceIDs` | No | `[]` | When non-empty, keeps only matching work-experience UUIDs in source order, then applies `recentCompanyCount`. |
 | `maxBulletsPerProject` | No | Unlimited | Limits project description paragraphs when positive. Non-positive values mean unlimited. |
 | `nestProjectsUnderRoles` | No | `true` | Renders projects under each role. `false` moves projects to a standalone `## Projects` section. |
 | `compactGroupedSkills` | No | `true` | Groups skills by category. `false` renders one skill per line. |
@@ -136,4 +137,7 @@ metadata. New publishing features belong on `CVDocument` and
 ## Fixture
 
 See `Examples/democv/cv.json` for a complete handwritten document with omitted
-IDs, links, public evidence, rendering options, and technical focus.
+IDs, explicit work-experience IDs, links, multiple roles and projects, public
+evidence, rendering options, and technical focus. The fixture intentionally
+contains more work history than `recentCompanyCount` renders so tests can prove
+older jobs are omitted from generated Markdown.

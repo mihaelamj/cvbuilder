@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fixture.
 - Public-evidence-heavy rendering mode and checked-in Markdown fixtures for all
   technical CV rendering modes.
+- Explicit `selectedExperienceIDs` rendering option for keeping relevant work
+  entries before recency limits are applied.
 - TileDown Markdown contract documentation and a generated
   `Examples/tiledown/democv.md` example.
 - Generated fixture freshness check for the checked-in TileDown Markdown example.
@@ -33,3 +35,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Markdown section headings are emitted.
 - Documented rendering-mode policies with evidence-backed rules separated from
   pragmatic renderer conventions.
+- Expanded the demo CV fixture into a multi-role technical CV with nested
+  projects, public evidence, and omitted older jobs covered by tests.

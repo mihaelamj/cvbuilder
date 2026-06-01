@@ -12,6 +12,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.links == DocumentLinks())
         #expect(document.publicEvidence.isEmpty)
         #expect(document.rendering == RenderingOptions())
+        #expect(document.rendering.selectedExperienceIDs.isEmpty)
         #expect(document.cv.experience.isEmpty)
         #expect(document.cv.education.isEmpty)
         #expect(document.cv.skills.isEmpty)
@@ -52,6 +53,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.links.companyURLs["Example Systems"] == "https://example.com/company")
         #expect(firstProject.descriptions == ["Built a Swift package."])
         #expect(firstEvidence.highlights == ["Kept releases documented."])
+        #expect(document.rendering.selectedExperienceIDs == [workID])
         try expectNormalizedRoundTrip(document)
     }
 
@@ -121,8 +123,17 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.cv.name == "Alex Rivera")
         #expect(document.frontMatter["slug"] == "demo-cv")
         #expect(document.links.companyURLs["Northbridge Systems"] == "https://example.com/northbridge")
+        #expect(document.cv.experience.count >= 4)
+        #expect(document.cv.experience.contains { $0.projects.count >= 2 })
+        #expect(document.publicEvidence.count >= 3)
+        #expect(Set(document.cv.skills.compactMap(\.category)).count >= 4)
         #expect(output.contains("# Alex Rivera"))
         #expect(output.contains("## Public Evidence"))
+        #expect(output.contains("#### API Contract Tooling"))
+        #expect(output.contains("### [Lumen Works](https://example.com/lumen) - Senior iOS Developer"))
+        #expect(output.contains("### [Clearpath Digital](https://example.com/clearpath) - Senior iOS Developer"))
+        #expect(!output.contains("### [Signal Gate](https://example.com/signal-gate)"))
+        #expect(!output.contains("### [BrightApps Lab](https://example.com/brightapps)"))
         try expectNormalizedRoundTrip(document)
     }
 

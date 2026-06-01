@@ -43,6 +43,7 @@ struct CVDocumentSchemaTests {
         )
 
         #expect(options.mode == .experiencedTechnical)
+        #expect(options.selectedExperienceIDs.isEmpty)
         #expect(options.nestProjectsUnderRoles)
         #expect(options.compactGroupedSkills)
         #expect(options.omitEmptySections)

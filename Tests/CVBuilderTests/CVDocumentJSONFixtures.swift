@@ -261,6 +261,9 @@ let fullDocumentJSON = """
   "rendering": {
     "mode": "experiencedTechnical",
     "recentCompanyCount": 3,
+    "selectedExperienceIDs": [
+      "00000000-0000-0000-0000-000000000202"
+    ],
     "maxBulletsPerProject": 4,
     "nestProjectsUnderRoles": true,
     "compactGroupedSkills": true,
