@@ -1,7 +1,7 @@
 import Foundation
 
 extension Rendering.MarkdownDocumentRenderer {
-    enum Section {
+    enum Section: Equatable {
         case contact
         case experience
         case education
@@ -33,12 +33,7 @@ extension Rendering.MarkdownDocumentRenderer {
 
 extension Rendering.MarkdownDocumentRenderer {
     func sections(for mode: RenderingMode) -> [Section] {
-        switch mode {
-        case .experiencedTechnical:
-            [.contact, .experience, .publicEvidence, .skills, .education, .links]
-        case .earlyCareerTechnical:
-            [.contact, .education, .publicEvidence, .experience, .skills, .links]
-        }
+        policy(for: mode).sections
     }
 
     func renderFrontMatter(_ frontMatter: [String: String], writer: inout Writer) {

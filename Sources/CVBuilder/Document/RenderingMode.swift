@@ -6,4 +6,6 @@ public enum RenderingMode: String, Codable, CaseIterable, Equatable, Sendable {
     case experiencedTechnical
     /// Orders education before experience for earlier-career technical candidates.
     case earlyCareerTechnical
+    /// Promotes public technical evidence near the top of the document.
+    case publicEvidenceHeavyTechnical
 }

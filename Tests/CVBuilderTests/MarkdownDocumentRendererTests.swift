@@ -2,6 +2,34 @@
 import Foundation
 import Testing
 
+struct RenderingModeFixture {
+    let mode: RenderingMode
+    let policyName: String
+    let sections: [Rendering.MarkdownDocumentRenderer.Section]
+    let fixtureName: String
+}
+
+let renderingModeFixtures = [
+    RenderingModeFixture(
+        mode: .experiencedTechnical,
+        policyName: "Experienced technical CV",
+        sections: [.contact, .experience, .publicEvidence, .skills, .education, .links],
+        fixtureName: "experiencedTechnical.md",
+    ),
+    RenderingModeFixture(
+        mode: .earlyCareerTechnical,
+        policyName: "Early-career technical CV",
+        sections: [.contact, .education, .publicEvidence, .experience, .skills, .links],
+        fixtureName: "earlyCareerTechnical.md",
+    ),
+    RenderingModeFixture(
+        mode: .publicEvidenceHeavyTechnical,
+        policyName: "Public-evidence-heavy technical CV",
+        sections: [.contact, .publicEvidence, .experience, .skills, .education, .links],
+        fixtureName: "publicEvidenceHeavyTechnical.md",
+    ),
+]
+
 @Suite("MarkdownDocumentRenderer")
 struct MarkdownDocumentRendererTests {
     @Test("rendering is byte-for-byte deterministic")
@@ -36,6 +64,37 @@ struct MarkdownDocumentRendererTests {
         #expect(output.contains("### [Contract Tooling](https://example.com/tooling)"))
         #expect(output.contains("Summary: Maintains release notes for the package."))
         #expect(output.contains("Tools: OpenAPI"))
+    }
+
+    @Test("rendering modes expose named policies", arguments: renderingModeFixtures)
+    func renderingModesExposeNamedPolicies(fixture: RenderingModeFixture) {
+        let policy = Rendering.MarkdownDocumentRenderer().policy(for: fixture.mode)
+
+        #expect(policy.name == fixture.policyName)
+        #expect(policy.sections == fixture.sections)
+    }
+
+    @Test("rendering modes match checked-in Markdown fixtures", arguments: renderingModeFixtures)
+    func renderingModesMatchCheckedInMarkdownFixtures(fixture: RenderingModeFixture) throws {
+        let document = try democvDocument(renderingMode: fixture.mode)
+        let expected = try expectedMarkdownFixture(fixture.fixtureName)
+        let output = Rendering.MarkdownDocumentRenderer().render(document)
+
+        #expect(output == expected)
+        #expect(output.contains("### [Northbridge Systems](https://example.com/northbridge) - Senior Mobile Architect"))
+        #expect(output.contains("#### Identity Capture Platform"))
+        #expect(output.contains("Summary: Maintains a Swift package"))
+        #expect(output.contains("[GitHub](https://example.com/alex-rivera-code)"))
+        #expect(output.contains("Tools: OpenAPI"))
+        #expect(!output.contains("Senior Senior"))
+    }
+
+    @Test("rendering mode fixture coverage is complete")
+    func renderingModeFixtureCoverageIsComplete() {
+        let fixtureModes = renderingModeFixtures.map(\.mode.rawValue).sorted()
+        let enumModes = RenderingMode.allCases.map(\.rawValue).sorted()
+
+        #expect(fixtureModes == enumModes)
     }
 
     @Test("experienced and early-career modes use different ordering")
@@ -256,6 +315,47 @@ struct MarkdownDocumentRendererTests {
 
     private func index(of needle: String, in haystack: String) throws -> String.Index {
         try #require(haystack.range(of: needle)?.lowerBound)
+    }
+
+    private func democvDocument(renderingMode mode: RenderingMode) throws -> CVDocument {
+        let fixtureData = try Data(contentsOf: fixtureURL("Examples/democv/cv.json"))
+        let document = try JSONDecoder().decode(CVDocument.self, from: fixtureData)
+
+        return CVDocument(
+            frontMatter: document.frontMatter,
+            cv: document.cv,
+            links: document.links,
+            publicEvidence: document.publicEvidence,
+            rendering: RenderingOptions(
+                mode: mode,
+                recentCompanyCount: document.rendering.recentCompanyCount,
+                maxBulletsPerProject: document.rendering.maxBulletsPerProject,
+                nestProjectsUnderRoles: document.rendering.nestProjectsUnderRoles,
+                compactGroupedSkills: document.rendering.compactGroupedSkills,
+                omitEmptySections: document.rendering.omitEmptySections,
+            ),
+        )
+    }
+
+    private func expectedMarkdownFixture(_ fixtureName: String) throws -> String {
+        let fixtureStem = fixtureName.replacingOccurrences(of: ".md", with: "")
+        let fixtureURL = try #require(Bundle.module.url(forResource: fixtureStem, withExtension: "md"))
+        var expected = try String(
+            contentsOf: fixtureURL,
+            encoding: .utf8,
+        )
+        if expected.hasSuffix("\n") {
+            expected.removeLast()
+        }
+        return expected
+    }
+
+    private func fixtureURL(_ relativePath: String) -> URL {
+        let testsDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+        return testsDirectory
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent(relativePath)
     }
 }
 

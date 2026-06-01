@@ -25,7 +25,8 @@ The generic renderer currently covers:
 - Headings, paragraphs, links, and labelled text lines.
 - Contact information, education, work experience, projects, skills, public
   evidence, and profile/download links.
-- Rendering modes for experienced and early-career technical CV ordering.
+- Rendering modes for experienced, early-career, and public-evidence-heavy
+  technical CV ordering.
 - JSON input with ergonomic defaults for missing optional arrays.
 - CLI output checks for checked-in generated Markdown.
 - Linux TileDown compatibility through a Markdown-only adapter.
@@ -168,7 +169,7 @@ See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
 The test suite validates generated Markdown in four ways:
 
 - Snapshot-style expectations check section ordering, headings, links, escaping,
-  and evidence rendering.
+  evidence rendering, and checked-in rendering-mode fixtures.
 - Hostile text tests ensure generated Markdown treats source data as data, not
   structure.
 - JSON schema tests check defaults for omitted optional arrays and rejection of
@@ -211,6 +212,8 @@ swift build --target CVBuilderTileDown
 - [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
 - [docs/cvdocument-contract.md](docs/cvdocument-contract.md): JSON schema,
   Markdown behavior, and migration rules.
+- [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
+  evidence mapping, and mode fixture coverage.
 - [docs/research/README.md](docs/research/README.md): research map.
 - [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
   evidence summary for technical CV decisions.
