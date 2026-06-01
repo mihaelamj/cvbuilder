@@ -141,3 +141,12 @@ IDs, explicit work-experience IDs, links, multiple roles and projects, public
 evidence, rendering options, and technical focus. The fixture intentionally
 contains more work history than `recentCompanyCount` renders so tests can prove
 older jobs are omitted from generated Markdown.
+
+Additional test fixtures live under
+`Tests/CVBuilderTests/Fixtures/Documents/`:
+
+- `earlyCareerTechnical.json` proves education-first ordering and public
+  evidence for early-career technical CVs.
+- `hostileMarkdown.json` proves generated Markdown escapes source data instead
+  of treating it as structure.
+- `minimal.json` proves handwritten documents can omit optional arrays and IDs.

@@ -1,6 +1,6 @@
 # CVBuilder Roadmap
 
-Status date: 2026-06-01
+Status date: 2026-06-02
 
 This roadmap defines the product direction for `cvbuilder`. It is intentionally
 Markdown-first and Linux-safe. The package owns CV data, validation, and
@@ -55,11 +55,14 @@ core package.
 Relevant links:
 
 - Issue #28: product roadmap epic with ordered child issues.
+- Issue #12: evidence-backed implementation epic.
 - Issue #3: file-driven CVBuilder implementation target.
 - Issue #5: closed evidence research epic.
 - Issue #26: closed Linux TileDown Markdown adapter.
 - Issue #30: closed technical CV rendering modes.
 - Issue #40: realistic fixture coverage for omitted and selected jobs.
+- Issue #19: CI-green evidence fixture proof coverage.
+- Issue #20: next JSON workflow and research-boundary documentation.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -71,6 +74,8 @@ Ordered roadmap issues:
 4. #31 - done: document and harden the TileDown Markdown contract.
 5. #32 - done: add roadmap quality gates and release hygiene.
 6. #40 - done: expand realistic fixture coverage.
+7. #19 - CI green: add evidence-backed renderer fixture proofs.
+8. #20 - next: document the JSON workflow and research-backed boundaries.
 
 ```mermaid
 flowchart TD
@@ -80,8 +85,10 @@ flowchart TD
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
+    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>CI green"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -91,6 +98,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6 done;
+    class P7 review;
+    class P8 next;
 ```
 
 ## Roadmap
@@ -241,6 +250,47 @@ Acceptance:
 - tests prove explicitly selected jobs can render before recency limits: done
 - generated Markdown fixtures are reproducible from source JSON: done
 - README and contract docs describe the fixture and selection behavior: done
+
+### Phase 7: Evidence Fixture Proofs
+
+Objective: make #12 fixture acceptance concrete with resource-backed JSON
+documents, not only in-code builders.
+
+Issue: [#19](https://github.com/mihaelamj/cvbuilder/issues/19).
+
+Deliverables:
+
+- keep `Examples/democv/cv.json` as the full senior technical CV fixture:
+  CI green
+- add early-career technical, hostile Markdown, and minimal JSON fixture files:
+  CI green
+- test privacy-safe example endpoints and fixture decoding: CI green
+- test early-career ordering, nested projects, public evidence, technical focus,
+  omitted sections, grouped skills, and prohibited generated fields: CI green
+
+Acceptance:
+
+- fixtures contain no real personal or company-identifying endpoints: CI green
+- tests prove all #19 renderer behaviors on macOS and Linux: CI green
+
+### Phase 8: Document the JSON Workflow and Research Boundaries
+
+Objective: make the file-driven CV workflow and evidence-backed boundaries clear
+without requiring users to read the source.
+
+Issue: [#20](https://github.com/mihaelamj/cvbuilder/issues/20).
+
+Deliverables:
+
+- document the authoring workflow from JSON to generated Markdown: next
+- document what the renderer deliberately does not generate: next
+- link the workflow docs back to the research proof matrix: next
+
+Acceptance:
+
+- README and docs explain the intended user path: next
+- docs keep PDF, TileDown implementation, ATS scoring, and static-site
+  generation outside the core CVBuilder contract: next
 
 ## Research Rules
 

@@ -1,0 +1,219 @@
+{
+  "frontMatter": {
+    "slug": "early-career-demo-cv",
+    "title": "Early Career Technical CV"
+  },
+  "cv": {
+    "name": "Jordan Vale",
+    "title": "Junior Swift Engineer",
+    "summary": "Builds Swift features, test fixtures, and small Linux-safe tools while growing into product ownership.",
+    "contactInfo": {
+      "email": "jordan.vale@example.com",
+      "phone": "+1 555 010 0602",
+      "github": "https://example.com/jordan-vale-code",
+      "website": "https://example.com/jordan-vale-notes",
+      "location": "Example City"
+    },
+    "experience": [
+      {
+        "company": {
+          "name": "Harbor Example Labs"
+        },
+        "role": {
+          "title": "Swift Engineer",
+          "seniority": "Junior"
+        },
+        "period": {
+          "start": { "month": 6, "year": 2025 },
+          "end": { "month": 6, "year": 2026 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Clinic Scheduling Prototype",
+              "company": {
+                "name": "Harbor Example Labs"
+              },
+              "descriptions": [
+                "Implemented appointment list screens from typed JSON fixtures.",
+                "Added unit tests around date grouping and empty-state rendering.",
+                "Documented setup steps for running the package on Linux CI."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "SwiftUI", "category": "framework" },
+                { "name": "Linux", "category": "platform" },
+                { "name": "Unit Testing", "category": "concept" }
+              ],
+              "role": {
+                "title": "Swift Engineer",
+                "seniority": "Junior"
+              },
+              "period": {
+                "start": { "month": 6, "year": 2025 },
+                "end": { "month": 6, "year": 2026 }
+              },
+              "urls": [
+                "https://example.com/clinic-scheduling-prototype"
+              ],
+              "technicalFocus": {
+                "areas": ["Fixture-driven UI", "Date grouping"],
+                "tags": ["swift", "testing", "linux"]
+              }
+            },
+            "role": {
+              "title": "Swift Engineer",
+              "seniority": "Junior"
+            },
+            "period": {
+              "start": { "month": 6, "year": 2025 },
+              "end": { "month": 6, "year": 2026 }
+            },
+            "technicalFocus": {
+              "areas": ["Test coverage"],
+              "tags": ["fixtures"]
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["Application features", "Testing"],
+          "tags": ["swift", "swiftui"]
+        }
+      },
+      {
+        "company": {
+          "name": "Example Campus Studio"
+        },
+        "role": {
+          "title": "iOS Intern",
+          "seniority": "Intern"
+        },
+        "period": {
+          "start": { "month": 6, "year": 2024 },
+          "end": { "month": 9, "year": 2024 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Study Group App",
+              "company": {
+                "name": "Example Campus Studio"
+              },
+              "descriptions": [
+                "Built sign-up and reminder flows for student study groups.",
+                "Paired with senior engineers to replace stringly typed view state with enums."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "UIKit", "category": "framework" },
+                { "name": "GitHub Actions", "category": "tool" }
+              ],
+              "role": {
+                "title": "iOS Intern",
+                "seniority": "Intern"
+              },
+              "period": {
+                "start": { "month": 6, "year": 2024 },
+                "end": { "month": 9, "year": 2024 }
+              },
+              "technicalFocus": {
+                "areas": ["State modeling"],
+                "tags": ["uikit", "ci"]
+              }
+            },
+            "role": {
+              "title": "iOS Intern",
+              "seniority": "Intern"
+            },
+            "period": {
+              "start": { "month": 6, "year": 2024 },
+              "end": { "month": 9, "year": 2024 }
+            }
+          }
+        ],
+        "technicalFocus": {
+          "areas": ["Feature delivery"],
+          "tags": ["uikit"]
+        }
+      }
+    ],
+    "education": [
+      {
+        "institution": "Example Institute of Technology",
+        "degree": "BSc",
+        "field": "Computer Science",
+        "period": {
+          "start": { "month": 9, "year": 2021 },
+          "end": { "month": 6, "year": 2025 }
+        }
+      }
+    ],
+    "skills": [
+      { "name": "Swift", "category": "language" },
+      { "name": "SwiftUI", "category": "framework" },
+      { "name": "UIKit", "category": "framework" },
+      { "name": "GitHub Actions", "category": "tool" },
+      { "name": "Linux", "category": "platform" },
+      { "name": "Unit Testing", "category": "concept" }
+    ]
+  },
+  "links": {
+    "profiles": [
+      {
+        "label": "GitHub",
+        "url": "https://example.com/jordan-vale-code"
+      },
+      {
+        "label": "Project notes",
+        "url": "https://example.com/jordan-vale-notes"
+      }
+    ],
+    "companyURLs": {
+      "Harbor Example Labs": "https://example.com/harbor-example-labs",
+      "Example Campus Studio": "https://example.com/example-campus-studio"
+    }
+  },
+  "publicEvidence": [
+    {
+      "title": "Swift Date Grouping Notes",
+      "kind": "technicalWriting",
+      "role": "Author",
+      "summary": "Explains how a small Swift package groups appointments by day with deterministic fixtures.",
+      "url": "https://example.com/swift-date-grouping-notes",
+      "technologies": ["Swift", "Unit Testing"],
+      "date": "2026",
+      "highlights": [
+        "Shows before-and-after examples for empty and multi-day schedules.",
+        "Includes Linux test command output in the write-up."
+      ],
+      "technicalFocus": {
+        "areas": ["Date handling", "Fixture design"],
+        "tags": ["swift", "testing"]
+      }
+    },
+    {
+      "title": "Campus App Demo Talk",
+      "kind": "talk",
+      "role": "Speaker",
+      "summary": "Presented lessons from replacing stringly typed navigation state with enums.",
+      "url": "https://example.com/campus-app-demo-talk",
+      "technologies": ["Swift", "UIKit"],
+      "date": "2025",
+      "highlights": [
+        "Covered tradeoffs for small teams maintaining UIKit apps."
+      ],
+      "technicalFocus": {
+        "areas": ["State modeling"],
+        "tags": ["uikit"]
+      }
+    }
+  ],
+  "rendering": {
+    "mode": "earlyCareerTechnical",
+    "recentCompanyCount": 2,
+    "maxBulletsPerProject": 3,
+    "nestProjectsUnderRoles": true,
+    "compactGroupedSkills": true,
+    "omitEmptySections": true
+  }
+}
