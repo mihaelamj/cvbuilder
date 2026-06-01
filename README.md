@@ -144,21 +144,21 @@ path from the current Markdown foundation to stable technical CV templates.
 ```mermaid
 flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
-    P2["Phase 2<br/>#29 CVDocument data contract<br/>In progress"]
-    P3["Phase 3<br/>#30 Technical CV rendering modes"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
+    P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Next"]
     P4["Phase 4<br/>#31 TileDown Markdown contract"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
-    classDef active fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
-    class P1 done;
-    class P2 active;
+    class P1,P2 done;
+    class P3 next;
     class P5 partial;
-    class P3,P4 todo;
+    class P4 todo;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.

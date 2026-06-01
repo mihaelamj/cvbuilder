@@ -61,29 +61,29 @@ Relevant links:
 Ordered roadmap issues:
 
 1. #26 - done: merge the Linux Markdown foundation.
-2. #29 - in progress: stabilize the `CVDocument` data contract.
-3. #30 - todo: build technical CV rendering modes.
+2. #29 - done: stabilize the `CVDocument` data contract.
+3. #30 - next: build technical CV rendering modes.
 4. #31 - todo: document and harden the TileDown Markdown contract.
 5. #32 - partially landed: add roadmap quality gates and release hygiene.
 
 ```mermaid
 flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
-    P2["Phase 2<br/>#29 CVDocument data contract<br/>In progress"]
-    P3["Phase 3<br/>#30 Technical CV rendering modes"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
+    P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Next"]
     P4["Phase 4<br/>#31 TileDown Markdown contract"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
-    classDef active fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
-    class P1 done;
-    class P2 active;
+    class P1,P2 done;
+    class P3 next;
     class P5 partial;
-    class P3,P4 todo;
+    class P4 todo;
 ```
 
 ## Roadmap
@@ -117,19 +117,19 @@ Objective: make `CVDocument` the durable source of truth for generated CVs.
 
 Deliverables:
 
-- document every public `CVDocument` field with expected Markdown behavior
-- add fixture JSON files for realistic technical CV variants
-- add schema tests for missing, empty, and invalid nested data
-- add migration notes for future schema changes
+- document every public `CVDocument` field with expected Markdown behavior: done
+- add fixture JSON files for realistic technical CV variants: done
+- add schema tests for missing, empty, and invalid nested data: done
+- add migration notes for future schema changes: done
 - decide whether legacy `CV` rendering remains a compatibility path or becomes
-  a thin adapter over `CVDocument`
+  a thin adapter over `CVDocument`: done, it remains a compatibility path
 
 Acceptance:
 
-- a user can write one JSON file without reading source code
-- generated Markdown is deterministic from that JSON
-- invalid input fails with actionable CLI errors
-- fixture tests prove all supported schema branches
+- a user can write one JSON file without reading source code: done
+- generated Markdown is deterministic from that JSON: done
+- invalid input fails with actionable CLI errors: done
+- fixture tests prove all supported schema branches: done
 
 ### Phase 3: Build Technical CV Templates
 
