@@ -65,7 +65,7 @@ Ordered roadmap issues:
 1. #26 - done: merge the Linux Markdown foundation.
 2. #29 - done: stabilize the `CVDocument` data contract.
 3. #30 - done: build technical CV rendering modes.
-4. #31 - in review, CI green: document and harden the TileDown Markdown contract.
+4. #31 - done: document and harden the TileDown Markdown contract.
 5. #32 - partially landed: add roadmap quality gates and release hygiene.
 
 ```mermaid
@@ -73,7 +73,7 @@ flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
     P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
-    P4["Phase 4<br/>#31 TileDown Markdown contract<br/>In review, CI green"]
+    P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
 
     P1 --> P2 --> P3 --> P4 --> P5
@@ -84,8 +84,7 @@ flowchart TD
     classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
-    class P1,P2,P3 done;
-    class P4 review;
+    class P1,P2,P3,P4 done;
     class P5 partial;
 ```
 
@@ -167,21 +166,21 @@ Objective: make TileDown consumption boring and predictable.
 Deliverables:
 
 - document the TileDown-compatible Markdown contract in
-  `docs/tiledown-markdown-contract.md`
+  `docs/tiledown-markdown-contract.md`: done
 - add a TileDown fixture directory with generated Markdown examples under
-  `Examples/tiledown`
+  `Examples/tiledown`: done
 - add tests that compare `CVBuilderTileDown.Renderer` output to canonical
-  Markdown output
+  Markdown output: done
 - clarify whether TileDown needs front matter conventions beyond current
-  `CVDocument.frontMatter`
+  `CVDocument.frontMatter`: done
 
 Acceptance:
 
-- Linux users can import `CVBuilderTileDown` without Apple frameworks
-- TileDown receives Markdown only
-- output remains byte-for-byte deterministic
+- Linux users can import `CVBuilderTileDown` without Apple frameworks: done
+- TileDown receives Markdown only: done
+- output remains byte-for-byte deterministic: done
 - TileDown integration does not pull in PDF, Ignite, or static-site generator
-  dependencies
+  dependencies: done
 
 ### Phase 5: Quality Gates and Release Hygiene
 
