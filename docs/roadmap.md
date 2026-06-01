@@ -43,29 +43,48 @@ core package.
 - `cvbuilder` CLI can emit normalized JSON.
 - `--check` mode can verify checked-in output.
 - Research documents live in `docs/research`.
-
-### In PR
-
-- PR #27 adds the Linux-only `CVBuilderTileDown` adapter.
-- PR #27 removes default Ignite build participation.
-- PR #27 keeps TileDown scoped to Markdown only.
-- PR #27 has green Linux and macOS CI on the current head.
+- PR #27 landed the Linux-only `CVBuilderTileDown` adapter.
+- Default Ignite build participation is removed.
+- TileDown remains scoped to Markdown only.
+- Linux, macOS, style, namespacing, SwiftFormat, and SwiftLint gates are active.
+- Community standards, issue templates, PR template, support policy, and
+  changelog are present.
 
 Relevant links:
 
 - Issue #28: product roadmap epic with ordered child issues.
 - Issue #3: file-driven CVBuilder implementation target.
 - Issue #5: closed evidence research epic.
-- Issue #26: Linux TileDown Markdown adapter.
-- PR #27: Linux TileDown Markdown adapter implementation.
+- Issue #26: closed Linux TileDown Markdown adapter.
+- PR #27: merged Linux TileDown Markdown adapter implementation.
 
 Ordered roadmap issues:
 
-1. #26 - merge the Linux Markdown foundation.
-2. #29 - stabilize the `CVDocument` data contract.
-3. #30 - build technical CV rendering modes.
-4. #31 - document and harden the TileDown Markdown contract.
-5. #32 - add roadmap quality gates and release hygiene.
+1. #26 - done: merge the Linux Markdown foundation.
+2. #29 - next: stabilize the `CVDocument` data contract.
+3. #30 - todo: build technical CV rendering modes.
+4. #31 - todo: document and harden the TileDown Markdown contract.
+5. #32 - partially landed: add roadmap quality gates and release hygiene.
+
+```mermaid
+flowchart TD
+    P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>Next"]
+    P3["Phase 3<br/>#30 Technical CV rendering modes"]
+    P4["Phase 4<br/>#31 TileDown Markdown contract"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
+
+    P1 --> P2 --> P3 --> P4 --> P5
+
+    classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
+    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
+    classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
+    class P1 done;
+    class P2 next;
+    class P5 partial;
+    class P3,P4 todo;
+```
 
 ## Roadmap
 
@@ -76,20 +95,21 @@ all future work.
 
 Deliverables:
 
-- merge PR #27
-- close issue #26 after merge
-- keep GitHub Linux CI mandatory
-- keep the CI guard that rejects `CVBuilderIgnite` in the Linux package graph
-- keep `.claude/` and local generated artifacts out of commits
+- merge PR #27: done
+- close issue #26 after merge: done
+- keep GitHub Linux CI mandatory: done
+- keep the CI guard that rejects `CVBuilderIgnite` in the Linux package graph:
+  done
+- keep `.claude/` and local generated artifacts out of commits: done
 
 Acceptance:
 
-- `swift test` passes on macOS
-- Linux CI passes
+- `swift test` passes on macOS: done
+- Linux CI passes: done
 - Claw Linux build and test pass when Linux-specific behavior changes
-- `Package.swift` exposes `CVBuilderTileDown` only on Linux
-- no PDF renderer exists in `Sources`
-- no default Ignite dependency exists
+- `Package.swift` exposes `CVBuilderTileDown` only on Linux: done
+- no PDF renderer exists in `Sources`: done
+- no default Ignite dependency exists: done
 
 ### Phase 2: Stabilize the CV Data Contract
 
@@ -164,11 +184,14 @@ Objective: make regressions hard to ship.
 
 Deliverables:
 
-- keep Linux and macOS CI on every PR
+- keep Linux and macOS CI on every PR: done
+- keep style and namespacing CI on every PR: done
+- keep SwiftFormat and SwiftLint checks on macOS CI: done
 - add a fixture freshness command if snapshots become checked in
-- document local verification commands in README
+- document local verification commands in README: done
 - add issue-body links from roadmap phases to GitHub issues as they are filed
-- add release notes when the first usable version is tagged
+- add release notes when the first usable version is tagged: changelog scaffold
+  exists; first tag still pending
 
 Acceptance:
 
