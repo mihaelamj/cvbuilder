@@ -51,6 +51,7 @@ core package.
   changelog are present.
 - The demo CV fixture exercises realistic multi-role technical CV behavior,
   omitted older jobs, and explicit relevance-selected jobs.
+- Epic #47 is open for release-ready authoring and CLI usability.
 
 Relevant links:
 
@@ -64,6 +65,11 @@ Relevant links:
 - Issue #19: closed evidence fixture proof coverage.
 - Issue #20: closed JSON workflow and research-boundary documentation in PR
   #45.
+- Issue #47: active release-ready authoring and CLI usability epic.
+- Issue #48: active CLI help output.
+- Issue #49: next machine-readable `CVDocument` JSON Schema.
+- Issue #50: next schema drift checks.
+- Issue #51: next first-release checklist.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -77,6 +83,10 @@ Ordered roadmap issues:
 6. #40 - done: expand realistic fixture coverage.
 7. #19 - done: add evidence-backed renderer fixture proofs.
 8. #20 - done: document the JSON workflow and research-backed boundaries.
+9. #48 - in progress: add user-facing CLI help output.
+10. #49 - next: add a machine-readable `CVDocument` JSON Schema.
+11. #50 - next: add schema drift checks for examples and fixtures.
+12. #51 - next: prepare first-release checklist and release notes.
 
 ```mermaid
 flowchart TD
@@ -88,8 +98,12 @@ flowchart TD
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
+    P9["Phase 9<br/>#48 CLI help<br/>In progress"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>Next"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
+    P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -99,6 +113,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8 done;
+    class P9 active;
+    class P10,P11,P12 next;
 ```
 
 ## Roadmap
@@ -219,7 +235,7 @@ Deliverables:
 - add issue-body links from roadmap phases to GitHub issues as they are filed:
   done
 - add release notes when the first usable version is tagged: changelog scaffold
-  exists; first tag still pending
+  exists; release checklist tracked by #51
 
 Acceptance:
 
@@ -290,6 +306,81 @@ Acceptance:
 - README and docs explain the intended user path: done
 - docs keep PDF, TileDown implementation, ATS scoring, and static-site
   generation outside the core CVBuilder contract: done
+
+### Phase 9: Add CLI Help Output
+
+Objective: make the executable self-describing for authors who discover the
+tool before reading the docs.
+
+Issue: [#48](https://github.com/mihaelamj/cvbuilder/issues/48).
+
+Deliverables:
+
+- add `cvbuilder --help`: in progress
+- add `cvbuilder -h`: in progress
+- document supported options and examples in the help text: in progress
+- update README CLI docs: in progress
+
+Acceptance:
+
+- help exits successfully without `--data` or `--out`: in progress
+- missing required options and unknown options still fail: in progress
+- tests cover help parsing and usage text: in progress
+
+### Phase 10: Add a CVDocument JSON Schema
+
+Objective: give JSON authors editor-friendly validation and completion for the
+public document contract.
+
+Issue: [#49](https://github.com/mihaelamj/cvbuilder/issues/49).
+
+Deliverables:
+
+- add a checked-in JSON Schema for `CVDocument`: next
+- document schema usage for authoring workflows: next
+- keep schema claims within the Markdown-only CVBuilder boundary: next
+
+Acceptance:
+
+- schema is valid JSON: next
+- schema reflects `docs/cvdocument-contract.md`: next
+- docs link users to the schema: next
+
+### Phase 11: Add Schema Drift Checks
+
+Objective: prevent the schema from drifting away from checked-in examples and
+fixtures.
+
+Issue: [#50](https://github.com/mihaelamj/cvbuilder/issues/50).
+
+Deliverables:
+
+- add a local drift check or Swift test for schema and fixtures: next
+- run the check in CI: next
+- document any user-facing command: next
+
+Acceptance:
+
+- malformed or disconnected schema changes fail verification: next
+- Linux CI proves the check: next
+
+### Phase 12: Prepare First Release Checklist
+
+Objective: make the first usable tag boring and auditable.
+
+Issue: [#51](https://github.com/mihaelamj/cvbuilder/issues/51).
+
+Deliverables:
+
+- document first-release steps: next
+- update release notes or changelog prep: next
+- name required local and GitHub checks: next
+
+Acceptance:
+
+- release checklist includes Linux and macOS CI: next
+- release checklist includes generated fixture freshness: next
+- release docs preserve Markdown-only product boundaries: next
 
 ## Research Rules
 

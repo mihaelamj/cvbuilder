@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   senior technical CV rendering proof cases.
 - JSON-to-Markdown workflow documentation covering CLI generation, `--check`,
   static-site integration, rendering modes, public evidence, and non-goals.
+- User-facing `cvbuilder --help` and `-h` usage output for the file-driven CLI.
 
 ### Changed
 

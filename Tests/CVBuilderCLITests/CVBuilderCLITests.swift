@@ -5,6 +5,36 @@ import Testing
 
 @Suite("CVBuilderCLI")
 struct CVBuilderCLITests {
+    @Test("command parser accepts help without data or output paths")
+    func commandParserAcceptsHelp() throws {
+        #expect(try CVBuilderCLI.Command.parse(["--help"]) == .help)
+        #expect(try CVBuilderCLI.Command.parse(["-h"]) == .help)
+        #expect(try CVBuilderCLI.Command.parse(["--", "--help"]) == .help)
+        #expect(try CVBuilderCLI.Command.parse([
+            "--",
+            "--data",
+            "cv.json",
+            "--out",
+            "cv.md",
+        ]) == .run(.init(dataPath: "cv.json", outputPath: "cv.md")))
+    }
+
+    @Test("usage text documents supported options and examples")
+    func usageTextDocumentsSupportedOptions() {
+        let usage = CVBuilderCLI.Usage.text
+
+        #expect(usage.contains("Usage: cvbuilder"))
+        #expect(usage.contains("--data <path>"))
+        #expect(usage.contains("--out <path>"))
+        #expect(usage.contains("--format <format>"))
+        #expect(usage.contains("markdown or json"))
+        #expect(usage.contains("--check"))
+        #expect(usage.contains("-h, --help"))
+        #expect(!usage.localizedCaseInsensitiveContains("pdf"))
+        #expect(!usage.localizedCaseInsensitiveContains("html"))
+        #expect(!usage.localizedCaseInsensitiveContains("ats"))
+    }
+
     @Test("parser accepts required paths, format, and check mode")
     func parserAcceptsOptions() throws {
         let options = try CVBuilderCLI.Options.parse([
