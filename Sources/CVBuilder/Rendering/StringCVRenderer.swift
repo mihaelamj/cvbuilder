@@ -1,26 +1,31 @@
 import Foundation
 
-public struct StringCVRenderer: CVRendering {
-    public var experienceTitle: String { "EXPERIENCE" }
-    public var skillsTitle: String { "SKILLS" }
-    
+public struct StringCVRenderer: CVRendering, Sendable {
+    public var experienceTitle: String {
+        "EXPERIENCE"
+    }
+
+    public var skillsTitle: String {
+        "SKILLS"
+    }
+
     public init() {}
 
-    public func render(cv: CV) -> String {
+    public func render(cv resume: CV) -> String {
         var output = ""
 
-        output += "Name: \(cv.name)\n"
-        output += "Title: \(cv.title)\n\n"
-        output += "\(cv.summary)\n\n"
+        output += "Name: \(resume.name)\n"
+        output += "Title: \(resume.title)\n\n"
+        output += "\(resume.summary)\n\n"
 
-        output += contactSection(from: cv.contactInfo)
+        output += contactSection(from: resume.contactInfo)
 
-        if let edu = cv.education.first {
+        if let edu = resume.education.first {
             output += "\(edu.institution), \(edu.degree) in \(edu.field)\n\n"
         }
 
         output += "\(experienceTitle)\n\n"
-        for exp in cv.experience.sorted(by: { $0.period.end > $1.period.end }) {
+        for exp in resume.experience.sorted(by: { $0.period.end > $1.period.end }) {
             output += "\(exp.company.name) (\(exp.formattedDateRange)) – \(exp.role.name)\n\n"
             for projectExp in exp.projects {
                 let project = projectExp.project
@@ -34,7 +39,7 @@ public struct StringCVRenderer: CVRendering {
                     }
                 }
                 if !project.techs.isEmpty {
-                    let techLine = project.techs.map { $0.name }.joined(separator: " | ")
+                    let techLine = project.techs.map(\.name).joined(separator: " | ")
                     output += "- | \(techLine) |\n"
                 }
                 output += "\n"
@@ -42,9 +47,9 @@ public struct StringCVRenderer: CVRendering {
             output += "\n"
         }
 
-        if !cv.skills.isEmpty {
+        if !resume.skills.isEmpty {
             output += "### \(skillsTitle)\n"
-            let techLine = cv.skills.map { $0.name }.joined(separator: " | ")
+            let techLine = resume.skills.map(\.name).joined(separator: " | ")
             output += "- | \(techLine) |\n\n"
         }
 
@@ -69,36 +74,41 @@ public struct StringCVRenderer: CVRendering {
         return output
     }
 
-    public func save(to url: URL, cv: CV) throws {
-        let content = render(cv: cv)
+    public func save(to url: URL, cv resume: CV) throws {
+        let content = render(cv: resume)
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
 
-    public func printToConsole(cv: CV) {
-        print(render(cv: cv))
+    public func printToConsole(cv resume: CV) {
+        print(render(cv: resume))
     }
 }
 
-// MARK: - ConsoleCVRenderer
+public struct ConsoleCVRenderer: CVRendering, Sendable {
+    public var experienceTitle: String {
+        "EXPERIENCE"
+    }
 
-import Foundation
+    public var skillsTitle: String {
+        "SKILLS"
+    }
 
-public struct ConsoleCVRenderer: CVRendering {
-    public var experienceTitle: String { "EXPERIENCE" }
-    public var skillsTitle: String { "SKILLS" }
-    
     public init() {}
 
-    public func render(cv: CV) -> String {
-        return StringCVRenderer().render(cv: cv)
+    public func render(cv resume: CV) -> String {
+        StringCVRenderer().render(cv: resume)
     }
 
-    public func save(to url: URL, cv: CV) throws {
+    public func save(to _: URL, cv _: CV) throws {
         // Console renderer doesn't support saving
-        throw NSError(domain: "ConsoleRenderer", code: 1, userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."])
+        throw NSError(
+            domain: "ConsoleRenderer",
+            code: 1,
+            userInfo: [NSLocalizedDescriptionKey: "Cannot save console output."]
+        )
     }
 
-    public func printToConsole(cv: CV) {
-        print(render(cv: cv))
+    public func printToConsole(cv resume: CV) {
+        print(render(cv: resume))
     }
 }

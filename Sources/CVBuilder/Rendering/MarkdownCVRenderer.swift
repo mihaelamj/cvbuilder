@@ -1,36 +1,41 @@
 import Foundation
 
-public struct MarkdownCVRenderer: CVRendering {
-    public var experienceTitle: String { "EXPERIENCE" }
-    public var skillsTitle: String { "SKILLS" }
-    
+public struct MarkdownCVRenderer: CVRendering, Sendable {
+    public var experienceTitle: String {
+        "EXPERIENCE"
+    }
+
+    public var skillsTitle: String {
+        "SKILLS"
+    }
+
     public init() {}
-    
+
     private func renderAttribution() -> String {
         "\n\n---\nCreated with [CVBuilder](https://github.com/mihaelamj/cvbuilder)"
     }
 
-    public func render(cv: CV) -> String {
+    public func render(cv resume: CV) -> String {
         var output = ""
 
         // Header
-        output += "# \(cv.name)\n"
-        output += "## \(cv.title)\n\n"
+        output += "# \(resume.name)\n"
+        output += "## \(resume.title)\n\n"
 
         // Summary
-        output += "\(cv.summary)\n\n"
+        output += "\(resume.summary)\n\n"
 
         // Contact
-        output += contactSection(from: cv.contactInfo)
+        output += contactSection(from: resume.contactInfo)
 
         // Education
-        if let edu = cv.education.first {
+        if let edu = resume.education.first {
             output += "\(edu.institution), \(edu.degree) in \(edu.field)\n\n"
         }
 
         // Experience
         output += "## \(experienceTitle)\n\n"
-        for exp in cv.experience.sorted(by: { $0.period.end > $1.period.end }) {
+        for exp in resume.experience.sorted(by: { $0.period.end > $1.period.end }) {
             output += "### \(exp.company.name) (\(exp.formattedDateRange)) – \(exp.role.name)\n\n"
             for projectExp in exp.projects {
                 let project = projectExp.project
@@ -44,7 +49,7 @@ public struct MarkdownCVRenderer: CVRendering {
                     }
                 }
                 if !project.techs.isEmpty {
-                    let techLine = project.techs.map { $0.name }.joined(separator: " | ")
+                    let techLine = project.techs.map(\.name).joined(separator: " | ")
                     output += "- | \(techLine) |\n"
                 }
                 output += "\n" // Space between projects
@@ -53,12 +58,12 @@ public struct MarkdownCVRenderer: CVRendering {
         }
 
         // Skills
-        if !cv.skills.isEmpty {
+        if !resume.skills.isEmpty {
             output += "### \(skillsTitle)\n"
-            let techLine = cv.skills.map { $0.name }.joined(separator: " | ")
+            let techLine = resume.skills.map(\.name).joined(separator: " | ")
             output += "- | \(techLine) |\n\n"
         }
-        
+
         // Attribution
         output += renderAttribution()
 
@@ -83,26 +88,26 @@ public struct MarkdownCVRenderer: CVRendering {
         return output
     }
 
-    public func save(to url: URL, cv: CV) throws {
-        let content = render(cv: cv)
+    public func save(to url: URL, cv resume: CV) throws {
+        let content = render(cv: resume)
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
-    
-    public func printToConsole(cv: CV) {
-        print(render(cv: cv))
+
+    public func printToConsole(cv resume: CV) {
+        print(render(cv: resume))
     }
 }
 
 public extension CV {
-    static func convertTMarkdownAndSave(_ cv: CV) -> URL? {
+    static func convertTMarkdownAndSave(_ resume: CV) -> URL? {
         let generator = MarkdownCVRenderer()
-        
+
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let outputURL = documentsURL.appendingPathComponent("CV.md")
-        
+
         do {
-            try generator.save(to: outputURL, cv: cv)
+            try generator.save(to: outputURL, cv: resume)
             print("Markdown successfully saved to \(outputURL.path)")
             return outputURL
         } catch {

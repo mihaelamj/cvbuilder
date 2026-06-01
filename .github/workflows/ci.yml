@@ -23,8 +23,19 @@ jobs:
       - name: Swift version
         run: swift --version
 
+      - name: Package graph
+        run: |
+          swift package dump-package > package.txt
+          grep -q "CVBuilderTileDown" package.txt
+          grep -q "cvbuilder" package.txt
+          ! grep -q "CVBuilderIgnite" package.txt
+
       - name: Build
-        run: swift build
+        run: |
+          swift build --target CVBuilder
+          swift build --target CVBuilderCLI
+          swift build --target CVBuilderTileDown
+          swift build --product cvbuilder
 
       - name: Test
         run: swift test
@@ -55,3 +66,22 @@ jobs:
           swift run cvbuilder --data "$tmpdir/cv.json" --out "$tmpdir/cv.normalized.json" --format json
           grep -q "# Linux CI" "$tmpdir/cv/index.md"
           grep -q '"frontMatter"' "$tmpdir/cv.normalized.json"
+
+  macos:
+    name: macOS Swift
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Swift version
+        run: swift --version
+
+      - name: Build
+        run: |
+          swift build --target CVBuilder
+          swift build --target CVBuilderCLI
+          swift build --product cvbuilder
+
+      - name: Test
+        run: swift test
