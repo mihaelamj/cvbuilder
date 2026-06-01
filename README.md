@@ -152,18 +152,19 @@ flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
     P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
-    P4["Phase 4<br/>#31 TileDown Markdown contract<br/>In progress"]
+    P4["Phase 4<br/>#31 TileDown Markdown contract<br/>In review, CI green"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
+    classDef review fill:#e8f0fe,stroke:#1a73e8,color:#111;
     classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3 done;
-    class P4 active;
+    class P4 review;
     class P5 partial;
 ```
 
