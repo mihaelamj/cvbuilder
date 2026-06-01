@@ -16,6 +16,10 @@ let package = Package(
         .library(
             name: "CVBuilderIgnite",
             targets: ["CVBuilderIgnite"]
+        ),
+        .executable(
+            name: "cvbuilder",
+            targets: ["CVBuilderTool"]
         )
     ],
     dependencies: [
@@ -36,11 +40,23 @@ let package = Package(
                 .product(name: "Ignite", package: "Ignite")
             ]
         ),
+        .target(
+            name: "CVBuilderCLI",
+            dependencies: ["CVBuilder"]
+        ),
+        .executableTarget(
+            name: "CVBuilderTool",
+            dependencies: ["CVBuilderCLI"]
+        ),
 
         // Unit tests
         .testTarget(
             name: "CVBuilderTests",
             dependencies: ["CVBuilder"]
+        ),
+        .testTarget(
+            name: "CVBuilderCLITests",
+            dependencies: ["CVBuilder", "CVBuilderCLI"]
         )
     ]
 )
