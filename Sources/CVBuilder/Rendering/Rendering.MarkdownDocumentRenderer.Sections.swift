@@ -47,16 +47,16 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         let lines = frontMatter.keys.sorted().map { key in
-            "\(key): \(frontMatter[key] ?? "")"
+            "\(escapedFrontMatterKey(key)): \(escapedFrontMatterScalar(frontMatter[key] ?? ""))"
         }
         writer.block(["---"] + lines + ["---"])
     }
 
     func renderHeader(_ resume: CV, writer: inout Writer) {
         writer.block([
-            "# \(resume.name)",
-            resume.title,
-            resume.summary
+            "# \(escapedMarkdownText(resume.name))",
+            escapedMarkdownText(resume.title),
+            escapedMarkdownText(resume.summary)
         ])
     }
 
@@ -112,8 +112,8 @@ extension Rendering.MarkdownDocumentRenderer {
 
         var lines = ["## Education"]
         for item in education {
-            lines.append("### \(item.institution)")
-            lines.append("\(item.degree) in \(item.field)")
+            lines.append("### \(escapedMarkdownText(item.institution))")
+            lines.append("\(escapedMarkdownText(item.degree)) in \(escapedMarkdownText(item.field))")
             lines.append(format(item.period, isCurrent: false))
         }
 
@@ -153,7 +153,7 @@ extension Rendering.MarkdownDocumentRenderer {
             }
         } else {
             for skill in skills {
-                lines.append(skill.name)
+                lines.append(escapedMarkdownText(skill.name))
             }
         }
 
@@ -209,7 +209,7 @@ extension Rendering.MarkdownDocumentRenderer {
         to lines: inout [String]
     ) {
         let project = projectExperience.project
-        lines.append("\(headingLevel) \(project.name)")
+        lines.append("\(headingLevel) \(escapedMarkdownText(project.name))")
         lines.append(format(projectExperience.period, isCurrent: project.isCurrent))
         appendLine("Role", value: projectExperience.role.name, to: &lines)
 
@@ -228,12 +228,12 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         let renderedURLs = urls.map { linkedText($0.absoluteString, destination: $0.absoluteString) }
-        appendLabelledList("Links", values: renderedURLs, to: &lines)
+        lines.append("Links: \(renderedURLs.joined(separator: ", "))")
     }
 
     func appendEvidenceDate(_ evidence: PublicEvidence, to lines: inout [String]) {
         if let date = evidence.date?.trimmingCharacters(in: .whitespacesAndNewlines), !date.isEmpty {
-            lines.append("Date: \(date)")
+            appendLine("Date", value: date, to: &lines)
         } else if let period = evidence.period {
             lines.append("Period: \(format(period, isCurrent: false))")
         }
@@ -246,7 +246,7 @@ extension Rendering.MarkdownDocumentRenderer {
                 continue
             }
 
-            lines.append(trimmedHighlight)
+            lines.append(escapedMarkdownText(trimmedHighlight))
         }
     }
 }
