@@ -99,6 +99,12 @@ Run the CV CLI:
 swift run cvbuilder --data cv.json --out cv/index.md
 ```
 
+Show CLI usage:
+
+```sh
+swift run cvbuilder -- --help
+```
+
 Write normalized JSON:
 
 ```sh
@@ -151,7 +157,8 @@ The file-driven authoring flow is documented in
 Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the product
 roadmap. Epic [#12](https://github.com/mihaelamj/cvbuilder/issues/12) tracks the
 evidence-backed implementation slices that harden the renderer and JSON
-workflow.
+workflow. Epic [#47](https://github.com/mihaelamj/cvbuilder/issues/47) tracks
+release-ready authoring and CLI usability.
 
 ```mermaid
 flowchart TD
@@ -163,8 +170,12 @@ flowchart TD
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
+    P9["Phase 9<br/>#48 CLI help<br/>CI green"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>Next"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
+    P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -174,6 +185,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8 done;
+    class P9 review;
+    class P10,P11,P12 next;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
