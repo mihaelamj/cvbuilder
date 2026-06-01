@@ -1,5 +1,9 @@
 # CVBuilder
 
+[![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)](https://github.com/mihaelamj/cvbuilder/actions/workflows/ci.yml)
+[![macOS](https://img.shields.io/badge/macOS-supported-000000?logo=apple&logoColor=white)](https://github.com/mihaelamj/cvbuilder/actions/workflows/ci.yml)
+[![Swift](https://img.shields.io/badge/Swift-6.1-F05138?logo=swift&logoColor=white)](Package.swift)
+
 CVBuilder is a Swift package for keeping technical CV data in structured Swift
 or JSON and rendering deterministic Markdown. The package is Markdown-first and
 Linux-safe. It does not include a PDF renderer, ATS scoring, resume optimizer
