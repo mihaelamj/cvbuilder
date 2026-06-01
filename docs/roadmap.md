@@ -62,8 +62,8 @@ Relevant links:
 - Issue #30: closed technical CV rendering modes.
 - Issue #40: realistic fixture coverage for omitted and selected jobs.
 - Issue #19: closed evidence fixture proof coverage.
-- Issue #20: CI-green JSON workflow and research-boundary documentation in
-  PR #45.
+- Issue #20: closed JSON workflow and research-boundary documentation in PR
+  #45.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -76,7 +76,7 @@ Ordered roadmap issues:
 5. #32 - done: add roadmap quality gates and release hygiene.
 6. #40 - done: expand realistic fixture coverage.
 7. #19 - done: add evidence-backed renderer fixture proofs.
-8. #20 - CI green: document the JSON workflow and research-backed boundaries.
+8. #20 - done: document the JSON workflow and research-backed boundaries.
 
 ```mermaid
 flowchart TD
@@ -87,7 +87,7 @@ flowchart TD
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
-    P8["Phase 8<br/>#20 Workflow documentation<br/>CI green"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
@@ -98,8 +98,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7 done;
-    class P8 review;
+    class P5,P6,P7,P8 done;
 ```
 
 ## Roadmap
@@ -282,15 +281,15 @@ Issue: [#20](https://github.com/mihaelamj/cvbuilder/issues/20).
 
 Deliverables:
 
-- document the authoring workflow from JSON to generated Markdown: CI green
-- document what the renderer deliberately does not generate: CI green
-- link the workflow docs back to the research proof matrix: CI green
+- document the authoring workflow from JSON to generated Markdown: done
+- document what the renderer deliberately does not generate: done
+- link the workflow docs back to the research proof matrix: done
 
 Acceptance:
 
-- README and docs explain the intended user path: CI green
+- README and docs explain the intended user path: done
 - docs keep PDF, TileDown implementation, ATS scoring, and static-site
-  generation outside the core CVBuilder contract: CI green
+  generation outside the core CVBuilder contract: done
 
 ## Research Rules
 
