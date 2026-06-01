@@ -226,6 +226,26 @@ struct MarkdownDocumentRendererTests {
         #expect(!output.contains("Unselected Legacy Works"))
     }
 
+    @Test("selected work entries preserve explicit relevance order")
+    func selectedExperienceIDsPreserveExplicitOrder() throws {
+        let recentID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000401"))
+        let selectedID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000402"))
+        let missingID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000499"))
+        let output = try Rendering.MarkdownDocumentRenderer().render(
+            makeSelectedWorkDocument(rendering: RenderingOptions(
+                recentCompanyCount: 2,
+                selectedExperienceIDs: [selectedID, selectedID, missingID, recentID],
+            )),
+        )
+        let selectedIndex = try index(of: "Selected Platform Lab", in: output)
+        let recentIndex = try index(of: "Recent Hidden Systems", in: output)
+
+        #expect(selectedIndex < recentIndex)
+        #expect(occurrenceCount(of: "Selected Platform Lab", in: output) == 1)
+        #expect(output.contains("Recent but less relevant delivery."))
+        #expect(!output.contains("Unselected Legacy Works"))
+    }
+
     @Test("public evidence uses period when display date is absent")
     func publicEvidenceUsesPeriodFallback() {
         let period = Period(start: .init(month: 1, year: 2024), end: .init(month: 6, year: 2026))
@@ -378,6 +398,18 @@ struct MarkdownDocumentRendererTests {
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent(relativePath)
+    }
+
+    private func occurrenceCount(of needle: String, in haystack: String) -> Int {
+        var count = 0
+        var searchRange = haystack.startIndex ..< haystack.endIndex
+
+        while let range = haystack.range(of: needle, range: searchRange) {
+            count += 1
+            searchRange = range.upperBound ..< haystack.endIndex
+        }
+
+        return count
     }
 }
 

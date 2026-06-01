@@ -27,8 +27,8 @@ The generic renderer currently covers:
   evidence, and profile/download links.
 - Rendering modes for experienced, early-career, and public-evidence-heavy
   technical CV ordering.
-- Optional explicit work-entry selection for relevant older jobs before recency
-  limits are applied.
+- Optional explicit ordered work-entry selection for relevant older jobs before
+  recency limits are applied.
 - JSON input with ergonomic defaults for missing optional arrays.
 - CLI output checks for checked-in generated Markdown.
 - Linux TileDown compatibility through a Markdown-only adapter.
