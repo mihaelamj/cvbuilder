@@ -37,3 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pragmatic renderer conventions.
 - Expanded the demo CV fixture into a multi-role technical CV with nested
   projects, public evidence, and omitted older jobs covered by tests.
+- Preserved explicit selected work-entry order for relevance-focused CV
+  variants.

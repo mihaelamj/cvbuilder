@@ -9,7 +9,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public let mode: RenderingMode
     /// Maximum number of work-experience entries to render. Non-positive values mean unlimited.
     public let recentCompanyCount: Int?
-    /// Explicit work-experience IDs to render. Empty values render all work entries before other limits.
+    /// Explicit ordered work-experience IDs to render. Empty values render all work entries before other limits.
     public let selectedExperienceIDs: [UUID]
     /// Maximum number of project description paragraphs to render. Non-positive values mean unlimited.
     public let maxBulletsPerProject: Int?

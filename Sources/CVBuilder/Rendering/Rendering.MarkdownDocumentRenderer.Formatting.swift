@@ -121,8 +121,19 @@ extension Rendering.MarkdownDocumentRenderer {
             return experience
         }
 
-        let selectedIDSet = Set(selectedIDs)
-        return experience.filter { selectedIDSet.contains($0.id) }
+        var experienceByID: [UUID: WorkExperience] = [:]
+        for work in experience where experienceByID[work.id] == nil {
+            experienceByID[work.id] = work
+        }
+
+        var seenSelectedIDs: Set<UUID> = []
+        return selectedIDs.compactMap { selectedID in
+            guard seenSelectedIDs.insert(selectedID).inserted else {
+                return nil
+            }
+
+            return experienceByID[selectedID]
+        }
     }
 
     func limitedDescriptions(_ descriptions: [String], maxCount: Int?) -> [String] {

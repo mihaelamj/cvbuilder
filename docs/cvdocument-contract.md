@@ -81,7 +81,7 @@ Supported `kind` values are `openSource`, `talk`, `publication`, `app`,
 |---|---:|---|---|
 | `mode` | No | `experiencedTechnical` | Controls section order. |
 | `recentCompanyCount` | No | Unlimited | Limits rendered work entries when positive. Non-positive values mean unlimited. |
-| `selectedExperienceIDs` | No | `[]` | When non-empty, keeps only matching work-experience UUIDs in source order, then applies `recentCompanyCount`. |
+| `selectedExperienceIDs` | No | `[]` | When non-empty, renders matching work-experience UUIDs in the supplied order, skips duplicates and unknown IDs, then applies `recentCompanyCount`. |
 | `maxBulletsPerProject` | No | Unlimited | Limits project description paragraphs when positive. Non-positive values mean unlimited. |
 | `nestProjectsUnderRoles` | No | `true` | Renders projects under each role. `false` moves projects to a standalone `## Projects` section. |
 | `compactGroupedSkills` | No | `true` | Groups skills by category. `false` renders one skill per line. |
