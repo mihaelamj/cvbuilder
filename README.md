@@ -179,7 +179,14 @@ swift test
 ```
 
 The same core package is expected to build on macOS and Linux. GitHub CI runs
-separate macOS Swift and Linux Swift workflows.
+style, macOS Swift, and Linux Swift workflows.
+
+Useful local checks from the repository root:
+
+```sh
+bash scripts/check-style.sh
+bash scripts/check-namespacing.sh
+```
 
 On Linux, also verify the TileDown adapter:
 

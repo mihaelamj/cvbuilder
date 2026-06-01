@@ -8,6 +8,8 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Getting Started
 
 ```sh
+bash scripts/check-style.sh
+bash scripts/check-namespacing.sh
 swift build --target CVBuilder
 swift build --target CVBuilderCLI
 swift build --product cvbuilder
@@ -49,7 +51,8 @@ committed files.
 
 - Keep one focused change per PR.
 - Add tests for behavior changes.
-- Run `swift build --target CVBuilder`, `swift build --target CVBuilderCLI`,
+- Run `bash scripts/check-style.sh`, `bash scripts/check-namespacing.sh`,
+  `swift build --target CVBuilder`, `swift build --target CVBuilderCLI`,
   `swift build --product cvbuilder`, and `swift test`.
 - Keep Linux CI green, especially when changing package products or TileDown
   behavior.
