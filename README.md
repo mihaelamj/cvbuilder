@@ -16,6 +16,12 @@ CVBuilder is a modular Swift package designed to represent and render CV (curric
 
 ---
 
+## 🗺 Roadmap
+
+The current product direction is documented in [docs/roadmap.md](docs/roadmap.md).
+
+---
+
 ## 🧱 Package Structure
 
 This package includes one core library, one command-line executable, and one Linux-only adapter target:
