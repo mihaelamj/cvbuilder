@@ -1,22 +1,28 @@
 # CVBuilder
 
-CVBuilder is a modular Swift package designed to represent and render CV (curriculum vitae) data in a structured, reusable way. It provides clean data models and rendering logic for Markdown and plain text.
+CVBuilder is a Swift package for keeping technical CV data in structured Swift
+or JSON and rendering deterministic Markdown. The package is Markdown-first and
+Linux-safe. It does not include a PDF renderer, ATS scoring, resume optimizer
+claims, or a default HTML renderer.
 
----
+## Features
 
-## ✨ Features
+- Strongly typed CV model for contact info, education, work experience,
+  projects, periods, roles, and technologies.
+- `CVDocument` publishing wrapper for front matter, links, public evidence, and
+  rendering options.
+- Deterministic Markdown through `Rendering.MarkdownDocumentRenderer`.
+- Legacy CV-only Markdown through `MarkdownCVRenderer`.
+- Plain text rendering through `StringCVRenderer`.
+- `cvbuilder` CLI for JSON to Markdown and JSON normalization.
+- Linux-only `CVBuilderTileDown` adapter that emits Markdown only.
 
-- 📄 Strongly typed data model for CVs: education, experience, skills, contact info, etc.
-- 🧩 Modular architecture: core types are renderer-agnostic.
-- 🖋️ Renderers for:
-  - **Markdown** (via `MarkdownCVRenderer`)
-  - **Plain text** (via `StringCVRenderer`)
-  - **Linux TileDown adapter** (via `CVBuilderTileDown.Renderer` in `CVBuilderTileDown`)
-- 🧪 Unit-testable and reusable across platforms.
+The document renderer intentionally emits conservative Markdown: front matter,
+headings, paragraphs, links, and labelled lines. It does not render tables,
+columns, images, score-like fields, demographic metadata, or inferred fit
+labels.
 
----
-
-## 🗺 Roadmap
+## Roadmap
 
 The current product direction is documented in [docs/roadmap.md](docs/roadmap.md).
 
@@ -46,30 +52,28 @@ flowchart TD
 
 ---
 
-## 🧱 Package Structure
+## Package Structure
 
 This package includes one core library, one command-line executable, and one Linux-only adapter target:
 
 ### 1. `CVBuilder` (core)
 
-Contains all model types and basic rendering:
+Contains model types and renderer implementations:
 
 ```
-CV
-├── ContactInfo
-├── Education
-├── WorkExperience
-│   ├── Company
-│   ├── Role
-│   └── ProjectExperience
-│       ├── Project
-│       └── Tech
-└── Period
+CVBuilder
+|-- CV
+|-- CVDocument
+|-- ContactInfo
+|-- Education
+|-- WorkExperience
+|-- ProjectExperience
+|-- Project
+|-- Tech
+|-- Rendering.MarkdownDocumentRenderer
+|-- MarkdownCVRenderer
+`-- StringCVRenderer
 ```
-
-Renderers in `CVBuilder`:
-- `MarkdownCVRenderer`
-- `StringCVRenderer`
 
 ### 2. `cvbuilder` (executable)
 
@@ -81,9 +85,7 @@ Provides `CVBuilderTileDown.Renderer`, which renders `CVDocument` or legacy `CV`
 values into Markdown for a TileDown-driven publishing pipeline. It does not
 generate PDF output.
 
----
-
-## 📦 Usage
+## Usage
 
 ### Add to your `Package.swift`
 
@@ -105,11 +107,37 @@ On Linux only:
 .product(name: "CVBuilderTileDown", package: "cvbuilder")
 ```
 
----
+`CVBuilderTileDown` is only present when SwiftPM evaluates the package on Linux.
 
-## 🛠 How to Generate a Markdown CV
+## Input JSON
 
-Use the `cvbuilder` command when your CV data lives in a JSON file:
+The CLI reads a `CVDocument` JSON file. Missing optional arrays default to empty
+values. This small document is valid input:
+
+```json
+{
+  "frontMatter": {
+    "slug": "demo-cv",
+    "title": "Demo CV"
+  },
+  "cv": {
+    "name": "Demo Candidate",
+    "title": "Senior Swift Engineer",
+    "summary": "Builds typed Swift tooling for document workflows.",
+    "contactInfo": {
+      "email": "demo.candidate@example.com",
+      "phone": "+1 555 010 0701",
+      "location": "Example City"
+    },
+    "skills": [
+      { "name": "Swift", "category": "language" },
+      { "name": "Linux", "category": "platform" }
+    ]
+  }
+}
+```
+
+## CLI
 
 ```sh
 swift run cvbuilder --data cv.json --out cv/index.md
@@ -129,175 +157,70 @@ swift run cvbuilder --data cv.json --out cv/index.md --check
 
 The CLI supports `--format markdown` and `--format json`. It does not generate PDF output, ATS scores, or resume-optimizer content.
 
-You can also generate Markdown through Swift code:
+## Swift API
 
 ```swift
 import CVBuilder
 
-let cv = CV.createExampleCV()
-let markdown = MarkdownCVRenderer().render(cv: cv)
-print(markdown)
+let resume = CV(
+    name: "Demo Candidate",
+    title: "Senior Swift Engineer",
+    summary: "Builds typed Swift tooling for document workflows.",
+    contactInfo: ContactInfo(
+        email: "demo.candidate@example.com",
+        phone: "+1 555 010 0701",
+        location: "Example City"
+    ),
+    experience: [],
+    education: [],
+    skills: [
+        Tech(name: "Swift", category: .language),
+        Tech(name: "Linux", category: .platform)
+    ]
+)
+
+let document = CVDocument(
+    frontMatter: ["slug": "demo-cv", "title": "Demo CV"],
+    cv: resume
+)
+
+let markdown = Rendering.MarkdownDocumentRenderer().render(document)
 ```
 
-Or use the utility method to save it:
+The legacy `MarkdownCVRenderer` remains available for callers that only have a
+`CV` value:
 
 ```swift
-if let markdownFile = CV.convertTMarkdownAndSave(cv) {
-    print("Markdown saved to: \(markdownFile)")
-}
+let markdown = MarkdownCVRenderer().render(cv: resume)
 ```
 
----
-
-## 🧪 Full Test Example
+On Linux, TileDown integrations can depend on `CVBuilderTileDown`:
 
 ```swift
+#if os(Linux)
+import CVBuilderTileDown
 
-extension CV {
-    static func createExampleCV() -> CV {
-        
-        // Create contact info
-        let contactInfo = ContactInfo(
-            email: "jane.doe@example.com",
-            phone: "+1 (555) 123-4567",
-            linkedIn: URL(string: "https://linkedin.com/in/janedoe"),
-            github: URL(string: "https://github.com/janedoe"),
-            website: URL(string: "https://janedoe.dev"),
-            location: "San Francisco, CA"
-        )
-        
-        // Create education
-        let education = Education(
-            institution: "Stanford University",
-            degree: "B.S.",
-            field: "Computer Science",
-            period: Period(
-                start: .init(month: 9, year: 2010),
-                end: .init(month: 6, year: 2014)
-            )
-        )
-        
-        // Create companies
-        let appleCompany = Company(name: "Apple Inc.")
-        let googleCompany = Company(name: "Google")
-        
-        // Create role types
-        let juniorIOS = Role(title: "iOS Developer", seniority: .junior)
-        let midAndroid = Role(title: "Android Developer", seniority: .mid)
-        let seniorIOS = Role(title: "iOS Developer", seniority: .senior)
-        let leadIOS = Role(title: "iOS Developer", seniority: .lead)
-        
-        // Create tech types
-        let swift = Tech(name: "Swift", category: .language)
-        let swiftUI = Tech(name: "SwiftUI", category: .framework)
-        let kotlin = Tech(name: "Kotlin", category: .language)
-        let restAPI = Tech(name: "REST API", category: .concept)
-
-        
-        // Create projects using the builder pattern
-        let project1 = try! Project.Builder()
-            .withName("iOS App Redesign")
-            .withCompany(appleCompany)
-            .withRole(seniorIOS)
-            .withPeriod(start: (month: 3, year: 2020), end: (month: 9, year: 2021))
-            .addDescription("Led a team of 5 developers for a complete redesign of a flagship iOS app")
-            .addDescription("Implemented SwiftUI components for improved user experience")
-            .addDescription("Reduced app size by 30% through code optimization")
-            .withTechs([swift, swiftUI])
-            .addURL(URL(string: "https://apps.apple.com/example")!)
-            .build()
-        
-        let project2 = try! Project.Builder()
-            .withName("Android Integration Project")
-            .withCompany(googleCompany)
-            .withRole(midAndroid)
-            .withPeriod(start: (month: 6, year: 2018), end: (month: 2, year: 2020))
-            .addDescription("Developed APIs for cross-platform data sharing")
-            .addDescription("Implemented secure authentication protocols")
-            .withTechs([kotlin, restAPI])
-            .build()
-        
-        // Create the CV
-        return CV.create(
-            name: "Jane Doe",
-            title: "Senior Mobile Developer",
-            summary: "Passionate mobile developer with 5+ years experience building apps for iOS and Android platforms. Expert in Swift, SwiftUI, and cross-platform development.",
-            contactInfo: contactInfo,
-            education: [education],
-            projects: [project1, project2]
-        )
-    }
-}
-
-
-@Test func testCreatingCV() async throws {
-    let cv = CV.createExampleCV()
-    print("Created")
-    #expect(cv.title == "Senior Mobile Developer")
-
-    let markdown = MarkdownCVRenderer().render(cv: cv)
-    print("Markdown Preview:")
-    print(markdown)
-
-    if let markdownFile = CV.convertTMarkdownAndSave(cv) {
-        print("Markdown saved to: \(markdownFile)")
-    }
-}
+let markdown = CVBuilderTileDown.Renderer().render(document)
+#endif
 ```
 
----
+## Verification
 
-## 📄 Sample Markdown Output
+Run the cross-platform targets locally:
 
-Below is a real CV generated using `MarkdownCVRenderer`:
-
-```
-# Jane Doe
-## Senior Mobile Developer
-
-Passionate mobile developer with 5+ years experience building apps for iOS and Android platforms. Expert in Swift, SwiftUI, and cross-platform development.
-
-jane.doe@example.com
-+1 (555) 123-4567
-San Francisco, CA
-[LinkedIn](https://linkedin.com/in/janedoe)
-[GitHub](https://github.com/janedoe)
-[Website](https://janedoe.dev)
-
-Stanford University, B.S. in Computer Science
-
-## EXPERIENCE
-
-### Apple Inc. (Mar 2020 - Sep 2021) – Senior iOS Developer
-
-#### iOS App Redesign
-- Led a team of 5 developers for a complete redesign of a flagship iOS app
-- Implemented SwiftUI components for improved user experience
-- Reduced app size by 30% through code optimization
-- [https://apps.apple.com/example](https://apps.apple.com/example)
-- | Swift | SwiftUI |
-
-
-### Google (Jun 2018 - Feb 2020) – Mid Android Developer
-
-#### Android Integration Project
-- Developed APIs for cross-platform data sharing
-- Implemented secure authentication protocols
-- | Kotlin | REST API |
-
-
-### SKILLS
-- | Kotlin | REST API | Swift | SwiftUI |
+```sh
+swift build --target CVBuilder
+swift build --target CVBuilderCLI
+swift build --product cvbuilder
+swift test
 ```
 
----
+On Linux, also verify the TileDown adapter:
 
-## 📄 License
+```sh
+swift build --target CVBuilderTileDown
+```
+
+## License
 
 MIT. See `LICENSE` file for details.
-
----
-
-## 👩‍💻 Author
-
-Built with ❤️ by [Mihaela Mihaljević](https://github.com/mihaelamj)
