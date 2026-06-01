@@ -1,6 +1,6 @@
 # CVBuilder
 
-CVBuilder is a modular Swift package designed to represent and render CV (curriculum vitae) data in a structured, reusable way. It provides clean data models, rendering logic for Markdown and plain text, and optional HTML rendering using [Ignite](https://github.com/twostraws/Ignite).
+CVBuilder is a modular Swift package designed to represent and render CV (curriculum vitae) data in a structured, reusable way. It provides clean data models and rendering logic for Markdown and plain text.
 
 ---
 
@@ -11,7 +11,6 @@ CVBuilder is a modular Swift package designed to represent and render CV (curric
 - 🖋️ Renderers for:
   - **Markdown** (via `MarkdownCVRenderer`)
   - **Plain text** (via `StringCVRenderer`)
-  - **HTML** with [Ignite](https://github.com/twostraws/Ignite) (via `IgniteRenderer` in `CVBuilderIgnite`)
   - **Linux TileDown adapter** (via `CVBuilderTileDown.Renderer` in `CVBuilderTileDown`)
 - 🧪 Unit-testable and reusable across platforms.
 
@@ -19,7 +18,7 @@ CVBuilder is a modular Swift package designed to represent and render CV (curric
 
 ## 🧱 Package Structure
 
-This package includes two main libraries, one command-line executable, and one Linux-only adapter target:
+This package includes one core library, one command-line executable, and one Linux-only adapter target:
 
 ### 1. `CVBuilder` (core)
 
@@ -42,17 +41,11 @@ Renderers in `CVBuilder`:
 - `MarkdownCVRenderer`
 - `StringCVRenderer`
 
-### 2. `CVBuilderIgnite` (optional)
-
-Provides `IgniteRenderer` for HTML rendering, using the [Ignite](https://github.com/twostraws/Ignite) static site generator.
-
-> 🔥 Note: This target depends on `Ignite` and is **separated** to avoid pulling in C dependencies in projects that don’t need HTML rendering.
-
-### 3. `cvbuilder` (executable)
+### 2. `cvbuilder` (executable)
 
 Generates Markdown or normalized JSON from one `CVDocument` JSON file.
 
-### 4. `CVBuilderTileDown` (Linux only)
+### 3. `CVBuilderTileDown` (Linux only)
 
 Provides `CVBuilderTileDown.Renderer`, which renders `CVDocument` or legacy `CV`
 values into Markdown for a TileDown-driven publishing pipeline. It does not
@@ -62,7 +55,7 @@ generate PDF output.
 
 ## 📦 Usage
 
-### Add to your `Package.swift` (using branch until Ignite is tagged):
+### Add to your `Package.swift`
 
 ```swift
 .package(url: "https://github.com/mihaelamj/cvbuilder.git", branch: "main")
@@ -71,8 +64,7 @@ generate PDF output.
 Then add the desired product:
 
 ```swift
-.product(name: "CVBuilder", package: "cvbuilder"),
-.product(name: "CVBuilderIgnite", package: "cvbuilder") // if using Ignite
+.product(name: "CVBuilder", package: "cvbuilder")
 ```
 
 The package also exposes the `cvbuilder` executable product for `swift run cvbuilder`.

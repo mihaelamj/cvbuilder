@@ -34,31 +34,18 @@ let packageProducts: [Product] = [
         name: "CVBuilder",
         targets: ["CVBuilder"]
     ),
-    .library(
-        name: "CVBuilderIgnite",
-        targets: ["CVBuilderIgnite"]
-    ),
     .executable(
         name: "cvbuilder",
         targets: ["CVBuilderTool"]
     )
 ] + tileDownProducts
 
-let packageDependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/twostraws/Ignite.git", branch: "main")
-]
+let packageDependencies: [Package.Dependency] = []
 
 let packageTargets: [Target] = [
     .target(
         name: "CVBuilder",
         dependencies: []
-    ),
-    .target(
-        name: "CVBuilderIgnite",
-        dependencies: [
-            "CVBuilder",
-            .product(name: "Ignite", package: "Ignite")
-        ]
     ),
     .target(
         name: "CVBuilderCLI",
@@ -71,8 +58,7 @@ let packageTargets: [Target] = [
     .testTarget(
         name: "CVBuilderTests",
         dependencies: [
-            "CVBuilder",
-            "CVBuilderIgnite"
+            "CVBuilder"
         ] + tileDownTestDependencies
     ),
     .testTarget(

@@ -1,5 +1,4 @@
 @testable import CVBuilder
-import CVBuilderIgnite
 import Foundation
 import Testing
 #if os(Linux)
@@ -23,12 +22,6 @@ import Testing
     let markdown = try String(contentsOf: outputURL, encoding: .utf8)
     #expect(markdown.contains("# \(resume.name)"))
     #expect(markdown.contains("## EXPERIENCE"))
-}
-
-@Test func igniteRendererIsImportable() throws {
-    let renderer = try IgniteRenderer(cv: makeDemoCV())
-
-    _ = renderer
 }
 
 #if os(Linux)

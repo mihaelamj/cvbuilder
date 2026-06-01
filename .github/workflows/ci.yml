@@ -25,12 +25,17 @@ jobs:
 
       - name: Package graph
         run: |
-          swift package describe > package.txt
+          swift package dump-package > package.txt
           grep -q "CVBuilderTileDown" package.txt
           grep -q "cvbuilder" package.txt
+          ! grep -q "CVBuilderIgnite" package.txt
 
       - name: Build
-        run: swift build
+        run: |
+          swift build --target CVBuilder
+          swift build --target CVBuilderCLI
+          swift build --target CVBuilderTileDown
+          swift build --product cvbuilder
 
       - name: Test
         run: swift test
@@ -73,7 +78,10 @@ jobs:
         run: swift --version
 
       - name: Build
-        run: swift build
+        run: |
+          swift build --target CVBuilder
+          swift build --target CVBuilderCLI
+          swift build --product cvbuilder
 
       - name: Test
         run: swift test
