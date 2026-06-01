@@ -66,7 +66,7 @@ Relevant links:
 - Issue #20: closed JSON workflow and research-boundary documentation in PR
   #45.
 - Issue #47: active release-ready authoring and CLI usability epic.
-- Issue #48: active CLI help output.
+- Issue #48: CI-green CLI help output in PR #52.
 - Issue #49: next machine-readable `CVDocument` JSON Schema.
 - Issue #50: next schema drift checks.
 - Issue #51: next first-release checklist.
@@ -83,7 +83,7 @@ Ordered roadmap issues:
 6. #40 - done: expand realistic fixture coverage.
 7. #19 - done: add evidence-backed renderer fixture proofs.
 8. #20 - done: document the JSON workflow and research-backed boundaries.
-9. #48 - in progress: add user-facing CLI help output.
+9. #48 - CI green: add user-facing CLI help output.
 10. #49 - next: add a machine-readable `CVDocument` JSON Schema.
 11. #50 - next: add schema drift checks for examples and fixtures.
 12. #51 - next: prepare first-release checklist and release notes.
@@ -98,7 +98,7 @@ flowchart TD
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
-    P9["Phase 9<br/>#48 CLI help<br/>In progress"]
+    P9["Phase 9<br/>#48 CLI help<br/>CI green"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Next"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
@@ -113,7 +113,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8 done;
-    class P9 active;
+    class P9 review;
     class P10,P11,P12 next;
 ```
 
@@ -316,16 +316,16 @@ Issue: [#48](https://github.com/mihaelamj/cvbuilder/issues/48).
 
 Deliverables:
 
-- add `cvbuilder --help`: in progress
-- add `cvbuilder -h`: in progress
-- document supported options and examples in the help text: in progress
-- update README CLI docs: in progress
+- add `cvbuilder --help`: CI green
+- add `cvbuilder -h`: CI green
+- document supported options and examples in the help text: CI green
+- update README CLI docs: CI green
 
 Acceptance:
 
-- help exits successfully without `--data` or `--out`: in progress
-- missing required options and unknown options still fail: in progress
-- tests cover help parsing and usage text: in progress
+- help exits successfully without `--data` or `--out`: CI green
+- missing required options and unknown options still fail: CI green
+- tests cover help parsing and usage text: CI green
 
 ### Phase 10: Add a CVDocument JSON Schema
 
