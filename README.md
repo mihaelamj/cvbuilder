@@ -143,6 +143,8 @@ The full data contract, Markdown behavior, decoding defaults, and migration
 rules are documented in
 [docs/cvdocument-contract.md](docs/cvdocument-contract.md). A complete
 handwritten fixture lives at [Examples/democv/cv.json](Examples/democv/cv.json).
+The file-driven authoring flow is documented in
+[docs/json-workflow.md](docs/json-workflow.md).
 
 ## CVBuilder roadmap
 
@@ -159,8 +161,8 @@ flowchart TD
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
-    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>CI green"]
-    P8["Phase 8<br/>#20 Workflow documentation<br/>Next"]
+    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>In progress"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
@@ -171,9 +173,8 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6 done;
-    class P7 review;
-    class P8 next;
+    class P5,P6,P7 done;
+    class P8 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -243,6 +244,8 @@ swift build --target CVBuilderTileDown
 - [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
 - [docs/cvdocument-contract.md](docs/cvdocument-contract.md): JSON schema,
   Markdown behavior, and migration rules.
+- [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
+  workflow, CI checks, SSG integration, and product boundaries.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
   evidence mapping, and mode fixture coverage.
 - [docs/tiledown-markdown-contract.md](docs/tiledown-markdown-contract.md):
