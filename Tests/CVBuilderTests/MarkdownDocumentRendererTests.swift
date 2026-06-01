@@ -81,8 +81,13 @@ struct MarkdownDocumentRendererTests {
         let output = Rendering.MarkdownDocumentRenderer().render(document)
 
         #expect(output == expected)
-        #expect(output.contains("### [Northbridge Systems](https://example.com/northbridge) - Senior Mobile Architect"))
+        #expect(output.contains("### [Northbridge Systems](https://example.com/northbridge) - Senior Swift Platform Engineer"))
         #expect(output.contains("#### Identity Capture Platform"))
+        #expect(output.contains("#### API Contract Tooling"))
+        #expect(output.contains("### [Lumen Works](https://example.com/lumen) - Senior iOS Developer"))
+        #expect(output.contains("### [Clearpath Digital](https://example.com/clearpath) - Senior iOS Developer"))
+        #expect(!output.contains("### [Signal Gate](https://example.com/signal-gate)"))
+        #expect(!output.contains("### [BrightApps Lab](https://example.com/brightapps)"))
         #expect(output.contains("Summary: Maintains a Swift package"))
         #expect(output.contains("[GitHub](https://example.com/alex-rivera-code)"))
         #expect(output.contains("Tools: OpenAPI"))
@@ -203,6 +208,22 @@ struct MarkdownDocumentRendererTests {
         #expect(output.contains("First visible project fact."))
         #expect(!output.contains("Second hidden project fact."))
         #expect(!output.contains("Hidden Systems"))
+    }
+
+    @Test("selected work entries render by explicit id instead of recency")
+    func selectedExperienceIDsRenderRelevantOlderWork() throws {
+        let selectedID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000402"))
+        let output = try Rendering.MarkdownDocumentRenderer().render(
+            makeSelectedWorkDocument(rendering: RenderingOptions(
+                recentCompanyCount: 1,
+                selectedExperienceIDs: [selectedID],
+            )),
+        )
+
+        #expect(output.contains("Selected Platform Lab"))
+        #expect(output.contains("Relevant older platform migration."))
+        #expect(!output.contains("Recent Hidden Systems"))
+        #expect(!output.contains("Unselected Legacy Works"))
     }
 
     @Test("public evidence uses period when display date is absent")
@@ -329,6 +350,7 @@ struct MarkdownDocumentRendererTests {
             rendering: RenderingOptions(
                 mode: mode,
                 recentCompanyCount: document.rendering.recentCompanyCount,
+                selectedExperienceIDs: document.rendering.selectedExperienceIDs,
                 maxBulletsPerProject: document.rendering.maxBulletsPerProject,
                 nestProjectsUnderRoles: document.rendering.nestProjectsUnderRoles,
                 compactGroupedSkills: document.rendering.compactGroupedSkills,
@@ -446,6 +468,66 @@ private func makeLimitedWorkDocument(rendering: RenderingOptions) -> CVDocument 
 
     return makeMinimalDocument(
         experience: [visibleExperience, hiddenExperience],
+        rendering: rendering,
+    )
+}
+
+private func makeSelectedWorkDocument(rendering: RenderingOptions) throws -> CVDocument {
+    let role = Role(title: "Engineer", seniority: .senior)
+    let recentPeriod = Period(start: .init(month: 4, year: 2026), end: .init(month: 6, year: 2026))
+    let selectedPeriod = Period(start: .init(month: 1, year: 2021), end: .init(month: 8, year: 2022))
+    let legacyPeriod = Period(start: .init(month: 1, year: 2019), end: .init(month: 12, year: 2020))
+
+    let recentExperience = try WorkExperience(
+        id: #require(UUID(uuidString: "00000000-0000-0000-0000-000000000401")),
+        company: Company(name: "Recent Hidden Systems"),
+        role: role,
+        period: recentPeriod,
+        projects: [
+            ProjectExperience(
+                project: Project(
+                    name: "Recent Hidden App",
+                    company: Company(name: "Recent Hidden Systems"),
+                    descriptions: ["Recent but less relevant delivery."],
+                    techs: [Tech(name: "Swift", category: .language)],
+                    role: role,
+                    period: recentPeriod,
+                ),
+                role: role,
+                period: recentPeriod,
+            ),
+        ],
+    )
+    let selectedExperience = try WorkExperience(
+        id: #require(UUID(uuidString: "00000000-0000-0000-0000-000000000402")),
+        company: Company(name: "Selected Platform Lab"),
+        role: role,
+        period: selectedPeriod,
+        projects: [
+            ProjectExperience(
+                project: Project(
+                    name: "Relevant Platform Migration",
+                    company: Company(name: "Selected Platform Lab"),
+                    descriptions: ["Relevant older platform migration."],
+                    techs: [Tech(name: "Swift Package Manager", category: .tool)],
+                    role: role,
+                    period: selectedPeriod,
+                ),
+                role: role,
+                period: selectedPeriod,
+            ),
+        ],
+    )
+    let unselectedExperience = try WorkExperience(
+        id: #require(UUID(uuidString: "00000000-0000-0000-0000-000000000403")),
+        company: Company(name: "Unselected Legacy Works"),
+        role: role,
+        period: legacyPeriod,
+        projects: [],
+    )
+
+    return makeMinimalDocument(
+        experience: [recentExperience, selectedExperience, unselectedExperience],
         rendering: rendering,
     )
 }

@@ -105,6 +105,26 @@ extension Rendering.MarkdownDocumentRenderer {
         return Array(experience.prefix(recentCompanyCount))
     }
 
+    func visibleExperience(
+        _ experience: [WorkExperience],
+        options: RenderingOptions,
+    ) -> [WorkExperience] {
+        let selectedExperience = selectedExperience(experience, selectedIDs: options.selectedExperienceIDs)
+        return limitedExperience(selectedExperience, recentCompanyCount: options.recentCompanyCount)
+    }
+
+    func selectedExperience(
+        _ experience: [WorkExperience],
+        selectedIDs: [UUID],
+    ) -> [WorkExperience] {
+        guard !selectedIDs.isEmpty else {
+            return experience
+        }
+
+        let selectedIDSet = Set(selectedIDs)
+        return experience.filter { selectedIDSet.contains($0.id) }
+    }
+
     func limitedDescriptions(_ descriptions: [String], maxCount: Int?) -> [String] {
         guard let maxCount else {
             return descriptions

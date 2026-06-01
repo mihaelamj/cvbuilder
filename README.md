@@ -27,13 +27,15 @@ The generic renderer currently covers:
   evidence, and profile/download links.
 - Rendering modes for experienced, early-career, and public-evidence-heavy
   technical CV ordering.
+- Optional explicit work-entry selection for relevant older jobs before recency
+  limits are applied.
 - JSON input with ergonomic defaults for missing optional arrays.
 - CLI output checks for checked-in generated Markdown.
 - Linux TileDown compatibility through a Markdown-only adapter.
 
 The compatibility target is structured technical CV data to Markdown. The
-generated profile is intentionally small while the document contract and
-technical CV templates are being hardened.
+demo fixture now includes multi-role work history, nested projects, public
+evidence, and omitted older jobs so template behavior is visible in tests.
 
 ## Package Products
 
@@ -154,8 +156,9 @@ flowchart TD
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
+    P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
 
-    P1 --> P2 --> P3 --> P4 --> P5
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -164,7 +167,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5 done;
+    class P5,P6 done;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -175,6 +178,8 @@ The test suite validates generated Markdown through fixture and behavior checks:
 
 - Snapshot-style expectations check section ordering, headings, links, escaping,
   evidence rendering, and checked-in rendering-mode fixtures.
+- Demo fixture tests cover realistic nested projects, omitted older jobs, and
+  explicit selection of relevant work entries.
 - Hostile text tests ensure generated Markdown treats source data as data, not
   structure.
 - JSON schema tests check defaults for omitted optional arrays and rejection of

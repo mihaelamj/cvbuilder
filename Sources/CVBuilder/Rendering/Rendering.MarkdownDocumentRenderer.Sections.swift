@@ -77,7 +77,7 @@ extension Rendering.MarkdownDocumentRenderer {
         options: RenderingOptions,
         writer: inout Writer,
     ) {
-        let visibleExperience = limitedExperience(experience, recentCompanyCount: options.recentCompanyCount)
+        let visibleExperience = visibleExperience(experience, options: options)
         guard !visibleExperience.isEmpty else {
             renderEmptySection("## Experience", options: options, writer: &writer)
             return

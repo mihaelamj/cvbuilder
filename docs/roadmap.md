@@ -49,6 +49,8 @@ core package.
 - Linux, macOS, style, namespacing, SwiftFormat, and SwiftLint gates are active.
 - Community standards, issue templates, PR template, support policy, and
   changelog are present.
+- The demo CV fixture exercises realistic multi-role technical CV behavior,
+  omitted older jobs, and explicit relevance-selected jobs.
 
 Relevant links:
 
@@ -57,6 +59,7 @@ Relevant links:
 - Issue #5: closed evidence research epic.
 - Issue #26: closed Linux TileDown Markdown adapter.
 - Issue #30: closed technical CV rendering modes.
+- Issue #40: realistic fixture coverage for omitted and selected jobs.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -67,6 +70,7 @@ Ordered roadmap issues:
 3. #30 - done: build technical CV rendering modes.
 4. #31 - done: document and harden the TileDown Markdown contract.
 5. #32 - done: add roadmap quality gates and release hygiene.
+6. #40 - done: expand realistic fixture coverage.
 
 ```mermaid
 flowchart TD
@@ -75,8 +79,9 @@ flowchart TD
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
+    P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
 
-    P1 --> P2 --> P3 --> P4 --> P5
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -85,7 +90,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5 done;
+    class P5,P6 done;
 ```
 
 ## Roadmap
@@ -214,6 +219,28 @@ Acceptance:
 - every production behavior change has tests
 - every generated artifact can be reproduced from source data
 - roadmap state is updated when a phase starts, lands, or changes scope
+
+### Phase 6: Realistic Fixture Coverage
+
+Objective: make the public fixture broad enough to catch regressions in
+technical CV rendering behavior.
+
+Issue: [#40](https://github.com/mihaelamj/cvbuilder/issues/40).
+
+Deliverables:
+
+- expand `Examples/democv/cv.json` beyond a single-role sample: done
+- include multiple work entries and nested projects: done
+- include enough older work for omission tests: done
+- add explicit selected-work tests for relevant older jobs: done
+- refresh generated TileDown and rendering-mode fixtures: done
+
+Acceptance:
+
+- tests prove older jobs can be omitted by rendering options: done
+- tests prove explicitly selected jobs can render before recency limits: done
+- generated Markdown fixtures are reproducible from source JSON: done
+- README and contract docs describe the fixture and selection behavior: done
 
 ## Research Rules
 
