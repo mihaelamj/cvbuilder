@@ -173,7 +173,7 @@ flowchart TD
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
-    P10["Phase 10<br/>#49 JSON Schema<br/>In progress"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>In review"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
@@ -187,7 +187,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9 done;
-    class P10 active;
+    class P10 review;
     class P11,P12 next;
 ```
 
