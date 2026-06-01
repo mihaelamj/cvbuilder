@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Self-tests for repository quality gate scripts.
 
-set -u
+set -eu
 
 VALID_BODY='## What
 
