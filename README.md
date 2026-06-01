@@ -159,7 +159,7 @@ flowchart TD
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
-    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>In review"]
+    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>CI green"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8

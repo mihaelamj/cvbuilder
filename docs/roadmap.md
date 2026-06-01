@@ -61,7 +61,7 @@ Relevant links:
 - Issue #26: closed Linux TileDown Markdown adapter.
 - Issue #30: closed technical CV rendering modes.
 - Issue #40: realistic fixture coverage for omitted and selected jobs.
-- Issue #19: in-review evidence fixture proof coverage.
+- Issue #19: CI-green evidence fixture proof coverage.
 - Issue #20: next JSON workflow and research-boundary documentation.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -74,7 +74,7 @@ Ordered roadmap issues:
 4. #31 - done: document and harden the TileDown Markdown contract.
 5. #32 - done: add roadmap quality gates and release hygiene.
 6. #40 - done: expand realistic fixture coverage.
-7. #19 - in review: add evidence-backed renderer fixture proofs.
+7. #19 - CI green: add evidence-backed renderer fixture proofs.
 8. #20 - next: document the JSON workflow and research-backed boundaries.
 
 ```mermaid
@@ -85,7 +85,7 @@ flowchart TD
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
-    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>In review"]
+    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>CI green"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
@@ -261,17 +261,17 @@ Issue: [#19](https://github.com/mihaelamj/cvbuilder/issues/19).
 Deliverables:
 
 - keep `Examples/democv/cv.json` as the full senior technical CV fixture:
-  in review
+  CI green
 - add early-career technical, hostile Markdown, and minimal JSON fixture files:
-  in review
-- test privacy-safe example endpoints and fixture decoding: in review
+  CI green
+- test privacy-safe example endpoints and fixture decoding: CI green
 - test early-career ordering, nested projects, public evidence, technical focus,
-  omitted sections, grouped skills, and prohibited generated fields: in review
+  omitted sections, grouped skills, and prohibited generated fields: CI green
 
 Acceptance:
 
-- fixtures contain no real personal or company-identifying endpoints: in review
-- tests prove all #19 renderer behaviors on macOS and Linux: in review
+- fixtures contain no real personal or company-identifying endpoints: CI green
+- tests prove all #19 renderer behaviors on macOS and Linux: CI green
 
 ### Phase 8: Document the JSON Workflow and Research Boundaries
 
