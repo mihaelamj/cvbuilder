@@ -88,6 +88,14 @@ struct CVDocumentJSONErgonomicsTests {
         try expectNormalizedRoundTrip(document)
     }
 
+    @Test("public evidence heavy rendering mode decodes from JSON")
+    func publicEvidenceHeavyRenderingModeDecodesFromJSON() throws {
+        let document = try decode(publicEvidenceHeavyDocumentJSON)
+
+        #expect(document.rendering.mode == .publicEvidenceHeavyTechnical)
+        try expectNormalizedRoundTrip(document)
+    }
+
     @Test("project-level omitted collections decode as empty")
     func defaultsProjectCollections() throws {
         let document = try decode(projectCollectionsDocumentJSON)

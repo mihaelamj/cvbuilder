@@ -92,6 +92,11 @@ Supported `mode` values:
   education, links.
 - `earlyCareerTechnical`: contact, education, public evidence, experience,
   skills, links.
+- `publicEvidenceHeavyTechnical`: contact, public evidence, experience, skills,
+  education, links.
+
+See [docs/rendering-modes.md](rendering-modes.md) for the policy names,
+evidence mapping, and fixture coverage for each mode.
 
 ## Decoding Rules
 

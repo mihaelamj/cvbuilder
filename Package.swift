@@ -60,6 +60,9 @@ let packageTargets: [Target] = [
         dependencies: [
             "CVBuilder",
         ] + tileDownTestDependencies,
+        resources: [
+            .process("Fixtures"),
+        ],
     ),
     .testTarget(
         name: "CVBuilderCLITests",

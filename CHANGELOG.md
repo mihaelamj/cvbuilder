@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Style, namespacing, SwiftFormat, SwiftLint, Linux Swift, and macOS Swift CI gates.
 - `CVDocument` contract documentation and a complete `Examples/democv/cv.json`
   fixture.
+- Public-evidence-heavy rendering mode and checked-in Markdown fixtures for all
+  technical CV rendering modes.
 
 ### Changed
 
@@ -24,3 +26,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   outside the core package.
 - Made `RenderingOptions.omitEmptySections` control whether empty optional
   Markdown section headings are emitted.
+- Documented rendering-mode policies with evidence-backed rules separated from
+  pragmatic renderer conventions.
