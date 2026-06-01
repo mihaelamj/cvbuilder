@@ -1,18 +1,17 @@
-name: CI
+name: Swift (Linux)
 
 on:
-  pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  linux:
-    name: Linux Swift
+  swift-linux:
+    name: Swift (Linux)
     runs-on: ubuntu-latest
     container:
       image: swift:6.1-noble
@@ -66,22 +65,3 @@ jobs:
           swift run cvbuilder --data "$tmpdir/cv.json" --out "$tmpdir/cv.normalized.json" --format json
           grep -q "# Linux CI" "$tmpdir/cv/index.md"
           grep -q '"frontMatter"' "$tmpdir/cv.normalized.json"
-
-  macos:
-    name: macOS Swift
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Swift version
-        run: swift --version
-
-      - name: Build
-        run: |
-          swift build --target CVBuilder
-          swift build --target CVBuilderCLI
-          swift build --product cvbuilder
-
-      - name: Test
-        run: swift test

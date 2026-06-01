@@ -1,65 +1,109 @@
 # CVBuilder
 
-[![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)](https://github.com/mihaelamj/cvbuilder/actions/workflows/ci.yml)
-[![macOS](https://img.shields.io/badge/macOS-supported-000000?logo=apple&logoColor=white)](https://github.com/mihaelamj/cvbuilder/actions/workflows/ci.yml)
-[![Swift](https://img.shields.io/badge/Swift-6.1-F05138?logo=swift&logoColor=white)](Package.swift)
+[![Swift macOS](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml)
+[![Swift Linux](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml)
 
-CVBuilder is a Swift package for typed technical CV data and deterministic
-Markdown output. It is built around one source of truth, `CVDocument`, which can
-be written in Swift or decoded from JSON and rendered by the library or CLI.
+CVBuilder is a Pure Swift technical CV generator. It keeps CV data in typed
+Swift or JSON, renders deterministic Markdown, and provides a Linux-facing
+TileDown adapter for Markdown publishing workflows.
 
-The package is Markdown-first and Linux-safe. It is meant for checked-in CV
-pages, technical CV variants, and TileDown publishing workflows that consume
-Markdown.
+The core package is built for macOS and Linux. `CVDocument` is the canonical
+source of truth for publishable CV data, front matter, links, public evidence,
+and rendering options.
+
+## What Works Today
+
+CVBuilder currently renders inspectable Markdown from structured CV data. The
+output is deterministic, byte-for-byte testable, and intentionally conservative.
+
+The generic renderer currently covers:
+
+- Front matter for static site generators.
+- Headings, paragraphs, links, and labelled text lines.
+- Contact information, education, work experience, projects, skills, public
+  evidence, and profile/download links.
+- Rendering modes for experienced and early-career technical CV ordering.
+- JSON input with ergonomic defaults for missing optional arrays.
+- CLI output checks for checked-in generated Markdown.
+- Linux TileDown compatibility through a Markdown-only adapter.
+
+The compatibility target is structured technical CV data to Markdown. The
+generated profile is intentionally small while the document contract and
+technical CV templates are being hardened.
+
+## Package Products
+
+| Product | Kind | Purpose |
+|---|---|---|
+| `CVBuilder` | Library | Core CV data model, document model, and Markdown/plain text renderers. |
+| `CVBuilderTileDown` | Library | Linux-only Markdown adapter for TileDown workflows. |
+| `cvbuilder` | Executable | `CVDocument` JSON file to Markdown or normalized JSON command. |
+
+`CVBuilderTileDown` is available only when the package is built on Linux. iOS
+support is not claimed.
 
 ## Quick Start
 
-Add the package:
+Use the document renderer directly:
 
 ```swift
-.package(url: "https://github.com/mihaelamj/cvbuilder.git", branch: "main")
+import CVBuilder
+
+let resume = CV(
+    name: "Demo Candidate",
+    title: "Senior Swift Engineer",
+    summary: "Builds typed Swift tooling for document workflows.",
+    contactInfo: ContactInfo(
+        email: "demo.candidate@example.com",
+        phone: "+1 555 010 0701",
+        location: "Example City"
+    ),
+    experience: [],
+    education: [],
+    skills: [
+        Tech(name: "Swift", category: .language),
+        Tech(name: "Linux", category: .platform),
+    ]
+)
+
+let document = CVDocument(
+    frontMatter: ["slug": "demo-cv", "title": "Demo CV"],
+    cv: resume
+)
+
+let markdown = Rendering.MarkdownDocumentRenderer().render(document)
 ```
 
-Add the core product to your target:
+Use the Linux-facing product:
 
 ```swift
-.product(name: "CVBuilder", package: "cvbuilder")
+import CVBuilderTileDown
+
+let markdown = CVBuilderTileDown.Renderer().render(document)
 ```
 
-On Linux, TileDown integrations can also depend on:
-
-```swift
-.product(name: "CVBuilderTileDown", package: "cvbuilder")
-```
-
-`CVBuilderTileDown` is only present when SwiftPM evaluates the package on Linux.
-
-## CLI
-
-Render Markdown from a `CVDocument` JSON file:
+Run the CV CLI:
 
 ```sh
 swift run cvbuilder --data cv.json --out cv/index.md
 ```
 
-Write normalized `CVDocument` JSON:
+Write normalized JSON:
 
 ```sh
 swift run cvbuilder --data cv.json --out cv.normalized.json --format json
 ```
 
-Verify that a checked-in output file is current:
+Check a generated Markdown file:
 
 ```sh
 swift run cvbuilder --data cv.json --out cv/index.md --check
 ```
 
-The CLI supports `--format markdown` and `--format json`.
-
 ## JSON Input
 
-The CLI reads a `CVDocument` JSON file. Missing optional arrays default to empty
-values. This small document is valid input:
+The CLI reads one `CVDocument` JSON file. Missing optional arrays default to
+empty values. This small document is valid input:
 
 ```json
 {
@@ -84,93 +128,45 @@ values. This small document is valid input:
 }
 ```
 
-## Swift API
+## CVBuilder roadmap
 
-```swift
-import CVBuilder
+Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the ordered
+path from the current Markdown foundation to stable technical CV templates.
 
-let resume = CV(
-    name: "Demo Candidate",
-    title: "Senior Swift Engineer",
-    summary: "Builds typed Swift tooling for document workflows.",
-    contactInfo: ContactInfo(
-        email: "demo.candidate@example.com",
-        phone: "+1 555 010 0701",
-        location: "Example City"
-    ),
-    experience: [],
-    education: [],
-    skills: [
-        Tech(name: "Swift", category: .language),
-        Tech(name: "Linux", category: .platform)
-    ]
-)
+```mermaid
+flowchart TD
+    P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>Next"]
+    P3["Phase 3<br/>#30 Technical CV rendering modes"]
+    P4["Phase 4<br/>#31 TileDown Markdown contract"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene"]
 
-let document = CVDocument(
-    frontMatter: ["slug": "demo-cv", "title": "Demo CV"],
-    cv: resume
-)
+    P1 --> P2 --> P3 --> P4 --> P5
 
-let markdown = Rendering.MarkdownDocumentRenderer().render(document)
+    classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
+    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
+    class P1 done;
+    class P2 next;
+    class P3,P4,P5 todo;
 ```
 
-Legacy `CV` values can still be rendered directly:
+See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
 
-```swift
-let markdown = MarkdownCVRenderer().render(cv: resume)
-```
+## Validation
 
-On Linux, TileDown can use the adapter target:
+The test suite validates generated Markdown in four ways:
 
-```swift
-#if os(Linux)
-import CVBuilderTileDown
+- Snapshot-style expectations check section ordering, headings, links, escaping,
+  and evidence rendering.
+- Hostile text tests ensure generated Markdown treats source data as data, not
+  structure.
+- JSON schema tests check defaults for omitted optional arrays and rejection of
+  explicit invalid nulls.
+- CLI tests check Markdown output, normalized JSON output, and stale-file
+  detection.
 
-let markdown = CVBuilderTileDown.Renderer().render(document)
-#endif
-```
-
-## Renderers
-
-- `Rendering.MarkdownDocumentRenderer` renders complete `CVDocument` values.
-- `MarkdownCVRenderer` renders legacy `CV` values.
-- `StringCVRenderer` renders plain text.
-- `CVBuilderTileDown.Renderer` is a Linux-only adapter that delegates to the
-  Markdown renderers.
-
-The canonical document renderer emits conservative Markdown: front matter,
-headings, paragraphs, links, and labelled lines. Output is deterministic and
-byte-for-byte testable.
-
-## Package Layout
-
-This package includes one core library, one executable, and one Linux-only
-adapter target:
-
-```
-CVBuilder
-|-- CV
-|-- CVDocument
-|-- ContactInfo
-|-- Education
-|-- WorkExperience
-|-- ProjectExperience
-|-- Project
-|-- Tech
-|-- Rendering.MarkdownDocumentRenderer
-|-- MarkdownCVRenderer
-`-- StringCVRenderer
-```
-
-Products:
-
-- `CVBuilder`: core library
-- `cvbuilder`: executable for `swift run cvbuilder`
-- `CVBuilderTileDown`: Linux-only Markdown adapter
-
-## Verification
-
-Run the cross-platform targets locally:
+## Build and Test
 
 ```sh
 swift build --target CVBuilder
@@ -179,52 +175,49 @@ swift build --product cvbuilder
 swift test
 ```
 
+The same core package is expected to build on macOS and Linux. GitHub CI runs
+separate macOS Swift and Linux Swift workflows.
+
 On Linux, also verify the TileDown adapter:
 
 ```sh
 swift build --target CVBuilderTileDown
 ```
 
-## Roadmap
+## Documentation
 
-The current product direction is documented in [docs/roadmap.md](docs/roadmap.md).
+- [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
+- [docs/research/README.md](docs/research/README.md): research map.
+- [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
+  evidence summary for technical CV decisions.
+- [docs/research/cvbuilder-proof-matrix.md](docs/research/cvbuilder-proof-matrix.md):
+  source-to-claim proof matrix.
+- [docs/research/cvbuilder-deep-review-protocol.md](docs/research/cvbuilder-deep-review-protocol.md):
+  deeper research protocol.
 
-```mermaid
-flowchart TD
-    Epic["Epic #28<br/>CVBuilder technical CV Markdown roadmap"]
-    Phase1["1. Linux Markdown foundation<br/>Issue #26, PR #27"]
-    Phase2["2. Stabilize CVDocument data contract<br/>Issue #29"]
-    Phase3["3. Build technical CV rendering modes<br/>Issue #30"]
-    Phase4["4. Harden TileDown Markdown contract<br/>Issue #31"]
-    Phase5["5. Quality gates and release hygiene<br/>Issue #32"]
+## Platform Boundaries
 
-    Core["CVBuilder<br/>structured CV data + deterministic Markdown"]
-    CLI["cvbuilder CLI<br/>JSON to Markdown or normalized JSON"]
-    TileDown["CVBuilderTileDown<br/>Linux Markdown adapter"]
-    Research["Research rules<br/>scientific evidence first"]
-    NonGoals["Non-goals<br/>kept outside core"]
+- Portable behavior means macOS and Linux.
+- `CVBuilderTileDown` is a Linux target hook, not a separate renderer backend.
+- TileDown receives Markdown only.
+- iOS support is not implemented or tested.
+- Research source snapshots, when present, are evidence only. They are not
+  package dependencies.
 
-    Epic --> Phase1 --> Phase2 --> Phase3 --> Phase4 --> Phase5
-    Research --> Phase2
-    Research --> Phase3
-    Phase1 --> Core
-    Core --> CLI
-    Core --> TileDown
-    Epic -. excludes .-> NonGoals
-```
+## Design Constraints
+
+- Pure Swift source.
+- Deterministic Markdown generation from typed data.
+- No runtime shell-out to another renderer during rendering.
+- No PDF renderer in the core package.
+- No ATS scoring, resume optimizer claims, personality labels, demographic
+  labels, or inferred fit labels.
+- No layout-driven Markdown tables, columns, image rendering, or photo handling
+  in the canonical document renderer.
+- No default Ignite or other HTML renderer dependency.
+- Linux support through Foundation and Swift Package Manager.
+- Small, testable public API.
 
 ## License
 
-MIT. See `LICENSE` file for details.
-
-## Non-goals
-
-These are intentionally outside the current package:
-
-- PDF rendering.
-- ATS scoring or resume optimizer claims.
-- Score-like fields, demographic metadata, personality labels, or inferred fit
-  labels.
-- Layout-driven Markdown tables, columns, image rendering, or photo handling in
-  the canonical document renderer.
-- Default Ignite or other HTML renderer dependency.
+See [LICENSE](LICENSE).
