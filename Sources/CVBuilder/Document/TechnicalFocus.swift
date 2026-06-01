@@ -6,7 +6,9 @@ import Foundation
 /// evidence item when a renderer needs to show why that work is technically
 /// relevant. Keep global skills separate from this local context.
 public struct TechnicalFocus: Codable, Equatable, Hashable, Sendable {
+    /// Broader technical areas rendered as `Technical focus`.
     public let areas: [String]
+    /// Concrete tags rendered as `Technical tags`.
     public let tags: [String]
 
     private enum CodingKeys: String, CodingKey {

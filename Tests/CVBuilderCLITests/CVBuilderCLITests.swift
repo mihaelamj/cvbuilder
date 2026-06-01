@@ -169,6 +169,19 @@ struct CVBuilderCLITests {
             #expect(!reason.isEmpty)
         }
 
+        let missingEmailInputURL = try tempDirectory.write("missing-email.json", contents: missingEmailJSON)
+        try expectFailure(makeRunner().run(.init(
+            dataPath: missingEmailInputURL.path,
+            outputPath: missingOutputURL.path,
+        ))) { failure in
+            guard case let .invalidJSON(path, reason) = failure else {
+                Issue.record("Expected invalidJSON, got \(failure)")
+                return
+            }
+            #expect(path == missingEmailInputURL.path)
+            #expect(reason.contains("cv.contactInfo.email"))
+        }
+
         try expectFailure(makeRunner().run(.init(
             dataPath: validInputURL.path,
             outputPath: missingOutputURL.path,
@@ -258,6 +271,20 @@ private let cliFixtureJSON = """
     "summary": "Builds file-driven Swift tooling.",
     "contactInfo": {
       "email": "alex@example.com",
+      "phone": "+1 555 010 0301",
+      "location": "Example City"
+    }
+  }
+}
+"""
+
+private let missingEmailJSON = """
+{
+  "cv": {
+    "name": "Alex Example",
+    "title": "CLI-focused Swift Engineer",
+    "summary": "Builds file-driven Swift tooling.",
+    "contactInfo": {
       "phone": "+1 555 010 0301",
       "location": "Example City"
     }

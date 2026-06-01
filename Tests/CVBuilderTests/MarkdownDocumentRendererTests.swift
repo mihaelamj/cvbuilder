@@ -89,6 +89,26 @@ struct MarkdownDocumentRendererTests {
         #expect(!output.contains("## Links"))
     }
 
+    @Test("empty optional sections can be emitted as an explicit skeleton")
+    func canRenderEmptyOptionalSectionHeadings() throws {
+        let document = try decode(minimalDocumentJSON)
+        let explicitSkeletonDocument = CVDocument(
+            frontMatter: document.frontMatter,
+            cv: document.cv,
+            links: document.links,
+            publicEvidence: document.publicEvidence,
+            rendering: RenderingOptions(omitEmptySections: false),
+        )
+        let output = Rendering.MarkdownDocumentRenderer().render(explicitSkeletonDocument)
+
+        #expect(output.contains("## Contact"))
+        #expect(output.contains("## Experience"))
+        #expect(output.contains("## Education"))
+        #expect(output.contains("## Public Evidence"))
+        #expect(output.contains("## Skills"))
+        #expect(output.contains("## Links"))
+    }
+
     @Test("non-positive rendering limits do not erase core facts")
     func nonPositiveLimitsDoNotEraseCoreFacts() throws {
         let document = try decode(fullDocumentJSON)
@@ -107,6 +127,43 @@ struct MarkdownDocumentRendererTests {
 
         #expect(output.contains(roleHeading))
         #expect(output.contains("Built a Swift package."))
+    }
+
+    @Test("positive rendering limits constrain work entries and project descriptions")
+    func positiveRenderingLimitsConstrainOutput() {
+        let output = Rendering.MarkdownDocumentRenderer().render(
+            makeLimitedWorkDocument(rendering: RenderingOptions(
+                recentCompanyCount: 1,
+                maxBulletsPerProject: 1,
+                nestProjectsUnderRoles: false,
+            )),
+        )
+
+        #expect(output.contains("## Projects"))
+        #expect(output.contains("### Visible Project"))
+        #expect(output.contains("First visible project fact."))
+        #expect(!output.contains("Second hidden project fact."))
+        #expect(!output.contains("Hidden Systems"))
+    }
+
+    @Test("public evidence uses period when display date is absent")
+    func publicEvidenceUsesPeriodFallback() {
+        let period = Period(start: .init(month: 1, year: 2024), end: .init(month: 6, year: 2026))
+        let evidence = PublicEvidence(
+            title: "Measured Package",
+            kind: .package,
+            role: "Maintainer",
+            summary: "Measured package reliability.",
+            url: "https://example.com/measured",
+            date: " ",
+            period: period,
+        )
+        let output = Rendering.MarkdownDocumentRenderer().render(
+            makeMinimalDocument(publicEvidence: [evidence]),
+        )
+
+        #expect(output.contains("Period: Jan 2024 - Jun 2026"))
+        #expect(!output.contains("Date:"))
     }
 
     @Test("legacy CV-only Markdown renderer remains available")
@@ -230,6 +287,65 @@ private func makeHostileDocument(
         cv: makeHostileCV(period: period, work: work),
         links: makeHostileLinks(),
         publicEvidence: makeHostilePublicEvidence(),
+        rendering: rendering,
+    )
+}
+
+private func makeMinimalDocument(
+    experience: [WorkExperience] = [],
+    publicEvidence: [PublicEvidence] = [],
+    rendering: RenderingOptions = .init(),
+) -> CVDocument {
+    CVDocument(
+        cv: CV(
+            name: "Taylor Example",
+            title: "Swift Engineer",
+            summary: "Builds Swift systems.",
+            contactInfo: ContactInfo(
+                email: "taylor@example.com",
+                phone: "+1 555 010 0106",
+                location: "Example City",
+            ),
+            experience: experience,
+            education: [],
+            skills: [],
+        ),
+        publicEvidence: publicEvidence,
+        rendering: rendering,
+    )
+}
+
+private func makeLimitedWorkDocument(rendering: RenderingOptions) -> CVDocument {
+    let period = Period(start: .init(month: 1, year: 2024), end: .init(month: 6, year: 2026))
+    let visibleCompany = Company(name: "Visible Systems")
+    let hiddenCompany = Company(name: "Hidden Systems")
+    let role = Role(title: "Engineer", seniority: .senior)
+    let visibleProject = Project(
+        name: "Visible Project",
+        company: visibleCompany,
+        descriptions: [
+            "First visible project fact.",
+            "Second hidden project fact.",
+        ],
+        techs: [Tech(name: "Swift", category: .language)],
+        role: role,
+        period: period,
+    )
+    let visibleExperience = WorkExperience(
+        company: visibleCompany,
+        role: role,
+        period: period,
+        projects: [ProjectExperience(project: visibleProject, role: role, period: period)],
+    )
+    let hiddenExperience = WorkExperience(
+        company: hiddenCompany,
+        role: role,
+        period: period,
+        projects: [],
+    )
+
+    return makeMinimalDocument(
+        experience: [visibleExperience, hiddenExperience],
         rendering: rendering,
     )
 }

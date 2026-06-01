@@ -7,8 +7,11 @@ import Foundation
 /// as a PDF resume, and `companyURLs` to link role headings without baking
 /// site-specific logic into renderers.
 public struct DocumentLinks: Codable, Equatable, Sendable {
+    /// Public profile links rendered in the document `Links` section.
     public let profiles: [Link]
+    /// Download links rendered in the document `Links` section.
     public let downloads: [Link]
+    /// Company-name to URL mapping used to link matching work-experience headings.
     public let companyURLs: [String: String]
 
     private enum CodingKeys: String, CodingKey {

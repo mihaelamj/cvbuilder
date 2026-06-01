@@ -30,13 +30,13 @@ public extension Rendering {
                         writer: &writer,
                     )
                 case .education:
-                    renderEducation(document.cv.education, writer: &writer)
+                    renderEducation(document.cv.education, options: document.rendering, writer: &writer)
                 case .publicEvidence:
-                    renderPublicEvidence(document.publicEvidence, writer: &writer)
+                    renderPublicEvidence(document.publicEvidence, options: document.rendering, writer: &writer)
                 case .skills:
                     renderSkills(document.cv.skills, options: document.rendering, writer: &writer)
                 case .links:
-                    renderLinks(document.links, writer: &writer)
+                    renderLinks(document.links, options: document.rendering, writer: &writer)
                 }
             }
 

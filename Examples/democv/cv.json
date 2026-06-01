@@ -1,0 +1,151 @@
+{
+  "frontMatter": {
+    "slug": "demo-cv",
+    "title": "Demo Curriculum Vitae"
+  },
+  "cv": {
+    "name": "Alex Rivera",
+    "title": "Senior Mobile Architect",
+    "summary": "Builds modular Swift applications, server-side tooling, and documentation workflows.",
+    "contactInfo": {
+      "email": "alex.rivera@example.com",
+      "phone": "+1 555 010 0199",
+      "linkedIn": "https://example.com/alex-rivera",
+      "github": "https://example.com/alex-rivera-code",
+      "website": "https://example.com/alex-rivera-notes",
+      "location": "Example City"
+    },
+    "experience": [
+      {
+        "company": {
+          "name": "Northbridge Systems"
+        },
+        "role": {
+          "title": "Senior Mobile Architect",
+          "seniority": "Senior"
+        },
+        "period": {
+          "start": { "month": 9, "year": 2025 },
+          "end": { "month": 6, "year": 2026 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "Identity Capture Platform",
+              "company": {
+                "name": "Northbridge Systems"
+              },
+              "descriptions": [
+                "Architected iOS applications for secure document capture and verification.",
+                "Designed package boundaries for testable identity workflows.",
+                "Automated API client updates from checked-in OpenAPI contracts."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "Swift Package Manager", "category": "tool" },
+                { "name": "OpenAPI", "category": "tool" }
+              ],
+              "role": {
+                "title": "Senior Mobile Architect",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 9, "year": 2025 },
+                "end": { "month": 6, "year": 2026 }
+              },
+              "urls": [
+                "https://example.com/northbridge-identity"
+              ],
+              "technicalFocus": {
+                "areas": ["Modular architecture", "API contracts"],
+                "tags": ["swift", "openapi", "testing"]
+              }
+            },
+            "role": {
+              "title": "Senior Mobile Architect",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 9, "year": 2025 },
+              "end": { "month": 6, "year": 2026 }
+            },
+            "technicalFocus": {
+              "areas": ["Package design"],
+              "tags": ["spm", "ci"]
+            }
+          }
+        ],
+        "isCurrent": true,
+        "technicalFocus": {
+          "areas": ["Architecture"],
+          "tags": ["swift", "linux"]
+        }
+      }
+    ],
+    "education": [
+      {
+        "institution": "Example Metropolitan University",
+        "degree": "MSc",
+        "field": "Human-Computer Information Systems",
+        "period": {
+          "start": { "month": 9, "year": 2016 },
+          "end": { "month": 6, "year": 2018 }
+        }
+      }
+    ],
+    "skills": [
+      { "name": "Swift", "category": "language" },
+      { "name": "Linux", "category": "platform" },
+      { "name": "OpenAPI", "category": "tool" },
+      { "name": "Unit Testing", "category": "concept" }
+    ]
+  },
+  "links": {
+    "profiles": [
+      {
+        "label": "GitHub",
+        "url": "https://example.com/alex-rivera-code"
+      },
+      {
+        "label": "Blog",
+        "url": "https://example.com/alex-rivera-notes"
+      }
+    ],
+    "downloads": [
+      {
+        "label": "PDF",
+        "url": "/assets/demo-cv.pdf"
+      }
+    ],
+    "companyURLs": {
+      "Northbridge Systems": "https://example.com/northbridge"
+    }
+  },
+  "publicEvidence": [
+    {
+      "title": "Contract Tooling Package",
+      "kind": "package",
+      "role": "Maintainer",
+      "summary": "Maintains a Swift package that generates typed clients from checked-in OpenAPI contracts.",
+      "url": "https://example.com/contract-tooling",
+      "technologies": ["Swift", "OpenAPI"],
+      "date": "2026",
+      "highlights": [
+        "Kept fixture-driven tests for contract changes.",
+        "Documented release-safe migration steps."
+      ],
+      "technicalFocus": {
+        "areas": ["Developer tooling"],
+        "tags": ["code-generation", "contracts"]
+      }
+    }
+  ],
+  "rendering": {
+    "mode": "experiencedTechnical",
+    "recentCompanyCount": 3,
+    "maxBulletsPerProject": 3,
+    "nestProjectsUnderRoles": true,
+    "compactGroupedSkills": true,
+    "omitEmptySections": true
+  }
+}

@@ -7,11 +7,31 @@ import Foundation
 /// links, public evidence, and rendering preferences. It does not know about a
 /// specific static site generator or output format.
 public struct CVDocument: Codable, Equatable, Sendable {
+    /// Static-site front matter emitted before the Markdown body.
+    ///
+    /// Keys are sorted before rendering so generated Markdown is deterministic.
+    /// Values are escaped as single-line YAML scalars.
     public let frontMatter: [String: String]
+    /// Canonical resume facts: identity, contact data, work, education, and skills.
+    ///
+    /// This field is required in JSON. Omitted optional collections inside `CV`
+    /// decode as empty collections so handwritten files can stay small.
     // swiftlint:disable:next identifier_name
     public let cv: CV
+    /// Document-level links used by generated Markdown.
+    ///
+    /// Profile and download links render in the `Links` section. `companyURLs`
+    /// links matching work-experience company headings.
     public let links: DocumentLinks
+    /// Public technical artifacts that support the CV.
+    ///
+    /// Rendered as `Public Evidence` entries with kind, role, date or period,
+    /// summary, technologies, technical focus, and highlights.
     public let publicEvidence: [PublicEvidence]
+    /// Markdown ordering and compaction preferences.
+    ///
+    /// Rendering options affect presentation only. They do not carry scores,
+    /// inferred fit, demographic fields, or parser-specific metadata.
     public let rendering: RenderingOptions
 
     private enum CodingKeys: String, CodingKey {

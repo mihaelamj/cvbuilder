@@ -61,7 +61,7 @@ Relevant links:
 Ordered roadmap issues:
 
 1. #26 - done: merge the Linux Markdown foundation.
-2. #29 - next: stabilize the `CVDocument` data contract.
+2. #29 - in progress: stabilize the `CVDocument` data contract.
 3. #30 - todo: build technical CV rendering modes.
 4. #31 - todo: document and harden the TileDown Markdown contract.
 5. #32 - partially landed: add roadmap quality gates and release hygiene.
@@ -69,7 +69,7 @@ Ordered roadmap issues:
 ```mermaid
 flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
-    P2["Phase 2<br/>#29 CVDocument data contract<br/>Next"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>In progress"]
     P3["Phase 3<br/>#30 Technical CV rendering modes"]
     P4["Phase 4<br/>#31 TileDown Markdown contract"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
@@ -77,11 +77,11 @@ flowchart TD
     P1 --> P2 --> P3 --> P4 --> P5
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
-    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef active fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1 done;
-    class P2 next;
+    class P2 active;
     class P5 partial;
     class P3,P4 todo;
 ```

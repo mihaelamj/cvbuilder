@@ -131,6 +131,11 @@ empty values. This small document is valid input:
 }
 ```
 
+The full data contract, Markdown behavior, decoding defaults, and migration
+rules are documented in
+[docs/cvdocument-contract.md](docs/cvdocument-contract.md). A complete
+handwritten fixture lives at [Examples/democv/cv.json](Examples/democv/cv.json).
+
 ## CVBuilder roadmap
 
 Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the ordered
@@ -139,7 +144,7 @@ path from the current Markdown foundation to stable technical CV templates.
 ```mermaid
 flowchart TD
     P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
-    P2["Phase 2<br/>#29 CVDocument data contract<br/>Next"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>In progress"]
     P3["Phase 3<br/>#30 Technical CV rendering modes"]
     P4["Phase 4<br/>#31 TileDown Markdown contract"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
@@ -147,11 +152,11 @@ flowchart TD
     P1 --> P2 --> P3 --> P4 --> P5
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
-    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef active fill:#fff8e1,stroke:#f9a825,color:#111;
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1 done;
-    class P2 next;
+    class P2 active;
     class P5 partial;
     class P3,P4 todo;
 ```
@@ -204,6 +209,8 @@ swift build --target CVBuilderTileDown
 - [CONTRIBUTING.md](CONTRIBUTING.md): contribution rules and local checks.
 - [SUPPORT.md](SUPPORT.md): where to file bugs, feature requests, and security issues.
 - [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
+- [docs/cvdocument-contract.md](docs/cvdocument-contract.md): JSON schema,
+  Markdown behavior, and migration rules.
 - [docs/research/README.md](docs/research/README.md): research map.
 - [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
   evidence summary for technical CV decisions.

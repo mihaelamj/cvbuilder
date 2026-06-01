@@ -5,16 +5,27 @@ import Foundation
 /// Evidence is descriptive only. It carries summary, role, technologies, and a
 /// link so renderers can show context without inventing scores or rankings.
 public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
+    /// Stable identifier for normalized JSON. Missing IDs are synthesized.
     public let id: UUID
+    /// Evidence heading text.
     public let title: String
+    /// Evidence category rendered as a factual label.
     public let kind: PublicEvidenceKind
+    /// Candidate role or relationship to the evidence.
     public let role: String
+    /// Short factual summary rendered under the evidence heading.
     public let summary: String
+    /// Evidence destination kept as source text until Markdown rendering.
     public let url: String
+    /// Technologies rendered as a labelled list for this evidence item.
     public let technologies: [String]
+    /// Optional display date rendered when present and non-empty.
     public let date: String?
+    /// Optional period rendered when `date` is absent.
     public let period: Period?
+    /// Supporting factual highlights rendered in source order.
     public let highlights: [String]
+    /// Optional local technical context for this evidence item.
     public let technicalFocus: TechnicalFocus?
 
     private enum CodingKeys: String, CodingKey {
