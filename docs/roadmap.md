@@ -62,7 +62,7 @@ Relevant links:
 - Issue #30: closed technical CV rendering modes.
 - Issue #40: realistic fixture coverage for omitted and selected jobs.
 - Issue #19: closed evidence fixture proof coverage.
-- Issue #20: in-review JSON workflow and research-boundary documentation in
+- Issue #20: CI-green JSON workflow and research-boundary documentation in
   PR #45.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -76,7 +76,7 @@ Ordered roadmap issues:
 5. #32 - done: add roadmap quality gates and release hygiene.
 6. #40 - done: expand realistic fixture coverage.
 7. #19 - done: add evidence-backed renderer fixture proofs.
-8. #20 - in review: document the JSON workflow and research-backed boundaries.
+8. #20 - CI green: document the JSON workflow and research-backed boundaries.
 
 ```mermaid
 flowchart TD
@@ -87,7 +87,7 @@ flowchart TD
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
-    P8["Phase 8<br/>#20 Workflow documentation<br/>In review"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>CI green"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
@@ -282,15 +282,15 @@ Issue: [#20](https://github.com/mihaelamj/cvbuilder/issues/20).
 
 Deliverables:
 
-- document the authoring workflow from JSON to generated Markdown: in review
-- document what the renderer deliberately does not generate: in review
-- link the workflow docs back to the research proof matrix: in review
+- document the authoring workflow from JSON to generated Markdown: CI green
+- document what the renderer deliberately does not generate: CI green
+- link the workflow docs back to the research proof matrix: CI green
 
 Acceptance:
 
-- README and docs explain the intended user path: in review
+- README and docs explain the intended user path: CI green
 - docs keep PDF, TileDown implementation, ATS scoring, and static-site
-  generation outside the core CVBuilder contract: in review
+  generation outside the core CVBuilder contract: CI green
 
 ## Research Rules
 
