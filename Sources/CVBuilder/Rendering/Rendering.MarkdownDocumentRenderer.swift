@@ -1,0 +1,51 @@
+import Foundation
+
+public extension Rendering {
+    /// Renders a complete `CVDocument` into factual, source-order Markdown.
+    ///
+    /// `MarkdownDocumentRenderer` is intentionally conservative: it emits flat
+    /// front matter, predictable headings, paragraphs, and labelled lines. It
+    /// does not render tables, columns, images, scores, demographic metadata, or
+    /// inferred fit labels.
+    struct MarkdownDocumentRenderer: Sendable {
+        /// Creates a renderer with the default evidence-backed Markdown policy.
+        public init() {}
+
+        /// Returns deterministic Markdown for the supplied document.
+        public func render(_ document: CVDocument) -> String {
+            var writer = Writer()
+
+            renderFrontMatter(document.frontMatter, writer: &writer)
+            renderHeader(document.cv, writer: &writer)
+
+            for section in sections(for: document.rendering.mode) {
+                switch section {
+                case .contact:
+                    renderContact(document.cv.contactInfo, writer: &writer)
+                case .experience:
+                    renderExperience(
+                        document.cv.experience,
+                        links: document.links,
+                        options: document.rendering,
+                        writer: &writer,
+                    )
+                case .education:
+                    renderEducation(document.cv.education, writer: &writer)
+                case .publicEvidence:
+                    renderPublicEvidence(document.publicEvidence, writer: &writer)
+                case .skills:
+                    renderSkills(document.cv.skills, options: document.rendering, writer: &writer)
+                case .links:
+                    renderLinks(document.links, writer: &writer)
+                }
+            }
+
+            return writer.output
+        }
+
+        /// Writes deterministic Markdown for the supplied document.
+        public func save(_ document: CVDocument, to url: URL) throws {
+            try render(document).write(to: url, atomically: true, encoding: .utf8)
+        }
+    }
+}

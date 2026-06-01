@@ -1,50 +1,50 @@
 import Foundation
 
-/// A publishable CV page: the core `CV` resume plus the presentation sections a
-/// website shows (speaking, open source, extra links) and SSG-agnostic front
-/// matter. Decodes from a single JSON file so a CV page can be generated with
-/// `cvbuilder --data cv.json --out cv/index.md`, no per-site Swift.
+/// A publishable technical CV document.
 ///
-/// `CV` stays pure (it is the resume); `CVDocument` is "a CV as a published
-/// page". Only `cv` is required; every other section defaults to empty.
-public struct CVDocument: Codable {
-    /// Front matter emitted verbatim as the leading YAML block, so the same file
-    /// works for any static site generator (Toucan, Tiledown, Jekyll, ...).
-    public var frontMatter: [String: String]
-    public var cv: CV
-    public var links: DocumentLinks
-    public var speaking: [SpeakingEngagement]
-    public var openSource: [OpenSourceProject]
-    public var rendering: RenderingOptions
+/// `CVDocument` keeps `CV` as the canonical resume data and adds publishing
+/// metadata that a generated Markdown page needs: static-site front matter,
+/// links, public evidence, and rendering preferences. It does not know about a
+/// specific static site generator or output format.
+public struct CVDocument: Codable, Equatable, Sendable {
+    public let frontMatter: [String: String]
+    // swiftlint:disable:next identifier_name
+    public let cv: CV
+    public let links: DocumentLinks
+    public let publicEvidence: [PublicEvidence]
+    public let rendering: RenderingOptions
+
+    private enum CodingKeys: String, CodingKey {
+        case frontMatter
+        // swiftlint:disable:next identifier_name
+        case cv
+        case links
+        case publicEvidence
+        case rendering
+    }
 
     public init(
         frontMatter: [String: String] = [:],
+        // swiftlint:disable:next identifier_name
         cv: CV,
         links: DocumentLinks = .init(),
-        speaking: [SpeakingEngagement] = [],
-        openSource: [OpenSourceProject] = [],
-        rendering: RenderingOptions = .init()
+        publicEvidence: [PublicEvidence] = [],
+        rendering: RenderingOptions = .init(),
     ) {
         self.frontMatter = frontMatter
         self.cv = cv
         self.links = links
-        self.speaking = speaking
-        self.openSource = openSource
+        self.publicEvidence = publicEvidence
         self.rendering = rendering
     }
 
-    public init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        frontMatter = try c.decodeIfPresent([String: String].self, forKey: .frontMatter) ?? [:]
-        cv = try c.decode(CV.self, forKey: .cv)
-        links = try c.decodeIfPresent(DocumentLinks.self, forKey: .links) ?? .init()
-        speaking = try c.decodeIfPresent([SpeakingEngagement].self, forKey: .speaking) ?? []
-        openSource = try c.decodeIfPresent([OpenSourceProject].self, forKey: .openSource) ?? []
-        rendering = try c.decodeIfPresent(RenderingOptions.self, forKey: .rendering) ?? .init()
-    }
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
 
-    /// Decodes a document from JSON `Data`.
-    public static func decode(from data: Data) throws -> CVDocument {
-        try JSONDecoder().decode(CVDocument.self, from: data)
+        frontMatter = try container.decode([String: String].self, forKey: .frontMatter, defaultIfMissing: [:])
+        cv = try container.decode(CV.self, forKey: .cv)
+        links = try container.decode(DocumentLinks.self, forKey: .links, defaultIfMissing: .init())
+        publicEvidence = try container.decode([PublicEvidence].self, forKey: .publicEvidence, defaultIfMissing: [])
+        rendering = try container.decode(RenderingOptions.self, forKey: .rendering, defaultIfMissing: .init())
     }
 }

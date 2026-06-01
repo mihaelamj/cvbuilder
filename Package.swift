@@ -2,58 +2,75 @@
 
 import PackageDescription
 
-// CVBuilderIgnite renders via twostraws/Ignite, a macOS-oriented HTML DSL that
-// does not build on Linux. Gate it (and its Ignite dependency) to macOS so the
-// core library, the cvbuilder CLI, and the tests build and run on Linux too.
-#if os(macOS)
-let igniteProducts: [Product] = [
-    .library(name: "CVBuilderIgnite", targets: ["CVBuilderIgnite"]),
+let packagePlatforms: [SupportedPlatform] = [
+    .macOS(.v13),
+    .iOS(.v16),
 ]
-let igniteDependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/twostraws/Ignite.git", branch: "main"),
-]
-let igniteTargets: [Target] = [
+
+#if os(Linux)
+    let tileDownProducts: [Product] = [
+        .library(
+            name: "CVBuilderTileDown",
+            targets: ["CVBuilderTileDown"],
+        ),
+    ]
+    let tileDownTargets: [Target] = [
+        .target(
+            name: "CVBuilderTileDown",
+            dependencies: ["CVBuilder"],
+        ),
+    ]
+    let tileDownTestDependencies: [Target.Dependency] = [
+        "CVBuilderTileDown",
+    ]
+#else
+    let tileDownProducts: [Product] = []
+    let tileDownTargets: [Target] = []
+    let tileDownTestDependencies: [Target.Dependency] = []
+#endif
+
+let packageProducts: [Product] = [
+    .library(
+        name: "CVBuilder",
+        targets: ["CVBuilder"],
+    ),
+    .executable(
+        name: "cvbuilder",
+        targets: ["CVBuilderTool"],
+    ),
+] + tileDownProducts
+
+let packageDependencies: [Package.Dependency] = []
+
+let packageTargets: [Target] = [
     .target(
-        name: "CVBuilderIgnite",
+        name: "CVBuilder",
+        dependencies: [],
+    ),
+    .target(
+        name: "CVBuilderCLI",
+        dependencies: ["CVBuilder"],
+    ),
+    .executableTarget(
+        name: "CVBuilderTool",
+        dependencies: ["CVBuilderCLI"],
+    ),
+    .testTarget(
+        name: "CVBuilderTests",
         dependencies: [
             "CVBuilder",
-            .product(name: "Ignite", package: "Ignite"),
-        ]
+        ] + tileDownTestDependencies,
     ),
-]
-#else
-let igniteProducts: [Product] = []
-let igniteDependencies: [Package.Dependency] = []
-let igniteTargets: [Target] = []
-#endif
+    .testTarget(
+        name: "CVBuilderCLITests",
+        dependencies: ["CVBuilder", "CVBuilderCLI"],
+    ),
+] + tileDownTargets
 
 let package = Package(
     name: "CVBuilder",
-    platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
-    ],
-    products: [
-        .library(name: "CVBuilder", targets: ["CVBuilder"]),
-        .executable(name: "cvbuilder", targets: ["CVBuilderCLI"]),
-    ] + igniteProducts,
-    dependencies: igniteDependencies,
-    targets: [
-        // Core models and rendering — no external dependency, builds anywhere.
-        .target(name: "CVBuilder"),
-
-        // File-driven CLI: render a CV page from one JSON document. The target
-        // directory is CVBuilderCLI (not "cvbuilder") so it does not collide with
-        // the CVBuilder target on case-insensitive filesystems; the executable
-        // product is still named `cvbuilder`.
-        .executableTarget(
-            name: "CVBuilderCLI",
-            dependencies: ["CVBuilder"]
-        ),
-
-        .testTarget(
-            name: "CVBuilderTests",
-            dependencies: ["CVBuilder"]
-        ),
-    ] + igniteTargets
+    platforms: packagePlatforms,
+    products: packageProducts,
+    dependencies: packageDependencies,
+    targets: packageTargets,
 )

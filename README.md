@@ -1,245 +1,240 @@
 # CVBuilder
 
-CVBuilder is a modular Swift package designed to represent and render CV (curriculum vitae) data in a structured, reusable way. It provides clean data models, rendering logic for Markdown and plain text, and optional support for HTML rendering using [Ignite](https://github.com/twostraws/Ignite).
+[![Style and namespacing](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml)
+[![Swift macOS](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml)
+[![Swift Linux](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml)
 
----
+Follow project updates at [@diyamantina](https://x.com/diyamantina).
 
-## ✨ Features
+CVBuilder is a Pure Swift technical CV generator. It keeps CV data in typed
+Swift or JSON, renders deterministic Markdown, and provides a Linux-facing
+TileDown adapter for Markdown publishing workflows.
 
-- 📄 Strongly typed data model for CVs: education, experience, skills, contact info, etc.
-- 🧩 Modular architecture: core types are renderer-agnostic.
-- 🖋️ Renderers for:
-  - **Markdown** (via `MarkdownCVRenderer`)
-  - **Plain text** (via `StringCVRenderer`)
-  - **HTML** with [Ignite](https://github.com/twostraws/Ignite) (via `IgniteRenderer` in `CVBuilderIgnite`)
-- 🧪 Unit-testable and reusable across platforms.
+The core package is built for macOS and Linux. `CVDocument` is the canonical
+source of truth for publishable CV data, front matter, links, public evidence,
+and rendering options.
 
----
+## What Works Today
 
-## 🧱 Package Structure
+CVBuilder currently renders inspectable Markdown from structured CV data. The
+output is deterministic, byte-for-byte testable, and intentionally conservative.
 
-This package includes two main libraries:
+The generic renderer currently covers:
 
-### 1. `CVBuilder` (core)
+- Front matter for static site generators.
+- Headings, paragraphs, links, and labelled text lines.
+- Contact information, education, work experience, projects, skills, public
+  evidence, and profile/download links.
+- Rendering modes for experienced and early-career technical CV ordering.
+- JSON input with ergonomic defaults for missing optional arrays.
+- CLI output checks for checked-in generated Markdown.
+- Linux TileDown compatibility through a Markdown-only adapter.
 
-Contains all model types and basic rendering:
+The compatibility target is structured technical CV data to Markdown. The
+generated profile is intentionally small while the document contract and
+technical CV templates are being hardened.
 
-```
-CV
-├── ContactInfo
-├── Education
-├── WorkExperience
-│   ├── Company
-│   ├── Role
-│   └── ProjectExperience
-│       ├── Project
-│       └── Tech
-└── Period
-```
+## Package Products
 
-Renderers in `CVBuilder`:
-- `MarkdownCVRenderer`
-- `StringCVRenderer`
+| Product | Kind | Purpose |
+|---|---|---|
+| `CVBuilder` | Library | Core CV data model, document model, and Markdown/plain text renderers. |
+| `CVBuilderTileDown` | Library | Linux-only Markdown adapter for TileDown workflows. |
+| `cvbuilder` | Executable | `CVDocument` JSON file to Markdown or normalized JSON command. |
 
-### 2. `CVBuilderIgnite` (optional)
+`CVBuilderTileDown` is available only when the package is built on Linux. iOS
+support is not claimed.
 
-Provides `IgniteRenderer` for HTML rendering, using the [Ignite](https://github.com/twostraws/Ignite) static site generator.
+## Quick Start
 
-> 🔥 Note: This target depends on `Ignite` and is **separated** to avoid pulling in C dependencies in projects that don’t need HTML rendering.
-
----
-
-## 📦 Usage
-
-### Add to your `Package.swift` (using branch until Ignite is tagged):
-
-```swift
-.package(url: "https://github.com/mihaelamj/cvbuilder.git", branch: "main")
-```
-
-Then add the desired product:
-
-```swift
-.product(name: "CVBuilder", package: "cvbuilder"),
-.product(name: "CVBuilderIgnite", package: "cvbuilder") // if using Ignite
-```
-
----
-
-## 🛠 How to Generate a Markdown CV
-
-Currently, the best way to generate a Markdown CV is through Swift code:
+Use the document renderer directly:
 
 ```swift
 import CVBuilder
 
-let cv = CV.createExampleCV()
-let markdown = MarkdownCVRenderer(cv: cv).render()
-print(markdown)
+let resume = CV(
+    name: "Demo Candidate",
+    title: "Senior Swift Engineer",
+    summary: "Builds typed Swift tooling for document workflows.",
+    contactInfo: ContactInfo(
+        email: "demo.candidate@example.com",
+        phone: "+1 555 010 0701",
+        location: "Example City"
+    ),
+    experience: [],
+    education: [],
+    skills: [
+        Tech(name: "Swift", category: .language),
+        Tech(name: "Linux", category: .platform),
+    ]
+)
+
+let document = CVDocument(
+    frontMatter: ["slug": "demo-cv", "title": "Demo CV"],
+    cv: resume
+)
+
+let markdown = Rendering.MarkdownDocumentRenderer().render(document)
 ```
 
-Or use the utility method to save it:
+Use the Linux-facing product:
 
 ```swift
-if let markdownFile = CV.convertTMarkdownAndSave(cv) {
-    print("Markdown saved to: \(markdownFile)")
+import CVBuilderTileDown
+
+let markdown = CVBuilderTileDown.Renderer().render(document)
+```
+
+Run the CV CLI:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md
+```
+
+Write normalized JSON:
+
+```sh
+swift run cvbuilder --data cv.json --out cv.normalized.json --format json
+```
+
+Check a generated Markdown file:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md --check
+```
+
+## JSON Input
+
+The CLI reads one `CVDocument` JSON file. Missing optional arrays default to
+empty values. This small document is valid input:
+
+```json
+{
+  "frontMatter": {
+    "slug": "demo-cv",
+    "title": "Demo CV"
+  },
+  "cv": {
+    "name": "Demo Candidate",
+    "title": "Senior Swift Engineer",
+    "summary": "Builds typed Swift tooling for document workflows.",
+    "contactInfo": {
+      "email": "demo.candidate@example.com",
+      "phone": "+1 555 010 0701",
+      "location": "Example City"
+    },
+    "skills": [
+      { "name": "Swift", "category": "language" },
+      { "name": "Linux", "category": "platform" }
+    ]
+  }
 }
 ```
 
-> ℹ️ A command-line interface to generate and export Markdown or HTML versions of your CV is currently **in progress**.
+## CVBuilder roadmap
 
----
+Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the ordered
+path from the current Markdown foundation to stable technical CV templates.
 
-## 🧪 Full Test Example
+```mermaid
+flowchart TD
+    P1["Phase 1<br/>#26 Linux Markdown foundation<br/>Done"]
+    P2["Phase 2<br/>#29 CVDocument data contract<br/>Next"]
+    P3["Phase 3<br/>#30 Technical CV rendering modes"]
+    P4["Phase 4<br/>#31 TileDown Markdown contract"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
 
-```swift
+    P1 --> P2 --> P3 --> P4 --> P5
 
-extension CV {
-    static func createExampleCV() -> CV {
-        
-        // Create contact info
-        let contactInfo = ContactInfo(
-            email: "jane.doe@example.com",
-            phone: "+1 (555) 123-4567",
-            linkedIn: URL(string: "https://linkedin.com/in/janedoe"),
-            github: URL(string: "https://github.com/janedoe"),
-            website: URL(string: "https://janedoe.dev"),
-            location: "San Francisco, CA"
-        )
-        
-        // Create education
-        let education = Education(
-            institution: "Stanford University",
-            degree: "B.S.",
-            field: "Computer Science",
-            period: Period(
-                start: .init(month: 9, year: 2010),
-                end: .init(month: 6, year: 2014)
-            )
-        )
-        
-        // Create companies
-        let appleCompany = Company(name: "Apple Inc.")
-        let googleCompany = Company(name: "Google")
-        
-        // Create role types
-        let juniorIOS = Role(title: "iOS Developer", seniority: .junior)
-        let midAndroid = Role(title: "Android Developer", seniority: .mid)
-        let seniorIOS = Role(title: "iOS Developer", seniority: .senior)
-        let leadIOS = Role(title: "iOS Developer", seniority: .lead)
-        
-        // Create tech types
-        let swift = Tech(name: "Swift", category: .language)
-        let swiftUI = Tech(name: "SwiftUI", category: .framework)
-        let kotlin = Tech(name: "Kotlin", category: .language)
-        let restAPI = Tech(name: "REST API", category: .concept)
-
-        
-        // Create projects using the builder pattern
-        let project1 = try! Project.Builder()
-            .withName("iOS App Redesign")
-            .withCompany(appleCompany)
-            .withRole(seniorIOS)
-            .withPeriod(start: (month: 3, year: 2020), end: (month: 9, year: 2021))
-            .addDescription("Led a team of 5 developers for a complete redesign of a flagship iOS app")
-            .addDescription("Implemented SwiftUI components for improved user experience")
-            .addDescription("Reduced app size by 30% through code optimization")
-            .withTechs([swift, swiftUI])
-            .addURL(URL(string: "https://apps.apple.com/example")!)
-            .build()
-        
-        let project2 = try! Project.Builder()
-            .withName("Android Integration Project")
-            .withCompany(googleCompany)
-            .withRole(midAndroid)
-            .withPeriod(start: (month: 6, year: 2018), end: (month: 2, year: 2020))
-            .addDescription("Developed APIs for cross-platform data sharing")
-            .addDescription("Implemented secure authentication protocols")
-            .withTechs([kotlin, restAPI])
-            .build()
-        
-        // Create the CV
-        return CV.create(
-            name: "Jane Doe",
-            title: "Senior Mobile Developer",
-            summary: "Passionate mobile developer with 5+ years experience building apps for iOS and Android platforms. Expert in Swift, SwiftUI, and cross-platform development.",
-            contactInfo: contactInfo,
-            education: [education],
-            projects: [project1, project2]
-        )
-    }
-}
-
-
-@Test func testCreatingCV() async throws {
-    let cv = CV.createExampleCV()
-    print("Created")
-    #expect(cv.title == "Senior Mobile Developer")
-
-    let markdown = MarkdownCVRenderer(cv: cv).render()
-    print("Markdown Preview:")
-    print(markdown)
-
-    if let markdownFile = CV.convertTMarkdownAndSave(cv) {
-        print("Markdown saved to: \(markdownFile)")
-    }
-}
+    classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
+    classDef next fill:#fff8e1,stroke:#f9a825,color:#111;
+    classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
+    classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
+    class P1 done;
+    class P2 next;
+    class P5 partial;
+    class P3,P4 todo;
 ```
 
----
+See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
 
-## 📄 Sample Markdown Output
+## Validation
 
-Below is a real CV generated using `MarkdownCVRenderer`:
+The test suite validates generated Markdown in four ways:
 
-```
-# Jane Doe
-## Senior Mobile Developer
+- Snapshot-style expectations check section ordering, headings, links, escaping,
+  and evidence rendering.
+- Hostile text tests ensure generated Markdown treats source data as data, not
+  structure.
+- JSON schema tests check defaults for omitted optional arrays and rejection of
+  explicit invalid nulls.
+- CLI tests check Markdown output, normalized JSON output, and stale-file
+  detection.
 
-Passionate mobile developer with 5+ years experience building apps for iOS and Android platforms. Expert in Swift, SwiftUI, and cross-platform development.
+## Build and Test
 
-jane.doe@example.com
-+1 (555) 123-4567
-San Francisco, CA
-[LinkedIn](https://linkedin.com/in/janedoe)
-[GitHub](https://github.com/janedoe)
-[Website](https://janedoe.dev)
-
-Stanford University, B.S. in Computer Science
-
-## EXPERIENCE
-
-### Apple Inc. (Mar 2020 - Sep 2021) – Senior iOS Developer
-
-#### iOS App Redesign
-- Led a team of 5 developers for a complete redesign of a flagship iOS app
-- Implemented SwiftUI components for improved user experience
-- Reduced app size by 30% through code optimization
-- [https://apps.apple.com/example](https://apps.apple.com/example)
-- | Swift | SwiftUI |
-
-
-### Google (Jun 2018 - Feb 2020) – Mid Android Developer
-
-#### Android Integration Project
-- Developed APIs for cross-platform data sharing
-- Implemented secure authentication protocols
-- | Kotlin | REST API |
-
-
-### SKILLS
-- | Kotlin | REST API | Swift | SwiftUI |
+```sh
+swift build --target CVBuilder
+swift build --target CVBuilderCLI
+swift build --product cvbuilder
+swift test
 ```
 
----
+The same core package is expected to build on macOS and Linux. GitHub CI runs
+style, macOS Swift, and Linux Swift workflows.
 
-## 📄 License
+Useful local checks from the repository root:
 
-MIT. See `LICENSE` file for details.
+```sh
+bash scripts/check-style.sh
+bash scripts/check-namespacing.sh
+swiftformat . --config .swiftformat --lint
+swiftlint --config .swiftlint.yml --strict
+```
 
----
+On Linux, also verify the TileDown adapter:
 
-## 👩‍💻 Author
+```sh
+swift build --target CVBuilderTileDown
+```
 
-Built with ❤️ by [Mihaela Mihaljević](https://github.com/mihaelamj)
+## Documentation
 
+- [CHANGELOG.md](CHANGELOG.md): notable user-facing changes.
+- [CONTRIBUTING.md](CONTRIBUTING.md): contribution rules and local checks.
+- [SUPPORT.md](SUPPORT.md): where to file bugs, feature requests, and security issues.
+- [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
+- [docs/research/README.md](docs/research/README.md): research map.
+- [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
+  evidence summary for technical CV decisions.
+- [docs/research/cvbuilder-proof-matrix.md](docs/research/cvbuilder-proof-matrix.md):
+  source-to-claim proof matrix.
+- [docs/research/cvbuilder-deep-review-protocol.md](docs/research/cvbuilder-deep-review-protocol.md):
+  deeper research protocol.
+
+## Platform Boundaries
+
+- Portable behavior means macOS and Linux.
+- `CVBuilderTileDown` is a Linux target hook, not a separate renderer backend.
+- TileDown receives Markdown only.
+- iOS support is not implemented or tested.
+- Research source snapshots, when present, are evidence only. They are not
+  package dependencies.
+
+## Design Constraints
+
+- Pure Swift source.
+- Deterministic Markdown generation from typed data.
+- No runtime shell-out to another renderer during rendering.
+- No PDF renderer in the core package.
+- No ATS scoring, resume optimizer claims, personality labels, demographic
+  labels, or inferred fit labels.
+- No layout-driven Markdown tables, columns, image rendering, or photo handling
+  in the canonical document renderer.
+- No default Ignite or other HTML renderer dependency.
+- Linux support through Foundation and Swift Package Manager.
+- Small, testable public API.
+
+## License
+
+See [LICENSE](LICENSE).

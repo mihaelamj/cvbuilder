@@ -1,0 +1,67 @@
+name: Swift (Linux)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  swift-linux:
+    name: Swift (Linux)
+    runs-on: ubuntu-latest
+    container:
+      image: swift:6.1-noble
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Swift version
+        run: swift --version
+
+      - name: Package graph
+        run: |
+          swift package dump-package > package.txt
+          grep -q "CVBuilderTileDown" package.txt
+          grep -q "cvbuilder" package.txt
+          ! grep -q "CVBuilderIgnite" package.txt
+
+      - name: Build
+        run: |
+          swift build --target CVBuilder
+          swift build --target CVBuilderCLI
+          swift build --target CVBuilderTileDown
+          swift build --product cvbuilder
+
+      - name: Test
+        run: swift test
+
+      - name: CLI smoke
+        run: |
+          tmpdir="$(mktemp -d)"
+          cat > "$tmpdir/cv.json" <<'JSON'
+          {
+            "frontMatter": {
+              "slug": "linux-ci"
+            },
+            "cv": {
+              "id": "00000000-0000-0000-0000-000000000601",
+              "name": "Linux CI",
+              "title": "Swift Command",
+              "summary": "Exercises the executable product on Linux.",
+              "contactInfo": {
+                "email": "linux-ci@example.com",
+                "phone": "+1 555 010 0601",
+                "location": "Example City"
+              }
+            }
+          }
+          JSON
+          swift run cvbuilder --data "$tmpdir/cv.json" --out "$tmpdir/cv/index.md"
+          swift run cvbuilder --data "$tmpdir/cv.json" --out "$tmpdir/cv/index.md" --check
+          swift run cvbuilder --data "$tmpdir/cv.json" --out "$tmpdir/cv.normalized.json" --format json
+          grep -q "# Linux CI" "$tmpdir/cv/index.md"
+          grep -q '"frontMatter"' "$tmpdir/cv.normalized.json"

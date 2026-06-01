@@ -1,18 +1,26 @@
 import Foundation
 
-public struct Education: Codable, Identifiable, Hashable {
+public struct Education: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID
     public let institution: String
     public let degree: String
     public let field: String
     public let period: Period
-    
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case institution
+        case degree
+        case field
+        case period
+    }
+
     public init(
         id: UUID = UUID(),
         institution: String,
         degree: String,
         field: String,
-        period: Period
+        period: Period,
     ) {
         self.id = id
         self.institution = institution
@@ -21,12 +29,13 @@ public struct Education: Codable, Identifiable, Hashable {
         self.period = period
     }
 
-    public init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
-        institution = try c.decode(String.self, forKey: .institution)
-        degree = try c.decode(String.self, forKey: .degree)
-        field = try c.decode(String.self, forKey: .field)
-        period = try c.decode(Period.self, forKey: .period)
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        institution = try container.decode(String.self, forKey: .institution)
+        degree = try container.decode(String.self, forKey: .degree)
+        field = try container.decode(String.self, forKey: .field)
+        period = try container.decode(Period.self, forKey: .period)
     }
 }

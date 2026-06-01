@@ -1,0 +1,24 @@
+name: Style and namespacing
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  style:
+    name: Style and namespacing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Style gate
+        run: bash scripts/check-style.sh
+
+      - name: Namespacing gate
+        run: bash scripts/check-namespacing.sh

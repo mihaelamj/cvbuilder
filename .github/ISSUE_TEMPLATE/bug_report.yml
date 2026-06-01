@@ -1,0 +1,61 @@
+name: Bug report
+description: Something ships incorrectly in CVBuilder.
+labels: ["bug"]
+body:
+  - type: input
+    id: status-date
+    attributes:
+      label: Status date
+      description: Today's date, in YYYY-MM-DD form. Keep this current as the issue evolves.
+      placeholder: 2026-06-01
+    validations:
+      required: true
+  - type: textarea
+    id: symptom
+    attributes:
+      label: Symptom
+      description: What goes wrong? What did you observe?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: A minimal, ordered list. Include JSON input, Markdown output, or command output if relevant.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How will we know this is fixed?
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: High means critical, release-gating, or actively blocking. Otherwise leave as Normal.
+      options:
+        - Normal
+        - High
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: The CVBuilder version or commit SHA where you saw this.
+    validations:
+      required: false

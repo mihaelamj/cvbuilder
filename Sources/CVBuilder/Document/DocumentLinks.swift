@@ -1,29 +1,37 @@
 import Foundation
 
-/// Presentation links a CV page shows beyond the core `ContactInfo`: a social
-/// handle, a downloadable resume, and per-company website URLs.
-public struct DocumentLinks: Codable, Hashable {
-    public var twitter: URL?
-    /// Path or URL to a downloadable resume (e.g. `/assets/cv.pdf`). A site-root
-    /// path is common, so this is a `String`, not a `URL`.
-    public var resumePDF: String?
-    /// Company display name to its website URL, used to link experience headings.
-    public var companyURLs: [String: URL]
+/// Link groups that belong to a published CV page rather than to core resume
+/// facts.
+///
+/// Use `profiles` for public profile destinations, `downloads` for files such
+/// as a PDF resume, and `companyURLs` to link role headings without baking
+/// site-specific logic into renderers.
+public struct DocumentLinks: Codable, Equatable, Sendable {
+    public let profiles: [Link]
+    public let downloads: [Link]
+    public let companyURLs: [String: String]
+
+    private enum CodingKeys: String, CodingKey {
+        case profiles
+        case downloads
+        case companyURLs
+    }
 
     public init(
-        twitter: URL? = nil,
-        resumePDF: String? = nil,
-        companyURLs: [String: URL] = [:]
+        profiles: [Link] = [],
+        downloads: [Link] = [],
+        companyURLs: [String: String] = [:],
     ) {
-        self.twitter = twitter
-        self.resumePDF = resumePDF
+        self.profiles = profiles
+        self.downloads = downloads
         self.companyURLs = companyURLs
     }
 
-    public init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        twitter = try c.decodeIfPresent(URL.self, forKey: .twitter)
-        resumePDF = try c.decodeIfPresent(String.self, forKey: .resumePDF)
-        companyURLs = try c.decodeIfPresent([String: URL].self, forKey: .companyURLs) ?? [:]
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        profiles = try container.decode([Link].self, forKey: .profiles, defaultIfMissing: [])
+        downloads = try container.decode([Link].self, forKey: .downloads, defaultIfMissing: [])
+        companyURLs = try container.decode([String: String].self, forKey: .companyURLs, defaultIfMissing: [:])
     }
 }

@@ -1,0 +1,21 @@
+# SwiftFormat configuration. The mechanical formatting gate.
+#
+# Run `swiftformat . --config .swiftformat` before committing when SwiftFormat
+# is available locally.
+
+--swiftversion 6.1
+--exclude .build
+--exclude DerivedData
+
+# House style.
+--indent 4
+--maxwidth 180
+--commas always
+
+# Safe defaults that match the style above.
+--trimwhitespace always
+--semicolons never
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--self remove
