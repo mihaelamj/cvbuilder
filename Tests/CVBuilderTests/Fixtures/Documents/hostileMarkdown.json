@@ -1,0 +1,131 @@
+{
+  "frontMatter": {
+    "slug": "hostile markdown cv",
+    "title": "Demo: ---\n# forged"
+  },
+  "cv": {
+    "name": "# Mallory\n## Forged",
+    "title": "- Lead *Swift* [x](bad)",
+    "summary": "1. Ordered\n+ plus\n| a | b |\n<admin@example.com>\n[text](https://bad)",
+    "contactInfo": {
+      "email": "mallory@example.com",
+      "phone": "+1 555 010 0603",
+      "github": "https://example.com/mallory-code",
+      "location": "Example City"
+    },
+    "experience": [
+      {
+        "company": {
+          "name": "Example Boundary | Labs [evil](x)"
+        },
+        "role": {
+          "title": "Architect *API*",
+          "seniority": "Senior"
+        },
+        "period": {
+          "start": { "month": 1, "year": 2024 },
+          "end": { "month": 6, "year": 2026 }
+        },
+        "projects": [
+          {
+            "project": {
+              "name": "- Project [link]",
+              "company": {
+                "name": "Example Boundary | Labs [evil](x)"
+              },
+              "descriptions": [
+                "---",
+                "# heading\n- list\n1. Ordered\n+ plus\n| a | b |\n<admin@example.com>\n[text](https://bad)"
+              ],
+              "techs": [
+                { "name": "Swift|Table", "category": "language" },
+                { "name": "*OpenAPI*", "category": "tool" }
+              ],
+              "role": {
+                "title": "Architect *API*",
+                "seniority": "Senior"
+              },
+              "period": {
+                "start": { "month": 1, "year": 2024 },
+                "end": { "month": 6, "year": 2026 }
+              },
+              "urls": [
+                "https://example.com/hostile-project"
+              ],
+              "isCurrent": true,
+              "technicalFocus": {
+                "areas": ["# Architecture", "A|B"],
+                "tags": ["-tag", "1. item"]
+              }
+            },
+            "role": {
+              "title": "Architect *API*",
+              "seniority": "Senior"
+            },
+            "period": {
+              "start": { "month": 1, "year": 2024 },
+              "end": { "month": 6, "year": 2026 }
+            }
+          }
+        ],
+        "isCurrent": true,
+        "technicalFocus": {
+          "areas": ["# Architecture"],
+          "tags": ["-tag"]
+        }
+      }
+    ],
+    "education": [
+      {
+        "institution": "# University",
+        "degree": "MSc",
+        "field": "Security|Parsing",
+        "period": {
+          "start": { "month": 1, "year": 2024 },
+          "end": { "month": 6, "year": 2026 }
+        }
+      }
+    ],
+    "skills": [
+      { "name": "*OpenAPI*", "category": "tool" },
+      { "name": "_internal_", "category": "tool" }
+    ]
+  },
+  "links": {
+    "profiles": [
+      {
+        "label": "[Profile](bad)",
+        "url": "https://example.com/profile path(1)\nnext"
+      }
+    ],
+    "downloads": [
+      {
+        "label": "CV (Markdown)",
+        "url": "/assets/CV (final).md"
+      }
+    ],
+    "companyURLs": {
+      "Example Boundary | Labs [evil](x)": "https://example.com/company path(1)"
+    }
+  },
+  "publicEvidence": [
+    {
+      "title": "Evidence [x](y)",
+      "kind": "openSource",
+      "role": "Maintainer",
+      "summary": "Summary with ---\n# forged",
+      "url": "https://example.com/evidence path(1)\n#bad",
+      "technologies": ["Swift|Table", "*OpenAPI*"],
+      "highlights": ["- shipped", "1. measured"],
+      "technicalFocus": {
+        "areas": ["Developer|Tooling"],
+        "tags": ["[contracts]"]
+      }
+    }
+  ],
+  "rendering": {
+    "mode": "experiencedTechnical",
+    "compactGroupedSkills": false,
+    "omitEmptySections": true
+  }
+}

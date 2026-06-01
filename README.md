@@ -146,8 +146,10 @@ handwritten fixture lives at [Examples/democv/cv.json](Examples/democv/cv.json).
 
 ## CVBuilder roadmap
 
-Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the ordered
-path from the current Markdown foundation to stable technical CV templates.
+Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the product
+roadmap. Epic [#12](https://github.com/mihaelamj/cvbuilder/issues/12) tracks the
+evidence-backed implementation slices that harden the renderer and JSON
+workflow.
 
 ```mermaid
 flowchart TD
@@ -157,8 +159,10 @@ flowchart TD
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
     P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Done"]
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
+    P7["Phase 7<br/>#19 Evidence fixture proofs<br/>In review"]
+    P8["Phase 8<br/>#20 Workflow documentation<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -168,6 +172,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6 done;
+    class P7 review;
+    class P8 next;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -180,6 +186,8 @@ The test suite validates generated Markdown through fixture and behavior checks:
   evidence rendering, and checked-in rendering-mode fixtures.
 - Demo fixture tests cover realistic nested projects, omitted older jobs, and
   explicit selection of relevant work entries.
+- Resource-backed JSON fixtures cover minimal, early-career, hostile Markdown,
+  and full senior technical CV documents.
 - Hostile text tests ensure generated Markdown treats source data as data, not
   structure.
 - JSON schema tests check defaults for omitted optional arrays and rejection of

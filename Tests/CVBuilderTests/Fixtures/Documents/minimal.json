@@ -1,0 +1,12 @@
+{
+  "cv": {
+    "name": "Taylor Example",
+    "title": "Swift Engineer",
+    "summary": "Builds small Swift tools and keeps release notes tidy.",
+    "contactInfo": {
+      "email": "taylor@example.com",
+      "phone": "+1 555 010 0601",
+      "location": "Example City"
+    }
+  }
+}

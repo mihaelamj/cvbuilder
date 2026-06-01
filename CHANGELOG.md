@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Generated fixture freshness check for the checked-in TileDown Markdown example.
 - Pull request roadmap gate that requires each PR to name the issue or phase it
   advances.
+- Resource-backed JSON fixtures for early-career, hostile Markdown, minimal, and
+  senior technical CV rendering proof cases.
 
 ### Changed
 

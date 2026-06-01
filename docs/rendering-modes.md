@@ -61,3 +61,14 @@ The tests compare generated output from `Examples/democv/cv.json` to these
 fixtures. The same test pass also checks heading levels, links, evidence
 summaries, omitted older jobs, explicit relevance-selected jobs, skill
 placement, and the absence of duplicated seniority text.
+
+Resource-backed JSON fixtures also cover the boundary cases that should stay
+portable across macOS and Linux:
+
+- `Examples/democv/cv.json`: full senior technical CV fixture.
+- `Tests/CVBuilderTests/Fixtures/Documents/earlyCareerTechnical.json`: early
+  career technical CV with education before experience.
+- `Tests/CVBuilderTests/Fixtures/Documents/hostileMarkdown.json`: source text
+  that tries to inject Markdown structure.
+- `Tests/CVBuilderTests/Fixtures/Documents/minimal.json`: omitted optional
+  arrays and omitted IDs.
