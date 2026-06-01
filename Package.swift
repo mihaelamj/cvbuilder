@@ -2,14 +2,10 @@
 
 import PackageDescription
 
-#if os(macOS)
-    let packagePlatforms: [SupportedPlatform]? = [
-        .macOS(.v13),
-        .iOS(.v16)
-    ]
-#else
-    let packagePlatforms: [SupportedPlatform]? = nil
-#endif
+let packagePlatforms: [SupportedPlatform] = [
+    .macOS(.v13),
+    .iOS(.v16)
+]
 
 #if os(Linux)
     let tileDownProducts: [Product] = [

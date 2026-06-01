@@ -47,8 +47,6 @@ Renderers in `CVBuilder`:
 Provides `IgniteRenderer` for HTML rendering, using the [Ignite](https://github.com/twostraws/Ignite) static site generator.
 
 > 🔥 Note: This target depends on `Ignite` and is **separated** to avoid pulling in C dependencies in projects that don’t need HTML rendering.
-> On Linux, both `CVBuilder` and `CVBuilderIgnite` are exposed. The manifest omits
-> Apple-platform declarations there so the package is not tied to macOS.
 
 ### 3. `cvbuilder` (executable)
 

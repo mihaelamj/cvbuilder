@@ -1,6 +1,6 @@
 import Foundation
 
-public struct StringCVRenderer: CVRendering {
+public struct StringCVRenderer: CVRendering, Sendable {
     public var experienceTitle: String {
         "EXPERIENCE"
     }
@@ -76,10 +76,6 @@ public struct StringCVRenderer: CVRendering {
 
     public func save(to url: URL, cv resume: CV) throws {
         let content = render(cv: resume)
-        try FileManager.default.createDirectory(
-            at: url.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
 
@@ -88,7 +84,7 @@ public struct StringCVRenderer: CVRendering {
     }
 }
 
-public struct ConsoleCVRenderer: CVRendering {
+public struct ConsoleCVRenderer: CVRendering, Sendable {
     public var experienceTitle: String {
         "EXPERIENCE"
     }

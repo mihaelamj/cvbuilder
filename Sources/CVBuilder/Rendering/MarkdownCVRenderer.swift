@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MarkdownCVRenderer: CVRendering {
+public struct MarkdownCVRenderer: CVRendering, Sendable {
     public var experienceTitle: String {
         "EXPERIENCE"
     }
@@ -90,10 +90,6 @@ public struct MarkdownCVRenderer: CVRendering {
 
     public func save(to url: URL, cv resume: CV) throws {
         let content = render(cv: resume)
-        try FileManager.default.createDirectory(
-            at: url.deletingLastPathComponent(),
-            withIntermediateDirectories: true
-        )
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
 
