@@ -153,7 +153,7 @@ flowchart TD
     P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
-    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>In progress"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
@@ -164,7 +164,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5 partial;
+    class P5 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -201,8 +201,19 @@ Useful local checks from the repository root:
 ```sh
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
+bash scripts/test-quality-gates.sh
+bash scripts/check-generated-fixtures.sh
 swiftformat . --config .swiftformat --lint
 swiftlint --config .swiftlint.yml --strict
+```
+
+Every pull request also needs a `## Roadmap` section naming the issue or phase
+it advances. CI enforces this on pull requests.
+
+To check a draft PR body locally:
+
+```sh
+PR_BODY_FILE=/path/to/pr-body.md bash scripts/check-pr-roadmap.sh
 ```
 
 On Linux, also verify the TileDown adapter:

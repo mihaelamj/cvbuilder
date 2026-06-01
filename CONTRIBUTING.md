@@ -10,6 +10,8 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 ```sh
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
+bash scripts/test-quality-gates.sh
+bash scripts/check-generated-fixtures.sh
 swiftformat . --config .swiftformat --lint
 swiftlint --config .swiftlint.yml --strict
 swift build --target CVBuilder
@@ -54,12 +56,15 @@ committed files.
 - Keep one focused change per PR.
 - Add tests for behavior changes.
 - Run `bash scripts/check-style.sh`, `bash scripts/check-namespacing.sh`,
+  `bash scripts/test-quality-gates.sh`,
+  `bash scripts/check-generated-fixtures.sh`,
   `swiftformat . --config .swiftformat --lint`,
   `swiftlint --config .swiftlint.yml --strict`,
   `swift build --target CVBuilder`, `swift build --target CVBuilderCLI`,
   `swift build --product cvbuilder`, and `swift test`.
 - Keep Linux CI green, especially when changing package products or TileDown
   behavior.
+- Include a `## Roadmap` section that names the issue or phase the PR advances.
 - Update README or docs when the user-facing contract changes.
 
 ## License

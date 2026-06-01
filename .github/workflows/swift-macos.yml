@@ -34,3 +34,6 @@ jobs:
 
       - name: Test
         run: swift test
+
+      - name: Generated fixture freshness
+        run: bash scripts/check-generated-fixtures.sh

@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   technical CV rendering modes.
 - TileDown Markdown contract documentation and a generated
   `Examples/tiledown/democv.md` example.
+- Generated fixture freshness check for the checked-in TileDown Markdown example.
+- Pull request roadmap gate that requires each PR to name the issue or phase it
+  advances.
 
 ### Changed
 
