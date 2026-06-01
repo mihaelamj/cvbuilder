@@ -198,6 +198,9 @@ swift build --target CVBuilderTileDown
 
 ## Documentation
 
+- [CHANGELOG.md](CHANGELOG.md): notable user-facing changes.
+- [CONTRIBUTING.md](CONTRIBUTING.md): contribution rules and local checks.
+- [SUPPORT.md](SUPPORT.md): where to file bugs, feature requests, and security issues.
 - [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
 - [docs/research/README.md](docs/research/README.md): research map.
 - [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
