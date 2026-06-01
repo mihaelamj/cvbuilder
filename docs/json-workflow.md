@@ -73,6 +73,11 @@ The full field contract is in
 [cvdocument-contract.md](cvdocument-contract.md). A complete senior technical
 fixture is in [Examples/democv/cv.json](../Examples/democv/cv.json).
 
+For editor completion or validation, use the checked-in JSON Schema at
+[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json). The schema
+describes the public `CVDocument` contract only; it does not add rendering
+targets or scoring behavior.
+
 ## Generate Markdown
 
 Generate Markdown from the JSON file:

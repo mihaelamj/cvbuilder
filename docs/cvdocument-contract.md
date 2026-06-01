@@ -5,6 +5,11 @@ Status date: 2026-06-02
 `CVDocument` is the durable JSON contract for `cvbuilder`. The JSON document is
 the source of truth. Markdown and normalized JSON are generated artifacts.
 
+Machine-readable authoring metadata lives in
+[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json). The schema
+is an editor-facing companion to this document, not a renderer or scoring
+engine.
+
 ## Contract Goals
 
 - A user can write one JSON file without writing Swift.
