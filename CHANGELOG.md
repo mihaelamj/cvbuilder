@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fixture.
 - Public-evidence-heavy rendering mode and checked-in Markdown fixtures for all
   technical CV rendering modes.
+- TileDown Markdown contract documentation and a generated
+  `Examples/tiledown/democv.md` example.
 
 ### Changed
 
