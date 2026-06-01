@@ -53,10 +53,19 @@ core package.
 
 Relevant links:
 
+- Issue #28: product roadmap epic with ordered child issues.
 - Issue #3: file-driven CVBuilder implementation target.
 - Issue #5: closed evidence research epic.
 - Issue #26: Linux TileDown Markdown adapter.
 - PR #27: Linux TileDown Markdown adapter implementation.
+
+Ordered roadmap issues:
+
+1. #26 - merge the Linux Markdown foundation.
+2. #29 - stabilize the `CVDocument` data contract.
+3. #30 - build technical CV rendering modes.
+4. #31 - document and harden the TileDown Markdown contract.
+5. #32 - add roadmap quality gates and release hygiene.
 
 ## Roadmap
 

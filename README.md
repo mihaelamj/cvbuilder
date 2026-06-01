@@ -20,6 +20,30 @@ CVBuilder is a modular Swift package designed to represent and render CV (curric
 
 The current product direction is documented in [docs/roadmap.md](docs/roadmap.md).
 
+```mermaid
+flowchart TD
+    Epic["Epic #28<br/>CVBuilder technical CV Markdown roadmap"]
+    Phase1["1. Linux Markdown foundation<br/>Issue #26, PR #27"]
+    Phase2["2. Stabilize CVDocument data contract<br/>Issue #29"]
+    Phase3["3. Build technical CV rendering modes<br/>Issue #30"]
+    Phase4["4. Harden TileDown Markdown contract<br/>Issue #31"]
+    Phase5["5. Quality gates and release hygiene<br/>Issue #32"]
+
+    Core["CVBuilder<br/>structured CV data + deterministic Markdown"]
+    CLI["cvbuilder CLI<br/>JSON to Markdown or normalized JSON"]
+    TileDown["CVBuilderTileDown<br/>Linux Markdown adapter"]
+    Research["Research rules<br/>scientific evidence first"]
+    Out["Out of scope<br/>PDF renderer, ATS scoring, default Ignite"]
+
+    Epic --> Phase1 --> Phase2 --> Phase3 --> Phase4 --> Phase5
+    Research --> Phase2
+    Research --> Phase3
+    Phase1 --> Core
+    Core --> CLI
+    Core --> TileDown
+    Epic -. keeps out .-> Out
+```
+
 ---
 
 ## 🧱 Package Structure
