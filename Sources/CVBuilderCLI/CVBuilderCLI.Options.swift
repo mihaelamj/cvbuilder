@@ -16,7 +16,15 @@ extension CVBuilderCLI {
             outputPath: String,
             format: Format = .markdown,
             check: Bool = false
-        ) {
+        ) throws {
+            guard !dataPath.isEmpty else {
+                throw Failure.missingValue(option: "--data")
+            }
+
+            guard !outputPath.isEmpty else {
+                throw Failure.missingValue(option: "--out")
+            }
+
             self.dataPath = dataPath
             self.outputPath = outputPath
             self.format = format
@@ -121,7 +129,7 @@ private extension CVBuilderCLI.Options {
                 throw CVBuilderCLI.Failure.missingRequiredOption("--out <path>")
             }
 
-            return CVBuilderCLI.Options(dataPath: dataPath, outputPath: outputPath, format: format, check: check)
+            return try CVBuilderCLI.Options(dataPath: dataPath, outputPath: outputPath, format: format, check: check)
         }
 
         func requiredAssignedValue(_ value: String, option: String) throws -> String {

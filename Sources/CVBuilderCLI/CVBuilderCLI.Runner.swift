@@ -2,13 +2,13 @@ import CVBuilder
 import Foundation
 
 extension CVBuilderCLI {
-    /// Executes validated `cvbuilder` options against the local file system.
+    /// Executes validated `cvbuilder` options against an injected file-system boundary.
     public struct Runner {
-        private let fileManager: FileManager
+        private let fileSystem: any FileSystem
 
         /// Creates a runner with its file-system dependency supplied by the caller.
-        public init(fileManager: FileManager) {
-            self.fileManager = fileManager
+        public init(fileSystem: any FileSystem) {
+            self.fileSystem = fileSystem
         }
 
         /// Executes the command options by writing or checking the requested output.
@@ -34,11 +34,10 @@ extension CVBuilderCLI {
         }
 
         private func readDocument(atPath path: String) throws -> CVDocument {
-            let inputURL = URL(fileURLWithPath: path)
             let inputData: Data
 
             do {
-                inputData = try Data(contentsOf: inputURL)
+                inputData = try fileSystem.readFile(atPath: path)
             } catch {
                 throw Failure.inputReadFailed(path: path, reason: error.localizedDescription)
             }
@@ -63,13 +62,13 @@ extension CVBuilderCLI {
 
         private func check(_ expectedData: Data, atPath path: String) throws {
             let outputURL = URL(fileURLWithPath: path)
-            guard fileManager.fileExists(atPath: outputURL.path) else {
+            guard fileSystem.fileExists(atPath: outputURL.path) else {
                 throw Failure.outputMissing(path: path)
             }
 
             let existingData: Data
             do {
-                existingData = try Data(contentsOf: outputURL)
+                existingData = try fileSystem.readFile(atPath: outputURL.path)
             } catch {
                 throw Failure.outputReadFailed(path: path, reason: error.localizedDescription)
             }
@@ -84,11 +83,11 @@ extension CVBuilderCLI {
             let outputDirectory = outputURL.deletingLastPathComponent()
 
             do {
-                try fileManager.createDirectory(
+                try fileSystem.createDirectory(
                     at: outputDirectory,
                     withIntermediateDirectories: true
                 )
-                try outputData.write(to: outputURL, options: .atomic)
+                try fileSystem.write(outputData, to: outputURL)
             } catch {
                 throw Failure.outputWriteFailed(path: path, reason: error.localizedDescription)
             }

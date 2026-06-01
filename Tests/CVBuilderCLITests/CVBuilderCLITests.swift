@@ -1,5 +1,5 @@
 import CVBuilder
-@testable import CVBuilderCLI
+import CVBuilderCLI
 import Foundation
 import Testing
 
@@ -16,12 +16,14 @@ struct CVBuilderCLITests {
             "--check"
         ])
 
-        #expect(options == CVBuilderCLI.Options(
+        let expected = try CVBuilderCLI.Options(
             dataPath: "cv.json",
             outputPath: "cv/index.md",
             format: .json,
             check: true
-        ))
+        )
+
+        #expect(options == expected)
     }
 
     @Test("parser rejects missing arguments and unknown formats")
@@ -95,7 +97,7 @@ struct CVBuilderCLITests {
 
         let inputURL = try tempDirectory.write("cv.json", contents: cliFixtureJSON)
         let outputURL = tempDirectory.url.appendingPathComponent("cv/index.md")
-        let options = CVBuilderCLI.Options(dataPath: inputURL.path, outputPath: outputURL.path)
+        let options = try CVBuilderCLI.Options(dataPath: inputURL.path, outputPath: outputURL.path)
 
         try makeRunner().run(options)
         try makeRunner().run(.init(
@@ -188,8 +190,19 @@ struct CVBuilderCLITests {
         }
     }
 
+    @Test("programmatic options reject empty paths")
+    func programmaticOptionsRejectEmptyPaths() throws {
+        try expectFailure(CVBuilderCLI.Options(dataPath: "", outputPath: "cv.md")) { failure in
+            #expect(failure == .missingValue(option: "--data"))
+        }
+
+        try expectFailure(CVBuilderCLI.Options(dataPath: "cv.json", outputPath: "")) { failure in
+            #expect(failure == .missingValue(option: "--out"))
+        }
+    }
+
     private func makeRunner() -> CVBuilderCLI.Runner {
-        CVBuilderCLI.Runner(fileManager: .default)
+        CVBuilderCLI.Runner(fileSystem: CVBuilderCLI.LocalFileSystem(fileManager: .default))
     }
 
     private func expectFailure(

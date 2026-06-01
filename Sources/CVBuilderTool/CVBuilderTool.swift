@@ -6,7 +6,8 @@ struct CVBuilderTool {
     static func main() {
         do {
             let options = try CVBuilderCLI.Options.parse(Array(CommandLine.arguments.dropFirst()))
-            try CVBuilderCLI.Runner(fileManager: .default).run(options)
+            let fileSystem = CVBuilderCLI.LocalFileSystem(fileManager: .default)
+            try CVBuilderCLI.Runner(fileSystem: fileSystem).run(options)
         } catch let failure as CVBuilderCLI.Failure {
             writeError(failure.message)
             exit(1)
