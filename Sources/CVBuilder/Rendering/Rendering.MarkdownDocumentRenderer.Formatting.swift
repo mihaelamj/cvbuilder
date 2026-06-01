@@ -5,19 +5,19 @@ extension Rendering.MarkdownDocumentRenderer {
         let company = if let url = links.companyURLs[work.company.name], !url.isEmpty {
             linkedText(work.company.name, destination: url)
         } else {
-            work.company.name
+            escapedMarkdownText(work.company.name)
         }
 
-        return "\(company) - \(work.role.name)"
+        return "\(company) - \(escapedMarkdownText(work.role.name))"
     }
 
     func linkedText(_ label: String, destination: String) -> String {
-        let trimmedDestination = destination.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmedDestination.isEmpty else {
-            return label
+        let escapedLabel = escapedMarkdownText(label)
+        guard let encodedDestination = encodedLinkDestination(destination) else {
+            return escapedLabel
         }
 
-        return "[\(label)](\(trimmedDestination))"
+        return "[\(escapedLabel)](\(encodedDestination))"
     }
 
     func appendLine(_ label: String, value: String, to lines: inout [String]) {
@@ -26,7 +26,7 @@ extension Rendering.MarkdownDocumentRenderer {
             return
         }
 
-        lines.append("\(label): \(trimmedValue)")
+        lines.append("\(label): \(escapedMarkdownText(trimmedValue))")
     }
 
     func appendLinkLine(_ label: String, url: String?, to lines: inout [String]) {
@@ -48,7 +48,7 @@ extension Rendering.MarkdownDocumentRenderer {
             return
         }
 
-        lines.append(trimmedValue)
+        lines.append(escapedMarkdownText(trimmedValue))
     }
 
     func appendLabelledList(_ label: String, values: [String], to lines: inout [String]) {
@@ -60,7 +60,7 @@ extension Rendering.MarkdownDocumentRenderer {
             return
         }
 
-        lines.append("\(label): \(visibleValues.joined(separator: ", "))")
+        lines.append("\(label): \(visibleValues.map(escapedMarkdownText).joined(separator: ", "))")
     }
 }
 
