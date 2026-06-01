@@ -23,12 +23,18 @@ swift build --product cvbuilder
 swift test
 ```
 
+## Roadmap
+
+<!-- Name the roadmap issue or phase this advances, e.g. Advances #32 under epic #28. -->
+
 ## Checklist
 
 - [ ] Style and namespacing checks pass.
 - [ ] SwiftFormat and SwiftLint pass.
 - [ ] Build and tests pass.
+- [ ] Generated fixture freshness check passes when checked-in examples are affected.
 - [ ] Linux behavior is verified when package products or TileDown behavior change.
+- [ ] Roadmap section names the issue or phase this PR advances.
 - [ ] README or docs updated for user-facing contract changes.
 - [ ] CHANGELOG.md updated under Unreleased, or this change is docs/tests/config only.
 - [ ] No AI attribution and no em dashes in commits, comments, or this description.

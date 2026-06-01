@@ -66,7 +66,7 @@ Ordered roadmap issues:
 2. #29 - done: stabilize the `CVDocument` data contract.
 3. #30 - done: build technical CV rendering modes.
 4. #31 - done: document and harden the TileDown Markdown contract.
-5. #32 - partially landed: add roadmap quality gates and release hygiene.
+5. #32 - in review: add roadmap quality gates and release hygiene.
 
 ```mermaid
 flowchart TD
@@ -74,7 +74,7 @@ flowchart TD
     P2["Phase 2<br/>#29 CVDocument data contract<br/>Done"]
     P3["Phase 3<br/>#30 Technical CV rendering modes<br/>Done"]
     P4["Phase 4<br/>#31 TileDown Markdown contract<br/>Done"]
-    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>Partially landed"]
+    P5["Phase 5<br/>#32 Quality gates and release hygiene<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5
 
@@ -85,7 +85,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5 partial;
+    class P5 review;
 ```
 
 ## Roadmap
@@ -94,6 +94,8 @@ flowchart TD
 
 Objective: make the current Markdown-only, Linux-safe package shape the base for
 all future work.
+
+Issue: [#26](https://github.com/mihaelamj/cvbuilder/issues/26).
 
 Deliverables:
 
@@ -117,6 +119,8 @@ Acceptance:
 
 Objective: make `CVDocument` the durable source of truth for generated CVs.
 
+Issue: [#29](https://github.com/mihaelamj/cvbuilder/issues/29).
+
 Deliverables:
 
 - document every public `CVDocument` field with expected Markdown behavior: done
@@ -137,6 +141,8 @@ Acceptance:
 
 Objective: turn the research findings into explicit rendering modes instead of
 ad hoc Markdown tweaks.
+
+Issue: [#30](https://github.com/mihaelamj/cvbuilder/issues/30).
 
 Initial modes:
 
@@ -163,6 +169,8 @@ Acceptance:
 
 Objective: make TileDown consumption boring and predictable.
 
+Issue: [#31](https://github.com/mihaelamj/cvbuilder/issues/31).
+
 Deliverables:
 
 - document the TileDown-compatible Markdown contract in
@@ -186,20 +194,23 @@ Acceptance:
 
 Objective: make regressions hard to ship.
 
+Issue: [#32](https://github.com/mihaelamj/cvbuilder/issues/32).
+
 Deliverables:
 
 - keep Linux and macOS CI on every PR: done
 - keep style and namespacing CI on every PR: done
 - keep SwiftFormat and SwiftLint checks on macOS CI: done
-- add a fixture freshness command if snapshots become checked in
+- add a fixture freshness command if snapshots become checked in: in review
 - document local verification commands in README: done
-- add issue-body links from roadmap phases to GitHub issues as they are filed
+- add issue-body links from roadmap phases to GitHub issues as they are filed:
+  done
 - add release notes when the first usable version is tagged: changelog scaffold
   exists; first tag still pending
 
 Acceptance:
 
-- every PR says which roadmap phase it advances
+- every PR says which roadmap phase it advances: in review
 - every production behavior change has tests
 - every generated artifact can be reproduced from source data
 - roadmap state is updated when a phase starts, lands, or changes scope
