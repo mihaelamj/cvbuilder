@@ -6,7 +6,9 @@ import Foundation
 /// URLs, site-root paths, relative paths, anchors, and later renderer-specific
 /// validation without losing author intent during decoding.
 public struct Link: Codable, Equatable, Sendable {
+    /// Human-readable link text rendered in Markdown.
     public let label: String
+    /// Link destination kept as source text until Markdown rendering.
     public let url: String
 
     public init(label: String, url: String) {

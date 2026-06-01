@@ -45,7 +45,7 @@ public extension CVBuilderCLI {
             do {
                 return try JSONDecoder().decode(CVDocument.self, from: inputData)
             } catch {
-                throw Failure.invalidJSON(path: path, reason: String(describing: error))
+                throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
             }
         }
 
@@ -92,5 +92,46 @@ public extension CVBuilderCLI {
                 throw Failure.outputWriteFailed(path: path, reason: error.localizedDescription)
             }
         }
+    }
+}
+
+private extension CVBuilderCLI.Runner {
+    func decodingFailureReason(for error: any Swift.Error) -> String {
+        switch error {
+        case let DecodingError.keyNotFound(key, context):
+            let path = codingPathDescription(context.codingPath + [key])
+            return "missing required field `\(path)`: \(context.debugDescription)"
+        case let DecodingError.valueNotFound(type, context):
+            let path = codingPathDescription(context.codingPath)
+            return "missing non-null `\(String(describing: type))` at `\(path)`: \(context.debugDescription)"
+        case let DecodingError.typeMismatch(type, context):
+            let path = codingPathDescription(context.codingPath)
+            return "expected `\(String(describing: type))` at `\(path)`: \(context.debugDescription)"
+        case let DecodingError.dataCorrupted(context):
+            let path = codingPathDescription(context.codingPath)
+            return "invalid value at `\(path)`: \(context.debugDescription)"
+        default:
+            return error.localizedDescription
+        }
+    }
+
+    func codingPathDescription(_ codingPath: [any CodingKey]) -> String {
+        guard !codingPath.isEmpty else {
+            return "document root"
+        }
+
+        var output = ""
+        for key in codingPath {
+            if let index = key.intValue {
+                output += "[\(index)]"
+            } else {
+                if !output.isEmpty {
+                    output += "."
+                }
+                output += key.stringValue
+            }
+        }
+
+        return output
     }
 }

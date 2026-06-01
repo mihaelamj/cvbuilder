@@ -84,6 +84,7 @@ extension Rendering.MarkdownDocumentRenderer {
     ) {
         let visibleExperience = limitedExperience(experience, recentCompanyCount: options.recentCompanyCount)
         guard !visibleExperience.isEmpty else {
+            renderEmptySection("## Experience", options: options, writer: &writer)
             return
         }
 
@@ -105,8 +106,9 @@ extension Rendering.MarkdownDocumentRenderer {
         writer.block(lines)
     }
 
-    func renderEducation(_ education: [Education], writer: inout Writer) {
+    func renderEducation(_ education: [Education], options: RenderingOptions, writer: inout Writer) {
         guard !education.isEmpty else {
+            renderEmptySection("## Education", options: options, writer: &writer)
             return
         }
 
@@ -120,8 +122,9 @@ extension Rendering.MarkdownDocumentRenderer {
         writer.block(lines)
     }
 
-    func renderPublicEvidence(_ evidence: [PublicEvidence], writer: inout Writer) {
+    func renderPublicEvidence(_ evidence: [PublicEvidence], options: RenderingOptions, writer: inout Writer) {
         guard !evidence.isEmpty else {
+            renderEmptySection("## Public Evidence", options: options, writer: &writer)
             return
         }
 
@@ -142,6 +145,7 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func renderSkills(_ skills: [Tech], options: RenderingOptions, writer: inout Writer) {
         guard !skills.isEmpty else {
+            renderEmptySection("## Skills", options: options, writer: &writer)
             return
         }
 
@@ -160,9 +164,10 @@ extension Rendering.MarkdownDocumentRenderer {
         writer.block(lines)
     }
 
-    func renderLinks(_ links: DocumentLinks, writer: inout Writer) {
+    func renderLinks(_ links: DocumentLinks, options: RenderingOptions, writer: inout Writer) {
         let documentLinks = links.profiles + links.downloads
         guard !documentLinks.isEmpty else {
+            renderEmptySection("## Links", options: options, writer: &writer)
             return
         }
 
@@ -172,6 +177,14 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         writer.block(lines)
+    }
+
+    func renderEmptySection(_ heading: String, options: RenderingOptions, writer: inout Writer) {
+        guard !options.omitEmptySections else {
+            return
+        }
+
+        writer.block([heading])
     }
 }
 

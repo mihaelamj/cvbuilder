@@ -104,6 +104,20 @@ struct CVDocumentJSONErgonomicsTests {
         try expectNormalizedRoundTrip(document)
     }
 
+    @Test("democv fixture decodes, renders, and normalizes")
+    func democvFixtureIsACompleteAuthoringExample() throws {
+        let fixtureData = try Data(contentsOf: fixtureURL("Examples/democv/cv.json"))
+        let document = try JSONDecoder().decode(CVDocument.self, from: fixtureData)
+        let output = Rendering.MarkdownDocumentRenderer().render(document)
+
+        #expect(document.cv.name == "Alex Rivera")
+        #expect(document.frontMatter["slug"] == "demo-cv")
+        #expect(document.links.companyURLs["Northbridge Systems"] == "https://example.com/northbridge")
+        #expect(output.contains("# Alex Rivera"))
+        #expect(output.contains("## Public Evidence"))
+        try expectNormalizedRoundTrip(document)
+    }
+
     @Test("explicit null IDs are rejected instead of synthesized")
     func rejectsNullID() throws {
         try expectDecodeFails(nullIDDocumentJSON)
@@ -141,5 +155,13 @@ struct CVDocumentJSONErgonomicsTests {
 
     private func uuid(_ value: String) throws -> UUID {
         try #require(UUID(uuidString: value))
+    }
+
+    private func fixtureURL(_ relativePath: String) -> URL {
+        let testsDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+        return testsDirectory
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent(relativePath)
     }
 }

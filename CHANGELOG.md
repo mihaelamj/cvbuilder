@@ -14,9 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `cvbuilder` CLI for JSON to Markdown and normalized JSON output.
 - Linux-only `CVBuilderTileDown` adapter for Markdown publishing workflows.
 - Style, namespacing, SwiftFormat, SwiftLint, Linux Swift, and macOS Swift CI gates.
+- `CVDocument` contract documentation and a complete `Examples/democv/cv.json`
+  fixture.
 
 ### Changed
 
 - Removed default Ignite participation from the package graph.
 - Kept PDF rendering, ATS scoring, resume optimizer claims, and HTML rendering
   outside the core package.
+- Made `RenderingOptions.omitEmptySections` control whether empty optional
+  Markdown section headings are emitted.
