@@ -1,5 +1,6 @@
 import Foundation
 
+@available(*, deprecated, message: "Use CVDocument with Rendering.MarkdownDocumentRenderer.")
 public struct StringCVRenderer: CVRendering, Sendable {
     public var experienceTitle: String {
         "EXPERIENCE"

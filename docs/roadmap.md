@@ -86,6 +86,9 @@ Relevant links:
 - Issue #68: release version docs reconciliation is done after PR #71.
 - Issue #69: release version consistency guard is done after PR #72.
 - Issue #70: release publication proof is done for `v0.9.0`.
+- Issue #76: active research-conformance hardening epic.
+- Issue #74: active legacy CV render path R12/R15 conformance.
+- Issue #75: next research-conformance matrix.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -110,6 +113,8 @@ Ordered roadmap issues:
 17. #68 - done: reconcile release version docs with existing tag history.
 18. #69 - done: add release version consistency guard.
 19. #70 - done: prepare release publication proof for reconciled version.
+20. #74 - active: make the public legacy CV render path R12/R15 conformant.
+21. #75 - next: add research-conformance matrix mapping R01 to R15.
 
 ```mermaid
 flowchart TD
@@ -132,8 +137,10 @@ flowchart TD
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
+    P20["Phase 20<br/>#74 Legacy CV path<br/>Active"]
+    P21["Phase 21<br/>#75 Conformance matrix<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -146,6 +153,8 @@ flowchart TD
     class P17 done;
     class P18 done;
     class P19 done;
+    class P20 active;
+    class P21 next;
 ```
 
 ## Roadmap
@@ -547,6 +556,51 @@ Acceptance:
 - tag points at the intended `main` commit: done
 - Style, Swift macOS, and Swift Linux tag workflows pass: done
 - roadmap and epic issue state match the published release: done
+
+### Phase 20: Make Legacy CV Render Path Research-Conformant
+
+Objective: make the public bare-`CV` TileDown render path use the same escaping,
+determinism, and no-footer behavior as canonical `CVDocument` Markdown.
+
+Issue: [#74](https://github.com/mihaelamj/cvbuilder/issues/74).
+
+Deliverables:
+
+- route `CVBuilderTileDown.Renderer().render(cv:)` through
+  `Rendering.MarkdownDocumentRenderer`: active
+- route `MarkdownCVRenderer.render(cv:)` through
+  `Rendering.MarkdownDocumentRenderer`: active
+- deprecate legacy `CVRendering` renderers without deleting compatibility APIs:
+  active
+- remove `CV.convertTMarkdownAndSave`: active
+- update tests, changelog, and renderer contract docs: active
+
+Acceptance:
+
+- public `render(cv:)` escapes Markdown text and emits no attribution footer:
+  active
+- repeated renders are byte-for-byte deterministic: active
+- deprecated symbols still compile with warnings: active
+- local and Linux CI verification pass: active
+
+### Phase 21: Add Research-Conformance Matrix
+
+Objective: make every surviving research rule R01 through R15 traceable to code
+locations and enforcing tests.
+
+Issue: [#75](https://github.com/mihaelamj/cvbuilder/issues/75).
+
+Deliverables:
+
+- add `docs/research/cvbuilder-conformance-matrix.md`: next
+- add a deterministic completeness test for rule-to-test mapping: next
+- link the matrix from `docs/research/README.md`: next
+
+Acceptance:
+
+- each rule maps to at least one code location and enforcing test: next
+- the completeness test fails on missing or stale test references: next
+- no rendering output changes in this phase: next
 
 ## Research Rules
 

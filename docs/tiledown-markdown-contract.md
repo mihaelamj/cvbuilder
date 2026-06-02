@@ -26,12 +26,13 @@ and PDF rendering are outside this package.
 | API | Output | Guarantee |
 |---|---|---|
 | `CVBuilderTileDown.Renderer().render(document)` | `String` | Delegates to `Rendering.MarkdownDocumentRenderer` and preserves canonical Markdown behavior. |
-| `CVBuilderTileDown.Renderer().render(cv:)` | `String` | Delegates to `MarkdownCVRenderer` for legacy callers that do not yet use `CVDocument`. |
+| `CVBuilderTileDown.Renderer().render(cv:)` | `String` | Wraps the `CV` in a default `CVDocument` and delegates to `Rendering.MarkdownDocumentRenderer`, preserving canonical escaping and no-footer output. |
 
 The `CVDocument` overload is the publishing contract. It preserves front matter,
 profile links, download links, public evidence, and rendering options. The
-legacy `CV` overload is compatibility only and does not add `CVDocument`
-metadata.
+legacy `CV` overload is compatibility only; it does not add front matter,
+document links, public evidence, or custom rendering options, but it still uses
+the canonical renderer's escaping and deterministic Markdown behavior.
 
 ## Front Matter
 

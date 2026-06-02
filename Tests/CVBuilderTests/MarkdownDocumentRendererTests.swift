@@ -270,8 +270,11 @@ struct MarkdownDocumentRendererTests {
     func legacyMarkdownCVRendererStillRendersCV() throws {
         let document = try decode(fullDocumentJSON)
         let renderer: any CVRendering = MarkdownCVRenderer()
+        let output = renderer.render(cv: document.cv)
 
-        #expect(renderer.render(cv: document.cv).contains("# Alex Example"))
+        #expect(output == Rendering.MarkdownDocumentRenderer().render(CVDocument(cv: document.cv)))
+        #expect(output.contains("# Alex Example"))
+        #expect(!output.contains("Created with"))
     }
 
     @Test("hostile text is escaped as data, not Markdown structure")

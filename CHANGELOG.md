@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Release-version consistency guard for changelog, release notes, release
   checklist, README, and roadmap drift.
 
+### Changed
+
+- Route the deprecated `MarkdownCVRenderer` and Linux
+  `CVBuilderTileDown.Renderer().render(cv:)` compatibility paths through the
+  canonical `CVDocument` Markdown renderer, so bare `CV` rendering now uses the
+  same escaping, deterministic ordering, and no-footer output.
+- Deprecated the legacy `CVRendering`, `MarkdownCVRenderer`,
+  `StringCVRenderer`, and `ConsoleCVRenderer` APIs in favor of `CVDocument` and
+  `Rendering.MarkdownDocumentRenderer`.
+
 ## [0.9.0] - 2026-06-02
 
 This is the first Markdown-first public release after the historical `0.1.0`
