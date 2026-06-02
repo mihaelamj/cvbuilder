@@ -1,25 +1,43 @@
 import Foundation
 
+/// The per-profile front-matter key contract: ordering plus which keys coerce to
+/// a boolean or an array. Coercion is profile-specific rather than global, so a
+/// profile only folds the keys it actually declares (Hugo and Toucan own
+/// `draft`; Jekyll owns `published`), instead of mistyping a key a profile does
+/// not define.
+private struct FrontMatterCoercion {
+    let preferredKeys: [String]
+    let booleanKeys: Set<String>
+    let arrayKeys: Set<String>
+}
+
 extension Rendering.MarkdownDocumentRenderer {
     func frontMatterBlock(_ frontMatter: [String: String], profile: FrontMatterProfile) -> [String] {
         switch profile {
         case .generic:
+            // The generic profile coerces nothing: every value is a quoted
+            // single-line scalar. SSG profiles below fold their declared
+            // boolean and array keys, so a value such as `draft` or `tags` is
+            // typed under a profile but a string under generic by design.
             genericYAMLFrontMatterBlock(frontMatter)
         case .toucan:
-            yamlFrontMatterBlock(
-                frontMatter,
+            yamlFrontMatterBlock(frontMatter, coercion: FrontMatterCoercion(
                 preferredKeys: ["title", "description", "date", "tags", "draft", "slug", "layout"],
-            )
+                booleanKeys: ["draft"],
+                arrayKeys: ["tags"],
+            ))
         case .hugo:
-            tomlFrontMatterBlock(
-                frontMatter,
+            tomlFrontMatterBlock(frontMatter, coercion: FrontMatterCoercion(
                 preferredKeys: ["title", "description", "date", "draft", "slug", "tags", "categories", "type", "layout"],
-            )
+                booleanKeys: ["draft"],
+                arrayKeys: ["tags", "categories"],
+            ))
         case .jekyll:
-            yamlFrontMatterBlock(
-                frontMatter,
+            yamlFrontMatterBlock(frontMatter, coercion: FrontMatterCoercion(
                 preferredKeys: ["layout", "title", "permalink", "date", "tags", "categories", "published", "slug"],
-            )
+                booleanKeys: ["published"],
+                arrayKeys: ["tags", "categories"],
+            ))
         }
     }
 
@@ -32,19 +50,19 @@ extension Rendering.MarkdownDocumentRenderer {
         return lines
     }
 
-    private func yamlFrontMatterBlock(_ frontMatter: [String: String], preferredKeys: [String]) -> [String] {
+    private func yamlFrontMatterBlock(_ frontMatter: [String: String], coercion: FrontMatterCoercion) -> [String] {
         var lines = ["---"]
-        for key in orderedFrontMatterKeys(frontMatter, preferredKeys: preferredKeys) {
-            lines.append(contentsOf: yamlFrontMatterLines(key: key, value: frontMatter[key] ?? ""))
+        for key in orderedFrontMatterKeys(frontMatter, preferredKeys: coercion.preferredKeys) {
+            lines.append(contentsOf: yamlFrontMatterLines(key: key, value: frontMatter[key] ?? "", coercion: coercion))
         }
         lines.append("---")
         return lines
     }
 
-    private func tomlFrontMatterBlock(_ frontMatter: [String: String], preferredKeys: [String]) -> [String] {
+    private func tomlFrontMatterBlock(_ frontMatter: [String: String], coercion: FrontMatterCoercion) -> [String] {
         var lines = ["+++"]
-        for key in orderedFrontMatterKeys(frontMatter, preferredKeys: preferredKeys) {
-            lines.append(tomlFrontMatterLine(key: key, value: frontMatter[key] ?? ""))
+        for key in orderedFrontMatterKeys(frontMatter, preferredKeys: coercion.preferredKeys) {
+            lines.append(tomlFrontMatterLine(key: key, value: frontMatter[key] ?? "", coercion: coercion))
         }
         lines.append("+++")
         return lines
@@ -59,14 +77,15 @@ extension Rendering.MarkdownDocumentRenderer {
         return preferred + remaining
     }
 
-    private func yamlFrontMatterLines(key: String, value: String) -> [String] {
+    private func yamlFrontMatterLines(key: String, value: String, coercion: FrontMatterCoercion) -> [String] {
         let yamlKey = escapedFrontMatterKey(key)
 
-        if let bool = frontMatterBool(key: key, value: value) {
+        if coercion.booleanKeys.contains(key), let bool = frontMatterBool(value) {
             return ["\(yamlKey): \(bool ? "true" : "false")"]
         }
 
-        if let values = frontMatterArray(key: key, value: value) {
+        if coercion.arrayKeys.contains(key) {
+            let values = frontMatterArray(value)
             guard !values.isEmpty else {
                 return ["\(yamlKey): []"]
             }
@@ -77,15 +96,15 @@ extension Rendering.MarkdownDocumentRenderer {
         return ["\(yamlKey): \(escapedFrontMatterScalar(value))"]
     }
 
-    private func tomlFrontMatterLine(key: String, value: String) -> String {
+    private func tomlFrontMatterLine(key: String, value: String, coercion: FrontMatterCoercion) -> String {
         let tomlKey = escapedTOMLKey(key)
 
-        if let bool = frontMatterBool(key: key, value: value) {
+        if coercion.booleanKeys.contains(key), let bool = frontMatterBool(value) {
             return "\(tomlKey) = \(bool ? "true" : "false")"
         }
 
-        if let values = frontMatterArray(key: key, value: value) {
-            let renderedValues = values
+        if coercion.arrayKeys.contains(key) {
+            let renderedValues = frontMatterArray(value)
                 .map(escapedFrontMatterScalar)
                 .joined(separator: ", ")
             return "\(tomlKey) = [\(renderedValues)]"
@@ -94,31 +113,26 @@ extension Rendering.MarkdownDocumentRenderer {
         return "\(tomlKey) = \(escapedFrontMatterScalar(value))"
     }
 
-    private func frontMatterBool(key: String, value: String) -> Bool? {
-        guard ["draft", "published"].contains(key) else {
-            return nil
-        }
-
+    /// Recognizes the common static-site-generator boolean spellings
+    /// (case-insensitively): `true`/`false`, `yes`/`no`, `1`/`0`, `on`/`off`.
+    /// Any other value returns `nil`, so the caller emits it as a quoted scalar
+    /// rather than guessing a boolean.
+    private func frontMatterBool(_ value: String) -> Bool? {
         switch value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() {
-        case "true":
-            return true
-        case "false":
-            return false
+        case "true", "yes", "1", "on":
+            true
+        case "false", "no", "0", "off":
+            false
         default:
-            return nil
+            nil
         }
     }
 
-    private func frontMatterArray(key: String, value: String) -> [String]? {
-        guard ["tags", "categories"].contains(key) else {
-            return nil
-        }
-
-        // Always return an array for these keys, never nil. An empty or
-        // separator-only value yields an empty array so the field renders as an
-        // empty sequence rather than falling through to a string scalar (which
-        // would leak the raw separator and give the key a non-uniform type).
-        return value
+    /// Splits a comma-separated value into trimmed, non-empty elements. An empty
+    /// or separator-only value yields an empty array so an array key renders as
+    /// an empty sequence rather than a string scalar.
+    private func frontMatterArray(_ value: String) -> [String] {
+        value
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }

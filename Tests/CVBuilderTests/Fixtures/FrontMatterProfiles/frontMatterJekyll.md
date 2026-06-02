@@ -9,7 +9,7 @@ tags:
 slug: "demo-cv"
 custom-key: "custom value"
 description: "Builds Swift tooling."
-draft: false
+draft: "false"
 ---
 
 # Taylor Example
