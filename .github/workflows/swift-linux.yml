@@ -39,6 +39,9 @@ jobs:
       - name: Test
         run: swift test
 
+      - name: Schema drift
+        run: bash scripts/check-schema-drift.sh
+
       - name: Generated fixture freshness
         run: bash scripts/check-generated-fixtures.sh
 
