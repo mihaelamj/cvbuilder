@@ -86,7 +86,8 @@ Before tagging:
 3. Confirm the release notes mention the Markdown-only boundary and do not imply
    PDF, HTML, static-site generation, scoring, or optimizer behavior.
 4. Confirm the changelog names the CLI, JSON Schema, schema drift checks,
-   generated fixture freshness, and Linux CI support.
+   generated fixture freshness, consumer smoke checks, and Linux CI support.
+5. Confirm `docs/release-notes/v0.1.0.md` matches the final release commit.
 
 For the first usable release, the expected tag is `v0.1.0` unless the maintainer
 chooses a different SemVer version.
