@@ -241,7 +241,11 @@ release hardening and tag proof. Epic
 [#67](https://github.com/mihaelamj/cvbuilder/issues/67) reconciles release
 version history before publication. Epic
 [#80](https://github.com/mihaelamj/cvbuilder/issues/80) completed the
-authoring and publishing experience.
+authoring and publishing experience. Epic
+[#132](https://github.com/mihaelamj/cvbuilder/issues/132) completed the
+first-principles source-code audit hardening (#108-#131): deterministic
+identity and dates, escaping and empty-field guards, JSON Resume fidelity,
+validator parity, and the packaging/CI gates.
 
 ```mermaid
 flowchart TD
@@ -270,8 +274,9 @@ flowchart TD
     P23["Phase 23<br/>#82 Front matter profiles<br/>Done"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Done"]
     P25["Phase 25<br/>#84 Localization<br/>Done"]
+    P26["Phase 26<br/>#132 Source-code audit hardening<br/>Done"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25 --> P26
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -290,6 +295,7 @@ flowchart TD
     class P23 done;
     class P24 done;
     class P25 done;
+    class P26 done;
 ```
 
 See the [Roadmap](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Roadmap.md)
