@@ -1,13 +1,17 @@
 import Foundation
 
-/// A concrete piece of work at a company: descriptions, technologies, role,
-/// period, and optional URLs and technical focus. Construct one directly or
-/// with the fluent `Project.Builder`.
+/// A concrete piece of work at a company: descriptions, results-oriented
+/// accomplishments, technologies, role, period, and optional URLs and technical
+/// focus. Construct one directly or with the fluent `Project.Builder`.
 public struct Project: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let name: String
     public let company: Company
     public let descriptions: [String]
+    /// Structured results-oriented accomplishment statements (action plus
+    /// outcome). Rendered verbatim after the descriptions; the renderer never
+    /// auto-inflates them or fabricates metrics (R18).
+    public let accomplishments: [String]
     public let techs: [Tech]
     public let role: Role
     public let period: Period
@@ -20,6 +24,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         case name
         case company
         case descriptions
+        case accomplishments
         case techs
         case role
         case period
@@ -33,6 +38,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         name: String,
         company: Company,
         descriptions: [String],
+        accomplishments: [String] = [],
         techs: [Tech],
         role: Role,
         period: Period,
@@ -44,6 +50,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         self.name = name
         self.company = company
         self.descriptions = descriptions
+        self.accomplishments = accomplishments
         self.techs = techs
         self.role = role
         self.period = period
@@ -59,6 +66,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         name = try container.decode(String.self, forKey: .name)
         company = try container.decode(Company.self, forKey: .company)
         descriptions = try container.decode([String].self, forKey: .descriptions, defaultIfMissing: [])
+        accomplishments = try container.decode([String].self, forKey: .accomplishments, defaultIfMissing: [])
         techs = try container.decode([Tech].self, forKey: .techs, defaultIfMissing: [])
         role = try container.decode(Role.self, forKey: .role)
         period = try container.decode(Period.self, forKey: .period)
@@ -72,6 +80,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         private var name: String = ""
         private var company: Company?
         private var descriptions: [String] = []
+        private var accomplishments: [String] = []
         private var techs: [Tech] = []
         private var role: Role = .none
         private var period: Period?
@@ -102,6 +111,18 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
         @discardableResult
         public func addDescription(_ description: String) -> Builder {
             descriptions.append(description)
+            return self
+        }
+
+        @discardableResult
+        public func withAccomplishments(_ accomplishments: [String]) -> Builder {
+            self.accomplishments = accomplishments
+            return self
+        }
+
+        @discardableResult
+        public func addAccomplishment(_ accomplishment: String) -> Builder {
+            accomplishments.append(accomplishment)
             return self
         }
 
@@ -192,6 +213,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
                 name: name,
                 company: company,
                 descriptions: descriptions,
+                accomplishments: accomplishments,
                 techs: techs,
                 role: role,
                 period: period,

@@ -238,6 +238,12 @@ extension Rendering.MarkdownDocumentRenderer {
             appendParagraph(description, to: &lines)
         }
 
+        // Results-oriented accomplishments render verbatim after the
+        // descriptions; the renderer never inflates them or fabricates metrics.
+        for accomplishment in project.accomplishments {
+            appendParagraph(accomplishment, to: &lines)
+        }
+
         appendLabelledList(labels.technologies, values: project.techs.map(\.name), to: &lines)
         appendFocus(projectExperience.technicalFocus, project.technicalFocus, to: &lines)
         appendProjectLinks(project.urls, to: &lines)

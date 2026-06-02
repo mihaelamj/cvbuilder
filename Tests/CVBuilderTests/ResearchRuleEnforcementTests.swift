@@ -65,7 +65,8 @@ struct ResearchRuleEnforcementTests {
         let project = Project(
             name: "Tooling",
             company: Company(name: "Acme"),
-            descriptions: [fact],
+            descriptions: [],
+            accomplishments: [fact],
             techs: [],
             role: role,
             period: Period(start: .init(month: 1, year: 2023), end: .init(month: 6, year: 2023)),
@@ -87,6 +88,38 @@ struct ResearchRuleEnforcementTests {
         let factLine = try #require(output.split(separator: "\n").first { $0.contains("Maintained the release pipeline") })
         let factLineHasDigit = factLine.contains(where: \.isNumber)
         #expect(!factLineHasDigit)
+    }
+
+    @Test("project accomplishments decode from JSON and render verbatim")
+    func accomplishmentsDecodeAndRender() throws {
+        let json = """
+        {
+          "cv": {
+            "name": "A", "title": "T", "summary": "S",
+            "contactInfo": { "email": "a@b.c", "phone": "+1", "location": "X" },
+            "experience": [{
+              "company": { "name": "C" },
+              "role": { "title": "Engineer", "seniority": "Senior" },
+              "period": { "start": { "month": 1, "year": 2023 }, "end": { "month": 6, "year": 2023 } },
+              "projects": [{
+                "project": {
+                  "name": "P", "company": { "name": "C" },
+                  "role": { "title": "Engineer", "seniority": "Senior" },
+                  "period": { "start": { "month": 1, "year": 2023 }, "end": { "month": 6, "year": 2023 } },
+                  "accomplishments": ["Shipped the release tooling."]
+                },
+                "role": { "title": "Engineer", "seniority": "Senior" },
+                "period": { "start": { "month": 1, "year": 2023 }, "end": { "month": 6, "year": 2023 } }
+              }]
+            }]
+          }
+        }
+        """
+        let document = try JSONDecoder().decode(CVDocument.self, from: Data(json.utf8))
+        let project = try #require(document.cv.experience.first?.projects.first?.project)
+
+        #expect(project.accomplishments == ["Shipped the release tooling."])
+        #expect(renderer.render(document).contains("Shipped the release tooling."))
     }
 
     // MARK: - R19 localized output is taxonomy-mappable and origin-safe
