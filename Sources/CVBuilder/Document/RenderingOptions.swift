@@ -9,6 +9,11 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public let frontMatterProfile: FrontMatterProfile
     /// High-level section ordering strategy.
     public let mode: RenderingMode
+    /// Output language for section labels, field labels, and month names.
+    ///
+    /// Defaults to `.english`, which reproduces the original literals exactly.
+    /// Rendering never depends on the host locale, so output stays deterministic.
+    public let locale: RenderingLocale
     /// Maximum number of work-experience entries to render. Non-positive values mean unlimited.
     public let recentCompanyCount: Int?
     /// Explicit ordered work-experience IDs to render. Empty values render all work entries before other limits.
@@ -28,6 +33,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case frontMatterProfile
         case mode
+        case locale
         case recentCompanyCount
         case selectedExperienceIDs
         case maxBulletsPerProject
@@ -39,6 +45,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public init(
         frontMatterProfile: FrontMatterProfile = .generic,
         mode: RenderingMode = .experiencedTechnical,
+        locale: RenderingLocale = .english,
         recentCompanyCount: Int? = nil,
         selectedExperienceIDs: [UUID] = [],
         maxBulletsPerProject: Int? = nil,
@@ -48,6 +55,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     ) {
         self.frontMatterProfile = frontMatterProfile
         self.mode = mode
+        self.locale = locale
         self.recentCompanyCount = recentCompanyCount
         self.selectedExperienceIDs = selectedExperienceIDs
         self.maxBulletsPerProject = maxBulletsPerProject
@@ -68,6 +76,11 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
             RenderingMode.self,
             forKey: .mode,
             defaultIfMissing: .experiencedTechnical,
+        )
+        locale = try container.decode(
+            RenderingLocale.self,
+            forKey: .locale,
+            defaultIfMissing: .english,
         )
         recentCompanyCount = try container.decodeIfPresent(Int.self, forKey: .recentCompanyCount)
         selectedExperienceIDs = try container.decode(

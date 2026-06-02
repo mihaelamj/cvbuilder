@@ -69,8 +69,8 @@ extension Rendering.MarkdownDocumentRenderer {
         let areas = uniqueValues(focus.flatMap { $0?.areas ?? [] })
         let tags = uniqueValues(focus.flatMap { $0?.tags ?? [] })
 
-        appendLabelledList("Technical focus", values: areas, to: &lines)
-        appendLabelledList("Technical tags", values: tags, to: &lines)
+        appendLabelledList(labels.technicalFocus, values: areas, to: &lines)
+        appendLabelledList(labels.technicalTags, values: tags, to: &lines)
     }
 
     func uniqueValues(_ values: [String]) -> [String] {
@@ -152,26 +152,13 @@ extension Rendering.MarkdownDocumentRenderer {
 extension Rendering.MarkdownDocumentRenderer {
     func format(_ period: Period, isCurrent: Bool) -> String {
         let start = format(period.start)
-        let end = isCurrent ? "Present" : format(period.end)
+        let end = isCurrent ? labels.present : format(period.end)
 
         return "\(start) - \(end)"
     }
 
     func format(_ date: Period.SimpleDate) -> String {
-        let monthNames = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-        ]
+        let monthNames = labels.monthNames
 
         guard (1 ... monthNames.count).contains(date.month) else {
             return "\(date.year)-\(String(format: "%02d", date.month))"
@@ -199,40 +186,40 @@ extension Rendering.MarkdownDocumentRenderer {
     func label(for category: Tech.Category?) -> String {
         switch category {
         case .language:
-            "Languages"
+            labels.categoryLanguages
         case .framework:
-            "Frameworks"
+            labels.categoryFrameworks
         case .tool:
-            "Tools"
+            labels.categoryTools
         case .platform:
-            "Platforms"
+            labels.categoryPlatforms
         case .concept:
-            "Concepts"
+            labels.categoryConcepts
         case .other:
-            "Other"
+            labels.categoryOther
         case nil:
-            "Uncategorized"
+            labels.categoryUncategorized
         }
     }
 
     func label(for kind: PublicEvidenceKind) -> String {
         switch kind {
         case .openSource:
-            "Open source"
+            labels.kindOpenSource
         case .talk:
-            "Talk"
+            labels.kindTalk
         case .publication:
-            "Publication"
+            labels.kindPublication
         case .app:
-            "App"
+            labels.kindApp
         case .package:
-            "Package"
+            labels.kindPackage
         case .technicalWriting:
-            "Technical writing"
+            labels.kindTechnicalWriting
         case .project:
-            "Project"
+            labels.kindProject
         case .other:
-            "Other"
+            labels.kindOther
         }
     }
 }

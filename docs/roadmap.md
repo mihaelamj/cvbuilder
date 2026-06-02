@@ -60,7 +60,7 @@ core package.
 
 - Epic #76 is complete after PR #85.
 - Issues #74 and #75 are done.
-- Epic #80 is active for the authoring and publishing experience.
+- Epic #80 is complete for the authoring and publishing experience.
 - Issue #81 is done after PR #97.
 - Issue #82 is done after PR #104.
 - Issue #83 is done for JSON Resume interop.
@@ -96,11 +96,11 @@ Relevant links:
 - Issue #76: completed research-conformance hardening epic.
 - Issue #74: legacy CV render path R12/R15 conformance is done after PR #79.
 - Issue #75: research-conformance matrix is done after PR #85.
-- Issue #80: active authoring and publishing experience epic.
+- Issue #80: authoring and publishing experience epic is complete.
 - Issue #81: CLI authoring experience is done after PR #97.
 - Issue #82: static-site-generator front-matter profiles are done after PR #104.
 - Issue #83: JSON Resume import and export interop is done.
-- Issue #84: future rendered-output localization.
+- Issue #84: rendered-output localization is done.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -130,7 +130,7 @@ Ordered roadmap issues:
 22. #81 - done: add CLI authoring validation, scaffolding, schema printing, and stream IO.
 23. #82 - done: add static-site-generator front-matter profiles.
 24. #83 - done: add JSON Resume import and export interop.
-25. #84 - todo: add deterministic rendered-output localization.
+25. #84 - done: add deterministic rendered-output localization.
 
 ```mermaid
 flowchart TD
@@ -158,7 +158,7 @@ flowchart TD
     P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
     P23["Phase 23<br/>#82 Front matter profiles<br/>Done"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Done"]
-    P25["Phase 25<br/>#84 Localization<br/>Todo"]
+    P25["Phase 25<br/>#84 Localization<br/>Done"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
 
@@ -177,8 +177,8 @@ flowchart TD
     class P21 done;
     class P22 done;
     class P23 done;
-    class P24 active;
-    class P25 todo;
+    class P24 done;
+    class P25 done;
 ```
 
 ## Roadmap
@@ -698,8 +698,15 @@ Issue: [#84](https://github.com/mihaelamj/cvbuilder/issues/84).
 
 Deliverables:
 
-- add selectable label sets through rendering options: todo
-- add deterministic per-locale date formatting: todo
+- add selectable label sets through rendering options: done
+- add deterministic per-locale date formatting: done
+
+Acceptance:
+
+- section labels are sourced from a label set selectable via `RenderingOptions`: done
+- date and period formatting is locale-selectable and host-locale independent: done
+- at least one non-English locale renders end to end with a checked-in fixture: done
+- default English output is unchanged and still byte-for-byte stable: done
 - add at least one non-English fixture: todo
 
 Acceptance:

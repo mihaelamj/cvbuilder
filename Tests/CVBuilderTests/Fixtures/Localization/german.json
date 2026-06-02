@@ -1,0 +1,98 @@
+{
+  "cv": {
+    "name": "Robin Beispiel",
+    "title": "Senior iOS Engineer",
+    "summary": "Entwickelt modulare Swift-Plattformen und Entwicklerwerkzeuge.",
+    "contactInfo": {
+      "email": "robin@example.com",
+      "phone": "+1 555 010 0701",
+      "linkedIn": "https://example.com/linkedin",
+      "github": "https://example.com/github",
+      "website": "https://example.com",
+      "location": "Beispielstadt"
+    },
+    "experience": [
+      {
+        "company": { "name": "Beispiel Systeme" },
+        "role": { "title": "iOS Engineer", "seniority": "Senior" },
+        "period": {
+          "start": { "month": 3, "year": 2024 },
+          "end": { "month": 5, "year": 2026 }
+        },
+        "isCurrent": true,
+        "projects": [
+          {
+            "project": {
+              "name": "Vertragswerkzeug",
+              "company": { "name": "Beispiel Systeme" },
+              "descriptions": [
+                "Baute ein modulares Swift-Paket.",
+                "Halbierte die Buildzeiten."
+              ],
+              "techs": [
+                { "name": "Swift", "category": "language" },
+                { "name": "OpenAPI", "category": "tool" }
+              ],
+              "role": { "title": "iOS Engineer", "seniority": "Senior" },
+              "period": {
+                "start": { "month": 3, "year": 2024 },
+                "end": { "month": 5, "year": 2026 }
+              },
+              "urls": ["https://example.com/tooling"],
+              "isCurrent": true,
+              "technicalFocus": { "areas": ["Paketdesign"], "tags": ["spm"] }
+            },
+            "role": { "title": "iOS Engineer", "seniority": "Senior" },
+            "period": {
+              "start": { "month": 3, "year": 2024 },
+              "end": { "month": 5, "year": 2026 }
+            }
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Beispiel-Universität",
+        "degree": "BSc",
+        "field": "Informatik",
+        "period": {
+          "start": { "month": 9, "year": 2018 },
+          "end": { "month": 6, "year": 2022 }
+        }
+      }
+    ],
+    "skills": [
+      { "name": "Swift", "category": "language" },
+      { "name": "OpenAPI", "category": "tool" },
+      { "name": "Linux", "category": "platform" }
+    ]
+  },
+  "links": {
+    "profiles": [
+      { "label": "Mastodon", "url": "https://example.com/mastodon" }
+    ],
+    "downloads": [
+      { "label": "PDF", "url": "/assets/lebenslauf.pdf" }
+    ]
+  },
+  "publicEvidence": [
+    {
+      "title": "Vertragswerkzeug",
+      "kind": "openSource",
+      "role": "Betreuer",
+      "summary": "Pflegt die Release-Notizen des Pakets.",
+      "url": "https://example.com/tooling",
+      "technologies": ["Swift", "OpenAPI"],
+      "period": {
+        "start": { "month": 9, "year": 2025 },
+        "end": { "month": 5, "year": 2026 }
+      },
+      "highlights": ["Dokumentierte jede Veröffentlichung."]
+    }
+  ],
+  "rendering": {
+    "locale": "de",
+    "mode": "experiencedTechnical"
+  }
+}

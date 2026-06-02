@@ -56,18 +56,18 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func renderContact(_ contactInfo: ContactInfo, writer: inout Writer) {
         var lines: [String] = []
-        appendLine("Email", value: contactInfo.email, to: &lines)
-        appendLine("Phone", value: contactInfo.phone, to: &lines)
-        appendLine("Location", value: contactInfo.location, to: &lines)
-        appendLinkLine("LinkedIn", url: contactInfo.linkedIn?.absoluteString, to: &lines)
-        appendLinkLine("GitHub", url: contactInfo.github?.absoluteString, to: &lines)
-        appendLinkLine("Website", url: contactInfo.website?.absoluteString, to: &lines)
+        appendLine(labels.email, value: contactInfo.email, to: &lines)
+        appendLine(labels.phone, value: contactInfo.phone, to: &lines)
+        appendLine(labels.location, value: contactInfo.location, to: &lines)
+        appendLinkLine(labels.linkedIn, url: contactInfo.linkedIn?.absoluteString, to: &lines)
+        appendLinkLine(labels.github, url: contactInfo.github?.absoluteString, to: &lines)
+        appendLinkLine(labels.website, url: contactInfo.website?.absoluteString, to: &lines)
 
         guard !lines.isEmpty else {
             return
         }
 
-        writer.block(["## Contact"] + lines)
+        writer.block(["## \(labels.contact)"] + lines)
     }
 
     func renderExperience(
@@ -78,11 +78,11 @@ extension Rendering.MarkdownDocumentRenderer {
     ) {
         let visibleExperience = visibleExperience(experience, options: options)
         guard !visibleExperience.isEmpty else {
-            renderEmptySection("## Experience", options: options, writer: &writer)
+            renderEmptySection("## \(labels.experience)", options: options, writer: &writer)
             return
         }
 
-        var lines = ["## Experience"]
+        var lines = ["## \(labels.experience)"]
         for work in visibleExperience {
             lines.append("### \(workHeading(work, links: links))")
             lines.append(format(work.period, isCurrent: work.isCurrent))
@@ -102,14 +102,14 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func renderEducation(_ education: [Education], options: RenderingOptions, writer: inout Writer) {
         guard !education.isEmpty else {
-            renderEmptySection("## Education", options: options, writer: &writer)
+            renderEmptySection("## \(labels.education)", options: options, writer: &writer)
             return
         }
 
-        var lines = ["## Education"]
+        var lines = ["## \(labels.education)"]
         for item in education {
             lines.append("### \(escapedMarkdownText(item.institution))")
-            lines.append("\(escapedMarkdownText(item.degree)) in \(escapedMarkdownText(item.field))")
+            lines.append("\(escapedMarkdownText(item.degree))\(labels.degreeFieldConnector)\(escapedMarkdownText(item.field))")
             lines.append(format(item.period, isCurrent: false))
         }
 
@@ -118,18 +118,18 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func renderPublicEvidence(_ evidence: [PublicEvidence], options: RenderingOptions, writer: inout Writer) {
         guard !evidence.isEmpty else {
-            renderEmptySection("## Public Evidence", options: options, writer: &writer)
+            renderEmptySection("## \(labels.publicEvidence)", options: options, writer: &writer)
             return
         }
 
-        var lines = ["## Public Evidence"]
+        var lines = ["## \(labels.publicEvidence)"]
         for item in evidence {
             lines.append("### \(linkedText(item.title, destination: item.url))")
-            lines.append("Kind: \(label(for: item.kind))")
-            appendLine("Role", value: item.role, to: &lines)
+            lines.append("\(labels.kind): \(label(for: item.kind))")
+            appendLine(labels.role, value: item.role, to: &lines)
             appendEvidenceDate(item, to: &lines)
-            appendLine("Summary", value: item.summary, to: &lines)
-            appendLabelledList("Technologies", values: item.technologies, to: &lines)
+            appendLine(labels.summary, value: item.summary, to: &lines)
+            appendLabelledList(labels.technologies, values: item.technologies, to: &lines)
             appendFocus(item.technicalFocus, to: &lines)
             appendHighlights(item.highlights, to: &lines)
         }
@@ -139,11 +139,11 @@ extension Rendering.MarkdownDocumentRenderer {
 
     func renderSkills(_ skills: [Tech], options: RenderingOptions, writer: inout Writer) {
         guard !skills.isEmpty else {
-            renderEmptySection("## Skills", options: options, writer: &writer)
+            renderEmptySection("## \(labels.skills)", options: options, writer: &writer)
             return
         }
 
-        var lines = ["## Skills"]
+        var lines = ["## \(labels.skills)"]
         if options.compactGroupedSkills {
             for category in orderedSkillCategories(skills) {
                 let categorySkills = skills.filter { $0.category == category }.map(\.name)
@@ -161,11 +161,11 @@ extension Rendering.MarkdownDocumentRenderer {
     func renderLinks(_ links: DocumentLinks, options: RenderingOptions, writer: inout Writer) {
         let documentLinks = links.profiles + links.downloads
         guard !documentLinks.isEmpty else {
-            renderEmptySection("## Links", options: options, writer: &writer)
+            renderEmptySection("## \(labels.links)", options: options, writer: &writer)
             return
         }
 
-        var lines = ["## Links"]
+        var lines = ["## \(labels.links)"]
         for link in documentLinks {
             lines.append(linkedText(link.label, destination: link.url))
         }
@@ -203,7 +203,7 @@ extension Rendering.MarkdownDocumentRenderer {
             return
         }
 
-        lines.append("## Projects")
+        lines.append("## \(labels.projects)")
         for projectExperience in projects {
             appendProject(projectExperience, headingLevel: "###", options: options, to: &lines)
         }
@@ -218,13 +218,13 @@ extension Rendering.MarkdownDocumentRenderer {
         let project = projectExperience.project
         lines.append("\(headingLevel) \(escapedMarkdownText(project.name))")
         lines.append(format(projectExperience.period, isCurrent: project.isCurrent))
-        appendLine("Role", value: projectExperience.role.name, to: &lines)
+        appendLine(labels.role, value: projectExperience.role.name, to: &lines)
 
         for description in limitedDescriptions(project.descriptions, maxCount: options.maxBulletsPerProject) {
             appendParagraph(description, to: &lines)
         }
 
-        appendLabelledList("Technologies", values: project.techs.map(\.name), to: &lines)
+        appendLabelledList(labels.technologies, values: project.techs.map(\.name), to: &lines)
         appendFocus(projectExperience.technicalFocus, project.technicalFocus, to: &lines)
         appendProjectLinks(project.urls, to: &lines)
     }
@@ -235,14 +235,14 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         let renderedURLs = urls.map { linkedText($0.absoluteString, destination: $0.absoluteString) }
-        lines.append("Links: \(renderedURLs.joined(separator: ", "))")
+        lines.append("\(labels.projectLinks): \(renderedURLs.joined(separator: ", "))")
     }
 
     func appendEvidenceDate(_ evidence: PublicEvidence, to lines: inout [String]) {
         if let date = evidence.date?.trimmingCharacters(in: .whitespacesAndNewlines), !date.isEmpty {
-            appendLine("Date", value: date, to: &lines)
+            appendLine(labels.date, value: date, to: &lines)
         } else if let period = evidence.period {
-            lines.append("Period: \(format(period, isCurrent: false))")
+            lines.append("\(labels.period): \(format(period, isCurrent: false))")
         }
     }
 
