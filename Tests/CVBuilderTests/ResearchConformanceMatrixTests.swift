@@ -317,6 +317,7 @@ private let researchConformanceEntries: [ResearchConformanceEntry] = [
     ResearchConformanceEntry(
         ruleID: "R18",
         codeLocations: [
+            "Sources/CVBuilder/Project.swift",
             "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Sections.swift",
         ],
         testNames: [

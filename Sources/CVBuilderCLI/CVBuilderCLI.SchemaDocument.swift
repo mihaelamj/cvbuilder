@@ -199,6 +199,7 @@ extension CVBuilderCLI {
                 "name": { "type": "string" },
                 "company": { "$ref": "#/$defs/company" },
                 "descriptions": { "$ref": "#/$defs/stringArray" },
+                "accomplishments": { "$ref": "#/$defs/stringArray" },
                 "techs": {
                   "type": "array",
                   "items": { "$ref": "#/$defs/tech" },

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `Project.accomplishments`: structured results-oriented accomplishment
+  statements (action plus outcome), rendered verbatim after the project
+  descriptions, with `Project.Builder` affordances
+  (`withAccomplishments`/`addAccomplishment`). The renderer never inflates them
+  or fabricates metrics (research rule R18).
 - CLI authoring commands for `--validate`, `--print-schema`, `--init`, stdin
   input with `--data -`, and stdout output with `--out -`.
 - Static-site-generator front matter profiles for generic, Toucan, Hugo, and
