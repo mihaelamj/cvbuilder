@@ -60,7 +60,9 @@ Landed on `main`:
 - Release epics #47, #57, and #67 complete, including the `v0.9.0` publication
   proof. Research-conformance epic #76 (#74, #75) complete. Authoring and
   publishing epic #80 (#81-#84) complete: CLI authoring, front-matter profiles,
-  JSON Resume interop, and localization.
+  JSON Resume interop, and localization. Source-code audit epic #132 (#108-#131)
+  complete: deterministic identity and dates, escaping and empty-field guards,
+  JSON Resume fidelity, validator parity, and packaging/CI gates.
 
 ## Ordered Roadmap Issues
 
@@ -93,6 +95,7 @@ Every phase is shipped. The table is the canonical issue order.
 | 23 | #82 | Add static-site-generator front-matter profiles. |
 | 24 | #83 | Add JSON Resume import and export interop. |
 | 25 | #84 | Add deterministic rendered-output localization. |
+| 26 | #132 | Resolve the first-principles source-code audit findings (#108-#131). |
 
 ## Phase Detail
 
@@ -244,7 +247,16 @@ date formatting, with at least one non-English locale fixture-backed end to end.
 Default English output stays byte-for-byte stable; no layout changes or new
 renderer backend. Shipped. See <doc:Localization>.
 
-## Research Rules
+### Phase 26: Resolve the Source-Code Audit Findings (#132)
+
+Fix the 24 findings (#108-#131) of the first-principles, four-round source-code
+audit, at the root cause rather than per symptom: deterministic value identity
+and serialization (optional `id`, content-based `Tech`/`Company` identity),
+date-model validation and optional period bounds, JSON Resume round-trip
+fidelity (absent dates, seniority, same-name employer URLs), empty/whitespace
+guards before structural Markdown, validator/decoder parity, front-matter
+coercion, section assembly, and the packaging/platform/CI gates. Each fix landed
+with regression tests. Shipped.
 
 Research remains input to renderer policy, not a marketing claim. Evidence
 priority and the surviving rule set are documented in <doc:ResearchOverview> and
