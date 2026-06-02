@@ -125,10 +125,17 @@ one, for example `cv.contactInfo.email` or `cv.experience[0].company`.
 `CVDocument` is the canonical publishing contract. The `cvbuilder` CLI only
 accepts `CVDocument` JSON.
 
-`MarkdownCVRenderer` remains a compatibility path for Swift callers that already
-hold a plain `CV`. It is not the schema contract and should not gain publishing
-metadata. New publishing features belong on `CVDocument` and
+`MarkdownCVRenderer`, `StringCVRenderer`, `ConsoleCVRenderer`, and
+`CVRendering` are deprecated compatibility APIs for Swift callers that already
+hold a plain `CV`. They are not the schema contract and should not gain
+publishing metadata. New publishing features belong on `CVDocument` and
 `Rendering.MarkdownDocumentRenderer`.
+
+`MarkdownCVRenderer.render(cv:)` and `CVBuilderTileDown.Renderer().render(cv:)`
+wrap the plain `CV` in a default `CVDocument` and delegate to
+`Rendering.MarkdownDocumentRenderer`, so public bare-`CV` Markdown compatibility
+paths use the same escaping, deterministic ordering, and no-footer output as
+canonical `CVDocument` rendering.
 
 ## Migration Rules
 

@@ -11,19 +11,19 @@ public extension CVBuilderTileDown {
     /// renderer.
     struct Renderer: Sendable {
         private let documentRenderer: Rendering.MarkdownDocumentRenderer
-        private let legacyRenderer: MarkdownCVRenderer
 
         /// Creates a renderer that delegates to CVBuilder's deterministic Markdown renderers.
-        ///
-        /// Inject custom renderers only when testing adapter behavior. The
-        /// default initializer uses the same production renderers as the core
-        /// package.
+        public init(documentRenderer: Rendering.MarkdownDocumentRenderer = .init()) {
+            self.documentRenderer = documentRenderer
+        }
+
+        /// Creates a renderer while preserving the former legacy-renderer injection shape.
+        @available(*, deprecated, message: "Use init(documentRenderer:) instead.")
         public init(
             documentRenderer: Rendering.MarkdownDocumentRenderer = .init(),
-            legacyRenderer: MarkdownCVRenderer = .init(),
+            legacyRenderer _: MarkdownCVRenderer,
         ) {
             self.documentRenderer = documentRenderer
-            self.legacyRenderer = legacyRenderer
         }
 
         /// Renders a complete `CVDocument` to deterministic Markdown.
@@ -37,11 +37,12 @@ public extension CVBuilderTileDown {
 
         /// Renders a legacy `CV` value to Markdown.
         ///
-        /// This compatibility overload emits Markdown for callers that still
-        /// hold plain `CV` values. It does not add `CVDocument` front matter,
-        /// links, public evidence, or rendering-mode behavior.
+        /// This compatibility overload wraps the value in a default `CVDocument`
+        /// so escaping, determinism, and low-noise Markdown stay identical to
+        /// the canonical renderer. It does not add front matter, document
+        /// links, public evidence, or custom rendering options.
         public func render(cv resume: CV) -> String {
-            legacyRenderer.render(cv: resume)
+            documentRenderer.render(CVDocument(cv: resume))
         }
     }
 }
