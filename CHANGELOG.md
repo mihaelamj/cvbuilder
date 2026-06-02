@@ -47,6 +47,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `--from json-resume --validate` now validates the converted `CVDocument`
+  against the embedded schema (parity with the `cv-document` path) and rejects an
+  empty or nameless resume instead of reporting it valid; a malformed file is
+  reported as invalid JSON Resume, naming the format actually parsed (#113, #116).
+- CLI validator fidelity: integer bounds are compared in integer space so the
+  validator's view of a value beyond `Double` precision matches the decoder; a
+  known boolean flag given a value (`--check=true`) reports "does not take a
+  value" instead of "unknown option"; and an `anyOf(type, null)` field no longer
+  reports the null branch's failure for a non-null value (#116).
 - The standalone `## Projects` block is now a first-class, policy-ordered section
   instead of being welded onto the end of the Experience block, and it is drawn
   from the full experience so projects are not lost when the Experience section

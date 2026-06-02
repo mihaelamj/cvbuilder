@@ -110,6 +110,10 @@ private extension CVBuilderCLI.Options {
                 format = try CVBuilderCLI.Format(argument: requiredAssignedValue(value, option: option))
             case "--front-matter-profile":
                 frontMatterProfile = try FrontMatterProfile(argument: requiredAssignedValue(value, option: option))
+            case "--check", "--validate":
+                // Known boolean flags that take no value; report that precisely
+                // rather than "unknown option".
+                throw CVBuilderCLI.Failure.unexpectedValue(option: option)
             default:
                 if option.hasPrefix("-") {
                     throw CVBuilderCLI.Failure.unknownOption(option)

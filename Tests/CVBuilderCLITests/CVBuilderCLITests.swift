@@ -484,11 +484,64 @@ struct CVBuilderCLITests {
         try makeRunner().validate(.init(dataPath: validURL.path, from: .jsonResume))
 
         try expectFailure(makeRunner().validate(.init(dataPath: malformedURL.path, from: .jsonResume))) { failure in
-            guard case let .invalidJSON(path, _) = failure else {
-                Issue.record("Expected invalidJSON, got \(failure)")
+            guard case let .invalidJSONResume(path, _) = failure else {
+                Issue.record("Expected invalidJSONResume, got \(failure)")
                 return
             }
             #expect(path == malformedURL.path)
+        }
+
+        // An empty JSON Resume converts to a nameless, empty document and is now
+        // rejected rather than reported valid (#113).
+        let emptyURL = try tempDirectory.write("empty.json", contents: "{}")
+        try expectFailure(makeRunner().validate(.init(dataPath: emptyURL.path, from: .jsonResume))) { failure in
+            guard case let .invalidJSONResume(path, reason) = failure else {
+                Issue.record("Expected invalidJSONResume, got \(failure)")
+                return
+            }
+            #expect(path == emptyURL.path)
+            #expect(reason.contains("no name"))
+        }
+    }
+
+    @Test("a known boolean flag given a value reports it precisely, not unknown option")
+    func booleanFlagGivenValueReportsPrecisely() throws {
+        let arguments = ["--data", "cv.json", "--out", "cv.md", "--check=true"]
+        try expectFailure(CVBuilderCLI.Options.parse(arguments)) { failure in
+            #expect(failure == .unexpectedValue(option: "--check"))
+            #expect(failure.message == "--check does not take a value")
+        }
+    }
+
+    @Test("the validator compares integer bounds in integer space")
+    func validatorComparesIntegerBoundsInIntegerSpace() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: hugeMonthJSON)
+        try expectFailure(makeRunner().validate(.init(dataPath: inputURL.path))) { failure in
+            guard case let .invalidJSON(_, reason) = failure else {
+                Issue.record("Expected invalidJSON, got \(failure)")
+                return
+            }
+            #expect(reason.contains("above maximum 12"))
+            #expect(!reason.contains("12.0"))
+        }
+    }
+
+    @Test("an anyOf null branch failure is suppressed for a non-null value")
+    func anyOfNullBranchSuppressed() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: badTechnicalFocusJSON)
+        try expectFailure(makeRunner().validate(.init(dataPath: inputURL.path))) { failure in
+            guard case let .invalidJSON(_, reason) = failure else {
+                Issue.record("Expected invalidJSON, got \(failure)")
+                return
+            }
+            #expect(reason.contains("did not match any allowed schema"))
+            #expect(!reason.contains("null"))
         }
     }
 
@@ -660,6 +713,49 @@ private let cliFixtureJSON = """
       "phone": "+1 555 010 0301",
       "location": "Example City"
     }
+  }
+}
+"""
+
+private let hugeMonthJSON = """
+{
+  "cv": {
+    "name": "A",
+    "title": "T",
+    "summary": "S",
+    "contactInfo": { "email": "a@b.c", "phone": "+100000000", "location": "X" },
+    "experience": [
+      {
+        "company": { "name": "C" },
+        "role": { "title": "E", "seniority": "Senior" },
+        "period": {
+          "start": { "month": 9999999999999999, "year": 2024 },
+          "end": { "month": 6, "year": 2026 }
+        }
+      }
+    ]
+  }
+}
+"""
+
+private let badTechnicalFocusJSON = """
+{
+  "cv": {
+    "name": "A",
+    "title": "T",
+    "summary": "S",
+    "contactInfo": { "email": "a@b.c", "phone": "+100000000", "location": "X" },
+    "experience": [
+      {
+        "company": { "name": "C" },
+        "role": { "title": "E", "seniority": "Senior" },
+        "period": {
+          "start": { "month": 1, "year": 2024 },
+          "end": { "month": 6, "year": 2026 }
+        },
+        "technicalFocus": "oops"
+      }
+    ]
   }
 }
 """
