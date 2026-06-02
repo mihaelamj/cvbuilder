@@ -40,6 +40,7 @@ bash scripts/check-platform-contract.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-schema-drift.sh
 bash scripts/check-generated-fixtures.sh
+bash scripts/check-consumer-smoke.sh
 swiftformat . --config .swiftformat --lint
 swiftlint --config .swiftlint.yml --strict
 swift build
@@ -70,10 +71,11 @@ The release commit on `main` must have these checks green:
 - Swift (Linux)
 
 The macOS and Linux workflows run the Swift test suite, the schema drift check,
-and generated fixture freshness checks. Linux also proves the package graph keeps
-`CVBuilderTileDown` and does not reintroduce default `CVBuilderIgnite`
-participation. The release-gate workflows run on pull requests, pushes to
-`main`, manual dispatch, and `v*` tag pushes.
+generated fixture freshness checks, and clean SwiftPM consumer smoke checks.
+Linux also proves the package graph keeps `CVBuilderTileDown`, proves
+`CVBuilderTileDown` can be imported by a clean consumer package, and does not
+reintroduce default `CVBuilderIgnite` participation. The release-gate workflows
+run on pull requests, pushes to `main`, manual dispatch, and `v*` tag pushes.
 
 ## Changelog Prep
 

@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   prep, tag steps, release-note expectations, and product boundaries.
 - Platform contract guard that keeps unsupported iOS metadata out of the first
   release until iOS support is tested and documented.
+- Clean SwiftPM consumer smoke test for proving public package consumption on
+  macOS and Linux before release.
 
 ### Changed
 
