@@ -60,6 +60,8 @@ core package.
 
 - Epic #76 is complete after PR #85.
 - Issues #74 and #75 are done.
+- Epic #80 is active for the authoring and publishing experience.
+- Issue #81 is in PR review for CLI authoring ergonomics.
 
 Relevant links:
 
@@ -92,6 +94,11 @@ Relevant links:
 - Issue #76: completed research-conformance hardening epic.
 - Issue #74: legacy CV render path R12/R15 conformance is done after PR #79.
 - Issue #75: research-conformance matrix is done after PR #85.
+- Issue #80: active authoring and publishing experience epic.
+- Issue #81: CLI authoring experience is in PR review.
+- Issue #82: next static-site-generator front-matter profiles.
+- Issue #83: future JSON Resume interop.
+- Issue #84: future rendered-output localization.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -118,6 +125,10 @@ Ordered roadmap issues:
 19. #70 - done: prepare release publication proof for reconciled version.
 20. #74 - done: make the public legacy CV render path R12/R15 conformant.
 21. #75 - done: add research-conformance matrix mapping R01 to R15.
+22. #81 - review: add CLI authoring validation, scaffolding, schema printing, and stream IO.
+23. #82 - next: add static-site-generator front-matter profiles.
+24. #83 - todo: add JSON Resume import and export interop.
+25. #84 - todo: add deterministic rendered-output localization.
 
 ```mermaid
 flowchart TD
@@ -142,8 +153,12 @@ flowchart TD
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
+    P22["Phase 22<br/>#81 CLI authoring<br/>Review"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Next"]
+    P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
+    P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -158,6 +173,9 @@ flowchart TD
     class P19 done;
     class P20 done;
     class P21 done;
+    class P22 review;
+    class P23 next;
+    class P24,P25 todo;
 ```
 
 ## Roadmap
@@ -604,6 +622,88 @@ Acceptance:
 - each rule maps to at least one code location and enforcing test: done
 - the completeness test fails on missing or stale test references: done
 - no rendering output changes in this phase: done
+
+### Phase 22: Add CLI Authoring Experience
+
+Objective: make `cvbuilder` validate, scaffold, print schema metadata, and
+compose through stdin and stdout while keeping existing rendering behavior
+unchanged.
+
+Issue: [#81](https://github.com/mihaelamj/cvbuilder/issues/81).
+
+Deliverables:
+
+- add `--validate` schema and decode validation with diagnostics: review
+- add `--print-schema` stdout schema output: review
+- add `--init <path>` starter JSON scaffolding with overwrite protection:
+  review
+- support stdin with `--data -` and stdout with `--out -`: review
+- update CLI help and JSON workflow docs: review
+
+Acceptance:
+
+- validation decodes without writing and reports schema or coding paths: review
+- schema output matches `Schemas/cvdocument.schema.json`: review
+- scaffolding writes the documented minimal document and protects existing
+  files: review
+- stream IO is covered by CLI tests: review
+
+### Phase 23: Add Static-Site Front-Matter Profiles
+
+Objective: make generated Markdown selectable for common static-site generator
+front-matter conventions without adding an HTML renderer.
+
+Issue: [#82](https://github.com/mihaelamj/cvbuilder/issues/82).
+
+Deliverables:
+
+- add Toucan, Hugo, and Jekyll front-matter profiles: next
+- add checked-in per-profile fixtures: next
+- document the profile contract and key mapping: next
+
+Acceptance:
+
+- each profile is byte-for-byte deterministic: next
+- default front matter remains unchanged without a selected profile: next
+- no HTML, templating, shell-out, or layout behavior is introduced: next
+
+### Phase 24: Add JSON Resume Interop
+
+Objective: import and export `jsonresume.org` documents while preserving
+`CVDocument` as the canonical model.
+
+Issue: [#83](https://github.com/mihaelamj/cvbuilder/issues/83).
+
+Deliverables:
+
+- add a typed JSON Resume model: todo
+- document mapping and lossy fields: todo
+- add import, export, and round-trip fixtures: todo
+
+Acceptance:
+
+- a JSON Resume sample imports and renders deterministic Markdown: todo
+- a `CVDocument` exports to schema-valid JSON Resume: todo
+- no ATS, scoring, or fit claims are introduced: todo
+
+### Phase 25: Add Deterministic Localization
+
+Objective: make rendered section labels and date formatting locale-selectable
+without host-locale dependence.
+
+Issue: [#84](https://github.com/mihaelamj/cvbuilder/issues/84).
+
+Deliverables:
+
+- add selectable label sets through rendering options: todo
+- add deterministic per-locale date formatting: todo
+- add at least one non-English fixture: todo
+
+Acceptance:
+
+- default English output stays byte-for-byte stable: todo
+- non-English output is fixture-backed and deterministic: todo
+- no layout changes or new renderer backend are introduced: todo
 
 ## Research Rules
 

@@ -5,10 +5,28 @@ public extension CVBuilderCLI {
     /// Executes validated `cvbuilder` options against an injected file-system boundary.
     struct Runner {
         private let fileSystem: any FileSystem
+        private let standardIO: any StandardIO
 
-        /// Creates a runner with its file-system dependency supplied by the caller.
-        public init(fileSystem: any FileSystem) {
+        /// Creates a runner with its file-system and standard-IO dependencies supplied by the caller.
+        public init(fileSystem: any FileSystem, standardIO: any StandardIO = LocalStandardIO()) {
             self.fileSystem = fileSystem
+            self.standardIO = standardIO
+        }
+
+        /// Executes a parsed command.
+        public func run(_ command: Command) throws {
+            switch command {
+            case .help:
+                try writeStandardOutput(Data("\(Usage.text)\n".utf8))
+            case let .initialize(options):
+                try initialize(options)
+            case .printSchema:
+                try printSchema()
+            case let .run(options):
+                try run(options)
+            case let .validate(options):
+                try validate(options)
+            }
         }
 
         /// Executes the command options by writing or checking the requested output.
@@ -24,6 +42,26 @@ public extension CVBuilderCLI {
             }
         }
 
+        /// Validates the input document without writing generated output.
+        public func validate(_ options: ValidationOptions) throws {
+            _ = try readDocument(atPath: options.dataPath)
+        }
+
+        /// Writes the canonical embedded JSON Schema to standard output.
+        public func printSchema() throws {
+            try writeStandardOutput(SchemaDocument.data)
+        }
+
+        /// Writes a minimal starter document.
+        public func initialize(_ options: InitOptions) throws {
+            let outputURL = URL(fileURLWithPath: options.outputPath)
+            if fileSystem.fileExists(atPath: outputURL.path), !options.force {
+                throw Failure.outputAlreadyExists(path: options.outputPath)
+            }
+
+            try write(StarterDocument.data, toPath: options.outputPath)
+        }
+
         func output(for document: CVDocument, format: Format) throws -> String {
             switch format {
             case .markdown:
@@ -37,15 +75,42 @@ public extension CVBuilderCLI {
             let inputData: Data
 
             do {
-                inputData = try fileSystem.readFile(atPath: path)
+                inputData = try readData(atPath: path)
             } catch {
                 throw Failure.inputReadFailed(path: path, reason: error.localizedDescription)
             }
+
+            try validateInputData(inputData, path: path)
 
             do {
                 return try JSONDecoder().decode(CVDocument.self, from: inputData)
             } catch {
                 throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
+            }
+        }
+
+        private func validateInputData(_ data: Data, path: String) throws {
+            let value: JSONValue
+            do {
+                value = try JSONDecoder().decode(JSONValue.self, from: data)
+            } catch {
+                throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
+            }
+
+            let validator: SchemaSubsetValidator
+            do {
+                let schema = try JSONDecoder().decode(JSONValue.self, from: SchemaDocument.data)
+                validator = try SchemaSubsetValidator(schema: schema)
+            } catch {
+                throw Failure.schemaValidationUnavailable(reason: String(describing: error))
+            }
+
+            let errors = validator.validate(value)
+            guard errors.isEmpty else {
+                let reason = errors
+                    .prefix(5)
+                    .joined(separator: "; ")
+                throw Failure.invalidJSON(path: path, reason: "schema validation failed: \(reason)")
             }
         }
 
@@ -61,6 +126,10 @@ public extension CVBuilderCLI {
         }
 
         private func check(_ expectedData: Data, atPath path: String) throws {
+            guard path != "-" else {
+                throw Failure.cannotCheckStandardOutput
+            }
+
             let outputURL = URL(fileURLWithPath: path)
             guard fileSystem.fileExists(atPath: outputURL.path) else {
                 throw Failure.outputMissing(path: path)
@@ -79,6 +148,11 @@ public extension CVBuilderCLI {
         }
 
         private func write(_ outputData: Data, toPath path: String) throws {
+            guard path != "-" else {
+                try writeStandardOutput(outputData)
+                return
+            }
+
             let outputURL = URL(fileURLWithPath: path)
             let outputDirectory = outputURL.deletingLastPathComponent()
 
@@ -90,6 +164,22 @@ public extension CVBuilderCLI {
                 try fileSystem.write(outputData, to: outputURL)
             } catch {
                 throw Failure.outputWriteFailed(path: path, reason: error.localizedDescription)
+            }
+        }
+
+        private func readData(atPath path: String) throws -> Data {
+            if path == "-" {
+                return try standardIO.readStandardInput()
+            }
+
+            return try fileSystem.readFile(atPath: path)
+        }
+
+        private func writeStandardOutput(_ data: Data) throws {
+            do {
+                try standardIO.writeStandardOutput(data)
+            } catch {
+                throw Failure.standardOutputWriteFailed(reason: error.localizedDescription)
             }
         }
     }

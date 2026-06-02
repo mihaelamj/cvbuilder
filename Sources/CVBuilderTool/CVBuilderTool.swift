@@ -9,9 +9,9 @@ struct CVBuilderTool {
             switch command {
             case .help:
                 writeOutput(CVBuilderCLI.Usage.text)
-            case let .run(options):
+            case .initialize, .printSchema, .run, .validate:
                 let fileSystem = CVBuilderCLI.LocalFileSystem(fileManager: .default)
-                try CVBuilderCLI.Runner(fileSystem: fileSystem).run(options)
+                try CVBuilderCLI.Runner(fileSystem: fileSystem).run(command)
             }
         } catch let failure as CVBuilderCLI.Failure {
             writeError(failure.message)
