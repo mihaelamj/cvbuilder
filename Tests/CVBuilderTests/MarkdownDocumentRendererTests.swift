@@ -274,6 +274,24 @@ struct MarkdownDocumentRendererTests {
         #expect(output.contains("### Visible Project"))
     }
 
+    @Test("explicit selection is not truncated by recentCompanyCount")
+    func explicitSelectionIsNotTruncatedByRecencyCap() throws {
+        let recentID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000401"))
+        let selectedID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000402"))
+        let legacyID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000403"))
+        let output = try Rendering.MarkdownDocumentRenderer().render(
+            makeSelectedWorkDocument(rendering: RenderingOptions(
+                recentCompanyCount: 2,
+                selectedExperienceIDs: [selectedID, legacyID, recentID],
+            )),
+        )
+
+        // All three explicitly selected entries render despite recentCompanyCount: 2.
+        #expect(output.contains("Selected Platform Lab"))
+        #expect(output.contains("Unselected Legacy Works"))
+        #expect(output.contains("Recent Hidden Systems"))
+    }
+
     @Test("selected work entries render by explicit id instead of recency")
     func selectedExperienceIDsRenderRelevantOlderWork() throws {
         let selectedID = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000402"))

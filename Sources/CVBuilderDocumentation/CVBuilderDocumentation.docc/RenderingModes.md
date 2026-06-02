@@ -66,7 +66,7 @@ These rules are not claimed as proven hiring effects:
 | Links last. | Profile and download links render in `## Links` at the end so they do not interrupt core evidence. |
 | Skills near the end. | `## Skills` stays compact and grouped by category. This is a readability convention, not a proven ranking signal. |
 | Projects nested under roles by default. | `nestProjectsUnderRoles` defaults to `true` so work evidence stays near the role where it happened. |
-| Explicit relevance selection is opt-in. | `selectedExperienceIDs` can keep specific work entries in the supplied order before recency limits are applied, but the renderer does not infer relevance. |
+| Explicit relevance selection is opt-in. | `selectedExperienceIDs` keeps specific work entries in the supplied order and is authoritative: when set, `recentCompanyCount` does not further truncate the curated list. The renderer does not infer relevance. |
 | Empty optional sections omitted by default. | `omitEmptySections` defaults to `true` so absent data does not create misleading headings. |
 | Public-evidence-heavy ordering is explicit. | `publicEvidenceHeavyTechnical` promotes `## Public Evidence` after contact, but does not imply public work is required or scored. |
 
