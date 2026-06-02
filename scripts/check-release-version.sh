@@ -30,9 +30,9 @@ require_contains() {
 
 version_component() {
   version="$1"
-  index="$2"
+  component_index="$2"
 
-  printf "%s" "$version" | awk -F. -v index="$index" '{ print $index + 0 }'
+  printf "%s" "$version" | awk -F. -v component_index="$component_index" '{ print $component_index + 0 }'
 }
 
 version_greater_than() {
