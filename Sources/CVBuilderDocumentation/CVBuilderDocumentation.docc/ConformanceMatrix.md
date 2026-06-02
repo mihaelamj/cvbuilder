@@ -13,6 +13,11 @@ at least one implementation location and at least one named test.
 fails when a rule is missing, a code path no longer exists, or a referenced test
 name is stale.
 
+Rules R16 through R19 were added by the second enrichment pass (see
+<doc:ProofMatrix>) as evidence-surviving rules. They are not yet wired to code and
+enforcing tests and are therefore out of this matrix's scope until that
+conformance work lands.
+
 Related issues: #75, #76, #11, #3.
 
 ## Matrix

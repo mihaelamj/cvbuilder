@@ -91,7 +91,7 @@ else
   require_file "$RELEASE_NOTES_PATH"
   require_contains "README.md" "$RELEASE_NOTES_PATH" "README.md must link $RELEASE_NOTES_PATH."
   require_contains "$ROADMAP" "$RELEASE_TAG" "Roadmap article must mention $RELEASE_TAG."
-  require_contains "$RELEASE_CHECKLIST" "ReleaseNotes" "release checklist must reference the ReleaseNotes article."
+  require_contains "$RELEASE_CHECKLIST" "<doc:ReleaseNotes>" "release checklist must reference the ReleaseNotes article."
   require_contains "$RELEASE_CHECKLIST" "git tag -a $RELEASE_TAG" "release checklist must tag $RELEASE_TAG."
   require_contains "$RELEASE_CHECKLIST" "git push origin $RELEASE_TAG" "release checklist must push $RELEASE_TAG."
   require_contains "$RELEASE_CHECKLIST" "historical \`$HISTORICAL_LATEST_VERSION\` boundary" "release checklist must document the historical tag boundary."
