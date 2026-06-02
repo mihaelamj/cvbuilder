@@ -104,12 +104,12 @@ findings and the implementation rules they produced, in one place.
 
 Read the group in derivation order, foundation first:
 
-1. <doc:DeepReviewProtocol> — how evidence was selected and weighted.
-2. <doc:SourceMatrix> — the sources themselves.
-3. <doc:ProofGradeAudit> — the standard each rule must meet.
-4. <doc:ProofMatrix> — the keep/revise/downgrade decisions and surviving rules.
-5. <doc:ConformanceMatrix> — the rules wired to code and tests.
-6. <doc:EvidenceSummary> — the synthesis, useful as either a primer or a recap.
+1. <doc:DeepReviewProtocol>: how evidence was selected and weighted.
+2. <doc:SourceMatrix>: the sources themselves.
+3. <doc:ProofGradeAudit>: the standard each rule must meet.
+4. <doc:ProofMatrix>: the keep/revise/downgrade decisions and surviving rules.
+5. <doc:ConformanceMatrix>: the rules wired to code and tests.
+6. <doc:EvidenceSummary>: the synthesis, useful as either a primer or a recap.
 
 ## Evidence Weighting
 
