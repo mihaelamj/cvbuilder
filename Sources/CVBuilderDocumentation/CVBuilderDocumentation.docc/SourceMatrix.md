@@ -117,6 +117,14 @@ author list (SkiLLMo 2025) must be confirmed before high-weight use.
 | 54 | Gugnani & Misra, 2020, AAAI. DOI: https://doi.org/10.1609/aaai.v34i08.7038 | Contextual skills | Implicit skill inference for matching. | High. | Contextual skills tied to work beat detached lists by about 29.4%; backs R14/R06. |
 | 55 | Decorte et al., 2023, RecSys-in-HR workshop. arXiv 2310.15636 (workshop) | Career representation | Hybrid skill plus work-context model. | Medium. | Keep a structured skills surface and anchor skills in work context. |
 
+Counter-evidence (lower weight, not peer-reviewed): Fuller, Raman, Sigelman et
+al. (2024, Harvard Business School / Burning Glass Institute report) find that
+dropping degree requirements changed postings far more than hires (about a
+1-in-700 net benefit). It bounds the skills claim to representation and matching
+legibility, not "listing skills gets you hired," and is recorded for honesty,
+not weighted as proof. ESCO and O*NET are cited as reference standards an
+optional normalized skill code would point to, not as findings.
+
 ### Employment Gaps and Date Presentation
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
