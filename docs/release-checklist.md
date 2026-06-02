@@ -95,9 +95,11 @@ Before tagging:
 2. Keep a fresh empty `Unreleased` section above the release section.
 3. Confirm the release notes mention the Markdown-only boundary and do not imply
    PDF, HTML, static-site generation, scoring, or optimizer behavior.
-4. Confirm the changelog names the CLI, JSON Schema, schema drift checks,
+4. Confirm the public release notes do not contain draft status text,
+   publication instructions, or maintainer-only process language.
+5. Confirm the changelog names the CLI, JSON Schema, schema drift checks,
    generated fixture freshness, consumer smoke checks, and Linux CI support.
-5. Confirm `docs/release-notes/v0.9.0.md` matches the final release commit.
+6. Confirm `docs/release-notes/v0.9.0.md` matches the final release commit.
 
 For the first Markdown-first release, the expected tag is `v0.9.0` unless the
 maintainer chooses a different SemVer version.
