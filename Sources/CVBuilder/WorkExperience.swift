@@ -74,7 +74,7 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
         ]
 
         guard (1 ... monthNames.count).contains(date.month) else {
-            return "\(date.year)-\(String(format: "%02d", date.month))"
+            return "\(date.year)"
         }
 
         return "\(monthNames[date.month - 1]) \(date.year)"

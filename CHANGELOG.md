@@ -43,6 +43,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `Period.SimpleDate` now validates `month` against the schema range (`1...12`)
+  when decoding, so a bare `JSONDecoder` rejects malformed months (`0`, `13`,
+  `-1`) consistently with the CLI's schema validator. `Period` rejects a
+  reversed period (`start` later than `end`) at decode, equal periods collapse
+  to a single rendered token, and the canonical Markdown renderer and JSON
+  Resume export fall back to a valid year-only token instead of emitting a
+  malformed `2024-13` ISO string (#109).
 - Normalized JSON is deterministic for documents that omit IDs: the same input
   now produces byte-identical output across runs, so `--check` against the
   CLI's own output passes (#119).
