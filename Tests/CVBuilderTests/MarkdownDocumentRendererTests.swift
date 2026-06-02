@@ -332,6 +332,25 @@ struct MarkdownDocumentRendererTests {
         #expect(output.split(separator: "\n").count(where: { $0 == "---" }) == 2)
     }
 
+    @Test("setext underline field values cannot forge a heading", arguments: ["===", "=", "-", "--", "---"])
+    func setextUnderlineFieldsCannotForgeHeading(_ underline: String) {
+        let cv = CV(
+            name: "Real Name",
+            title: "Fake Title",
+            summary: underline,
+            contactInfo: ContactInfo(email: "a@b.c", phone: "+100000000", location: "Somewhere"),
+            experience: [],
+            education: [],
+            skills: [],
+        )
+        let output = Rendering.MarkdownDocumentRenderer().render(CVDocument(cv: cv))
+
+        // The underline value is escaped at the line start, so it stays literal
+        // text instead of promoting "Fake Title" into a setext heading.
+        #expect(output.contains("Fake Title\n\\\(underline)"))
+        #expect(!output.split(separator: "\n").contains { String($0) == underline })
+    }
+
     @Test("front matter keys and scalar values are quoted and single-line")
     func frontMatterScalarsAreQuotedAndSingleLine() {
         let document = makeHostileDocument(

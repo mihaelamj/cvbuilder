@@ -119,7 +119,7 @@ private extension Rendering.MarkdownDocumentRenderer {
             return "\\\(value)"
         }
 
-        if isHyphenThematicBreak(value) {
+        if isSetextUnderline(value) {
             return "\\\(value)"
         }
 
@@ -158,8 +158,17 @@ private extension Rendering.MarkdownDocumentRenderer {
             && value.dropFirst().first?.isWhitespace == true
     }
 
-    func isHyphenThematicBreak(_ value: String) -> Bool {
-        value.allSatisfy { $0 == "-" } && value.count >= 3
+    /// A line consisting solely of `=` (any length) or `-` (any length) acts as
+    /// a setext heading underline (`=` for H1, `-` for H2) or, for `-` of length
+    /// >= 3, a thematic break. Because adjacent fields render on their own
+    /// physical lines, such a value would promote the preceding line into a
+    /// forged heading, so it must be escaped at the line start.
+    func isSetextUnderline(_ value: String) -> Bool {
+        guard !value.isEmpty else {
+            return false
+        }
+
+        return value.allSatisfy { $0 == "=" } || value.allSatisfy { $0 == "-" }
     }
 
     func isPlainFrontMatterKeyScalar(_ scalar: UnicodeScalar) -> Bool {
