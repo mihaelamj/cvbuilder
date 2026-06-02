@@ -184,8 +184,8 @@ flowchart TD
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
-    P17["Phase 17<br/>#68 Version history docs<br/>CI green"]
-    P18["Phase 18<br/>#69 Version guard<br/>Next"]
+    P17["Phase 17<br/>#68 Version history docs<br/>Done"]
+    P18["Phase 18<br/>#69 Version guard<br/>CI green"]
     P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
@@ -198,8 +198,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
-    class P17 review;
-    class P18 next;
+    class P17 done;
+    class P18 review;
     class P19 todo;
 ```
 
@@ -249,6 +249,7 @@ Useful local checks from the repository root:
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
 bash scripts/check-platform-contract.sh
+bash scripts/check-release-version.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-schema-drift.sh
 bash scripts/check-generated-fixtures.sh

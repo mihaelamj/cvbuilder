@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Release-version consistency guard for changelog, release notes, release
+  checklist, README, and roadmap drift.
+
 ## [0.9.0] - 2026-06-02
 
 This is the first Markdown-first public release after the historical `0.1.0`

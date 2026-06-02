@@ -11,6 +11,7 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
 bash scripts/check-platform-contract.sh
+bash scripts/check-release-version.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-generated-fixtures.sh
 bash scripts/check-consumer-smoke.sh
@@ -59,6 +60,7 @@ committed files.
 - Add tests for behavior changes.
 - Run `bash scripts/check-style.sh`, `bash scripts/check-namespacing.sh`,
   `bash scripts/check-platform-contract.sh`,
+  `bash scripts/check-release-version.sh`,
   `bash scripts/test-quality-gates.sh`,
   `bash scripts/check-consumer-smoke.sh`,
   `bash scripts/check-generated-fixtures.sh`,

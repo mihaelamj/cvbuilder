@@ -41,6 +41,7 @@ Run these from the repository root before creating a tag:
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
 bash scripts/check-platform-contract.sh
+bash scripts/check-release-version.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-schema-drift.sh
 bash scripts/check-generated-fixtures.sh
@@ -56,6 +57,11 @@ swift test
 
 The release is not ready if any command fails or produces uncommitted fixture
 changes.
+
+The release-version guard checks that the top dated changelog section, release
+notes file, release checklist commands, README, and roadmap agree on the
+reconciled release tag. It also rejects a documented release version that is not
+newer than the historical `0.8.0` boundary.
 
 On Linux, also run:
 
