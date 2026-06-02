@@ -71,7 +71,8 @@ The release commit on `main` must have these checks green:
 The macOS and Linux workflows run the Swift test suite, the schema drift check,
 and generated fixture freshness checks. Linux also proves the package graph keeps
 `CVBuilderTileDown` and does not reintroduce default `CVBuilderIgnite`
-participation.
+participation. The release-gate workflows run on pull requests, pushes to
+`main`, manual dispatch, and `v*` tag pushes.
 
 ## Changelog Prep
 

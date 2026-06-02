@@ -52,6 +52,7 @@ core package.
 - The demo CV fixture exercises realistic multi-role technical CV behavior,
   omitted older jobs, and explicit relevance-selected jobs.
 - Epic #47 completed release-ready authoring and CLI usability.
+- Epic #57 is open for first public release hardening and tag proof.
 
 Relevant links:
 
@@ -71,6 +72,11 @@ Relevant links:
 - Issue #50: closed schema drift checks in PR #54.
 - Issue #51: closed first-release checklist in PR #55.
 - PR #55: merged first-release checklist.
+- Issue #57: active first public release hardening and tag proof epic.
+- Issue #58: active tag-triggered release CI gates.
+- Issue #61: next package platform contract alignment.
+- Issue #60: next clean SwiftPM consumer smoke test.
+- Issue #59: next `v0.1.0` changelog and release notes.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -88,6 +94,10 @@ Ordered roadmap issues:
 10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
 11. #50 - done: add schema drift checks for examples and fixtures.
 12. #51 - done: prepare first-release checklist and release notes.
+13. #58 - in progress: add tag-triggered release CI gates.
+14. #61 - next: align the package platform contract with supported platforms.
+15. #60 - next: add a clean SwiftPM consumer smoke test.
+16. #59 - next: prepare `v0.1.0` changelog and release notes.
 
 ```mermaid
 flowchart TD
@@ -103,8 +113,12 @@ flowchart TD
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
     P12["Phase 12<br/>#51 Release checklist<br/>Done"]
+    P13["Phase 13<br/>#58 Release tag CI<br/>In progress"]
+    P14["Phase 14<br/>#61 Platform contract<br/>Next"]
+    P15["Phase 15<br/>#60 Consumer smoke<br/>Next"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -114,6 +128,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12 done;
+    class P13 active;
+    class P14,P15,P16 next;
 ```
 
 ## Roadmap
@@ -380,6 +396,84 @@ Acceptance:
 - release checklist includes Linux and macOS CI: done
 - release checklist includes generated fixture freshness: done
 - release docs preserve Markdown-only product boundaries: done
+
+### Phase 13: Add Tag-Triggered Release CI Gates
+
+Objective: make release-tag verification real instead of only documented.
+
+Issue: [#58](https://github.com/mihaelamj/cvbuilder/issues/58).
+
+Deliverables:
+
+- run Style and namespacing on `v*` tag pushes: in progress
+- run Swift macOS on `v*` tag pushes: in progress
+- run Swift Linux on `v*` tag pushes: in progress
+- document the tag-gate trigger contract: in progress
+
+Acceptance:
+
+- pull request and `main` branch triggers remain unchanged: in progress
+- release checklist accurately describes tag-gate behavior: in progress
+- CI proves the workflow syntax before merge: in progress
+
+### Phase 14: Align Package Platform Contract
+
+Objective: keep package metadata from advertising unsupported platforms before
+the first release.
+
+Issue: [#61](https://github.com/mihaelamj/cvbuilder/issues/61).
+
+Deliverables:
+
+- align `Package.swift` with documented supported platforms: next
+- keep README and docs consistent with package metadata: next
+- add drift protection if practical: next
+
+Acceptance:
+
+- package metadata no longer implies unsupported iOS support: next
+- macOS and Linux builds still pass: next
+- no Apple UI framework or PDF dependency is introduced: next
+
+### Phase 15: Add Clean SwiftPM Consumer Smoke Test
+
+Objective: prove external package consumption, not only in-repository builds.
+
+Issue: [#60](https://github.com/mihaelamj/cvbuilder/issues/60).
+
+Deliverables:
+
+- add a local or CI smoke test that creates a temporary Swift package: next
+- import `CVBuilder` from that clean package: next
+- on Linux, also import `CVBuilderTileDown`: next
+- document the smoke test command if it is exposed locally: next
+
+Acceptance:
+
+- macOS proves `CVBuilder` consumption: next
+- Linux proves `CVBuilder` and `CVBuilderTileDown` consumption: next
+- smoke test stays Markdown and JSON only: next
+
+### Phase 16: Prepare v0.1.0 Release Notes
+
+Objective: make the first public release notes ready after release gates are
+proven.
+
+Issue: [#59](https://github.com/mihaelamj/cvbuilder/issues/59).
+
+Deliverables:
+
+- move changelog content into a `v0.1.0` release section: next
+- keep a fresh empty `Unreleased` section: next
+- draft release notes with supported behavior and boundaries: next
+
+Acceptance:
+
+- release notes mention Markdown and JSON only: next
+- release notes mention style, macOS, Linux, schema drift, fixture freshness, and
+  consumer proof gates: next
+- release notes avoid unsupported PDF, HTML, scoring, optimizer, or static-site
+  claims: next
 
 ## Research Rules
 
