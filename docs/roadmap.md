@@ -59,7 +59,7 @@ core package.
 ### Active work
 
 - Epic #76 is active for research-conformance hardening.
-- Issue #74 is done after PR #79; issue #75 remains next.
+- Issue #74 is done after PR #79; issue #75 is active.
 
 Relevant links:
 
@@ -91,7 +91,7 @@ Relevant links:
 - Issue #70: release publication proof is done for `v0.9.0`.
 - Issue #76: active research-conformance hardening epic.
 - Issue #74: legacy CV render path R12/R15 conformance is done after PR #79.
-- Issue #75: next research-conformance matrix.
+- Issue #75: active research-conformance matrix.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -117,7 +117,7 @@ Ordered roadmap issues:
 18. #69 - done: add release version consistency guard.
 19. #70 - done: prepare release publication proof for reconciled version.
 20. #74 - done: make the public legacy CV render path R12/R15 conformant.
-21. #75 - next: add research-conformance matrix mapping R01 to R15.
+21. #75 - active: add research-conformance matrix mapping R01 to R15.
 
 ```mermaid
 flowchart TD
@@ -141,7 +141,7 @@ flowchart TD
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
-    P21["Phase 21<br/>#75 Conformance matrix<br/>Next"]
+    P21["Phase 21<br/>#75 Conformance matrix<br/>Active"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21
 
@@ -157,7 +157,7 @@ flowchart TD
     class P18 done;
     class P19 done;
     class P20 done;
-    class P21 next;
+    class P21 active;
 ```
 
 ## Roadmap
@@ -595,15 +595,15 @@ Issue: [#75](https://github.com/mihaelamj/cvbuilder/issues/75).
 
 Deliverables:
 
-- add `docs/research/cvbuilder-conformance-matrix.md`: next
-- add a deterministic completeness test for rule-to-test mapping: next
-- link the matrix from `docs/research/README.md`: next
+- add `docs/research/cvbuilder-conformance-matrix.md`: active
+- add a deterministic completeness test for rule-to-test mapping: active
+- link the matrix from `docs/research/README.md`: active
 
 Acceptance:
 
-- each rule maps to at least one code location and enforcing test: next
-- the completeness test fails on missing or stale test references: next
-- no rendering output changes in this phase: next
+- each rule maps to at least one code location and enforcing test: active
+- the completeness test fails on missing or stale test references: active
+- no rendering output changes in this phase: active
 
 ## Research Rules
 

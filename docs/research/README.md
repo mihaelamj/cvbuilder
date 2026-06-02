@@ -1,6 +1,6 @@
 # CVBuilder Research Documents
 
-Status date: 2026-05-31
+Status date: 2026-06-02
 
 This folder contains the CVBuilder evidence documents that were originally
 tracked in GitHub issues. The implementation target is issue #3:
@@ -25,6 +25,9 @@ The core boundary is:
   - stricter proof-grade audit plan for the next research pass
 - `cvbuilder-proof-matrix.md`
   - proof-grade rule audit with source-level evidence and final decisions
+- `cvbuilder-conformance-matrix.md`
+  - traceability from surviving research rules R01 through R15 to code
+    locations and enforcing tests
 
 ## Issue Map
 
