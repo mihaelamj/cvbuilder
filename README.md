@@ -149,6 +149,8 @@ The full data contract, Markdown behavior, decoding defaults, and migration
 rules are documented in
 [docs/cvdocument-contract.md](docs/cvdocument-contract.md). A complete
 handwritten fixture lives at [Examples/democv/cv.json](Examples/democv/cv.json).
+Editor-oriented schema metadata lives at
+[Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json).
 The file-driven authoring flow is documented in
 [docs/json-workflow.md](docs/json-workflow.md).
 
@@ -170,8 +172,8 @@ flowchart TD
     P6["Phase 6<br/>#40 Realistic fixture coverage<br/>Done"]
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
-    P9["Phase 9<br/>#48 CLI help<br/>CI green"]
-    P10["Phase 10<br/>#49 JSON Schema<br/>Next"]
+    P9["Phase 9<br/>#48 CLI help<br/>Done"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>CI green"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
@@ -184,9 +186,9 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8 done;
-    class P9 review;
-    class P10,P11,P12 next;
+    class P5,P6,P7,P8,P9 done;
+    class P10 review;
+    class P11,P12 next;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -258,6 +260,8 @@ swift build --target CVBuilderTileDown
   Markdown behavior, and migration rules.
 - [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
   workflow, CI checks, SSG integration, and product boundaries.
+- [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
+  machine-readable JSON Schema for editor validation and completion.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
   evidence mapping, and mode fixture coverage.
 - [docs/tiledown-markdown-contract.md](docs/tiledown-markdown-contract.md):

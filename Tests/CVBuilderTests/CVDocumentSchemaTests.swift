@@ -6,6 +6,46 @@ import Testing
 struct CVDocumentSchemaTests {
     private let evidenceSummary = "Maintains a Swift package that generates typed clients from checked-in contracts."
 
+    @Test("checked-in JSON Schema is valid and documents current enums")
+    func checkedInJSONSchemaIsValidAndDocumentsEnums() throws {
+        let schema = try loadSchema()
+        let definitions = try #require(schema["$defs"] as? [String: Any])
+        let renderingOptions = try #require(definitions["renderingOptions"] as? [String: Any])
+        let publicEvidence = try #require(definitions["publicEvidence"] as? [String: Any])
+        let tech = try #require(definitions["tech"] as? [String: Any])
+        let role = try #require(definitions["role"] as? [String: Any])
+
+        #expect(schema["title"] as? String == "CVDocument")
+        #expect(schema["required"] as? [String] == ["cv"])
+        #expect(enumValues(in: renderingOptions, property: "mode") == RenderingMode.allCases.map(\.rawValue))
+        #expect(enumValues(in: publicEvidence, property: "kind") == PublicEvidenceKind.allCases.map(\.rawValue))
+        #expect(enumValues(in: tech, property: "category") == ["language", "framework", "tool", "platform", "concept", "other"])
+        #expect(enumValues(in: role, property: "seniority") == ["Intern", "Junior", "Mid", "Senior", "Lead", "Principal", "Chief"])
+    }
+
+    @Test("checked-in JSON Schema covers document sections and authoring defaults")
+    func checkedInJSONSchemaCoversDocumentSectionsAndDefaults() throws {
+        let schema = try loadSchema()
+        let topLevelProperties = try properties(in: schema)
+        let cv = try definition("cv", in: schema)
+        let publicEvidence = try definition("publicEvidence", in: schema)
+        let documentLinks = try definition("documentLinks", in: schema)
+        let renderingOptions = try definition("renderingOptions", in: schema)
+        let renderingProperties = try properties(in: renderingOptions)
+
+        #expect(Set(topLevelProperties.keys) == Set(["frontMatter", "cv", "links", "publicEvidence", "rendering"]))
+        #expect(requiredValues(in: cv) == ["name", "title", "summary", "contactInfo"])
+        #expect(requiredValues(in: publicEvidence) == ["title", "kind", "role", "summary", "url"])
+        #expect(arrayDefaultIsEmpty("profiles", in: documentLinks))
+        #expect(arrayDefaultIsEmpty("downloads", in: documentLinks))
+        #expect(objectDefaultIsEmpty("companyURLs", in: documentLinks))
+        #expect(stringDefault("mode", in: renderingProperties) == RenderingMode.experiencedTechnical.rawValue)
+        #expect(arrayDefaultIsEmpty("selectedExperienceIDs", in: renderingOptions))
+        #expect(boolDefault("nestProjectsUnderRoles", in: renderingProperties))
+        #expect(boolDefault("compactGroupedSkills", in: renderingProperties))
+        #expect(boolDefault("omitEmptySections", in: renderingProperties))
+    }
+
     @Test("document preserves front matter, links, evidence, and technical focus")
     func documentRoundTripsPublishableTechnicalCV() throws {
         let document = try makeDocument()
@@ -209,5 +249,77 @@ struct CVDocumentSchemaTests {
 
     private func uuid(_ value: String) throws -> UUID {
         try #require(UUID(uuidString: value))
+    }
+
+    private func loadSchema() throws -> [String: Any] {
+        let data = try Data(contentsOf: repositoryURL("Schemas/cvdocument.schema.json"))
+        return try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+    }
+
+    private func repositoryURL(_ relativePath: String) -> URL {
+        URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent(relativePath)
+    }
+
+    private func definition(_ name: String, in schema: [String: Any]) throws -> [String: Any] {
+        let definitions = try #require(schema["$defs"] as? [String: Any])
+        return try #require(definitions[name] as? [String: Any])
+    }
+
+    private func properties(in definition: [String: Any]) throws -> [String: Any] {
+        try #require(definition["properties"] as? [String: Any])
+    }
+
+    private func requiredValues(in definition: [String: Any]) -> [String] {
+        definition["required"] as? [String] ?? []
+    }
+
+    private func arrayDefaultIsEmpty(_ property: String, in definition: [String: Any]) -> Bool {
+        guard
+            let value = propertyValue(property, in: definition),
+            let defaultValue = value["default"] as? [Any]
+        else {
+            return false
+        }
+
+        return defaultValue.isEmpty
+    }
+
+    private func objectDefaultIsEmpty(_ property: String, in definition: [String: Any]) -> Bool {
+        guard
+            let value = propertyValue(property, in: definition),
+            let defaultValue = value["default"] as? [String: Any]
+        else {
+            return false
+        }
+
+        return defaultValue.isEmpty
+    }
+
+    private func stringDefault(_ property: String, in properties: [String: Any]) -> String? {
+        (properties[property] as? [String: Any])?["default"] as? String
+    }
+
+    private func boolDefault(_ property: String, in properties: [String: Any]) -> Bool {
+        (properties[property] as? [String: Any])?["default"] as? Bool ?? false
+    }
+
+    private func propertyValue(_ property: String, in definition: [String: Any]) -> [String: Any]? {
+        guard let properties = definition["properties"] as? [String: Any] else {
+            return nil
+        }
+
+        return properties[property] as? [String: Any]
+    }
+
+    private func enumValues(in definition: [String: Any], property: String) -> [String] {
+        guard
+            let properties = definition["properties"] as? [String: Any],
+            let value = properties[property] as? [String: Any],
+            let enumValues = value["enum"] as? [Any]
+        else {
+            return []
+        }
+
+        return enumValues.compactMap { $0 as? String }
     }
 }
