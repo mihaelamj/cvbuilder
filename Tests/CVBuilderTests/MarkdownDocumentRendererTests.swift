@@ -9,6 +9,11 @@ struct RenderingModeFixture {
     let fixtureName: String
 }
 
+struct FrontMatterProfileFixture {
+    let profile: FrontMatterProfile
+    let fixtureName: String
+}
+
 let renderingModeFixtures = [
     RenderingModeFixture(
         mode: .experiencedTechnical,
@@ -28,6 +33,13 @@ let renderingModeFixtures = [
         sections: [.contact, .publicEvidence, .experience, .skills, .education, .links],
         fixtureName: "publicEvidenceHeavyTechnical.md",
     ),
+]
+
+let frontMatterProfileFixtures = [
+    FrontMatterProfileFixture(profile: .generic, fixtureName: "frontMatterGeneric.md"),
+    FrontMatterProfileFixture(profile: .toucan, fixtureName: "frontMatterToucan.md"),
+    FrontMatterProfileFixture(profile: .hugo, fixtureName: "frontMatterHugo.md"),
+    FrontMatterProfileFixture(profile: .jekyll, fixtureName: "frontMatterJekyll.md"),
 ]
 
 @Suite("MarkdownDocumentRenderer")
@@ -100,6 +112,27 @@ struct MarkdownDocumentRendererTests {
         let enumModes = RenderingMode.allCases.map(\.rawValue).sorted()
 
         #expect(fixtureModes == enumModes)
+    }
+
+    @Test("front matter profiles match checked-in Markdown fixtures", arguments: frontMatterProfileFixtures)
+    func frontMatterProfilesMatchCheckedInFixtures(fixture: FrontMatterProfileFixture) throws {
+        let document = makeFrontMatterProfileDocument(profile: fixture.profile)
+        let expected = try expectedMarkdownFixture(fixture.fixtureName)
+        let output = Rendering.MarkdownDocumentRenderer().render(document)
+
+        #expect(output == expected)
+        #expect(output.contains("# Taylor Example"))
+        #expect(output.contains("## Contact"))
+    }
+
+    @Test("default front matter profile preserves generic output")
+    func defaultFrontMatterProfilePreservesGenericOutput() throws {
+        let explicitGeneric = Rendering.MarkdownDocumentRenderer().render(makeFrontMatterProfileDocument(profile: .generic))
+        let implicitGeneric = Rendering.MarkdownDocumentRenderer().render(makeFrontMatterProfileDocument(profile: nil))
+        let expected = try expectedMarkdownFixture("frontMatterGeneric.md")
+
+        #expect(implicitGeneric == explicitGeneric)
+        #expect(implicitGeneric == expected)
     }
 
     @Test("experienced and early-career modes use different ordering")
@@ -371,6 +404,7 @@ struct MarkdownDocumentRendererTests {
             links: document.links,
             publicEvidence: document.publicEvidence,
             rendering: RenderingOptions(
+                frontMatterProfile: document.rendering.frontMatterProfile,
                 mode: mode,
                 recentCompanyCount: document.rendering.recentCompanyCount,
                 selectedExperienceIDs: document.rendering.selectedExperienceIDs,
@@ -416,6 +450,23 @@ struct MarkdownDocumentRendererTests {
     }
 }
 
+private func makeFrontMatterProfileDocument(profile: FrontMatterProfile?) -> CVDocument {
+    makeMinimalDocument(
+        frontMatter: [
+            "custom-key": "custom value",
+            "date": "2026-06-02",
+            "description": "Builds Swift tooling.",
+            "draft": "false",
+            "layout": "cv",
+            "permalink": "/cv/",
+            "slug": "demo-cv",
+            "tags": "Swift, Linux",
+            "title": "Demo CV",
+        ],
+        rendering: profile.map { RenderingOptions(frontMatterProfile: $0) } ?? .init(),
+    )
+}
+
 private func makeHostileDocument(
     frontMatter: [String: String] = [
         "slug": "hostile cv",
@@ -449,11 +500,13 @@ private func makeHostileDocument(
 }
 
 private func makeMinimalDocument(
+    frontMatter: [String: String] = [:],
     experience: [WorkExperience] = [],
     publicEvidence: [PublicEvidence] = [],
     rendering: RenderingOptions = .init(),
 ) -> CVDocument {
     CVDocument(
+        frontMatter: frontMatter,
         cv: CV(
             name: "Taylor Example",
             title: "Swift Engineer",

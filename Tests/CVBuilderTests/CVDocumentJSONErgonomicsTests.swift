@@ -12,6 +12,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.links == DocumentLinks())
         #expect(document.publicEvidence.isEmpty)
         #expect(document.rendering == RenderingOptions())
+        #expect(document.rendering.frontMatterProfile == .generic)
         #expect(document.rendering.selectedExperienceIDs.isEmpty)
         #expect(document.cv.experience.isEmpty)
         #expect(document.cv.education.isEmpty)
@@ -54,6 +55,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(firstProject.descriptions == ["Built a Swift package."])
         #expect(firstEvidence.highlights == ["Kept releases documented."])
         #expect(document.rendering.selectedExperienceIDs == [workID])
+        #expect(document.rendering.frontMatterProfile == .generic)
         try expectNormalizedRoundTrip(document)
     }
 
@@ -78,6 +80,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(evidence.technicalFocus?.areas == [])
         #expect(evidence.technicalFocus?.tags == ["architecture"])
         #expect(document.rendering.mode == .earlyCareerTechnical)
+        #expect(document.rendering.frontMatterProfile == .jekyll)
         #expect(document.rendering.nestProjectsUnderRoles)
         #expect(document.rendering.compactGroupedSkills)
         #expect(document.rendering.omitEmptySections)

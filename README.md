@@ -320,6 +320,8 @@ swift build --target CVBuilderTileDown
   Markdown behavior, and migration rules.
 - [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
   workflow, CI checks, SSG integration, and product boundaries.
+- [docs/front-matter-profiles.md](docs/front-matter-profiles.md): generic,
+  Toucan, Hugo, and Jekyll front matter profiles.
 - [docs/release-checklist.md](docs/release-checklist.md): Markdown-first
   release gates, tag process, release-note expectations, and boundaries.
 - [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): release

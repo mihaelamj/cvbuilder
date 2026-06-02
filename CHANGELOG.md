@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - CLI authoring commands for `--validate`, `--print-schema`, `--init`, stdin
   input with `--data -`, and stdout output with `--out -`.
+- Static-site-generator front matter profiles for generic, Toucan, Hugo, and
+  Jekyll Markdown output.
 - Release-version consistency guard for changelog, release notes, release
   checklist, README, and roadmap drift.
 

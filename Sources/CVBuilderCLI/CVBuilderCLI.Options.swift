@@ -1,3 +1,5 @@
+import CVBuilder
+
 public extension CVBuilderCLI {
     /// Parsed command-line options for a `cvbuilder` invocation.
     struct Options: Equatable, Sendable {
@@ -7,6 +9,8 @@ public extension CVBuilderCLI {
         public let outputPath: String
         /// Output format selected by `--format`; defaults to Markdown.
         public let format: Format
+        /// Optional front matter profile override selected by the CLI.
+        public let frontMatterProfile: FrontMatterProfile?
         /// Whether the command should compare output without writing.
         public let check: Bool
 
@@ -15,6 +19,7 @@ public extension CVBuilderCLI {
             dataPath: String,
             outputPath: String,
             format: Format = .markdown,
+            frontMatterProfile: FrontMatterProfile? = nil,
             check: Bool = false,
         ) throws {
             guard !dataPath.isEmpty else {
@@ -28,6 +33,7 @@ public extension CVBuilderCLI {
             self.dataPath = dataPath
             self.outputPath = outputPath
             self.format = format
+            self.frontMatterProfile = frontMatterProfile
             self.check = check
         }
 
@@ -45,6 +51,7 @@ private extension CVBuilderCLI.Options {
         var dataPath: String?
         var outputPath: String?
         var format = CVBuilderCLI.Format.markdown
+        var frontMatterProfile: FrontMatterProfile?
         var check = false
         var index: Int
 
@@ -94,6 +101,8 @@ private extension CVBuilderCLI.Options {
                 outputPath = try requiredAssignedValue(value, option: option)
             case "--format":
                 format = try CVBuilderCLI.Format(argument: requiredAssignedValue(value, option: option))
+            case "--front-matter-profile":
+                frontMatterProfile = try FrontMatterProfile(argument: requiredAssignedValue(value, option: option))
             default:
                 if option.hasPrefix("-") {
                     throw CVBuilderCLI.Failure.unknownOption(option)
@@ -113,6 +122,8 @@ private extension CVBuilderCLI.Options {
                 outputPath = try nextValue(option: argument)
             case "--format":
                 format = try CVBuilderCLI.Format(argument: nextValue(option: argument))
+            case "--front-matter-profile":
+                frontMatterProfile = try FrontMatterProfile(argument: nextValue(option: argument))
             default:
                 return false
             }
@@ -129,7 +140,13 @@ private extension CVBuilderCLI.Options {
                 throw CVBuilderCLI.Failure.missingRequiredOption("--out <path>")
             }
 
-            return try CVBuilderCLI.Options(dataPath: dataPath, outputPath: outputPath, format: format, check: check)
+            return try CVBuilderCLI.Options(
+                dataPath: dataPath,
+                outputPath: outputPath,
+                format: format,
+                frontMatterProfile: frontMatterProfile,
+                check: check,
+            )
         }
 
         func requiredAssignedValue(_ value: String, option: String) throws -> String {
