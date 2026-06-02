@@ -185,7 +185,7 @@ flowchart TD
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
-    P18["Phase 18<br/>#69 Version guard<br/>In review"]
+    P18["Phase 18<br/>#69 Version guard<br/>CI green"]
     P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
