@@ -17,9 +17,9 @@ publicly with credit to the reporter if desired.
 
 ## Supported versions
 
-CVBuilder is pre-1.0 and under active development. Security fixes are applied to
-the `main` branch. Until a stable release exists, only the latest `main` is
-supported.
+CVBuilder follows Semantic Versioning. Security fixes are applied to the `main`
+branch and ship in the next patch release of the current `1.x` line. The latest
+`1.x` release and `main` are supported.
 
 ## Scope
 

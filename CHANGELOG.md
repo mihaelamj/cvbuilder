@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-06-03
+
+First stable release. The public API is declared stable after the
+first-principles source-code audit (#132) and the research-enrichment work
+(#86, #98). See the release notes for the breaking-change summary since 0.9.0.
+
 ### Added
 
 - `Project.accomplishments`: structured results-oriented accomplishment
