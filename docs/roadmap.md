@@ -54,6 +54,10 @@ core package.
 - Epic #47 completed release-ready authoring and CLI usability.
 - Epic #57 completed first public release hardening and tag proof.
 
+### Active work
+
+- Epic #67 is active to reconcile release version history before publication.
+
 Relevant links:
 
 - Issue #28: product roadmap epic with ordered child issues.
@@ -76,8 +80,12 @@ Relevant links:
 - Issue #58: closed tag-triggered release CI gates in PR #62.
 - Issue #61: closed package platform contract alignment in PR #63.
 - Issue #60: closed clean SwiftPM consumer smoke test in PR #64.
-- Issue #59: closed `v0.1.0` changelog and release notes in PR #65.
-- PR #65: merged `v0.1.0` changelog and release notes.
+- Issue #59: closed initial changelog and release notes draft in PR #65.
+- PR #65: merged the initial release notes draft.
+- Issue #67: active release version history reconciliation epic.
+- Issue #68: release version docs reconciliation is CI-green in PR #71.
+- Issue #69: next release version consistency guard.
+- Issue #70: future release publication proof.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -98,7 +106,10 @@ Ordered roadmap issues:
 13. #58 - done: add tag-triggered release CI gates.
 14. #61 - done: align the package platform contract with supported platforms.
 15. #60 - done: add a clean SwiftPM consumer smoke test.
-16. #59 - done: prepare `v0.1.0` changelog and release notes.
+16. #59 - done: prepare the changelog and release notes draft.
+17. #68 - CI-green: reconcile release version docs with existing tag history.
+18. #69 - next: add release version consistency guard.
+19. #70 - todo: prepare release publication proof for reconciled version.
 
 ```mermaid
 flowchart TD
@@ -117,9 +128,12 @@ flowchart TD
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Done"]
+    P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
+    P17["Phase 17<br/>#68 Version history docs<br/>CI green"]
+    P18["Phase 18<br/>#69 Version guard<br/>Next"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -129,6 +143,9 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
+    class P17 review;
+    class P18 next;
+    class P19 todo;
 ```
 
 ## Roadmap
@@ -248,8 +265,8 @@ Deliverables:
 - document local verification commands in README: done
 - add issue-body links from roadmap phases to GitHub issues as they are filed:
   done
-- add release notes when the first usable version is tagged: changelog scaffold
-  exists; release checklist documented by #51
+- add release notes when the first Markdown-first version is tagged: changelog
+  scaffold exists; release checklist documented by #51
 
 Acceptance:
 
@@ -380,7 +397,7 @@ Acceptance:
 
 ### Phase 12: Prepare First Release Checklist
 
-Objective: make the first usable tag boring and auditable.
+Objective: make the first Markdown-first tag boring and auditable.
 
 Issue: [#51](https://github.com/mihaelamj/cvbuilder/issues/51).
 
@@ -453,16 +470,16 @@ Acceptance:
 - Linux proves `CVBuilder` and `CVBuilderTileDown` consumption: done
 - smoke test stays Markdown and JSON only: done
 
-### Phase 16: Prepare v0.1.0 Release Notes
+### Phase 16: Prepare Release Notes Draft
 
-Objective: make the first public release notes ready after release gates are
+Objective: make the first Markdown-first release notes ready after release gates are
 proven.
 
 Issue: [#59](https://github.com/mihaelamj/cvbuilder/issues/59).
 
 Deliverables:
 
-- move changelog content into a `v0.1.0` release section: done
+- move changelog content into a dated release section: done
 - keep a fresh empty `Unreleased` section: done
 - draft release notes with supported behavior and boundaries: done
 
@@ -473,6 +490,68 @@ Acceptance:
   consumer proof gates: done
 - release notes avoid unsupported PDF, HTML, scoring, optimizer, or static-site
   claims: done
+
+### Phase 17: Reconcile Release Version History
+
+Objective: make release documentation match the repository's historical tags
+before publishing.
+
+Issue: [#68](https://github.com/mihaelamj/cvbuilder/issues/68).
+
+Deliverables:
+
+- update release documentation to use the reconciled next release version:
+  CI-green in PR #71
+- preserve the historical `0.1.0` through `0.8.0` tag boundary in docs: in
+  CI-green in PR #71
+- rename release notes to match the reconciled `v0.9.0` tag: CI-green in
+  PR #71
+- update README and roadmap Mermaid state: CI-green in PR #71
+
+Acceptance:
+
+- next-release version claims are consistent across release docs: CI-green in
+  PR #71
+- the older `0.8.0` tag boundary is documented without rewriting history:
+  CI-green in PR #71
+- critic loop and local verification pass before PR merge: done
+
+### Phase 18: Add Release Version Consistency Guard
+
+Objective: make future release-version drift fail locally and in CI.
+
+Issue: [#69](https://github.com/mihaelamj/cvbuilder/issues/69).
+
+Deliverables:
+
+- add a local release-version consistency command: next
+- wire the guard into CI: next
+- document the command in README and release checklist: next
+
+Acceptance:
+
+- stale mixed release versions fail verification: next
+- documented next release cannot be lower than the historical tag boundary:
+  next
+
+### Phase 19: Prepare Release Publication Proof
+
+Objective: publish only after the reconciled version and guards are in place,
+then record post-tag evidence.
+
+Issue: [#70](https://github.com/mihaelamj/cvbuilder/issues/70).
+
+Deliverables:
+
+- create the reconciled release tag after `main` checks are green: todo
+- publish the matching GitHub Release: todo
+- record tag-triggered workflow proof and release URLs: todo
+
+Acceptance:
+
+- tag points at the intended `main` commit: todo
+- Style, Swift macOS, and Swift Linux tag workflows pass: todo
+- roadmap and epic issue state match the published release: todo
 
 ## Research Rules
 

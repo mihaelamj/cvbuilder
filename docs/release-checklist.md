@@ -1,14 +1,18 @@
-# First Release Checklist
+# Markdown-First Release Checklist
 
 Status date: 2026-06-02
 
-This checklist prepares the first usable CVBuilder release tag. It does not
-expand the product boundary. CVBuilder remains a pure Swift, Markdown-first
+This checklist prepares the first Markdown-first CVBuilder release tag. It does
+not expand the product boundary. CVBuilder remains a pure Swift, Markdown-first
 library and command-line tool.
+
+Historical tags `0.1.0` through `0.8.0` remain in the repository. The next
+release uses a `v0.9.0` tag so it is newer than the historical `0.8.0` boundary
+and matches the `v*` tag-triggered workflows.
 
 ## Release Boundary
 
-The first release includes:
+The Markdown-first release includes:
 
 - `CVDocument` as the canonical JSON data contract.
 - deterministic Markdown generation from `CVDocument`
@@ -19,7 +23,7 @@ The first release includes:
 - JSON Schema authoring metadata for `CVDocument`
 - schema drift checks for examples and fixtures
 
-The first release does not include:
+The Markdown-first release does not include:
 
 - PDF generation or rendering
 - HTML rendering
@@ -87,10 +91,10 @@ Before tagging:
    PDF, HTML, static-site generation, scoring, or optimizer behavior.
 4. Confirm the changelog names the CLI, JSON Schema, schema drift checks,
    generated fixture freshness, consumer smoke checks, and Linux CI support.
-5. Confirm `docs/release-notes/v0.1.0.md` matches the final release commit.
+5. Confirm `docs/release-notes/v0.9.0.md` matches the final release commit.
 
-For the first usable release, the expected tag is `v0.1.0` unless the maintainer
-chooses a different SemVer version.
+For the first Markdown-first release, the expected tag is `v0.9.0` unless the
+maintainer chooses a different SemVer version.
 
 ## Tag And Publish
 
@@ -100,8 +104,8 @@ After the release commit is on `main` and GitHub checks are green:
 git fetch origin main
 git switch main
 git pull --ff-only origin main
-git tag -a v0.1.0 -m "CVBuilder v0.1.0"
-git push origin v0.1.0
+git tag -a v0.9.0 -m "CVBuilder v0.9.0"
+git push origin v0.9.0
 ```
 
 Then create a GitHub Release for the tag. Release notes should include:

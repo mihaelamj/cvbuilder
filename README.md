@@ -162,7 +162,9 @@ the evidence-backed implementation slices that hardened the renderer and JSON
 workflow. Epic [#47](https://github.com/mihaelamj/cvbuilder/issues/47) completed
 release-ready authoring and CLI usability. Epic
 [#57](https://github.com/mihaelamj/cvbuilder/issues/57) completed first public
-release hardening and tag proof.
+release hardening and tag proof. Epic
+[#67](https://github.com/mihaelamj/cvbuilder/issues/67) reconciles release
+version history before publication.
 
 ```mermaid
 flowchart TD
@@ -181,9 +183,12 @@ flowchart TD
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Done"]
+    P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
+    P17["Phase 17<br/>#68 Version history docs<br/>CI green"]
+    P18["Phase 18<br/>#69 Version guard<br/>Next"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -193,6 +198,9 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
+    class P17 review;
+    class P18 next;
+    class P19 todo;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -274,10 +282,10 @@ swift build --target CVBuilderTileDown
   Markdown behavior, and migration rules.
 - [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
   workflow, CI checks, SSG integration, and product boundaries.
-- [docs/release-checklist.md](docs/release-checklist.md): first usable release
-  gates, tag process, release-note expectations, and boundaries.
-- [docs/release-notes/v0.1.0.md](docs/release-notes/v0.1.0.md): draft notes
-  for the first public release tag.
+- [docs/release-checklist.md](docs/release-checklist.md): Markdown-first
+  release gates, tag process, release-note expectations, and boundaries.
+- [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): draft notes
+  for the first Markdown-first release tag.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
