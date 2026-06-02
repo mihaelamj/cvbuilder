@@ -1,0 +1,84 @@
+{
+  "basics" : {
+    "email" : "taylor@example.com",
+    "label" : "Builds Swift apps and developer tooling.",
+    "location" : {
+      "city" : "Example City"
+    },
+    "name" : "Taylor Example",
+    "phone" : "+1 555 010 0101",
+    "profiles" : [
+      {
+        "network" : "LinkedIn",
+        "url" : "https:\/\/example.com\/linkedin"
+      },
+      {
+        "network" : "GitHub",
+        "url" : "https:\/\/example.com\/github"
+      },
+      {
+        "network" : "Mastodon",
+        "url" : "https:\/\/example.com\/mastodon"
+      }
+    ],
+    "summary" : "Senior engineer focused on modular Swift platforms.",
+    "url" : "https:\/\/example.com"
+  },
+  "education" : [
+    {
+      "area" : "Computer Science",
+      "endDate" : "2018-06",
+      "institution" : "Example University",
+      "startDate" : "2014-09",
+      "studyType" : "BSc"
+    }
+  ],
+  "projects" : [
+    {
+      "description" : "An open-source OpenAPI toolchain.",
+      "endDate" : "2026-05",
+      "highlights" : [
+        "Documented every release."
+      ],
+      "keywords" : [
+        "Swift",
+        "OpenAPI"
+      ],
+      "name" : "Contract Tooling",
+      "roles" : [
+        "Maintainer"
+      ],
+      "startDate" : "2025-09",
+      "type" : "openSource",
+      "url" : "https:\/\/example.com\/tooling"
+    }
+  ],
+  "skills" : [
+    {
+      "name" : "Swift"
+    },
+    {
+      "name" : "OpenAPI"
+    }
+  ],
+  "work" : [
+    {
+      "endDate" : "2026-05",
+      "highlights" : [
+        "Shipped a modular Swift package.",
+        "Cut build times by half."
+      ],
+      "name" : "Example Systems",
+      "position" : "Senior iOS Engineer",
+      "startDate" : "2024-01",
+      "summary" : "Led the platform team.",
+      "url" : "https:\/\/example.com\/company"
+    },
+    {
+      "name" : "Example Labs",
+      "position" : "Lead Backend Engineer",
+      "startDate" : "2021-03",
+      "summary" : "Owned the services layer."
+    }
+  ]
+}

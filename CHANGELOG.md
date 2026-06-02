@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   input with `--data -`, and stdout output with `--out -`.
 - Static-site-generator front matter profiles for generic, Toucan, Hugo, and
   Jekyll Markdown output.
+- JSON Resume interop: a typed `jsonresume.org` model, `CVDocument(jsonResume:)`
+  import, `JSONResume(cvDocument:)` export, the CLI `--from json-resume` input
+  mode and `--format json-resume` output, round-trip fixtures, and the
+  `docs/json-resume-interop.md` mapping and lossy-field contract.
 - Release-version consistency guard for changelog, release notes, release
   checklist, README, and roadmap drift.
 

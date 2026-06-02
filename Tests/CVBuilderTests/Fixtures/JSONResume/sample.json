@@ -1,0 +1,78 @@
+{
+  "basics": {
+    "name": "Jordan Example",
+    "label": "Staff iOS Engineer",
+    "email": "jordan@example.com",
+    "phone": "+1 555 010 0102",
+    "url": "https://example.com",
+    "summary": "Builds modular Swift platforms and developer tooling.",
+    "location": {
+      "city": "Example City",
+      "region": "Example Region",
+      "countryCode": "EX"
+    },
+    "profiles": [
+      { "network": "LinkedIn", "username": "jordan", "url": "https://example.com/linkedin" },
+      { "network": "GitHub", "username": "jordan", "url": "https://example.com/github" },
+      { "network": "Mastodon", "username": "jordan", "url": "https://example.com/mastodon" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Example Systems",
+      "position": "Senior iOS Engineer",
+      "url": "https://example.com/company",
+      "startDate": "2024-01-15",
+      "endDate": "2026-05",
+      "summary": "Led the platform team.",
+      "highlights": [
+        "Shipped a modular Swift package.",
+        "Cut build times by half."
+      ]
+    },
+    {
+      "name": "Example Labs",
+      "position": "Backend Engineer",
+      "startDate": "2021-03",
+      "summary": "Owned the services layer."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University",
+      "area": "Computer Science",
+      "studyType": "BSc",
+      "startDate": "2014",
+      "endDate": "2018"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "level": "Expert",
+      "keywords": ["Swift", "Objective-C"]
+    },
+    {
+      "name": "Tooling",
+      "keywords": ["OpenAPI", "GitHub Actions"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Contract Tooling",
+      "description": "An open-source OpenAPI toolchain.",
+      "highlights": ["Documented every release."],
+      "keywords": ["Swift", "OpenAPI"],
+      "startDate": "2025-09",
+      "endDate": "2026-05",
+      "url": "https://example.com/tooling",
+      "roles": ["Maintainer"],
+      "entity": "Example Systems",
+      "type": "openSource"
+    }
+  ],
+  "meta": {
+    "version": "v1.0.0",
+    "canonical": "https://example.com/resume.json"
+  }
+}

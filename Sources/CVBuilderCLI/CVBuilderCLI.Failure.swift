@@ -8,6 +8,7 @@ public extension CVBuilderCLI {
         case unknownOption(String)
         case unexpectedArgument(String)
         case unknownFormat(String)
+        case unknownInputFormat(String)
         case unknownFrontMatterProfile(String)
         case inputReadFailed(path: String, reason: String)
         case invalidJSON(path: String, reason: String)
@@ -33,6 +34,8 @@ public extension CVBuilderCLI {
                 "unexpected argument \(argument)"
             case let .unknownFormat(format):
                 "unknown format \(format). Allowed values: \(CVBuilderCLI.Format.allowedValuesDescription)"
+            case let .unknownInputFormat(inputFormat):
+                "unknown input format \(inputFormat). Allowed values: \(CVBuilderCLI.InputFormat.allowedValuesDescription)"
             case let .unknownFrontMatterProfile(profile):
                 "unknown front matter profile \(profile). Allowed values: \(FrontMatterProfile.allowedValuesDescription)"
             case let .inputReadFailed(path, reason):

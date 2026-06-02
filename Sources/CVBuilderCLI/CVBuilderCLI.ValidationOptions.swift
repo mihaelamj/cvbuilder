@@ -1,16 +1,19 @@
 public extension CVBuilderCLI {
     /// Parsed options for `cvbuilder --validate`.
     struct ValidationOptions: Equatable, Sendable {
-        /// Path to the input `CVDocument` JSON file or `-` for standard input.
+        /// Path to the input document file or `-` for standard input.
         public let dataPath: String
+        /// Input format selected by `--from`; defaults to canonical `CVDocument` JSON.
+        public let from: InputFormat
 
         /// Creates validated validation options for programmatic execution.
-        public init(dataPath: String) throws {
+        public init(dataPath: String, from: InputFormat = .cvDocument) throws {
             guard !dataPath.isEmpty else {
                 throw Failure.missingValue(option: "--data")
             }
 
             self.dataPath = dataPath
+            self.from = from
         }
 
         /// Parses command-line arguments for validation mode.
@@ -25,6 +28,7 @@ private extension CVBuilderCLI.ValidationOptions {
     struct Parser {
         let arguments: [String]
         var dataPath: String?
+        var from = CVBuilderCLI.InputFormat.cvDocument
         var sawValidate = false
         var index: Int
 
@@ -46,7 +50,7 @@ private extension CVBuilderCLI.ValidationOptions {
                 throw CVBuilderCLI.Failure.missingRequiredOption("--data <path>")
             }
 
-            return try CVBuilderCLI.ValidationOptions(dataPath: dataPath)
+            return try CVBuilderCLI.ValidationOptions(dataPath: dataPath, from: from)
         }
 
         mutating func consume(_ argument: String) throws {
@@ -78,6 +82,8 @@ private extension CVBuilderCLI.ValidationOptions {
             switch option {
             case "--data":
                 dataPath = try requiredAssignedValue(value, option: option)
+            case "--from":
+                from = try CVBuilderCLI.InputFormat(argument: requiredAssignedValue(value, option: option))
             default:
                 if option.hasPrefix("-") {
                     throw CVBuilderCLI.Failure.unknownOption(option)
@@ -93,6 +99,8 @@ private extension CVBuilderCLI.ValidationOptions {
             switch argument {
             case "--data":
                 dataPath = try nextValue(option: argument)
+            case "--from":
+                from = try CVBuilderCLI.InputFormat(argument: nextValue(option: argument))
             default:
                 return false
             }

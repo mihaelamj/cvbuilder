@@ -31,7 +31,9 @@ struct CVBuilderCLITests {
         #expect(usage.contains("--data <path|->"))
         #expect(usage.contains("--out <path|->"))
         #expect(usage.contains("--format <format>"))
-        #expect(usage.contains("markdown or json"))
+        #expect(usage.contains("markdown, json, or json-resume"))
+        #expect(usage.contains("--from <format>"))
+        #expect(usage.contains("cv-document or json-resume"))
         #expect(usage.contains("--front-matter-profile <profile>"))
         #expect(usage.contains("generic, toucan, hugo, or jekyll"))
         #expect(usage.contains("--check"))
@@ -375,6 +377,123 @@ struct CVBuilderCLITests {
         }
     }
 
+    @Test("runner imports JSON Resume input and renders Markdown")
+    func runnerImportsJSONResume() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("resume.json", contents: jsonResumeFixtureJSON)
+        let outputURL = tempDirectory.url.appendingPathComponent("cv/index.md")
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: outputURL.path, from: .jsonResume))
+
+        let output = try String(contentsOf: outputURL, encoding: .utf8)
+        #expect(output.contains("# Robin Example"))
+        #expect(output.contains("## Experience"))
+        #expect(output.contains("Senior iOS Engineer"))
+        #expect(output.hasSuffix("\n"))
+    }
+
+    @Test("runner round-trips JSON Resume through the json-resume output format")
+    func runnerRoundTripsJSONResume() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("resume.json", contents: jsonResumeFixtureJSON)
+        let firstURL = tempDirectory.url.appendingPathComponent("first.json")
+        let secondURL = tempDirectory.url.appendingPathComponent("second.json")
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: firstURL.path, from: .jsonResume, format: .jsonResume))
+        try makeRunner().run(.init(dataPath: firstURL.path, outputPath: secondURL.path, from: .jsonResume, format: .jsonResume))
+
+        let first = try Data(contentsOf: firstURL)
+        let second = try Data(contentsOf: secondURL)
+        #expect(first == second)
+    }
+
+    @Test("runner exports CVDocument input to JSON Resume")
+    func runnerExportsJSONResume() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: cliFixtureJSON)
+        let outputURL = tempDirectory.url.appendingPathComponent("resume.json")
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: outputURL.path, format: .jsonResume))
+
+        let outputData = try Data(contentsOf: outputURL)
+        let decoded = try JSONDecoder().decode(JSONResume.self, from: outputData)
+        let output = try #require(String(data: outputData, encoding: .utf8))
+
+        #expect(decoded.basics.name == "Alex Example")
+        #expect(decoded.basics.label == "CLI-focused Swift Engineer")
+        #expect(output.hasSuffix("\n"))
+    }
+
+    @Test("runner validates JSON Resume input honoring --from")
+    func runnerValidatesJSONResume() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let validURL = try tempDirectory.write("resume.json", contents: jsonResumeFixtureJSON)
+        let malformedURL = try tempDirectory.write("broken.json", contents: "{")
+
+        try makeRunner().validate(.init(dataPath: validURL.path, from: .jsonResume))
+
+        try expectFailure(makeRunner().validate(.init(dataPath: malformedURL.path, from: .jsonResume))) { failure in
+            guard case let .invalidJSON(path, _) = failure else {
+                Issue.record("Expected invalidJSON, got \(failure)")
+                return
+            }
+            #expect(path == malformedURL.path)
+        }
+    }
+
+    @Test("imported JSON Resume produces schema-valid CVDocument JSON")
+    func importedJSONResumeIsCVDocumentSchemaValid() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("resume.json", contents: jsonResumeFixtureJSON)
+        let outputURL = tempDirectory.url.appendingPathComponent("cv.json")
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: outputURL.path, from: .jsonResume, format: .json))
+
+        // Re-validating the emitted CVDocument JSON runs it through the embedded JSON Schema.
+        try makeRunner().validate(.init(dataPath: outputURL.path))
+    }
+
+    @Test("validation parser accepts --from json-resume")
+    func validationParserAcceptsInputFormat() throws {
+        let options = try CVBuilderCLI.ValidationOptions.parse(["--data", "resume.json", "--from", "json-resume", "--validate"])
+        #expect(try options == .init(dataPath: "resume.json", from: .jsonResume))
+
+        let command = try CVBuilderCLI.Command.parse(["--data", "resume.json", "--from", "json-resume", "--validate"])
+        #expect(try command == .validate(.init(dataPath: "resume.json", from: .jsonResume)))
+    }
+
+    @Test("parser accepts the json-resume input and output formats")
+    func parserAcceptsJSONResumeFormats() throws {
+        let options = try CVBuilderCLI.Options.parse([
+            "--data",
+            "resume.json",
+            "--out",
+            "cv/index.md",
+            "--from",
+            "json-resume",
+            "--format=json-resume",
+        ])
+
+        #expect(options.from == .jsonResume)
+        #expect(options.format == .jsonResume)
+
+        try expectFailure(CVBuilderCLI.Options.parse([
+            "--data", "resume.json", "--out", "cv.md", "--from", "linkedin",
+        ])) { failure in
+            #expect(failure == .unknownInputFormat("linkedin"))
+        }
+    }
+
     @Test("programmatic options reject empty paths")
     func programmaticOptionsRejectEmptyPaths() throws {
         try expectFailure(CVBuilderCLI.Options(dataPath: "", outputPath: "cv.md")) { failure in
@@ -499,6 +618,45 @@ private let cliFixtureJSON = """
       "location": "Example City"
     }
   }
+}
+"""
+
+private let jsonResumeFixtureJSON = """
+{
+  "basics": {
+    "name": "Robin Example",
+    "label": "Swift Engineer",
+    "email": "robin@example.com",
+    "phone": "+1 555 010 0303",
+    "url": "https://example.com",
+    "summary": "Builds Swift tooling.",
+    "location": { "city": "Example City" },
+    "profiles": [
+      { "network": "GitHub", "url": "https://example.com/github" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Example Systems",
+      "position": "Senior iOS Engineer",
+      "startDate": "2024-01",
+      "endDate": "2026-05",
+      "summary": "Led the platform team.",
+      "highlights": ["Shipped a Swift package."]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Example University",
+      "area": "Computer Science",
+      "studyType": "BSc",
+      "startDate": "2014-09",
+      "endDate": "2018-06"
+    }
+  ],
+  "skills": [
+    { "name": "Swift" }
+  ]
 }
 """
 

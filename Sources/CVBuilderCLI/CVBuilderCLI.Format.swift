@@ -3,6 +3,7 @@ public extension CVBuilderCLI {
     enum Format: String, CaseIterable, Equatable, Sendable {
         case markdown
         case json
+        case jsonResume = "json-resume"
 
         init(argument: String) throws {
             guard let format = Self(rawValue: argument) else {

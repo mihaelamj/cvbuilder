@@ -1,0 +1,116 @@
+{
+  "basics" : {
+    "email" : "jordan.vale@example.com",
+    "label" : "Junior Swift Engineer",
+    "location" : {
+      "city" : "Example City"
+    },
+    "name" : "Jordan Vale",
+    "phone" : "+1 555 010 0602",
+    "profiles" : [
+      {
+        "network" : "GitHub",
+        "url" : "https:\/\/example.com\/jordan-vale-code"
+      },
+      {
+        "network" : "GitHub",
+        "url" : "https:\/\/example.com\/jordan-vale-code"
+      },
+      {
+        "network" : "Project notes",
+        "url" : "https:\/\/example.com\/jordan-vale-notes"
+      }
+    ],
+    "summary" : "Builds Swift features, test fixtures, and small Linux-safe tools while growing into product ownership.",
+    "url" : "https:\/\/example.com\/jordan-vale-notes"
+  },
+  "education" : [
+    {
+      "area" : "Computer Science",
+      "endDate" : "2025-06",
+      "institution" : "Example Institute of Technology",
+      "startDate" : "2021-09",
+      "studyType" : "BSc"
+    }
+  ],
+  "projects" : [
+    {
+      "description" : "Explains how a small Swift package groups appointments by day with deterministic fixtures.",
+      "highlights" : [
+        "Shows before-and-after examples for empty and multi-day schedules.",
+        "Includes Linux test command output in the write-up."
+      ],
+      "keywords" : [
+        "Swift",
+        "Unit Testing"
+      ],
+      "name" : "Swift Date Grouping Notes",
+      "roles" : [
+        "Author"
+      ],
+      "type" : "technicalWriting",
+      "url" : "https:\/\/example.com\/swift-date-grouping-notes"
+    },
+    {
+      "description" : "Presented lessons from replacing stringly typed navigation state with enums.",
+      "highlights" : [
+        "Covered tradeoffs for small teams maintaining UIKit apps."
+      ],
+      "keywords" : [
+        "Swift",
+        "UIKit"
+      ],
+      "name" : "Campus App Demo Talk",
+      "roles" : [
+        "Speaker"
+      ],
+      "type" : "talk",
+      "url" : "https:\/\/example.com\/campus-app-demo-talk"
+    }
+  ],
+  "skills" : [
+    {
+      "name" : "Swift"
+    },
+    {
+      "name" : "SwiftUI"
+    },
+    {
+      "name" : "UIKit"
+    },
+    {
+      "name" : "GitHub Actions"
+    },
+    {
+      "name" : "Linux"
+    },
+    {
+      "name" : "Unit Testing"
+    }
+  ],
+  "work" : [
+    {
+      "endDate" : "2026-06",
+      "highlights" : [
+        "Added unit tests around date grouping and empty-state rendering.",
+        "Documented setup steps for running the package on Linux CI."
+      ],
+      "name" : "Harbor Example Labs",
+      "position" : "Junior Swift Engineer",
+      "startDate" : "2025-06",
+      "summary" : "Implemented appointment list screens from typed JSON fixtures.",
+      "url" : "https:\/\/example.com\/harbor-example-labs"
+    },
+    {
+      "endDate" : "2024-09",
+      "highlights" : [
+        "Paired with senior engineers to replace stringly typed view state with enums."
+      ],
+      "name" : "Example Campus Studio",
+      "position" : "Intern iOS Intern",
+      "startDate" : "2024-06",
+      "summary" : "Built sign-up and reminder flows for student study groups.",
+      "url" : "https:\/\/example.com\/example-campus-studio"
+    }
+  ]
+}
