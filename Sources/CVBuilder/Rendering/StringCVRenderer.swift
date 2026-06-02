@@ -26,7 +26,14 @@ public struct StringCVRenderer: CVRendering, Sendable {
         }
 
         output += "\(experienceTitle)\n\n"
-        for exp in resume.experience.sorted(by: { Period.SimpleDate.isAscending($1.period.end, before: $0.period.end) }) {
+        let orderedExperience = resume.experience.sorted { lhs, rhs in
+            if lhs.isCurrent != rhs.isCurrent {
+                return lhs.isCurrent
+            }
+
+            return Period.SimpleDate.isAscending(rhs.period.end, before: lhs.period.end)
+        }
+        for exp in orderedExperience {
             output += "\(exp.company.name) (\(exp.formattedDateRange)) – \(exp.role.name)\n\n"
             for projectExp in exp.projects {
                 let project = projectExp.project

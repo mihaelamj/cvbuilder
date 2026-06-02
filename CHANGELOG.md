@@ -47,6 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `CV.createFromProjects` now sorts current companies ahead of finished ones, so
+  an ongoing role rendered as "... - Present" appears at the top of the
+  experience list instead of below older completed roles. The legacy
+  `StringCVRenderer` ordering was aligned to match (#123).
+- `CV.createFromProjects` now aggregates the projects' technical focuses into a
+  deduplicated company-level `TechnicalFocus` and forwards each project's
+  `technicalFocus` into its `ProjectExperience`, so the model preserves the
+  focus data it was given (#124).
 - Front-matter boolean and array coercion is now per-profile rather than global:
   Toucan and Hugo fold `draft`, Jekyll folds `published`, and a profile no longer
   mistypes a key it does not declare. Booleans accept the common static-site
