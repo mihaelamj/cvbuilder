@@ -52,7 +52,7 @@ core package.
 - The demo CV fixture exercises realistic multi-role technical CV behavior,
   omitted older jobs, and explicit relevance-selected jobs.
 - Epic #47 completed release-ready authoring and CLI usability.
-- Epic #57 is open for first public release hardening and tag proof.
+- Epic #57 completed first public release hardening and tag proof.
 
 Relevant links:
 
@@ -72,11 +72,12 @@ Relevant links:
 - Issue #50: closed schema drift checks in PR #54.
 - Issue #51: closed first-release checklist in PR #55.
 - PR #55: merged first-release checklist.
-- Issue #57: active first public release hardening and tag proof epic.
+- Issue #57: closed first public release hardening and tag proof epic.
 - Issue #58: closed tag-triggered release CI gates in PR #62.
 - Issue #61: closed package platform contract alignment in PR #63.
 - Issue #60: closed clean SwiftPM consumer smoke test in PR #64.
-- Issue #59: CI-green `v0.1.0` changelog and release notes in PR #65.
+- Issue #59: closed `v0.1.0` changelog and release notes in PR #65.
+- PR #65: merged `v0.1.0` changelog and release notes.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -97,7 +98,7 @@ Ordered roadmap issues:
 13. #58 - done: add tag-triggered release CI gates.
 14. #61 - done: align the package platform contract with supported platforms.
 15. #60 - done: add a clean SwiftPM consumer smoke test.
-16. #59 - CI green: prepare `v0.1.0` changelog and release notes.
+16. #59 - done: prepare `v0.1.0` changelog and release notes.
 
 ```mermaid
 flowchart TD
@@ -116,7 +117,7 @@ flowchart TD
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>CI green"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Done"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
@@ -127,8 +128,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15 done;
-    class P16 review;
+    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
 ```
 
 ## Roadmap
@@ -462,17 +462,17 @@ Issue: [#59](https://github.com/mihaelamj/cvbuilder/issues/59).
 
 Deliverables:
 
-- move changelog content into a `v0.1.0` release section: CI green
-- keep a fresh empty `Unreleased` section: CI green
-- draft release notes with supported behavior and boundaries: CI green
+- move changelog content into a `v0.1.0` release section: done
+- keep a fresh empty `Unreleased` section: done
+- draft release notes with supported behavior and boundaries: done
 
 Acceptance:
 
-- release notes mention Markdown and JSON only: CI green
+- release notes mention Markdown and JSON only: done
 - release notes mention style, macOS, Linux, schema drift, fixture freshness, and
-  consumer proof gates: CI green
+  consumer proof gates: done
 - release notes avoid unsupported PDF, HTML, scoring, optimizer, or static-site
-  claims: CI green
+  claims: done
 
 ## Research Rules
 

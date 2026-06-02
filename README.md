@@ -161,7 +161,7 @@ roadmap. Epic [#12](https://github.com/mihaelamj/cvbuilder/issues/12) tracked
 the evidence-backed implementation slices that hardened the renderer and JSON
 workflow. Epic [#47](https://github.com/mihaelamj/cvbuilder/issues/47) completed
 release-ready authoring and CLI usability. Epic
-[#57](https://github.com/mihaelamj/cvbuilder/issues/57) tracks first public
+[#57](https://github.com/mihaelamj/cvbuilder/issues/57) completed first public
 release hardening and tag proof.
 
 ```mermaid
@@ -181,7 +181,7 @@ flowchart TD
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>CI green"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Done"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
@@ -192,8 +192,7 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15 done;
-    class P16 review;
+    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
