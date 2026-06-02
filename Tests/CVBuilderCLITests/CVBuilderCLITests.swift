@@ -320,6 +320,34 @@ struct CVBuilderCLITests {
         }
     }
 
+    @Test("normalized JSON for an ID-less document passes --check across runs")
+    func normalizedJSONIsDeterministicForOmittedIDs() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: omittedIDFixtureJSON)
+        let outputURL = tempDirectory.url.appendingPathComponent("normalized.json")
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: outputURL.path, format: .json))
+        let firstOutput = try Data(contentsOf: outputURL)
+
+        // A second run from the same ID-less input must reproduce byte-identical
+        // output and therefore satisfy --check (the #119 regression).
+        try makeRunner().run(.init(
+            dataPath: inputURL.path,
+            outputPath: outputURL.path,
+            format: .json,
+            check: true,
+        ))
+
+        try makeRunner().run(.init(dataPath: inputURL.path, outputPath: outputURL.path, format: .json))
+        let secondOutput = try Data(contentsOf: outputURL)
+
+        #expect(firstOutput == secondOutput)
+        let rendered = try #require(String(data: firstOutput, encoding: .utf8))
+        #expect(!rendered.contains("\"id\""))
+    }
+
     @Test("runner reports invalid JSON, missing check output, and write failures")
     func runnerReportsUserFacingFailures() throws {
         let tempDirectory = try TemporaryDirectory()
@@ -617,6 +645,22 @@ private let cliFixtureJSON = """
       "phone": "+1 555 010 0301",
       "location": "Example City"
     }
+  }
+}
+"""
+
+private let omittedIDFixtureJSON = """
+{
+  "cv": {
+    "name": "Alex Example",
+    "title": "CLI-focused Swift Engineer",
+    "summary": "Builds file-driven Swift tooling.",
+    "contactInfo": {
+      "email": "alex@example.com",
+      "phone": "+1 555 010 0301",
+      "location": "Example City"
+    },
+    "skills": [{ "name": "Swift", "category": "language" }]
   }
 }
 """

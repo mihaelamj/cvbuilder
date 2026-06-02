@@ -30,7 +30,7 @@ struct CVDocumentFixtureCoverageTests {
         #expect(document.links == DocumentLinks())
         #expect(document.publicEvidence.isEmpty)
         #expect(document.rendering == RenderingOptions())
-        #expect(document.cv.id.uuidString.count == 36)
+        #expect(document.cv.id == nil)
         #expect(output.contains("## Contact"))
         #expect(!output.contains("## Experience"))
         #expect(!output.contains("## Education"))

@@ -1,7 +1,7 @@
 import Foundation
 
 public struct ProjectExperience: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let project: Project
     public let role: Role
     public let period: Period
@@ -16,7 +16,7 @@ public struct ProjectExperience: Codable, Identifiable, Hashable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         project: Project,
         role: Role,
         period: Period,
@@ -32,7 +32,7 @@ public struct ProjectExperience: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         project = try container.decode(Project.self, forKey: .project)
         role = try container.decode(Role.self, forKey: .role)
         period = try container.decode(Period.self, forKey: .period)

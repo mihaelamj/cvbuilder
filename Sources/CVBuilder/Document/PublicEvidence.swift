@@ -5,8 +5,9 @@ import Foundation
 /// Evidence is descriptive only. It carries summary, role, technologies, and a
 /// link so renderers can show context without inventing scores or rankings.
 public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
-    /// Stable identifier for normalized JSON. Missing IDs are synthesized.
-    public let id: UUID
+    /// Optional stable identifier. Omitted IDs stay omitted in normalized JSON
+    /// so output is byte-stable; an explicit `null` is rejected.
+    public let id: UUID?
     /// Evidence heading text.
     public let title: String
     /// Evidence category rendered as a factual label.
@@ -43,7 +44,7 @@ public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         title: String,
         kind: PublicEvidenceKind,
         role: String,
@@ -71,7 +72,7 @@ public struct PublicEvidence: Codable, Equatable, Identifiable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         kind = try container.decode(PublicEvidenceKind.self, forKey: .kind)
         role = try container.decode(String.self, forKey: .role)

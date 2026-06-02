@@ -1,7 +1,7 @@
 import Foundation
 
 public struct CV: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let name: String
     public let title: String
     public let summary: String
@@ -22,7 +22,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         name: String,
         title: String,
         summary: String,
@@ -44,7 +44,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         title = try container.decode(String.self, forKey: .title)
         summary = try container.decode(String.self, forKey: .summary)
@@ -92,7 +92,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
         }
         .sorted { $0.period.end > $1.period.end } // most recent first
 
-        let uniqueSkills = Set(projects.flatMap(\.techs)).sorted { $0.name < $1.name }
+        let uniqueSkills = Tech.deduplicatedAndSorted(projects.flatMap(\.techs))
 
         return CV(
             name: name,
@@ -111,7 +111,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
     }
 
     public func allUniqueSkills() -> [Tech] {
-        Set(experience.flatMap { $0.projects.flatMap(\.project.techs) }).sorted { $0.name < $1.name }
+        Tech.deduplicatedAndSorted(experience.flatMap { $0.projects.flatMap(\.project.techs) })
     }
 }
 

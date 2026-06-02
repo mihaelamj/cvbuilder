@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Project: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let name: String
     public let company: Company
     public let descriptions: [String]
@@ -26,7 +26,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         name: String,
         company: Company,
         descriptions: [String],
@@ -52,7 +52,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         company = try container.decode(Company.self, forKey: .company)
         descriptions = try container.decode([String].self, forKey: .descriptions, defaultIfMissing: [])
@@ -65,7 +65,7 @@ public struct Project: Codable, Identifiable, Hashable, Sendable {
     }
 
     public class Builder {
-        private var id: UUID = .init()
+        private var id: UUID?
         private var name: String = ""
         private var company: Company?
         private var descriptions: [String] = []

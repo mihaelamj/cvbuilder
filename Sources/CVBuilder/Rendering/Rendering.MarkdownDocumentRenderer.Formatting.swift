@@ -122,8 +122,12 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         var experienceByID: [UUID: WorkExperience] = [:]
-        for work in experience where experienceByID[work.id] == nil {
-            experienceByID[work.id] = work
+        for work in experience {
+            guard let id = work.id, experienceByID[id] == nil else {
+                continue
+            }
+
+            experienceByID[id] = work
         }
 
         var seenSelectedIDs: Set<UUID> = []
