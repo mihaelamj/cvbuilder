@@ -12,9 +12,21 @@ public extension CVDocument {
     init(jsonResume resume: JSONResume) {
         let cv = CV(jsonResume: resume)
 
+        // Company URLs are keyed by employer name. When two work entries share a
+        // name but carry different URLs, the mapping is ambiguous, so drop it
+        // rather than apply one entry's URL to the other (which would corrupt the
+        // surviving entry). Same-name entries that agree keep their shared URL.
         var companyURLs: [String: String] = [:]
+        var conflictingNames: Set<String> = []
         for work in resume.work where !work.url.isEmpty {
-            companyURLs[work.name] = work.url
+            if let existing = companyURLs[work.name], existing != work.url {
+                conflictingNames.insert(work.name)
+            } else {
+                companyURLs[work.name] = work.url
+            }
+        }
+        for name in conflictingNames {
+            companyURLs.removeValue(forKey: name)
         }
 
         let links = DocumentLinks(

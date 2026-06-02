@@ -81,6 +81,48 @@ struct JSONResumeInteropTests {
         #expect(!exported.contains("0001"))
     }
 
+    // MARK: Same-name employer URLs and profile mapping (#117)
+
+    @Test("same-name employers with different URLs do not corrupt each other")
+    func sameNameEmployerConflictingURLsAreDropped() throws {
+        let json = #"{"work":[{"name":"X","position":"Engineer","url":"https://first.com","summary":"a"},{"name":"X","position":"Engineer","url":"https://second.com","summary":"b"}]}"#
+        let document = try CVDocument(jsonResume: decodeResume(json))
+
+        // Ambiguous URL is dropped rather than applied to both entries.
+        #expect(document.links.companyURLs["X"] == nil)
+
+        let exported = try reExported(json)
+        #expect(!exported.contains("first.com"))
+        #expect(!exported.contains("second.com"))
+    }
+
+    @Test("same-name employers sharing one URL keep it")
+    func sameNameEmployerSharedURLIsKept() throws {
+        let json = #"{"work":[{"name":"X","position":"Engineer","url":"https://shared.com","summary":"a"},{"name":"X","position":"Engineer","url":"https://shared.com","summary":"b"}]}"#
+        let document = try CVDocument(jsonResume: decodeResume(json))
+
+        #expect(document.links.companyURLs["X"] == "https://shared.com")
+    }
+
+    @Test("LinkedIn and GitHub profiles re-emit first in canonical order (documented)")
+    func profilesReorderToCanonical() throws {
+        let json = #"{"basics":{"name":"N","profiles":[{"network":"GitHub","url":"https://gh"},{"network":"LinkedIn","url":"https://li"},{"network":"Mastodon","url":"https://m"}]}}"#
+        let exported = try JSONResume(cvDocument: CVDocument(jsonResume: decodeResume(json)))
+
+        #expect(exported.basics.profiles.map(\.network) == ["LinkedIn", "GitHub", "Mastodon"])
+    }
+
+    @Test("a duplicate LinkedIn profile is dropped, keeping the first (documented)")
+    func duplicateProfileIsDropped() throws {
+        let json = #"{"basics":{"name":"N","profiles":[{"network":"LinkedIn","url":"https://li1"},{"network":"LinkedIn","url":"https://li2"}]}}"#
+        let document = try CVDocument(jsonResume: decodeResume(json))
+
+        #expect(document.cv.contactInfo.linkedIn?.absoluteString == "https://li1")
+
+        let exported = JSONResume(cvDocument: document)
+        #expect(exported.basics.profiles.count(where: { $0.network == "LinkedIn" }) == 1)
+    }
+
     // MARK: Import a real-world sample and render deterministic Markdown
 
     @Test("real JSON Resume sample imports and renders deterministic Markdown")
@@ -258,9 +300,12 @@ struct JSONResumeInteropTests {
         try String(contentsOf: fixtureURL(relativePath), encoding: .utf8)
     }
 
+    private func decodeResume(_ jsonResumeText: String) throws -> JSONResume {
+        try JSONDecoder().decode(JSONResume.self, from: Data(jsonResumeText.utf8))
+    }
+
     private func reExported(_ jsonResumeText: String) throws -> String {
-        let resume = try JSONDecoder().decode(JSONResume.self, from: Data(jsonResumeText.utf8))
-        return try normalizedJSONResume(for: CVDocument(jsonResume: resume))
+        try normalizedJSONResume(for: CVDocument(jsonResume: decodeResume(jsonResumeText)))
     }
 
     private func normalizedJSONResume(for document: CVDocument) throws -> String {
