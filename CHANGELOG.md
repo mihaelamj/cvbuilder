@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-06-02
+## [0.9.0] - 2026-06-02
+
+This is the first Markdown-first public release after the historical `0.1.0`
+through `0.8.0` tags. Those older tags remain in the repository history.
 
 ### Added
 
