@@ -83,7 +83,7 @@ Relevant links:
 - Issue #59: closed initial changelog and release notes draft in PR #65.
 - PR #65: merged the initial release notes draft.
 - Issue #67: active release version history reconciliation epic.
-- Issue #68: active release version docs reconciliation.
+- Issue #68: release version docs reconciliation is in review in PR #71.
 - Issue #69: next release version consistency guard.
 - Issue #70: future release publication proof.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -107,7 +107,7 @@ Ordered roadmap issues:
 14. #61 - done: align the package platform contract with supported platforms.
 15. #60 - done: add a clean SwiftPM consumer smoke test.
 16. #59 - done: prepare the changelog and release notes draft.
-17. #68 - active: reconcile release version docs with existing tag history.
+17. #68 - in review: reconcile release version docs with existing tag history.
 18. #69 - next: add release version consistency guard.
 19. #70 - todo: prepare release publication proof for reconciled version.
 
@@ -129,7 +129,7 @@ flowchart TD
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
-    P17["Phase 17<br/>#68 Version history docs<br/>Active"]
+    P17["Phase 17<br/>#68 Version history docs<br/>In review"]
     P18["Phase 18<br/>#69 Version guard<br/>Next"]
     P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
@@ -143,7 +143,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
-    class P17 active;
+    class P17 review;
     class P18 next;
     class P19 todo;
 ```
@@ -501,17 +501,20 @@ Issue: [#68](https://github.com/mihaelamj/cvbuilder/issues/68).
 Deliverables:
 
 - update release documentation to use the reconciled next release version:
-  active
-- preserve the historical `0.1.0` through `0.8.0` tag boundary in docs: active
-- rename release notes to match the reconciled `v0.9.0` tag: active
-- update README and roadmap Mermaid state: active
+  in review in PR #71
+- preserve the historical `0.1.0` through `0.8.0` tag boundary in docs: in
+  review in PR #71
+- rename release notes to match the reconciled `v0.9.0` tag: in review in
+  PR #71
+- update README and roadmap Mermaid state: in review in PR #71
 
 Acceptance:
 
-- next-release version claims are consistent across release docs: active
+- next-release version claims are consistent across release docs: in review in
+  PR #71
 - the older `0.8.0` tag boundary is documented without rewriting history:
-  active
-- critic loop and local verification pass before PR merge
+  in review in PR #71
+- critic loop and local verification pass before PR merge: done
 
 ### Phase 18: Add Release Version Consistency Guard
 
