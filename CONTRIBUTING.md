@@ -46,6 +46,14 @@ swift build --target CVBuilderTileDown
 - No runtime shell-out to another renderer during rendering.
 - Tests use Swift Testing.
 
+## Status Diagrams
+
+Roadmap and epic Mermaid status diagrams are color-coded, and color moves with
+state (github-discipline Rule 1.8): a node's label, its color `class`, and the
+linked issue or PR state are all updated in the same change. A node labeled
+`Done` must not stay colored `Active`. The palette is `done`, `review`,
+`active`, `next`, `partial`, `todo`. Diagrams use `flowchart TD` (vertical).
+
 ## Issue Labels
 
 The tracker uses exactly five labels (Apple system palette): `bug` (#FF3B30),
