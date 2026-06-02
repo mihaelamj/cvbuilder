@@ -135,8 +135,15 @@ extension Rendering.MarkdownDocumentRenderer {
         _ experience: [WorkExperience],
         options: RenderingOptions,
     ) -> [WorkExperience] {
-        let selectedExperience = selectedExperience(experience, selectedIDs: options.selectedExperienceIDs)
-        return limitedExperience(selectedExperience, recentCompanyCount: options.recentCompanyCount)
+        // Explicit selection is the higher-priority concept: when
+        // `selectedExperienceIDs` is non-empty it bounds the rendered set in the
+        // curated order, and the recency cap does not further truncate it. The
+        // cap only applies when no explicit selection is given.
+        guard options.selectedExperienceIDs.isEmpty else {
+            return selectedExperience(experience, selectedIDs: options.selectedExperienceIDs)
+        }
+
+        return limitedExperience(experience, recentCompanyCount: options.recentCompanyCount)
     }
 
     func selectedExperience(

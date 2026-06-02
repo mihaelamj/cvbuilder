@@ -47,6 +47,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Explicit `selectedExperienceIDs` is now authoritative over `recentCompanyCount`:
+  when a selection is set, all selected work entries render in the curated order
+  and the recency cap no longer silently truncates them. The cap still applies
+  when no explicit selection is given (#115).
 - Removed the unused, divergent `Period.formattedDateRange` (a `M/YYYY` layout
   inconsistent with the canonical `Mon YYYY` output) and documented
   `WorkExperience.formattedDateRange` as the intentionally English-only path for
