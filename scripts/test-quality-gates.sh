@@ -74,6 +74,41 @@ if (cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh" 2>/dev
   exit 1
 fi
 
+# A `.iOS` substring inside a comment must not trip the platform gate.
+cat > "$PLATFORM_TMP/Package.swift" <<'SWIFT'
+let packagePlatforms: [SupportedPlatform] = [
+    .macOS(.v13),
+]
+// no .iOS support yet
+SWIFT
+
+(cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh")
+
+# check-namespacing.sh must catch a second file-scope type regardless of the
+# access / final / open / actor / struct combination.
+NS_TMP=$(mktemp -d)
+trap 'rm -rf "$PLATFORM_TMP" "$NS_TMP"' EXIT
+mkdir -p "$NS_TMP/Sources"
+
+cat > "$NS_TMP/Sources/Two.swift" <<'SWIFT'
+public struct Foo {}
+public final actor Bar {}
+SWIFT
+
+if (cd "$NS_TMP" && bash "$ROOT/scripts/check-namespacing.sh" 2>/dev/null); then
+  echo "quality-gates: two file-scope types (final actor) were accepted" >&2
+  exit 1
+fi
+
+# A single file-scope type with a nested type must pass.
+cat > "$NS_TMP/Sources/Two.swift" <<'SWIFT'
+public struct Foo {
+    struct Nested {}
+}
+SWIFT
+
+(cd "$NS_TMP" && bash "$ROOT/scripts/check-namespacing.sh")
+
 RELEASE_ROOT="$PLATFORM_TMP/release"
 RELEASE_DOCC="$RELEASE_ROOT/Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc"
 mkdir -p "$RELEASE_DOCC"

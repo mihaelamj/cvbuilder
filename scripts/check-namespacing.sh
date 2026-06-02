@@ -13,7 +13,7 @@ fi
 
 FAIL=0
 while IFS= read -r f; do
-  count=$(grep -cE "^(public |package |internal )?(actor|struct|enum|protocol|class|final class) [A-Z]" "$f")
+  count=$(grep -cE "^(open |public |package |internal )?(final )?(actor|struct|enum|protocol|class) [A-Z]" "$f")
   if [ "$count" -gt 1 ]; then
     echo "namespacing: $count file-scope types in $f (one per file)" >&2
     FAIL=1

@@ -47,6 +47,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The `CVBuilderDocumentation` target now depends on `CVBuilder` so DocC symbol
+  links resolve, and macOS CI builds the catalog and fails on any DocC warning,
+  so a broken reference no longer ships undetected (#127).
+- The `CVBuilderTileDown` target and its contract test now compile and run on
+  every platform (only the public product stays Linux-only), so adapter
+  regressions are caught on the macOS dev platform; macOS CI builds the target
+  (#128).
+- Verification gates: `check-namespacing.sh` now counts a second file-scope type
+  declared with any access / `final` / `open` / `actor` / `struct` combination
+  (not only `final class`), and `check-platform-contract.sh` matches a real
+  `.iOS(` declaration rather than the `.iOS` substring in a comment (#129).
 - `--from json-resume --validate` now validates the converted `CVDocument`
   against the embedded schema (parity with the `cv-document` path) and rejects an
   empty or nameless resume instead of reporting it valid; a malformed file is
