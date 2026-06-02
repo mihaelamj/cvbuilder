@@ -138,6 +138,21 @@ struct CVBuilderCLITests {
         }
     }
 
+    @Test("validator accepts the relative URLs the decoder accepts")
+    func validatorAgreesWithDecoderOnRelativeURLs() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: relativeURLJSON)
+
+        // The CLI runs schema validation before decoding; succeeding here proves
+        // both the validator and the decoder accept the relative URLs (#112).
+        try makeRunner().validate(.init(dataPath: inputURL.path))
+
+        let decoded = try JSONDecoder().decode(CVDocument.self, from: Data(relativeURLJSON.utf8))
+        #expect(decoded.cv.contactInfo.website?.absoluteString == "/cv/profile")
+    }
+
     @Test("runner prints embedded JSON Schema without filesystem access")
     func runnerPrintsCheckedInJSONSchema() throws {
         let standardIO = MemoryStandardIO()
@@ -644,6 +659,24 @@ private let cliFixtureJSON = """
       "email": "alex@example.com",
       "phone": "+1 555 010 0301",
       "location": "Example City"
+    }
+  }
+}
+"""
+
+private let relativeURLJSON = """
+{
+  "cv": {
+    "name": "Alex Example",
+    "title": "CLI-focused Swift Engineer",
+    "summary": "Builds file-driven Swift tooling.",
+    "contactInfo": {
+      "email": "alex@example.com",
+      "phone": "+1 555 010 0301",
+      "location": "Example City",
+      "website": "/cv/profile",
+      "linkedIn": "../profiles/alex",
+      "github": "#projects"
     }
   }
 }

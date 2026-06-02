@@ -43,6 +43,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The CLI schema validator's `uri` format check now mirrors the model decoder,
+  which accepts relative URLs (site-root paths, anchors, relative paths). It
+  rejects only strings Foundation cannot parse into a URL, so `--validate` no
+  longer falsely rejects a document the decoder accepts and the renderer
+  renders (#112).
 - Markdown escaping now neutralizes setext heading underlines: a field value
   that is entirely `=` (any length) or entirely `-` (any length) is escaped at
   the line start, so user data can no longer promote the preceding rendered
