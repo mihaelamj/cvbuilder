@@ -175,7 +175,7 @@ flowchart TD
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
-    P12["Phase 12<br/>#51 Release checklist<br/>In progress"]
+    P12["Phase 12<br/>#51 Release checklist<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
@@ -187,7 +187,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11 done;
-    class P12 active;
+    class P12 review;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
