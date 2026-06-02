@@ -13,6 +13,7 @@ bash scripts/check-namespacing.sh
 bash scripts/check-platform-contract.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-generated-fixtures.sh
+bash scripts/check-consumer-smoke.sh
 swiftformat . --config .swiftformat --lint
 swiftlint --config .swiftlint.yml --strict
 swift build --target CVBuilder
@@ -59,6 +60,7 @@ committed files.
 - Run `bash scripts/check-style.sh`, `bash scripts/check-namespacing.sh`,
   `bash scripts/check-platform-contract.sh`,
   `bash scripts/test-quality-gates.sh`,
+  `bash scripts/check-consumer-smoke.sh`,
   `bash scripts/check-generated-fixtures.sh`,
   `swiftformat . --config .swiftformat --lint`,
   `swiftlint --config .swiftlint.yml --strict`,

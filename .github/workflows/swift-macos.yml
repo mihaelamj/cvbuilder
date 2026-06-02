@@ -42,3 +42,6 @@ jobs:
 
       - name: Generated fixture freshness
         run: bash scripts/check-generated-fixtures.sh
+
+      - name: Consumer smoke
+        run: bash scripts/check-consumer-smoke.sh
