@@ -62,7 +62,8 @@ core package.
 - Issues #74 and #75 are done.
 - Epic #80 is active for the authoring and publishing experience.
 - Issue #81 is done after PR #97.
-- Issue #82 is in review in PR #104.
+- Issue #82 is done after PR #104.
+- Issue #83 is active for JSON Resume interop.
 
 Relevant links:
 
@@ -97,8 +98,8 @@ Relevant links:
 - Issue #75: research-conformance matrix is done after PR #85.
 - Issue #80: active authoring and publishing experience epic.
 - Issue #81: CLI authoring experience is done after PR #97.
-- Issue #82: in review for static-site-generator front-matter profiles in PR #104.
-- Issue #83: future JSON Resume interop.
+- Issue #82: static-site-generator front-matter profiles are done after PR #104.
+- Issue #83: active JSON Resume interop.
 - Issue #84: future rendered-output localization.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -127,8 +128,8 @@ Ordered roadmap issues:
 20. #74 - done: make the public legacy CV render path R12/R15 conformant.
 21. #75 - done: add research-conformance matrix mapping R01 to R15.
 22. #81 - done: add CLI authoring validation, scaffolding, schema printing, and stream IO.
-23. #82 - review: add static-site-generator front-matter profiles in PR #104.
-24. #83 - todo: add JSON Resume import and export interop.
+23. #82 - done: add static-site-generator front-matter profiles.
+24. #83 - active: add JSON Resume import and export interop.
 25. #84 - todo: add deterministic rendered-output localization.
 
 ```mermaid
@@ -155,8 +156,8 @@ flowchart TD
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
     P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
-    P23["Phase 23<br/>#82 Front matter profiles<br/>Review"]
-    P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Done"]
+    P24["Phase 24<br/>#83 JSON Resume interop<br/>Active"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
@@ -175,8 +176,9 @@ flowchart TD
     class P20 done;
     class P21 done;
     class P22 done;
-    class P23 review;
-    class P24,P25 todo;
+    class P23 done;
+    class P24 active;
+    class P25 todo;
 ```
 
 ## Roadmap
@@ -658,15 +660,15 @@ Issue: [#82](https://github.com/mihaelamj/cvbuilder/issues/82).
 
 Deliverables:
 
-- add Toucan, Hugo, and Jekyll front-matter profiles: review in PR #104
-- add checked-in per-profile fixtures: review in PR #104
-- document the profile contract and key mapping: review in PR #104
+- add Toucan, Hugo, and Jekyll front-matter profiles: done
+- add checked-in per-profile fixtures: done
+- document the profile contract and key mapping: done
 
 Acceptance:
 
-- each profile is byte-for-byte deterministic: review in PR #104
-- default front matter remains unchanged without a selected profile: review in PR #104
-- no HTML, templating, shell-out, or layout behavior is introduced: review in PR #104
+- each profile is byte-for-byte deterministic: done
+- default front matter remains unchanged without a selected profile: done
+- no HTML, templating, shell-out, or layout behavior is introduced: done
 
 ### Phase 24: Add JSON Resume Interop
 
@@ -677,15 +679,15 @@ Issue: [#83](https://github.com/mihaelamj/cvbuilder/issues/83).
 
 Deliverables:
 
-- add a typed JSON Resume model: todo
-- document mapping and lossy fields: todo
-- add import, export, and round-trip fixtures: todo
+- add a typed JSON Resume model: active
+- document mapping and lossy fields: active
+- add import, export, and round-trip fixtures: active
 
 Acceptance:
 
-- a JSON Resume sample imports and renders deterministic Markdown: todo
-- a `CVDocument` exports to schema-valid JSON Resume: todo
-- no ATS, scoring, or fit claims are introduced: todo
+- a JSON Resume sample imports and renders deterministic Markdown: active
+- a `CVDocument` exports to schema-valid JSON Resume: active
+- no ATS, scoring, or fit claims are introduced: active
 
 ### Phase 25: Add Deterministic Localization
 
