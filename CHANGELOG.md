@@ -43,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Markdown escaping now neutralizes setext heading underlines: a field value
+  that is entirely `=` (any length) or entirely `-` (any length) is escaped at
+  the line start, so user data can no longer promote the preceding rendered
+  line into a forged heading (#108).
 - `Period.SimpleDate` now validates `month` against the schema range (`1...12`)
   when decoding, so a bare `JSONDecoder` rejects malformed months (`0`, `13`,
   `-1`) consistently with the CLI's schema validator. `Period` rejects a
