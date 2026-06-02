@@ -68,8 +68,8 @@ Relevant links:
 - Issue #47: active release-ready authoring and CLI usability epic.
 - Issue #48: closed CLI help output.
 - Issue #49: closed machine-readable `CVDocument` JSON Schema in PR #53.
-- Issue #50: CI-green schema drift checks in PR #54.
-- Issue #51: next first-release checklist.
+- Issue #50: closed schema drift checks in PR #54.
+- Issue #51: active first-release checklist.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -85,8 +85,8 @@ Ordered roadmap issues:
 8. #20 - done: document the JSON workflow and research-backed boundaries.
 9. #48 - done: add user-facing CLI help output.
 10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
-11. #50 - CI green: add schema drift checks for examples and fixtures.
-12. #51 - next: prepare first-release checklist and release notes.
+11. #50 - done: add schema drift checks for examples and fixtures.
+12. #51 - in progress: prepare first-release checklist and release notes.
 
 ```mermaid
 flowchart TD
@@ -100,8 +100,8 @@ flowchart TD
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
-    P11["Phase 11<br/>#50 Schema drift checks<br/>CI green"]
-    P12["Phase 12<br/>#51 Release checklist<br/>Next"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
+    P12["Phase 12<br/>#51 Release checklist<br/>In progress"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
@@ -112,9 +112,8 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9,P10 done;
-    class P11 review;
-    class P12 next;
+    class P5,P6,P7,P8,P9,P10,P11 done;
+    class P12 active;
 ```
 
 ## Roadmap
@@ -355,14 +354,14 @@ Issue: [#50](https://github.com/mihaelamj/cvbuilder/issues/50).
 
 Deliverables:
 
-- add a local drift check or Swift test for schema and fixtures: CI green
-- run the check in CI: CI green
-- document any user-facing command: CI green
+- add a local drift check or Swift test for schema and fixtures: done
+- run the check in CI: done
+- document any user-facing command: done
 
 Acceptance:
 
-- malformed or disconnected schema changes fail verification: CI green
-- Linux CI proves the check: CI green
+- malformed or disconnected schema changes fail verification: done
+- Linux CI proves the check: done
 
 ### Phase 12: Prepare First Release Checklist
 
@@ -372,15 +371,15 @@ Issue: [#51](https://github.com/mihaelamj/cvbuilder/issues/51).
 
 Deliverables:
 
-- document first-release steps: next
-- update release notes or changelog prep: next
-- name required local and GitHub checks: next
+- document first-release steps: in progress
+- update release notes or changelog prep: in progress
+- name required local and GitHub checks: in progress
 
 Acceptance:
 
-- release checklist includes Linux and macOS CI: next
-- release checklist includes generated fixture freshness: next
-- release docs preserve Markdown-only product boundaries: next
+- release checklist includes Linux and macOS CI: in progress
+- release checklist includes generated fixture freshness: in progress
+- release docs preserve Markdown-only product boundaries: in progress
 
 ## Research Rules
 

@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   static-site integration, rendering modes, public evidence, and non-goals.
 - User-facing `cvbuilder --help` and `-h` usage output for the file-driven CLI.
 - Machine-readable `CVDocument` JSON Schema for editor-oriented authoring.
+- Schema drift checks to keep checked-in examples and fixtures aligned with the
+  `CVDocument` JSON Schema.
+- First usable release checklist covering local gates, GitHub checks, changelog
+  prep, tag steps, release-note expectations, and product boundaries.
 
 ### Changed
 

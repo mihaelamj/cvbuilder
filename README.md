@@ -174,8 +174,8 @@ flowchart TD
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
-    P11["Phase 11<br/>#50 Schema drift checks<br/>CI green"]
-    P12["Phase 12<br/>#51 Release checklist<br/>Next"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
+    P12["Phase 12<br/>#51 Release checklist<br/>In progress"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
@@ -186,9 +186,8 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9,P10 done;
-    class P11 review;
-    class P12 next;
+    class P5,P6,P7,P8,P9,P10,P11 done;
+    class P12 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -268,6 +267,8 @@ swift build --target CVBuilderTileDown
   Markdown behavior, and migration rules.
 - [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
   workflow, CI checks, SSG integration, and product boundaries.
+- [docs/release-checklist.md](docs/release-checklist.md): first usable release
+  gates, tag process, release-note expectations, and boundaries.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
