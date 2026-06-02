@@ -85,7 +85,8 @@ Relevant links:
 - Issue #67: active release version history reconciliation epic.
 - Issue #68: release version docs reconciliation is done after PR #71.
 - Issue #69: release version consistency guard is done after PR #72.
-- Issue #70: pre-publication release proof handoff is in review in PR #73.
+- Issue #70: release publication proof is in active pre-publication correction
+  after PR #73.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -109,8 +110,8 @@ Ordered roadmap issues:
 16. #59 - done: prepare the changelog and release notes draft.
 17. #68 - done: reconcile release version docs with existing tag history.
 18. #69 - done: add release version consistency guard.
-19. #70 - pre-publication review: prepare release publication proof for
-    reconciled version.
+19. #70 - active pre-publication correction: prepare release publication proof
+    for reconciled version.
 
 ```mermaid
 flowchart TD
@@ -132,7 +133,7 @@ flowchart TD
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
-    P19["Phase 19<br/>#70 Publish proof<br/>Pre-publish review"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Correction active"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
@@ -146,7 +147,7 @@ flowchart TD
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
     class P17 done;
     class P18 done;
-    class P19 review;
+    class P19 active;
 ```
 
 ## Roadmap
@@ -548,7 +549,7 @@ Acceptance:
 - tag points at the intended `main` commit: pending
 - Style, Swift macOS, and Swift Linux tag workflows pass: pending
 - roadmap and epic issue state match the published release: pre-publication
-  handoff is in review in PR #73; published release state is pending
+  correction is active after PR #73; published release state is pending
 
 ## Research Rules
 

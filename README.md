@@ -186,7 +186,7 @@ flowchart TD
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
-    P19["Phase 19<br/>#70 Publish proof<br/>Pre-publish review"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Correction active"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
@@ -200,7 +200,7 @@ flowchart TD
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
     class P17 done;
     class P18 done;
-    class P19 review;
+    class P19 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -285,8 +285,8 @@ swift build --target CVBuilderTileDown
   workflow, CI checks, SSG integration, and product boundaries.
 - [docs/release-checklist.md](docs/release-checklist.md): Markdown-first
   release gates, tag process, release-note expectations, and boundaries.
-- [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): draft notes
-  for the first Markdown-first release tag.
+- [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): release
+  notes for the first Markdown-first release tag.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
