@@ -4,6 +4,7 @@ extension Rendering.MarkdownDocumentRenderer {
     enum Section: Equatable {
         case contact
         case experience
+        case projects
         case education
         case publicEvidence
         case skills
@@ -93,8 +94,30 @@ extension Rendering.MarkdownDocumentRenderer {
             }
         }
 
-        if !options.nestProjectsUnderRoles {
-            appendStandaloneProjects(from: visibleExperience, options: options, to: &lines)
+        writer.block(lines)
+    }
+
+    /// Renders the standalone `## Projects` section as its own block.
+    ///
+    /// When `nestProjectsUnderRoles` is true the projects render under each role
+    /// in the Experience section, so this section emits nothing. When false it
+    /// lists every project as a first-class, policy-ordered section, drawn from
+    /// the full experience so the projects are not lost when the Experience
+    /// section is filtered (by `recentCompanyCount`/`selectedExperienceIDs`).
+    func renderProjects(_ experience: [WorkExperience], options: RenderingOptions, writer: inout Writer) {
+        guard !options.nestProjectsUnderRoles else {
+            return
+        }
+
+        let projects = experience.flatMap(\.projects)
+        guard !projects.isEmpty else {
+            renderEmptySection("## \(labels.projects)", options: options, writer: &writer)
+            return
+        }
+
+        var lines = ["## \(labels.projects)"]
+        for projectExperience in projects {
+            appendProject(projectExperience, headingLevel: "###", options: options, to: &lines)
         }
 
         writer.block(lines)
@@ -195,22 +218,6 @@ extension Rendering.MarkdownDocumentRenderer {
     ) {
         for projectExperience in projects {
             appendProject(projectExperience, headingLevel: "####", options: options, to: &lines)
-        }
-    }
-
-    func appendStandaloneProjects(
-        from experience: [WorkExperience],
-        options: RenderingOptions,
-        to lines: inout [String],
-    ) {
-        let projects = experience.flatMap(\.projects)
-        guard !projects.isEmpty else {
-            return
-        }
-
-        lines.append("## \(labels.projects)")
-        for projectExperience in projects {
-            appendProject(projectExperience, headingLevel: "###", options: options, to: &lines)
         }
     }
 

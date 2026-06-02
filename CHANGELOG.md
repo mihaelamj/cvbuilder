@@ -47,6 +47,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The standalone `## Projects` block is now a first-class, policy-ordered section
+  instead of being welded onto the end of the Experience block, and it is drawn
+  from the full experience so projects are not lost when the Experience section
+  is filtered to empty by `recentCompanyCount`/`selectedExperienceIDs` (#122).
 - Empty or whitespace fields no longer produce degenerate Markdown: a link with
   an empty label falls back to its destination as the visible text (never
   `[](url)`), a public-evidence item with an empty title and url falls back to

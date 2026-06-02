@@ -18,19 +18,19 @@ let renderingModeFixtures = [
     RenderingModeFixture(
         mode: .experiencedTechnical,
         policyName: "Experienced technical CV",
-        sections: [.contact, .experience, .publicEvidence, .skills, .education, .links],
+        sections: [.contact, .experience, .projects, .publicEvidence, .skills, .education, .links],
         fixtureName: "experiencedTechnical.md",
     ),
     RenderingModeFixture(
         mode: .earlyCareerTechnical,
         policyName: "Early-career technical CV",
-        sections: [.contact, .education, .publicEvidence, .experience, .skills, .links],
+        sections: [.contact, .education, .publicEvidence, .experience, .projects, .skills, .links],
         fixtureName: "earlyCareerTechnical.md",
     ),
     RenderingModeFixture(
         mode: .publicEvidenceHeavyTechnical,
         policyName: "Public-evidence-heavy technical CV",
-        sections: [.contact, .publicEvidence, .experience, .skills, .education, .links],
+        sections: [.contact, .publicEvidence, .experience, .projects, .skills, .education, .links],
         fixtureName: "publicEvidenceHeavyTechnical.md",
     ),
 ]
@@ -241,6 +241,37 @@ struct MarkdownDocumentRendererTests {
         #expect(output.contains("First visible project fact."))
         #expect(!output.contains("Second hidden project fact."))
         #expect(!output.contains("Hidden Systems"))
+    }
+
+    @Test("standalone Projects is a first-class section, ordered after Experience")
+    func standaloneProjectsIsFirstClassSection() {
+        let output = Rendering.MarkdownDocumentRenderer().render(
+            makeLimitedWorkDocument(rendering: RenderingOptions(nestProjectsUnderRoles: false)),
+        )
+
+        // Its own block, separated from the Experience block, not welded onto it.
+        #expect(output.contains("\n\n## Projects\n"))
+        let experienceIndex = output.range(of: "## Experience")?.lowerBound
+        let projectsIndex = output.range(of: "## Projects")?.lowerBound
+        #expect(experienceIndex != nil)
+        #expect(projectsIndex != nil)
+        if let experienceIndex, let projectsIndex {
+            #expect(experienceIndex < projectsIndex)
+        }
+    }
+
+    @Test("standalone projects survive when the experience filter empties the list")
+    func standaloneProjectsSurviveEmptyExperience() throws {
+        let missingID = try #require(UUID(uuidString: "00000000-0000-0000-0000-0000000000FF"))
+        let output = Rendering.MarkdownDocumentRenderer().render(
+            makeLimitedWorkDocument(rendering: RenderingOptions(
+                selectedExperienceIDs: [missingID],
+                nestProjectsUnderRoles: false,
+            )),
+        )
+
+        #expect(output.contains("## Projects"))
+        #expect(output.contains("### Visible Project"))
     }
 
     @Test("selected work entries render by explicit id instead of recency")

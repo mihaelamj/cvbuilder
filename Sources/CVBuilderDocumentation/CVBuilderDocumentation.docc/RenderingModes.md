@@ -29,9 +29,17 @@ vertical chain:
 
 | JSON value | Policy name | Section order | Use when |
 |---|---|---|---|
-| `experiencedTechnical` | Experienced technical CV | Contact, Experience, Public Evidence, Skills, Education, Links | Substantial work history should lead the factual record. |
-| `earlyCareerTechnical` | Early-career technical CV | Contact, Education, Public Evidence, Experience, Skills, Links | Education and public work need earlier visibility. |
-| `publicEvidenceHeavyTechnical` | Public-evidence-heavy technical CV | Contact, Public Evidence, Experience, Skills, Education, Links | The candidate's public technical artifacts are the clearest evidence to inspect first. |
+| `experiencedTechnical` | Experienced technical CV | Contact, Experience, Projects, Public Evidence, Skills, Education, Links | Substantial work history should lead the factual record. |
+| `earlyCareerTechnical` | Early-career technical CV | Contact, Education, Public Evidence, Experience, Projects, Skills, Links | Education and public work need earlier visibility. |
+| `publicEvidenceHeavyTechnical` | Public-evidence-heavy technical CV | Contact, Public Evidence, Experience, Projects, Skills, Education, Links | The candidate's public technical artifacts are the clearest evidence to inspect first. |
+
+The Projects section is a first-class, policy-ordered section. It renders only
+when `nestProjectsUnderRoles` is `false`; when `true` (the default) the projects
+render under each role in the Experience section and the standalone Projects
+section emits nothing. The standalone section lists every project and is not
+narrowed by the Experience filters (`recentCompanyCount`,
+`selectedExperienceIDs`), so projects survive even when the Experience section is
+filtered to empty.
 
 ## Evidence-Backed Behavior
 
