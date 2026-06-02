@@ -46,6 +46,16 @@ swift build --target CVBuilderTileDown
 - No runtime shell-out to another renderer during rendering.
 - Tests use Swift Testing.
 
+## Issue Labels
+
+The tracker uses exactly five labels (Apple system palette): `bug` (#FF3B30),
+`enhancement` (#007AFF), `epic` (#AF52DE), `priority: high` (#FF3B30), and
+`good first issue` (#34C759). The issue forms apply the kind (`bug` or
+`enhancement`) at filing time. Do not add a sixth label unless it carries at
+least three current issues and adds a genuinely orthogonal axis; record that
+justification in the PR. Express finer topics (documentation, research, and so
+on) in the issue title and body, not as labels.
+
 ## Commits
 
 Commit messages follow Conventional Commits: `<type>(<scope>): summary`.
