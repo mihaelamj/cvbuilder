@@ -6,6 +6,20 @@ let packagePlatforms: [SupportedPlatform] = [
     .macOS(.v13),
 ]
 
+/// The TileDown adapter is pure Swift over `CVBuilder`, so the target and its
+/// contract test compile and run on every platform; adapter regressions are
+/// caught on the macOS dev platform, not only on Linux CI. Only the public
+/// product stays Linux-only.
+let tileDownTargets: [Target] = [
+    .target(
+        name: "CVBuilderTileDown",
+        dependencies: ["CVBuilder"],
+    ),
+]
+let tileDownTestDependencies: [Target.Dependency] = [
+    "CVBuilderTileDown",
+]
+
 #if os(Linux)
     let tileDownProducts: [Product] = [
         .library(
@@ -13,19 +27,8 @@ let packagePlatforms: [SupportedPlatform] = [
             targets: ["CVBuilderTileDown"],
         ),
     ]
-    let tileDownTargets: [Target] = [
-        .target(
-            name: "CVBuilderTileDown",
-            dependencies: ["CVBuilder"],
-        ),
-    ]
-    let tileDownTestDependencies: [Target.Dependency] = [
-        "CVBuilderTileDown",
-    ]
 #else
     let tileDownProducts: [Product] = []
-    let tileDownTargets: [Target] = []
-    let tileDownTestDependencies: [Target.Dependency] = []
 #endif
 
 let packageProducts: [Product] = [
@@ -50,7 +53,7 @@ let packageTargets: [Target] = [
     ),
     .target(
         name: "CVBuilderDocumentation",
-        dependencies: [],
+        dependencies: ["CVBuilder"],
     ),
     .target(
         name: "CVBuilderCLI",

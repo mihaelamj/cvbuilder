@@ -36,6 +36,7 @@ jobs:
           swift build --target CVBuilder
           swift build --target CVBuilderCLI
           swift build --target CVBuilderTileDown
+          swift build --product CVBuilderTileDown
           swift build --product cvbuilder
 
       - name: Test

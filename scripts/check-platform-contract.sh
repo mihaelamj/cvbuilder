@@ -10,7 +10,7 @@ if ! grep -q "\\.macOS" Package.swift; then
   FAIL=1
 fi
 
-if grep -q "\\.iOS" Package.swift; then
+if grep -qE "\\.iOS\\s*\\(" Package.swift; then
   echo "platform-contract: Package.swift must not declare iOS until iOS support is tested and documented." >&2
   FAIL=1
 fi

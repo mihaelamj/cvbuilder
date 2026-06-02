@@ -32,10 +32,20 @@ jobs:
         run: |
           swift build --target CVBuilder
           swift build --target CVBuilderCLI
+          swift build --target CVBuilderTileDown
           swift build --product cvbuilder
 
       - name: Test
         run: swift test
+
+      - name: Documentation
+        run: |
+          set -o pipefail
+          swift package generate-documentation --target CVBuilderDocumentation 2>&1 | tee docc-output.log
+          if grep -q "warning:" docc-output.log; then
+            echo "documentation: DocC reported warnings" >&2
+            exit 1
+          fi
 
       - name: Schema drift
         run: bash scripts/check-schema-drift.sh
