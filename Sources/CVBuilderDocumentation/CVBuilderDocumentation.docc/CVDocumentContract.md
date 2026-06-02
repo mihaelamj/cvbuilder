@@ -102,6 +102,7 @@ Supported `kind` values are `openSource`, `talk`, `publication`, `app`,
 | `nestProjectsUnderRoles` | No | `true` | Renders projects under each role. `false` moves projects to a standalone `## Projects` section. |
 | `compactGroupedSkills` | No | `true` | Groups skills by category. `false` renders one skill per line. |
 | `omitEmptySections` | No | `true` | Omits empty optional sections. `false` emits empty optional section headings. |
+| `useDurationPeriods` | No | `false` | Renders periods as a whole-year duration (`3 yrs`) instead of a date range. Periods missing a bound fall back to the date form; inter-role gaps are never derived. |
 
 Supported `mode` values:
 

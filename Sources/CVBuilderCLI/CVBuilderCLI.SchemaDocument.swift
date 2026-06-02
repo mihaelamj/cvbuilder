@@ -337,6 +337,10 @@ extension CVBuilderCLI {
                 "omitEmptySections": {
                   "type": "boolean",
                   "default": true
+                },
+                "useDurationPeriods": {
+                  "type": "boolean",
+                  "default": false
                 }
               },
               "default": {}

@@ -15,6 +15,11 @@ public extension Rendering {
         /// keeps the original output.
         var labels: RenderingLabels = .english
 
+        /// Whether periods render as a duration (`3 yrs`) instead of a date
+        /// range. Resolved from `RenderingOptions.useDurationPeriods` at the
+        /// start of `render(_:)`; defaults to the date-range form.
+        var usesDurationPeriods = false
+
         /// Creates a renderer with the default evidence-backed Markdown policy.
         public init() {}
 
@@ -22,6 +27,7 @@ public extension Rendering {
         public func render(_ document: CVDocument) -> String {
             var renderer = self
             renderer.labels = document.rendering.locale.labels
+            renderer.usesDurationPeriods = document.rendering.useDurationPeriods
             return renderer.renderDocument(document)
         }
 

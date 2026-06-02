@@ -207,6 +207,7 @@ public extension CVBuilderCLI {
                     nestProjectsUnderRoles: document.rendering.nestProjectsUnderRoles,
                     compactGroupedSkills: document.rendering.compactGroupedSkills,
                     omitEmptySections: document.rendering.omitEmptySections,
+                    useDurationPeriods: document.rendering.useDurationPeriods,
                 ),
             )
         }
