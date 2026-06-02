@@ -9,8 +9,9 @@ import Foundation
 public struct CVDocument: Codable, Equatable, Sendable {
     /// Static-site front matter emitted before the Markdown body.
     ///
-    /// Keys are sorted before rendering so generated Markdown is deterministic.
-    /// Values are escaped as single-line YAML scalars.
+    /// The selected `RenderingOptions.frontMatterProfile` controls key order,
+    /// delimiters, and value coercion. The generic profile sorts keys and escapes
+    /// values as single-line strings.
     public let frontMatter: [String: String]
     /// Canonical resume facts: identity, contact data, work, education, and skills.
     ///

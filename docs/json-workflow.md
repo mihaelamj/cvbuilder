@@ -181,7 +181,8 @@ your project deliberately chooses it as the checked-in authoring format.
 ## Front Matter Passthrough
 
 `frontMatter` is a string dictionary. The Markdown renderer emits it before the
-body as YAML-style front matter:
+body using the generic profile unless `rendering.frontMatterProfile` selects a
+site-specific profile:
 
 ```json
 {
@@ -193,11 +194,32 @@ body as YAML-style front matter:
 }
 ```
 
-CVBuilder sorts front matter keys before rendering and escapes scalar values as
-single-line strings. It does not validate static-site-generator-specific keys.
-That is deliberate: Hugo, Jekyll, TileDown, custom site builders, and checked-in
-Markdown workflows can each consume their own keys without CVBuilder knowing
-their full site model.
+The generic profile sorts front matter keys before rendering and escapes values
+as single-line strings. CVBuilder does not validate static-site-generator-
+specific keys. That is deliberate: Hugo, Jekyll, TileDown, custom site builders,
+and checked-in Markdown workflows can each consume their own keys without
+CVBuilder knowing their full site model.
+
+Set `rendering.frontMatterProfile` when a publishing pipeline needs a specific
+front matter dialect:
+
+```json
+{
+  "rendering": {
+    "frontMatterProfile": "hugo"
+  }
+}
+```
+
+The CLI can override the source JSON for one render:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md --front-matter-profile hugo
+```
+
+Supported values are `generic`, `toucan`, `hugo`, and `jekyll`. See
+[front-matter-profiles.md](front-matter-profiles.md) for delimiters, key
+ordering, and value coercion rules.
 
 ## Static Site Integration
 

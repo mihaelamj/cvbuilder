@@ -84,6 +84,7 @@ let partialDocumentJSON = """
     }
   ],
   "rendering": {
+    "frontMatterProfile": "jekyll",
     "mode": "earlyCareerTechnical"
   }
 }

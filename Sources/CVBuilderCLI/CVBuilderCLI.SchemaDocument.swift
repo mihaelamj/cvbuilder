@@ -300,6 +300,11 @@ extension CVBuilderCLI {
             "renderingOptions": {
               "type": "object",
               "properties": {
+                "frontMatterProfile": {
+                  "type": "string",
+                  "enum": ["generic", "toucan", "hugo", "jekyll"],
+                  "default": "generic"
+                },
                 "mode": {
                   "type": "string",
                   "enum": [

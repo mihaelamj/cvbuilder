@@ -14,10 +14,8 @@ extension Rendering.MarkdownDocumentRenderer {
         private(set) var output = ""
 
         mutating func block(_ lines: [String]) {
-            let content = lines
-                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-                .filter { !$0.isEmpty }
-                .joined(separator: "\n")
+            let visibleLines = lines.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            let content = visibleLines.joined(separator: "\n")
 
             guard !content.isEmpty else {
                 return
@@ -36,15 +34,16 @@ extension Rendering.MarkdownDocumentRenderer {
         policy(for: mode).sections
     }
 
-    func renderFrontMatter(_ frontMatter: [String: String], writer: inout Writer) {
+    func renderFrontMatter(
+        _ frontMatter: [String: String],
+        profile: FrontMatterProfile,
+        writer: inout Writer,
+    ) {
         guard !frontMatter.isEmpty else {
             return
         }
 
-        let lines = frontMatter.keys.sorted().map { key in
-            "\(escapedFrontMatterKey(key)): \(escapedFrontMatterScalar(frontMatter[key] ?? ""))"
-        }
-        writer.block(["---"] + lines + ["---"])
+        writer.block(frontMatterBlock(frontMatter, profile: profile))
     }
 
     func renderHeader(_ resume: CV, writer: inout Writer) {

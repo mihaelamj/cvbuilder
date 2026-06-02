@@ -5,6 +5,8 @@ Status date: 2026-06-01
 `RenderingMode` selects the section-order policy for generated technical CV
 Markdown. It does not score candidates, infer traits, add demographic metadata,
 or optimize for a specific parser. The source of truth remains `CVDocument`.
+Front matter dialects are separate from section ordering and are documented in
+[front-matter-profiles.md](front-matter-profiles.md).
 
 The evidence basis is tracked in
 [docs/research/cvbuilder-proof-matrix.md](research/cvbuilder-proof-matrix.md).

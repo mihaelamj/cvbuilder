@@ -32,11 +32,14 @@ struct CVBuilderCLITests {
         #expect(usage.contains("--out <path|->"))
         #expect(usage.contains("--format <format>"))
         #expect(usage.contains("markdown or json"))
+        #expect(usage.contains("--front-matter-profile <profile>"))
+        #expect(usage.contains("generic, toucan, hugo, or jekyll"))
         #expect(usage.contains("--check"))
         #expect(usage.contains("--validate"))
         #expect(usage.contains("--print-schema"))
         #expect(usage.contains("--init <path>"))
         #expect(usage.contains("--force"))
+        #expect(usage.contains("cvbuilder --data cv.json --out cv/index.md --front-matter-profile hugo"))
         #expect(usage.contains("cat cv.json | cvbuilder --data - --out -"))
         #expect(usage.contains("-h, --help"))
         #expect(!usage.localizedCaseInsensitiveContains("pdf"))
@@ -52,6 +55,7 @@ struct CVBuilderCLITests {
             "--out=cv/index.md",
             "--format",
             "json",
+            "--front-matter-profile=hugo",
             "--check",
         ])
 
@@ -59,6 +63,7 @@ struct CVBuilderCLITests {
             dataPath: "cv.json",
             outputPath: "cv/index.md",
             format: .json,
+            frontMatterProfile: .hugo,
             check: true,
         )
 
@@ -87,6 +92,11 @@ struct CVBuilderCLITests {
         try expectFailure(CVBuilderCLI.Options.parse(unknownFormatArguments)) { failure in
             #expect(failure == .unknownFormat("html"))
             #expect(failure.message.contains("markdown, json"))
+        }
+        let unknownProfileArguments = ["--data", "cv.json", "--out", "cv.md", "--front-matter-profile", "astro"]
+        try expectFailure(CVBuilderCLI.Options.parse(unknownProfileArguments)) { failure in
+            #expect(failure == .unknownFrontMatterProfile("astro"))
+            #expect(failure.message.contains("generic, toucan, hugo, jekyll"))
         }
         try expectFailure(CVBuilderCLI.Options.parse(["cv.json"])) { failure in
             #expect(failure == .unexpectedArgument("cv.json"))
@@ -201,6 +211,29 @@ struct CVBuilderCLITests {
         #expect(output.hasSuffix("\n"))
     }
 
+    @Test("runner applies front matter profile overrides")
+    func runnerAppliesFrontMatterProfileOverrides() throws {
+        let tempDirectory = try TemporaryDirectory()
+        defer { tempDirectory.cleanup() }
+
+        let inputURL = try tempDirectory.write("cv.json", contents: cliFixtureJSON)
+        let outputURL = tempDirectory.url.appendingPathComponent("cv/index.md")
+
+        try makeRunner().run(.init(
+            dataPath: inputURL.path,
+            outputPath: outputURL.path,
+            frontMatterProfile: .hugo,
+        ))
+
+        let output = try String(contentsOf: outputURL, encoding: .utf8)
+        #expect(output.hasPrefix("""
+        +++
+        title = "CLI CV"
+        slug = "cli-cv"
+        +++
+        """))
+    }
+
     @Test("runner re-emits normalized JSON")
     func runnerWritesNormalizedJSON() throws {
         let tempDirectory = try TemporaryDirectory()
@@ -213,6 +246,7 @@ struct CVBuilderCLITests {
             dataPath: inputURL.path,
             outputPath: outputURL.path,
             format: .json,
+            frontMatterProfile: .jekyll,
         ))
 
         let outputData = try Data(contentsOf: outputURL)
@@ -220,6 +254,7 @@ struct CVBuilderCLITests {
         let output = try #require(String(data: outputData, encoding: .utf8))
 
         #expect(decoded.cv.name == "Alex Example")
+        #expect(decoded.rendering.frontMatterProfile == .jekyll)
         #expect(output.contains("\"frontMatter\""))
         #expect(output.contains("\"rendering\""))
         #expect(output.hasSuffix("\n"))
@@ -264,11 +299,13 @@ struct CVBuilderCLITests {
             dataPath: inputURL.path,
             outputPath: outputURL.path,
             format: .json,
+            frontMatterProfile: .jekyll,
         ))
         try makeRunner().run(.init(
             dataPath: inputURL.path,
             outputPath: outputURL.path,
             format: .json,
+            frontMatterProfile: .jekyll,
             check: true,
         ))
 

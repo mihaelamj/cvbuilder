@@ -62,7 +62,7 @@ core package.
 - Issues #74 and #75 are done.
 - Epic #80 is active for the authoring and publishing experience.
 - Issue #81 is done after PR #97.
-- Issue #82 is active for static-site-generator front-matter profiles.
+- Issue #82 is in review in PR #104.
 
 Relevant links:
 
@@ -97,7 +97,7 @@ Relevant links:
 - Issue #75: research-conformance matrix is done after PR #85.
 - Issue #80: active authoring and publishing experience epic.
 - Issue #81: CLI authoring experience is done after PR #97.
-- Issue #82: active static-site-generator front-matter profiles.
+- Issue #82: in review for static-site-generator front-matter profiles in PR #104.
 - Issue #83: future JSON Resume interop.
 - Issue #84: future rendered-output localization.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -127,7 +127,7 @@ Ordered roadmap issues:
 20. #74 - done: make the public legacy CV render path R12/R15 conformant.
 21. #75 - done: add research-conformance matrix mapping R01 to R15.
 22. #81 - done: add CLI authoring validation, scaffolding, schema printing, and stream IO.
-23. #82 - active: add static-site-generator front-matter profiles.
+23. #82 - review: add static-site-generator front-matter profiles in PR #104.
 24. #83 - todo: add JSON Resume import and export interop.
 25. #84 - todo: add deterministic rendered-output localization.
 
@@ -155,7 +155,7 @@ flowchart TD
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
     P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
-    P23["Phase 23<br/>#82 Front matter profiles<br/>Active"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Review"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
@@ -175,7 +175,7 @@ flowchart TD
     class P20 done;
     class P21 done;
     class P22 done;
-    class P23 active;
+    class P23 review;
     class P24,P25 todo;
 ```
 
@@ -658,15 +658,15 @@ Issue: [#82](https://github.com/mihaelamj/cvbuilder/issues/82).
 
 Deliverables:
 
-- add Toucan, Hugo, and Jekyll front-matter profiles: active
-- add checked-in per-profile fixtures: active
-- document the profile contract and key mapping: active
+- add Toucan, Hugo, and Jekyll front-matter profiles: review in PR #104
+- add checked-in per-profile fixtures: review in PR #104
+- document the profile contract and key mapping: review in PR #104
 
 Acceptance:
 
-- each profile is byte-for-byte deterministic: active
-- default front matter remains unchanged without a selected profile: active
-- no HTML, templating, shell-out, or layout behavior is introduced: active
+- each profile is byte-for-byte deterministic: review in PR #104
+- default front matter remains unchanged without a selected profile: review in PR #104
+- no HTML, templating, shell-out, or layout behavior is introduced: review in PR #104
 
 ### Phase 24: Add JSON Resume Interop
 

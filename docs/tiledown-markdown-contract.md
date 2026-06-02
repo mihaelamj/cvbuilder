@@ -36,12 +36,15 @@ the canonical renderer's escaping and deterministic Markdown behavior.
 
 ## Front Matter
 
-Front matter comes from `CVDocument.frontMatter`.
+Front matter comes from `CVDocument.frontMatter` and is serialized according to
+`CVDocument.rendering.frontMatterProfile`.
 
 - Missing front matter emits no front matter block.
-- Keys are sorted by the canonical Markdown renderer.
-- Scalar values are escaped as single-line quoted values when needed.
+- The generic profile keeps the legacy YAML-style string behavior.
+- Toucan, Hugo, and Jekyll profiles use the canonical Markdown renderer's
+  profile-specific delimiters, key ordering, and value coercion.
 - The TileDown adapter does not add, remove, or rename front matter keys.
+- The TileDown adapter does not override the selected front matter profile.
 - TileDown-specific conventions should be represented as ordinary
   `frontMatter` keys in the source `CVDocument`.
 
@@ -53,7 +56,8 @@ the surrounding workflow owns publishing configuration.
 
 The adapter emits the same Markdown as `Rendering.MarkdownDocumentRenderer`:
 
-- YAML front matter when present.
+- Front matter when present, serialized according to
+  `RenderingOptions.frontMatterProfile`.
 - One `#` document heading for the candidate name.
 - `##` sections for contact, experience, public evidence, skills, education,
   and links according to `RenderingOptions.mode`.

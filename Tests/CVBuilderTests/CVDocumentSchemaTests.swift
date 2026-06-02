@@ -17,6 +17,7 @@ struct CVDocumentSchemaTests {
 
         #expect(schema["title"] as? String == "CVDocument")
         #expect(schema["required"] as? [String] == ["cv"])
+        #expect(enumValues(in: renderingOptions, property: "frontMatterProfile") == FrontMatterProfile.allCases.map(\.rawValue))
         #expect(enumValues(in: renderingOptions, property: "mode") == RenderingMode.allCases.map(\.rawValue))
         #expect(enumValues(in: publicEvidence, property: "kind") == PublicEvidenceKind.allCases.map(\.rawValue))
         #expect(enumValues(in: tech, property: "category") == ["language", "framework", "tool", "platform", "concept", "other"])
@@ -39,6 +40,7 @@ struct CVDocumentSchemaTests {
         #expect(arrayDefaultIsEmpty("profiles", in: documentLinks))
         #expect(arrayDefaultIsEmpty("downloads", in: documentLinks))
         #expect(objectDefaultIsEmpty("companyURLs", in: documentLinks))
+        #expect(stringDefault("frontMatterProfile", in: renderingProperties) == FrontMatterProfile.generic.rawValue)
         #expect(stringDefault("mode", in: renderingProperties) == RenderingMode.experiencedTechnical.rawValue)
         #expect(arrayDefaultIsEmpty("selectedExperienceIDs", in: renderingOptions))
         #expect(boolDefault("nestProjectsUnderRoles", in: renderingProperties))
@@ -77,11 +79,13 @@ struct CVDocumentSchemaTests {
     @Test("rendering options express ordering without scores")
     func renderingOptionsStayFactual() {
         let options = RenderingOptions(
+            frontMatterProfile: .hugo,
             mode: .experiencedTechnical,
             recentCompanyCount: 3,
             maxBulletsPerProject: 4,
         )
 
+        #expect(options.frontMatterProfile == .hugo)
         #expect(options.mode == .experiencedTechnical)
         #expect(options.selectedExperienceIDs.isEmpty)
         #expect(options.nestProjectsUnderRoles)

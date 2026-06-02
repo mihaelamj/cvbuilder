@@ -1,3 +1,5 @@
+import CVBuilder
+
 public extension CVBuilderCLI {
     /// User-facing failures reported by the `cvbuilder` command.
     enum Failure: Swift.Error, Equatable, Sendable {
@@ -6,6 +8,7 @@ public extension CVBuilderCLI {
         case unknownOption(String)
         case unexpectedArgument(String)
         case unknownFormat(String)
+        case unknownFrontMatterProfile(String)
         case inputReadFailed(path: String, reason: String)
         case invalidJSON(path: String, reason: String)
         case schemaValidationUnavailable(reason: String)
@@ -30,6 +33,8 @@ public extension CVBuilderCLI {
                 "unexpected argument \(argument)"
             case let .unknownFormat(format):
                 "unknown format \(format). Allowed values: \(CVBuilderCLI.Format.allowedValuesDescription)"
+            case let .unknownFrontMatterProfile(profile):
+                "unknown front matter profile \(profile). Allowed values: \(FrontMatterProfile.allowedValuesDescription)"
             case let .inputReadFailed(path, reason):
                 "could not read \(path): \(reason)"
             case let .invalidJSON(path, reason):

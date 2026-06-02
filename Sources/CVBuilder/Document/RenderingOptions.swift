@@ -5,6 +5,8 @@ import Foundation
 /// Options describe document ordering and compaction choices only. They do not
 /// carry scoring, inferred fit, ranking, or parser-specific tricks.
 public struct RenderingOptions: Codable, Equatable, Sendable {
+    /// Static-site-generator front matter profile.
+    public let frontMatterProfile: FrontMatterProfile
     /// High-level section ordering strategy.
     public let mode: RenderingMode
     /// Maximum number of work-experience entries to render. Non-positive values mean unlimited.
@@ -24,6 +26,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public let omitEmptySections: Bool
 
     private enum CodingKeys: String, CodingKey {
+        case frontMatterProfile
         case mode
         case recentCompanyCount
         case selectedExperienceIDs
@@ -34,6 +37,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     }
 
     public init(
+        frontMatterProfile: FrontMatterProfile = .generic,
         mode: RenderingMode = .experiencedTechnical,
         recentCompanyCount: Int? = nil,
         selectedExperienceIDs: [UUID] = [],
@@ -42,6 +46,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         compactGroupedSkills: Bool = true,
         omitEmptySections: Bool = true,
     ) {
+        self.frontMatterProfile = frontMatterProfile
         self.mode = mode
         self.recentCompanyCount = recentCompanyCount
         self.selectedExperienceIDs = selectedExperienceIDs
@@ -54,6 +59,11 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        frontMatterProfile = try container.decode(
+            FrontMatterProfile.self,
+            forKey: .frontMatterProfile,
+            defaultIfMissing: .generic,
+        )
         mode = try container.decode(
             RenderingMode.self,
             forKey: .mode,

@@ -216,7 +216,7 @@ flowchart TD
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
     P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
-    P23["Phase 23<br/>#82 Front matter profiles<br/>Active"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Review"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
@@ -236,7 +236,7 @@ flowchart TD
     class P20 done;
     class P21 done;
     class P22 done;
-    class P23 active;
+    class P23 review;
     class P24,P25 todo;
 ```
 
@@ -320,6 +320,8 @@ swift build --target CVBuilderTileDown
   Markdown behavior, and migration rules.
 - [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
   workflow, CI checks, SSG integration, and product boundaries.
+- [docs/front-matter-profiles.md](docs/front-matter-profiles.md): generic,
+  Toucan, Hugo, and Jekyll front matter profiles.
 - [docs/release-checklist.md](docs/release-checklist.md): Markdown-first
   release gates, tag process, release-note expectations, and boundaries.
 - [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): release

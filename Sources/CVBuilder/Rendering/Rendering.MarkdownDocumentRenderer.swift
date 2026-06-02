@@ -15,7 +15,11 @@ public extension Rendering {
         public func render(_ document: CVDocument) -> String {
             var writer = Writer()
 
-            renderFrontMatter(document.frontMatter, writer: &writer)
+            renderFrontMatter(
+                document.frontMatter,
+                profile: document.rendering.frontMatterProfile,
+                writer: &writer,
+            )
             renderHeader(document.cv, writer: &writer)
 
             for section in sections(for: document.rendering.mode) {

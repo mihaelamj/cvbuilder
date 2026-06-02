@@ -23,11 +23,11 @@ engine.
 
 | JSON key | Required | Default | Markdown behavior |
 |---|---:|---|---|
-| `frontMatter` | No | `{}` | Emits a YAML front matter block before the body. Keys are sorted. Values are escaped as single-line scalars. |
+| `frontMatter` | No | `{}` | Emits a front matter block before the body according to `rendering.frontMatterProfile`. |
 | `cv` | Yes | None | Supplies the document header, contact data, experience, education, and skills. |
 | `links` | No | Empty link groups | `profiles` and `downloads` render in `## Links`. `companyURLs` links matching experience headings. |
 | `publicEvidence` | No | `[]` | Renders `## Public Evidence` entries in source order. |
-| `rendering` | No | Experienced technical defaults | Controls section order, project nesting, compaction, and empty-section behavior. |
+| `rendering` | No | Generic front matter and experienced technical defaults | Controls front matter profile, section order, project nesting, compaction, and empty-section behavior. |
 
 ## CV Core
 
@@ -106,6 +106,11 @@ evidence mapping, and fixture coverage for each mode.
 
 See [docs/json-workflow.md](json-workflow.md) for the file-driven CLI workflow,
 `--check` usage, front matter passthrough, and static-site-generator boundary.
+
+`rendering.frontMatterProfile` selects how `frontMatter` is serialized before
+the Markdown body. Supported values are `generic`, `toucan`, `hugo`, and
+`jekyll`. See [front-matter-profiles.md](front-matter-profiles.md) for the
+profile contract.
 
 ## Decoding Rules
 
