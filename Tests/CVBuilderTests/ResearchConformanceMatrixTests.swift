@@ -15,7 +15,7 @@ struct ResearchConformanceMatrixTests {
             encoding: .utf8,
         )
 
-        let expectedRuleIDs = (1 ... 15).map { String(format: "R%02d", $0) }
+        let expectedRuleIDs = (1 ... 19).map { String(format: "R%02d", $0) }
         let actualRuleIDs = entries.map(\.ruleID)
         #expect(actualRuleIDs.sorted() == expectedRuleIDs)
         #expect(Set(actualRuleIDs).count == expectedRuleIDs.count)
@@ -290,6 +290,49 @@ private let researchConformanceEntries: [ResearchConformanceEntry] = [
             "renderer omits visual scoring demographic and table artifacts",
             "legacy CV-only Markdown renderer remains available",
             "renderer keeps TileDown integration Markdown only",
+        ],
+    ),
+    ResearchConformanceEntry(
+        ruleID: "R16",
+        codeLocations: [
+            "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Sections.swift",
+            "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Escaping.swift",
+        ],
+        testNames: [
+            "accessible heading structure has a single title and no skipped levels",
+            "hostile text is escaped as data, not Markdown structure",
+        ],
+    ),
+    ResearchConformanceEntry(
+        ruleID: "R17",
+        codeLocations: [
+            "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Formatting.swift",
+            "Sources/CVBuilder/Period.swift",
+        ],
+        testNames: [
+            "date rendering emits no auto-computed gaps or durations",
+            "partial periods render the present bound, not a fabricated range",
+        ],
+    ),
+    ResearchConformanceEntry(
+        ruleID: "R18",
+        codeLocations: [
+            "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Sections.swift",
+        ],
+        testNames: [
+            "accomplishment content renders verbatim without fabricated metrics",
+        ],
+    ),
+    ResearchConformanceEntry(
+        ruleID: "R19",
+        codeLocations: [
+            "Sources/CVBuilder/Document/RenderingLabels.swift",
+            "Sources/CVBuilder/Document/RenderingLocale.swift",
+            "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Sections.swift",
+        ],
+        testNames: [
+            "localized output keeps a fixed name slot, stable structure, and no origin fields",
+            "locale only changes labels, never the document structure",
         ],
     ),
 ]
