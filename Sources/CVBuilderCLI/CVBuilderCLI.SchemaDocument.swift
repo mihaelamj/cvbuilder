@@ -118,7 +118,6 @@ extension CVBuilderCLI {
             },
             "period": {
               "type": "object",
-              "required": ["start", "end"],
               "properties": {
                 "start": { "$ref": "#/$defs/simpleDate" },
                 "end": { "$ref": "#/$defs/simpleDate" }

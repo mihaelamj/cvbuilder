@@ -155,19 +155,31 @@ extension Rendering.MarkdownDocumentRenderer {
 
 extension Rendering.MarkdownDocumentRenderer {
     func format(_ period: Period, isCurrent: Bool) -> String {
-        let start = format(period.start)
+        let startText = period.start.map(format)
+        let endText = period.end.map(format)
 
         guard !isCurrent else {
-            return "\(start) - \(labels.present)"
+            // Ongoing: "<start> - Present", or just "Present" when the start is
+            // unknown.
+            guard let startText else {
+                return labels.present
+            }
+
+            return "\(startText) - \(labels.present)"
         }
 
-        // Equal start and end collapse to a single token (e.g. "Jan 2024"),
-        // rather than rendering the redundant "Jan 2024 - Jan 2024".
-        guard period.start != period.end else {
+        switch (startText, endText) {
+        case let (start?, end?):
+            // Equal start and end collapse to a single token (e.g. "Jan 2024"),
+            // rather than rendering the redundant "Jan 2024 - Jan 2024".
+            return period.start == period.end ? start : "\(start) - \(end)"
+        case let (start?, nil):
             return start
+        case let (nil, end?):
+            return end
+        case (nil, nil):
+            return ""
         }
-
-        return "\(start) - \(format(period.end))"
     }
 
     func format(_ date: Period.SimpleDate) -> String {

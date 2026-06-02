@@ -37,12 +37,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Model `id` fields are now `UUID?` and default to omitted instead of a freshly
   synthesized `UUID()`. Omitted IDs stay omitted through decode and encode, an
   explicit JSON `null` is still rejected, and explicit IDs round-trip unchanged.
+- `Period.start` and `Period.end` are now optional (`SimpleDate?`), so an absent
+  date is first-class instead of fabricated. The JSON Schema no longer requires
+  `start`/`end` on a period, and the renderer shows the present bound (or
+  `Present` for an ongoing role) without inventing a range.
 - `Tech` value identity is now its `name` and `category`, and `Company` value
   identity is now its `name`, so deduplication and grouping key on the semantic
   fields rather than a per-instance identifier.
 
 ### Fixed
 
+- JSON Resume import no longer fabricates sentinel dates for absent optional
+  dates. A `work`/`education`/`projects` entry missing `startDate` and/or
+  `endDate` round-trips with those fields still absent, instead of emitting a
+  fabricated `0001-01` or copying one bound onto the other (#110).
 - Front-matter `tags` and `categories` always render as an array under the
   static-site-generator profiles, including the empty and separator-only cases
   (an empty sequence: `[]` in TOML, `key: []` in YAML). Previously an empty or

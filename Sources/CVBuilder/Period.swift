@@ -40,8 +40,12 @@ public struct Period: Codable, Identifiable, Equatable, Hashable, Sendable {
         }
     }
 
-    public let start: SimpleDate
-    public let end: SimpleDate
+    /// Optional start date. Absent when the source did not supply one (notably a
+    /// JSON Resume entry with no `startDate`), so absence survives a round trip
+    /// instead of being fabricated as a sentinel date.
+    public let start: SimpleDate?
+    /// Optional end date. Absent for an open-ended or ongoing period.
+    public let end: SimpleDate?
 
     private enum CodingKeys: String, CodingKey {
         case start
@@ -49,33 +53,35 @@ public struct Period: Codable, Identifiable, Equatable, Hashable, Sendable {
     }
 
     var formattedDateRange: String {
-        "\(start.month)/\(start.year) - \(end.month)/\(end.year)"
+        let startText = start.map { "\($0.month)/\($0.year)" } ?? ""
+        let endText = end.map { "\($0.month)/\($0.year)" } ?? ""
+        return "\(startText) - \(endText)"
     }
 
     public var id: String {
-        "\(start.id)_to_\(end.id)"
+        "\(start?.id ?? "")_to_\(end?.id ?? "")"
     }
 
-    public init(start: Period.SimpleDate, end: Period.SimpleDate) {
+    public init(start: Period.SimpleDate?, end: Period.SimpleDate?) {
         self.start = start
         self.end = end
     }
 
-    /// Rejects a reversed period (`start` later than `end`) at the model
-    /// boundary. Equal start and end are permitted and collapse to a single
-    /// token when rendered.
+    /// Decodes the optional `start`/`end` dates. A missing key stays `nil` so
+    /// the field round-trips as absent; an explicit `null` is rejected.
     ///
-    /// This ordering invariant is enforced here rather than in the JSON Schema
-    /// because JSON Schema cannot express a comparison between two sibling
+    /// Rejects a reversed period (`start` later than `end`) when both are
+    /// present. This ordering invariant is enforced here rather than in the JSON
+    /// Schema because JSON Schema cannot express a comparison between two sibling
     /// properties, so the decoder is the single authority for it. The CLI runs
     /// schema validation first, then decoding, so a reversed period surfaces as
     /// a decode error with a clear message.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let start = try container.decode(SimpleDate.self, forKey: .start)
-        let end = try container.decode(SimpleDate.self, forKey: .end)
+        let start = try container.decodeOmittable(SimpleDate.self, forKey: .start)
+        let end = try container.decodeOmittable(SimpleDate.self, forKey: .end)
 
-        guard start <= end else {
+        if let start, let end, start > end {
             throw DecodingError.dataCorrupted(DecodingError.Context(
                 codingPath: container.codingPath,
                 debugDescription: "period start (\(start.id)) is later than end (\(end.id))",
@@ -94,5 +100,25 @@ extension Period.SimpleDate: Comparable {
             return lhs.year < rhs.year
         }
         return lhs.month < rhs.month
+    }
+}
+
+extension Period.SimpleDate {
+    /// Orders two optional dates ascending, treating an absent date as later
+    /// than any present date. Sorting ascending therefore puts absent dates
+    /// last; swapping the arguments to sort descending puts them first (an
+    /// ongoing or unknown bound is the most recent). Keeps date-driven ordering
+    /// total and deterministic now that period bounds are optional.
+    static func isAscending(_ lhs: Period.SimpleDate?, before rhs: Period.SimpleDate?) -> Bool {
+        switch (lhs, rhs) {
+        case let (lhs?, rhs?):
+            lhs < rhs
+        case (_?, nil):
+            true
+        case (nil, _?):
+            false
+        case (nil, nil):
+            false
+        }
     }
 }

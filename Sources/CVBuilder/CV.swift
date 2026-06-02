@@ -75,8 +75,10 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
                 return nil
             }
 
-            let start = projectExperiences.map(\.period.start).min() ?? firstProjectExperience.period.start
-            let end = projectExperiences.map(\.period.end).max() ?? firstProjectExperience.period.end
+            // Span the company period across the present project dates; an
+            // absent bound stays absent rather than being fabricated.
+            let start = projectExperiences.compactMap(\.period.start).min()
+            let end = projectExperiences.compactMap(\.period.end).max()
             let period = Period(start: start, end: end)
 
             let highestRole = projectExperiences.map(\.role).max(by: { rank($0) < rank($1) }) ?? firstProjectExperience.role
@@ -86,11 +88,14 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
                 company: company,
                 role: highestRole,
                 period: period,
-                projects: projectExperiences.sorted { $0.period.start < $1.period.start },
+                projects: projectExperiences.sorted {
+                    Period.SimpleDate.isAscending($0.period.start, before: $1.period.start)
+                },
                 isCurrent: isCurrent,
             )
         }
-        .sorted { $0.period.end > $1.period.end } // most recent first
+        // Most recent first; an absent end (ongoing) sorts ahead of dated ends.
+        .sorted { Period.SimpleDate.isAscending($1.period.end, before: $0.period.end) }
 
         let uniqueSkills = Tech.deduplicatedAndSorted(projects.flatMap(\.techs))
 
