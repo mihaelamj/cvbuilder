@@ -17,6 +17,70 @@ struct JSONResumeInteropTests {
         #expect(reExported == trimmedTrailingNewline(original))
     }
 
+    // MARK: Absent optional dates round-trip absent (no fabricated sentinels)
+
+    @Test("a work entry missing startDate re-exports with startDate still absent")
+    func workMissingStartDateRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"work":[{"name":"X","position":"Senior Engineer","endDate":"2020-05","summary":"s"}]}"#)
+
+        #expect(!exported.contains("\"startDate\""))
+        #expect(exported.contains("\"endDate\" : \"2020-05\""))
+        #expect(!exported.contains("0001"))
+    }
+
+    @Test("a work entry missing endDate (ongoing) re-exports with endDate still absent")
+    func workMissingEndDateRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"work":[{"name":"X","position":"Senior Engineer","startDate":"2018-01","summary":"s"}]}"#)
+
+        #expect(exported.contains("\"startDate\" : \"2018-01\""))
+        #expect(!exported.contains("\"endDate\""))
+        #expect(!exported.contains("0001"))
+    }
+
+    @Test("education missing endDate does not copy the start date onto the end")
+    func educationMissingEndDateDoesNotCopyStart() throws {
+        let exported = try reExported(#"{"education":[{"institution":"U","area":"CS","studyType":"BSc","startDate":"2014-09"}]}"#)
+
+        #expect(exported.contains("\"startDate\" : \"2014-09\""))
+        #expect(!exported.contains("\"endDate\""))
+    }
+
+    @Test("education missing startDate re-exports with startDate still absent")
+    func educationMissingStartDateRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"education":[{"institution":"U","area":"CS","studyType":"BSc","endDate":"2018-06"}]}"#)
+
+        #expect(!exported.contains("\"startDate\""))
+        #expect(exported.contains("\"endDate\" : \"2018-06\""))
+        #expect(!exported.contains("0001"))
+    }
+
+    @Test("a project missing startDate re-exports with startDate still absent")
+    func projectMissingStartDateRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"projects":[{"name":"P","description":"d","endDate":"2021-06"}]}"#)
+
+        #expect(!exported.contains("\"startDate\""))
+        #expect(exported.contains("\"endDate\" : \"2021-06\""))
+        #expect(!exported.contains("0001"))
+    }
+
+    @Test("a project missing endDate re-exports with endDate still absent")
+    func projectMissingEndDateRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"projects":[{"name":"P","description":"d","startDate":"2019-03"}]}"#)
+
+        #expect(exported.contains("\"startDate\" : \"2019-03\""))
+        #expect(!exported.contains("\"endDate\""))
+        #expect(!exported.contains("0001"))
+    }
+
+    @Test("a document with entirely absent dates emits no fabricated date")
+    func entirelyAbsentDatesEmitNoFabricatedDate() throws {
+        let exported = try reExported(#"{"work":[{"name":"X","position":"Engineer","summary":"s"}],"education":[{"institution":"U","area":"CS","studyType":"BSc"}]}"#)
+
+        #expect(!exported.contains("\"startDate\""))
+        #expect(!exported.contains("\"endDate\""))
+        #expect(!exported.contains("0001"))
+    }
+
     // MARK: Import a real-world sample and render deterministic Markdown
 
     @Test("real JSON Resume sample imports and renders deterministic Markdown")
@@ -142,6 +206,11 @@ struct JSONResumeInteropTests {
 
     private func fixtureText(_ relativePath: String) throws -> String {
         try String(contentsOf: fixtureURL(relativePath), encoding: .utf8)
+    }
+
+    private func reExported(_ jsonResumeText: String) throws -> String {
+        let resume = try JSONDecoder().decode(JSONResume.self, from: Data(jsonResumeText.utf8))
+        return try normalizedJSONResume(for: CVDocument(jsonResume: resume))
     }
 
     private func normalizedJSONResume(for document: CVDocument) throws -> String {

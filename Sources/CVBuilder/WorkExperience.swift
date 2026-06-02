@@ -50,11 +50,25 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     }
 
     public var formattedDateRange: String {
-        let startString = Self.format(period.start)
+        let startString = period.start.map(Self.format)
         if isCurrent {
+            guard let startString else {
+                return "Present"
+            }
+
             return "\(startString) - Present"
         }
-        return "\(startString) - \(Self.format(period.end))"
+
+        switch (startString, period.end.map(Self.format)) {
+        case let (start?, end?):
+            return period.start == period.end ? start : "\(start) - \(end)"
+        case let (start?, nil):
+            return start
+        case let (nil, end?):
+            return end
+        case (nil, nil):
+            return ""
+        }
     }
 
     private static func format(_ date: Period.SimpleDate) -> String {

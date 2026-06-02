@@ -53,6 +53,9 @@ The guarantee is stated on the direction that *can* be lossless:
 > Formally, `export(import(j)) = projection_S(j)`.
 
 Sections and fields outside `S` are dropped on import and absent on re-export.
+An absent optional `startDate` or `endDate` is preserved as absent: `Period`
+carries optional bounds, so a missing date is never fabricated as a sentinel
+(`0001-01`) or copied from the other bound, and it re-exports omitted.
 The reverse direction (`import(export(d))`) is lossy and enumerated below.
 
 `Tests/CVBuilderTests/Fixtures/JSONResume/roundtrip.json` is a fixed point of

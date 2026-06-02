@@ -60,6 +60,43 @@ struct PeriodValidationTests {
         #expect(renderer.format(period, isCurrent: false) == "Jan 2024 - Jun 2026")
     }
 
+    // MARK: - #110 optional period bounds
+
+    @Test("a period may omit start, end, or both")
+    func periodBoundsAreOptional() throws {
+        let startOnly = try decode(Period.self, from: #"{"start": {"month": 3, "year": 2020}}"#)
+        #expect(startOnly.start == Period.SimpleDate(month: 3, year: 2020))
+        #expect(startOnly.end == nil)
+
+        let endOnly = try decode(Period.self, from: #"{"end": {"month": 6, "year": 2021}}"#)
+        #expect(endOnly.start == nil)
+        #expect(endOnly.end == Period.SimpleDate(month: 6, year: 2021))
+
+        let neither = try decode(Period.self, from: "{}")
+        #expect(neither.start == nil)
+        #expect(neither.end == nil)
+    }
+
+    @Test("an explicit null period bound is rejected")
+    func explicitNullPeriodBoundIsRejected() throws {
+        try expectDecodeFails(Period.self, from: #"{"start": null, "end": {"month": 6, "year": 2021}}"#)
+    }
+
+    @Test("partial periods render the present bound, not a fabricated range")
+    func partialPeriodsRenderPresentBound() {
+        let renderer = Rendering.MarkdownDocumentRenderer()
+
+        let startOnly = Period(start: .init(month: 1, year: 2024), end: nil)
+        let endOnly = Period(start: nil, end: .init(month: 6, year: 2026))
+        let empty = Period(start: nil, end: nil)
+
+        #expect(renderer.format(startOnly, isCurrent: false) == "Jan 2024")
+        #expect(renderer.format(endOnly, isCurrent: false) == "Jun 2026")
+        #expect(renderer.format(empty, isCurrent: false) == "")
+        #expect(renderer.format(empty, isCurrent: true) == renderer.labels.present)
+        #expect(renderer.format(startOnly, isCurrent: true) == "Jan 2024 - \(renderer.labels.present)")
+    }
+
     // MARK: - #109 formatter fallbacks for out-of-range months
 
     @Test("the renderer falls back to a valid year-only token for an out-of-range month")

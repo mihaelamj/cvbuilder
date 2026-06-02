@@ -73,8 +73,10 @@ extension WorkExperience {
         let role = Role(title: title, seniority: seniority)
         let isCurrent = work.endDate.trimmingCharacters(in: .whitespaces).isEmpty
 
-        let start = JSONResumeDate.simpleDate(from: work.startDate) ?? Period.SimpleDate(month: 1, year: 1)
-        let end = isCurrent ? start : (JSONResumeDate.simpleDate(from: work.endDate) ?? start)
+        // Carry absent dates through as nil so they re-export absent. An ongoing
+        // role keeps no end date; `isCurrent` drives the "Present" rendering.
+        let start = JSONResumeDate.simpleDate(from: work.startDate)
+        let end = isCurrent ? nil : JSONResumeDate.simpleDate(from: work.endDate)
         let period = Period(start: start, end: end)
 
         let descriptions = (work.summary.isEmpty ? [] : [work.summary]) + work.highlights
@@ -106,8 +108,10 @@ extension WorkExperience {
 
 extension Education {
     init(jsonResume education: JSONResume.Education) {
-        let start = JSONResumeDate.simpleDate(from: education.startDate) ?? Period.SimpleDate(month: 1, year: 1)
-        let end = JSONResumeDate.simpleDate(from: education.endDate) ?? start
+        // Absent start/end dates stay absent rather than being fabricated or
+        // copied from each other.
+        let start = JSONResumeDate.simpleDate(from: education.startDate)
+        let end = JSONResumeDate.simpleDate(from: education.endDate)
 
         self.init(
             institution: education.institution,
@@ -120,13 +124,11 @@ extension Education {
 
 extension PublicEvidence {
     init(jsonResumeProject project: JSONResume.Project) {
-        let period: Period?
-        if let start = JSONResumeDate.simpleDate(from: project.startDate) {
-            let end = JSONResumeDate.simpleDate(from: project.endDate) ?? start
-            period = Period(start: start, end: end)
-        } else {
-            period = nil
-        }
+        // Keep whichever dates are present; only drop the period entirely when
+        // both are absent.
+        let start = JSONResumeDate.simpleDate(from: project.startDate)
+        let end = JSONResumeDate.simpleDate(from: project.endDate)
+        let period: Period? = (start == nil && end == nil) ? nil : Period(start: start, end: end)
 
         self.init(
             title: project.name,

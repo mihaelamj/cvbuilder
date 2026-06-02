@@ -44,4 +44,13 @@ enum JSONResumeDate {
 
         return String(format: "%04d-%02d", date.year, date.month)
     }
+
+    /// Renders an optional date, or the empty string when it is absent.
+    ///
+    /// An absent date is omitted from JSON Resume output (the model uses
+    /// `encodeIfNotEmpty`), so an entry whose `startDate`/`endDate` was missing
+    /// on import re-exports with that field still absent.
+    static func string(from date: Period.SimpleDate?) -> String {
+        date.map(string(from:)) ?? ""
+    }
 }
