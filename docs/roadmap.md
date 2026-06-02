@@ -73,7 +73,7 @@ Relevant links:
 - Issue #51: closed first-release checklist in PR #55.
 - PR #55: merged first-release checklist.
 - Issue #57: active first public release hardening and tag proof epic.
-- Issue #58: active tag-triggered release CI gates.
+- Issue #58: tag-triggered release CI gates in review in PR #62.
 - Issue #61: next package platform contract alignment.
 - Issue #60: next clean SwiftPM consumer smoke test.
 - Issue #59: next `v0.1.0` changelog and release notes.
@@ -94,7 +94,7 @@ Ordered roadmap issues:
 10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
 11. #50 - done: add schema drift checks for examples and fixtures.
 12. #51 - done: prepare first-release checklist and release notes.
-13. #58 - in progress: add tag-triggered release CI gates.
+13. #58 - in review: add tag-triggered release CI gates.
 14. #61 - next: align the package platform contract with supported platforms.
 15. #60 - next: add a clean SwiftPM consumer smoke test.
 16. #59 - next: prepare `v0.1.0` changelog and release notes.
@@ -113,7 +113,7 @@ flowchart TD
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
     P12["Phase 12<br/>#51 Release checklist<br/>Done"]
-    P13["Phase 13<br/>#58 Release tag CI<br/>In progress"]
+    P13["Phase 13<br/>#58 Release tag CI<br/>In review"]
     P14["Phase 14<br/>#61 Platform contract<br/>Next"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Next"]
     P16["Phase 16<br/>#59 v0.1.0 notes<br/>Next"]
@@ -128,7 +128,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12 done;
-    class P13 active;
+    class P13 review;
     class P14,P15,P16 next;
 ```
 
@@ -405,16 +405,16 @@ Issue: [#58](https://github.com/mihaelamj/cvbuilder/issues/58).
 
 Deliverables:
 
-- run Style and namespacing on `v*` tag pushes: in progress
-- run Swift macOS on `v*` tag pushes: in progress
-- run Swift Linux on `v*` tag pushes: in progress
-- document the tag-gate trigger contract: in progress
+- run Style and namespacing on `v*` tag pushes: in review
+- run Swift macOS on `v*` tag pushes: in review
+- run Swift Linux on `v*` tag pushes: in review
+- document the tag-gate trigger contract: in review
 
 Acceptance:
 
-- pull request and `main` branch triggers remain unchanged: in progress
-- release checklist accurately describes tag-gate behavior: in progress
-- CI proves the workflow syntax before merge: in progress
+- pull request and `main` branch triggers remain unchanged: in review
+- release checklist accurately describes tag-gate behavior: in review
+- CI proves the workflow syntax before merge: in review
 
 ### Phase 14: Align Package Platform Contract
 
