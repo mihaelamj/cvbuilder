@@ -33,6 +33,12 @@ cvbuilder --data cv.json --out resume.json --format json-resume
 Programmatically, the conversions are exposed as `CVDocument(jsonResume:)` and
 `JSONResume(cvDocument:)`.
 
+`--validate` with `--from json-resume` validates the converted `CVDocument`
+against the embedded schema (the same structural validation the `cv-document`
+path runs) and rejects an empty or nameless resume rather than reporting it
+valid. A malformed file is reported as invalid JSON Resume, naming the format
+being parsed.
+
 ## Round-Trip Guarantee
 
 The two schemas hold different amounts of information. `CVDocument` is strictly

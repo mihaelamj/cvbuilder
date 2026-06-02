@@ -87,16 +87,20 @@ public extension CVBuilderCLI {
 
         private func readDocument(atPath path: String) throws -> CVDocument {
             let inputData = try readInputData(atPath: path)
-            try validateInputData(inputData, path: path)
+            try validateInputData(inputData, path: path, makeInvalid: { Failure.invalidJSON(path: $0, reason: $1) })
             return try decodeJSON(CVDocument.self, from: inputData, path: path)
         }
 
-        private func validateInputData(_ data: Data, path: String) throws {
+        private func validateInputData(
+            _ data: Data,
+            path: String,
+            makeInvalid: (String, String) -> Failure,
+        ) throws {
             let value: JSONValue
             do {
                 value = try JSONDecoder().decode(JSONValue.self, from: data)
             } catch {
-                throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
+                throw makeInvalid(path, decodingFailureReason(for: error))
             }
 
             let validator: SchemaSubsetValidator
@@ -112,14 +116,45 @@ public extension CVBuilderCLI {
                 let reason = errors
                     .prefix(5)
                     .joined(separator: "; ")
-                throw Failure.invalidJSON(path: path, reason: "schema validation failed: \(reason)")
+                throw makeInvalid(path, "schema validation failed: \(reason)")
             }
         }
 
         private func readJSONResumeDocument(atPath path: String) throws -> CVDocument {
             let inputData = try readInputData(atPath: path)
-            let resume = try decodeJSON(JSONResume.self, from: inputData, path: path)
-            return CVDocument(jsonResume: resume)
+            let resume: JSONResume
+            do {
+                resume = try JSONDecoder().decode(JSONResume.self, from: inputData)
+            } catch {
+                throw Failure.invalidJSONResume(path: path, reason: decodingFailureReason(for: error))
+            }
+
+            // Validate the converted document against the schema so `--from
+            // json-resume` gets the same structural validation as the
+            // cv-document path, rather than only checking raw decodability.
+            let document = CVDocument(jsonResume: resume)
+            try validateConvertedDocument(document, path: path)
+            return document
+        }
+
+        private func validateConvertedDocument(_ document: CVDocument, path: String) throws {
+            // Reject a meaningless resume (e.g. `{}`), which would otherwise
+            // convert to an empty, nameless document and render a blank CV.
+            guard !document.cv.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw Failure.invalidJSONResume(
+                    path: path,
+                    reason: "resume has no name; the converted document is empty",
+                )
+            }
+
+            let data: Data
+            do {
+                data = try JSONEncoder().encode(document)
+            } catch {
+                throw Failure.schemaValidationUnavailable(reason: String(describing: error))
+            }
+
+            try validateInputData(data, path: path, makeInvalid: { Failure.invalidJSONResume(path: $0, reason: $1) })
         }
 
         private func readInputData(atPath path: String) throws -> Data {

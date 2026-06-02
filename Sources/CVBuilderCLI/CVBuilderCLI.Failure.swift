@@ -5,6 +5,7 @@ public extension CVBuilderCLI {
     enum Failure: Swift.Error, Equatable, Sendable {
         case missingRequiredOption(String)
         case missingValue(option: String)
+        case unexpectedValue(option: String)
         case unknownOption(String)
         case unexpectedArgument(String)
         case unknownFormat(String)
@@ -12,6 +13,7 @@ public extension CVBuilderCLI {
         case unknownFrontMatterProfile(String)
         case inputReadFailed(path: String, reason: String)
         case invalidJSON(path: String, reason: String)
+        case invalidJSONResume(path: String, reason: String)
         case schemaValidationUnavailable(reason: String)
         case outputAlreadyExists(path: String)
         case outputReadFailed(path: String, reason: String)
@@ -28,6 +30,8 @@ public extension CVBuilderCLI {
                 "missing required option \(option)"
             case let .missingValue(option):
                 "missing value for \(option)"
+            case let .unexpectedValue(option):
+                "\(option) does not take a value"
             case let .unknownOption(option):
                 "unknown option \(option)"
             case let .unexpectedArgument(argument):
@@ -42,6 +46,8 @@ public extension CVBuilderCLI {
                 "could not read \(path): \(reason)"
             case let .invalidJSON(path, reason):
                 "invalid CVDocument JSON in \(path): \(reason)"
+            case let .invalidJSONResume(path, reason):
+                "invalid JSON Resume in \(path): \(reason)"
             case let .schemaValidationUnavailable(reason):
                 "could not validate against embedded schema: \(reason)"
             case let .outputAlreadyExists(path):

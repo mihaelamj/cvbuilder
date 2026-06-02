@@ -52,7 +52,7 @@ extension CVBuilderCLI {
                 errors.append(contentsOf: validateObject(object, schema: schema, path: path))
             case let .array(array):
                 errors.append(contentsOf: validateArray(array, schema: schema, path: path))
-            case .bool, .null, .number, .string:
+            case .bool, .integer, .null, .number, .string:
                 break
             }
 
@@ -71,7 +71,16 @@ extension CVBuilderCLI {
                 return []
             }
 
-            let details = results
+            // For an `anyOf(type, null)` field, a non-null value always fails the
+            // null branch; suppress that branch's detail so only the real
+            // mismatch is reported.
+            let relevantResults = value == .null
+                ? results
+                : zip(schemaObjects, results)
+                .filter { schema, _ in schema["type"]?.stringValue != "null" }
+                .map(\.1)
+
+            let details = (relevantResults.isEmpty ? results : relevantResults)
                 .flatMap { $0.prefix(2) }
                 .joined(separator: "; ")
             return ["\(path) did not match any allowed schema\(details.isEmpty ? "" : ": \(details)")"]
@@ -119,7 +128,7 @@ extension CVBuilderCLI {
                 ["\(path) is not allowed"]
             case let .object(schema):
                 validate(value, against: schema, path: path)
-            case .array, .null, .number, .string:
+            case .array, .integer, .null, .number, .string:
                 []
             }
         }
@@ -160,13 +169,41 @@ extension CVBuilderCLI {
             }
 
             var errors: [String] = []
-            if let minimum = schema["minimum"]?.numberValue, number < minimum {
-                errors.append("\(path) is below minimum \(minimum)")
+            if let minimum = schema["minimum"], let minimumNumber = minimum.numberValue,
+               isBelow(value, bound: minimum, boundNumber: minimumNumber, number: number)
+            {
+                errors.append("\(path) is below minimum \(boundText(minimum))")
             }
-            if let maximum = schema["maximum"]?.numberValue, number > maximum {
-                errors.append("\(path) is above maximum \(maximum)")
+            if let maximum = schema["maximum"], let maximumNumber = maximum.numberValue,
+               isAbove(value, bound: maximum, boundNumber: maximumNumber, number: number)
+            {
+                errors.append("\(path) is above maximum \(boundText(maximum))")
             }
             return errors
+        }
+
+        /// Compares the value against a bound in integer space when both are
+        /// integers (so values beyond `Double` precision compare exactly), and
+        /// in floating-point space otherwise.
+        private func isBelow(_ value: JSONValue, bound: JSONValue, boundNumber: Double, number: Double) -> Bool {
+            if let value = value.integerValue, let bound = bound.integerValue {
+                return value < bound
+            }
+            return number < boundNumber
+        }
+
+        private func isAbove(_ value: JSONValue, bound: JSONValue, boundNumber: Double, number: Double) -> Bool {
+            if let value = value.integerValue, let bound = bound.integerValue {
+                return value > bound
+            }
+            return number > boundNumber
+        }
+
+        private func boundText(_ bound: JSONValue) -> String {
+            if let integer = bound.integerValue {
+                return String(integer)
+            }
+            return String(bound.numberValue ?? 0)
         }
 
         private func validateFormat(
@@ -209,12 +246,13 @@ extension CVBuilderCLI {
                  ("boolean", .bool),
                  ("null", .null),
                  ("object", .object),
-                 ("string", .string):
+                 ("string", .string),
+                 ("integer", .integer),
+                 ("number", .integer),
+                 ("number", .number):
                 true
             case let ("integer", .number(number)):
                 number.rounded() == number
-            case ("number", .number):
-                true
             default:
                 false
             }

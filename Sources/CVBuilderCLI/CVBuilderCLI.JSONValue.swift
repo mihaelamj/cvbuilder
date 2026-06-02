@@ -4,6 +4,7 @@ extension CVBuilderCLI {
     enum JSONValue: Decodable, Equatable {
         case array([JSONValue])
         case bool(Bool)
+        case integer(Int64)
         case null
         case number(Double)
         case object([String: JSONValue])
@@ -16,6 +17,10 @@ extension CVBuilderCLI {
                 self = .null
             } else if let value = try? container.decode(Bool.self) {
                 self = .bool(value)
+            } else if let value = try? container.decode(Int64.self) {
+                // Decode integers exactly so the validator's view matches the
+                // model decoder for values beyond Double's 2^53 precision.
+                self = .integer(value)
             } else if let value = try? container.decode(Double.self) {
                 self = .number(value)
             } else if let value = try? container.decode(String.self) {
@@ -45,10 +50,10 @@ extension CVBuilderCLI {
                 "array"
             case .bool:
                 "boolean"
+            case .integer, .number:
+                "number"
             case .null:
                 "null"
-            case .number:
-                "number"
             case .object:
                 "object"
             case .string:
@@ -57,7 +62,20 @@ extension CVBuilderCLI {
         }
 
         var numberValue: Double? {
-            guard case let .number(value) = self else {
+            switch self {
+            case let .integer(value):
+                Double(value)
+            case let .number(value):
+                value
+            default:
+                nil
+            }
+        }
+
+        /// The exact integer value when this is an integer token, preserved
+        /// without the precision loss of a `Double` round-trip.
+        var integerValue: Int64? {
+            guard case let .integer(value) = self else {
                 return nil
             }
             return value
