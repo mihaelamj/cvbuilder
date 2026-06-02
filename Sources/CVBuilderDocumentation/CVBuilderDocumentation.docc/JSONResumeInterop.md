@@ -169,6 +169,11 @@ outside the supported subset `S`:
 - `basics.profiles[].username`, which `CVDocument` does not store.
 - Recognized-network casing other than `LinkedIn` and `GitHub` (for example
   `linkedin`), which export re-cases canonically.
+- `basics.profiles[]` order: LinkedIn and GitHub are channeled into typed
+  contact fields and re-emitted first (LinkedIn, then GitHub), then the
+  remaining networks in order, so the original order is not preserved. Only the
+  first LinkedIn and the first GitHub profile are kept; a second profile on
+  either network is dropped.
 - `skills[].level` and `skills[].keywords` group names.
 - `work[].position` casing of a recognized leading seniority word (re-cased
   canonically), internal whitespace in the title (collapsed to single spaces),
@@ -177,8 +182,10 @@ outside the supported subset `S`:
 - Dates in `YYYY-MM-DD` (day dropped) or `YYYY` (month defaulted to `01`).
 - `projects[].entity`, which has no public-evidence home, and second and later
   `projects[].roles`.
-- A `work[].url` when two or more entries share the same employer `name`: the
-  company-URL map is keyed by name, so the last entry's URL wins.
+- A `work[].url` when two or more entries share the same employer `name` with
+  different URLs: the company-URL map is keyed by name, so an ambiguous URL is
+  dropped for that name rather than applied to every same-named entry. Same-name
+  entries that share one URL keep it.
 - All sections outside `S` (`volunteer`, `awards`, `meta`, and so on). `meta` is
   modelled but dropped by the `CVDocument` conversion in both directions.
 

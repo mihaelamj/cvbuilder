@@ -47,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- JSON Resume import no longer applies one employer's URL to another when two
+  `work` entries share a `name`: a conflicting company URL is dropped for that
+  name instead of corrupting the surviving entry, and same-name entries that
+  share a URL keep it. Profile reordering and duplicate-profile drop are now
+  documented as normalizing cases in the interop article (#117).
 - JSON Resume seniority inference matches the leading position word
   case-insensitively, and export reconstructs the position without a fabricated
   `Mid` prefix or trailing space. A position with no recognized seniority word,
