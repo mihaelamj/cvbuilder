@@ -52,12 +52,6 @@ public struct Period: Codable, Identifiable, Equatable, Hashable, Sendable {
         case end
     }
 
-    var formattedDateRange: String {
-        let startText = start.map { "\($0.month)/\($0.year)" } ?? ""
-        let endText = end.map { "\($0.month)/\($0.year)" } ?? ""
-        return "\(startText) - \(endText)"
-    }
-
     public var id: String {
         "\(start?.id ?? "")_to_\(end?.id ?? "")"
     }

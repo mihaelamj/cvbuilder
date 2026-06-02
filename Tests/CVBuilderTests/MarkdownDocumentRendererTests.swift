@@ -363,6 +363,17 @@ struct MarkdownDocumentRendererTests {
         #expect(output.split(separator: "\n").count(where: { $0 == "---" }) == 2)
     }
 
+    @Test("the legacy WorkExperience.formattedDateRange is English-only")
+    func legacyFormattedDateRangeIsEnglishOnly() {
+        let period = Period(start: .init(month: 1, year: 2024), end: .init(month: 6, year: 2026))
+        let role = Role(title: "Engineer", seniority: .senior)
+        let finished = WorkExperience(company: Company(name: "C"), role: role, period: period, projects: [])
+        let ongoing = WorkExperience(company: Company(name: "C"), role: role, period: period, projects: [], isCurrent: true)
+
+        #expect(finished.formattedDateRange == "Jan 2024 - Jun 2026")
+        #expect(ongoing.formattedDateRange == "Jan 2024 - Present")
+    }
+
     @Test("setext underline field values cannot forge a heading", arguments: ["===", "=", "-", "--", "---"])
     func setextUnderlineFieldsCannotForgeHeading(_ underline: String) {
         let cv = CV(
