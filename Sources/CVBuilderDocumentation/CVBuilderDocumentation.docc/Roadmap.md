@@ -57,8 +57,9 @@ Landed on `main`:
 - Community standards, issue and PR templates, support policy, and changelog.
 - A realistic demo CV fixture exercising multi-role history, omitted older jobs,
   and explicit relevance-selected jobs.
-- Release epics #47, #57, and #67 complete, including the `v0.9.0` publication
-  proof. Research-conformance epic #76 (#74, #75) complete. Authoring and
+- Release epics #47, #57, and #67 complete, including the `0.9.0` publication
+  proof and the first stable `v1.0.0` release. Research-conformance epic #76
+  (#74, #75) complete. Authoring and
   publishing epic #80 (#81-#84) complete: CLI authoring, front-matter profiles,
   JSON Resume interop, and localization. Source-code audit epic #132 (#108-#131)
   complete: deterministic identity and dates, escaping and empty-field guards,
@@ -198,7 +199,7 @@ Shipped. See <doc:ReleaseNotes>.
 
 ### Phase 17: Reconcile Release Version History (#68)
 
-Reconcile release docs to `v0.9.0` while preserving the historical `0.1.0`
+Reconcile release docs to `0.9.0` while preserving the historical `0.1.0`
 through `0.8.0` tag boundary without rewriting history. Shipped.
 
 ### Phase 18: Add Release Version Consistency Guard (#69)

@@ -1,18 +1,118 @@
+<div align="center">
+
 # CVBuilder
+
+**A pure-Swift, evidence-based generator for technical CVs. Typed data in, deterministic Markdown out.**
 
 [![Style and namespacing](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/style.yml)
 [![Swift macOS](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-macos.yml)
 [![Swift Linux](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml/badge.svg)](https://github.com/mihaelamj/cvbuilder/actions/workflows/swift-linux.yml)
 
+</div>
+
+CVBuilder turns a typed `CVDocument` (or a JSON file) into clean, deterministic
+Markdown for a technical CV. It owns the data model and the rendering; static
+site generators, Markdown viewers, and the parsers and assistive technology that
+read a CV consume the output. There is no PDF, no HTML, no scoring, and no
+layout magic, by design.
+
+It ships as a Swift library, a `cvbuilder` command-line tool, and a Linux-facing
+TileDown adapter, and runs on macOS and Linux. `CVDocument` is the single source
+of truth for CV data, front matter, links, public evidence, and rendering
+options.
+
+## What it does
+
+Give it structured CV data:
+
+```json
+{
+  "frontMatter": { "slug": "jane-rivera", "title": "Jane Rivera" },
+  "cv": {
+    "name": "Jane Rivera",
+    "title": "Senior iOS Engineer",
+    "summary": "Builds modular, testable Swift apps and developer tooling.",
+    "contactInfo": { "email": "jane@example.com", "phone": "+1 555 0100", "location": "Berlin, DE" },
+    "experience": [{
+      "company": { "name": "Northwind" },
+      "role": { "title": "iOS Engineer", "seniority": "Senior" },
+      "period": { "start": { "month": 3, "year": 2022 }, "end": { "month": 6, "year": 2024 } },
+      "projects": [{
+        "project": {
+          "name": "Checkout SDK", "company": { "name": "Northwind" },
+          "role": { "title": "iOS Engineer", "seniority": "Senior" },
+          "period": { "start": { "month": 3, "year": 2022 }, "end": { "month": 6, "year": 2024 } },
+          "descriptions": ["Built a Swift payments SDK used across three apps."],
+          "accomplishments": ["Cut checkout crash rate to near zero across three apps."],
+          "techs": [{ "name": "Swift", "category": "language" }, { "name": "SwiftUI", "category": "framework" }]
+        },
+        "role": { "title": "iOS Engineer", "seniority": "Senior" },
+        "period": { "start": { "month": 3, "year": 2022 }, "end": { "month": 6, "year": 2024 } }
+      }]
+    }],
+    "skills": [{ "name": "Swift", "category": "language" }, { "name": "SwiftUI", "category": "framework" }]
+  }
+}
+```
+
+and it renders deterministic, parser-friendly Markdown:
+
+```markdown
+---
+slug: "jane-rivera"
+title: "Jane Rivera"
+---
+
+# Jane Rivera
+Senior iOS Engineer
+Builds modular, testable Swift apps and developer tooling.
+
+## Contact
+Email: jane@example.com
+Phone: +1 555 0100
+Location: Berlin, DE
+
+## Experience
+### Northwind - Senior iOS Engineer
+Mar 2022 - Jun 2024
+#### Checkout SDK
+Mar 2022 - Jun 2024
+Role: Senior iOS Engineer
+Built a Swift payments SDK used across three apps.
+Cut checkout crash rate to near zero across three apps.
+Technologies: Swift, SwiftUI
+
+## Skills
+Languages: Swift
+Frameworks: SwiftUI
+```
+
+The same input always produces byte-identical output, so generated files are
+safe to commit, diff, and check in CI.
+
+## Install
+
+Add CVBuilder to your `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/mihaelamj/cvbuilder", from: "1.0.0"),
+],
+```
+
+and depend on the `CVBuilder` product:
+
+```swift
+.target(name: "YourApp", dependencies: ["CVBuilder"]),
+```
+
+Or run the command-line tool without adding a dependency:
+
+```sh
+swift run cvbuilder --data cv.json --out cv/index.md
+```
+
 Follow project updates at [@diyamantina](https://x.com/diyamantina).
-
-CVBuilder is a Pure Swift technical CV generator. It keeps CV data in typed
-Swift or JSON, renders deterministic Markdown, and provides a Linux-facing
-TileDown adapter for Markdown publishing workflows.
-
-The core package is built for macOS and Linux. `CVDocument` is the canonical
-source of truth for publishable CV data, front matter, links, public evidence,
-and rendering options.
 
 ## Philosophy
 

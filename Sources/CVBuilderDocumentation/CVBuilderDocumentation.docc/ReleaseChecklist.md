@@ -8,8 +8,8 @@ This checklist prepares a Markdown-first CVBuilder release tag. It does not
 expand the product boundary. CVBuilder remains a pure Swift, Markdown-first
 library and command-line tool.
 
-Historical tags `0.1.0` through `0.8.0` remain in the repository. The first
-Markdown-first release uses a `v0.9.0` tag so it is newer than the historical
+Historical tags `0.1.0` through `0.9.0` remain in the repository. The first
+stable release uses a `v1.0.0` tag so it is newer than the historical
 `0.8.0` boundary and matches the `v*` tag-triggered workflows.
 
 ## Release Boundary
@@ -103,7 +103,7 @@ Before tagging:
    generated fixture freshness, consumer smoke checks, and Linux CI support.
 6. Confirm the release notes match the final release commit.
 
-For the first Markdown-first release, the expected tag is `v0.9.0` unless the
+For the first stable release, the expected tag is `v1.0.0` unless the
 maintainer chooses a different SemVer version.
 
 ## Tag and Publish
@@ -114,8 +114,8 @@ After the release commit is on `main` and GitHub checks are green:
 git fetch origin main
 git switch main
 git pull --ff-only origin main
-git tag -a v0.9.0 -m "CVBuilder v0.9.0"
-git push origin v0.9.0
+git tag -a v1.0.0 -m "CVBuilder v1.0.0"
+git push origin v1.0.0
 ```
 
 Then create a GitHub Release for the tag. Release notes should include:
@@ -140,7 +140,7 @@ After publishing:
 
 ## Published Release Proof
 
-The `v0.9.0` release was published on 2026-06-02. The GitHub Release and the
+The predecessor `0.9.0` release was published on 2026-06-02. The first stable
+`v1.0.0` release was published on 2026-06-03. The GitHub Release and the
 tag-triggered Style, Swift macOS, and Swift Linux workflow runs are linked from
-<doc:ReleaseNotes>. Tag-triggered workflow proof and release URLs are recorded in
-the release issue (#70).
+<doc:ReleaseNotes>.
