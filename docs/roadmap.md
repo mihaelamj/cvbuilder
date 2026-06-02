@@ -68,7 +68,7 @@ Relevant links:
 - Issue #47: active release-ready authoring and CLI usability epic.
 - Issue #48: closed CLI help output.
 - Issue #49: closed machine-readable `CVDocument` JSON Schema in PR #53.
-- Issue #50: in-review schema drift checks in PR #54.
+- Issue #50: CI-green schema drift checks in PR #54.
 - Issue #51: next first-release checklist.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -85,7 +85,7 @@ Ordered roadmap issues:
 8. #20 - done: document the JSON workflow and research-backed boundaries.
 9. #48 - done: add user-facing CLI help output.
 10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
-11. #50 - in review: add schema drift checks for examples and fixtures.
+11. #50 - CI green: add schema drift checks for examples and fixtures.
 12. #51 - next: prepare first-release checklist and release notes.
 
 ```mermaid
@@ -100,7 +100,7 @@ flowchart TD
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
-    P11["Phase 11<br/>#50 Schema drift checks<br/>In review"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>CI green"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
@@ -355,14 +355,14 @@ Issue: [#50](https://github.com/mihaelamj/cvbuilder/issues/50).
 
 Deliverables:
 
-- add a local drift check or Swift test for schema and fixtures: in review
-- run the check in CI: in review
-- document any user-facing command: in review
+- add a local drift check or Swift test for schema and fixtures: CI green
+- run the check in CI: CI green
+- document any user-facing command: CI green
 
 Acceptance:
 
-- malformed or disconnected schema changes fail verification: in review
-- Linux CI proves the check: in review
+- malformed or disconnected schema changes fail verification: CI green
+- Linux CI proves the check: CI green
 
 ### Phase 12: Prepare First Release Checklist
 
