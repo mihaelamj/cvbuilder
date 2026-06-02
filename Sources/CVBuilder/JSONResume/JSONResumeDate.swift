@@ -6,7 +6,7 @@ import Foundation
 /// or `YYYY` form. `CVDocument` stores month and year only, so day precision is
 /// dropped on import and a missing month defaults to January. The canonical
 /// output form is `YYYY-MM`, which round-trips byte-for-byte; the other input
-/// forms are lossy (see `docs/json-resume-interop.md`).
+/// forms are lossy (see the JSONResumeInterop catalog article).
 enum JSONResumeDate {
     /// Parses a JSON Resume date string into month and year.
     ///

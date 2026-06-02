@@ -1,9 +1,13 @@
-# JSON Resume interop
+# JSON Resume Interop
+
+Field-level mapping, the round-trip guarantee, and the lossy fields when importing and exporting JSON Resume documents.
+
+## Overview
 
 CVBuilder can import and export documents in the
-[jsonresume.org](https://jsonresume.org) schema while keeping `CVDocument` as
-the canonical model. This document specifies the field-level mapping, the
-round-trip guarantee, and the fields that are lossy in each direction.
+[jsonresume.org](https://jsonresume.org) schema while keeping `CVDocument` as the
+canonical model. This article specifies the field-level mapping, the round-trip
+guarantee, and the fields that are lossy in each direction.
 
 This is pure data mapping. It introduces no scores, fit signals, rankings, or
 parser-specific tricks, and adds no rendering backend. Imported documents render
@@ -26,10 +30,10 @@ cvbuilder --data cv.json --out resume.json --format json-resume
 `json-resume`). `--format` selects the output format (`markdown`, the default,
 `json`, or `json-resume`).
 
-Programmatically, the conversions are exposed as
-`CVDocument(jsonResume:)` and `JSONResume(cvDocument:)`.
+Programmatically, the conversions are exposed as `CVDocument(jsonResume:)` and
+`JSONResume(cvDocument:)`.
 
-## Round-trip guarantee
+## Round-Trip Guarantee
 
 The two schemas hold different amounts of information. `CVDocument` is strictly
 richer on the mapped subset: it carries role seniority, stable identifiers,
@@ -46,7 +50,7 @@ The guarantee is stated on the direction that *can* be lossless:
 > education, name-only skills, and projects). For any JSON Resume document `j`,
 > importing then re-exporting yields `j` projected onto `S`, byte-for-byte after
 > normalization (sorted keys, canonical `YYYY-MM` dates, empty fields omitted).
-> Formally, `export(import(j)) = π_S(j)`.
+> Formally, `export(import(j)) = projection_S(j)`.
 
 Sections and fields outside `S` are dropped on import and absent on re-export.
 The reverse direction (`import(export(d))`) is lossy and enumerated below.
@@ -54,7 +58,7 @@ The reverse direction (`import(export(d))`) is lossy and enumerated below.
 `Tests/CVBuilderTests/Fixtures/JSONResume/roundtrip.json` is a fixed point of
 this round-trip and is asserted byte-for-byte by the test suite.
 
-## Structural mapping
+## Structural Mapping
 
 JSON Resume's two array sections map to two distinct `CVDocument` homes so the
 import is injective and the round-trip stays well defined:
@@ -140,7 +144,7 @@ a missing month defaults to January, and the canonical output form is
 `interests`, `references`, and `meta` have no `CVDocument` home. They are
 ignored on import and never emitted on export.
 
-## Lossy fields
+## Lossy Fields
 
 ### Importing JSON Resume into CVDocument
 
@@ -180,11 +184,11 @@ JSON Resume representation and is dropped on export:
 - `links.downloads` and `links.companyURLs` for companies absent from work.
 - `PublicEvidence.date` when no `period` is present.
 
-## Research boundary
+## Research Boundary
 
 JSON Resume interop is an engineering and interoperability feature. There is no
 peer-reviewed evaluation of structured machine-readable resume formats, so the
 mapping makes no claim about hiring outcomes, parser behavior, or fit. The
 export is covered by a test asserting it introduces no scoring, fit, ranking,
 or demographic fields, consistent with rules R08, R09, and R15 in
-`docs/research/cvbuilder-conformance-matrix.md`.
+<doc:ConformanceMatrix>.

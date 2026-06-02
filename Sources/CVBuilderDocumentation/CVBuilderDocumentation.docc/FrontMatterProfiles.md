@@ -1,6 +1,8 @@
 # Front Matter Profiles
 
-Status date: 2026-06-02
+How `RenderingOptions.frontMatterProfile` serializes `CVDocument.frontMatter` for common static-site generators.
+
+## Overview
 
 CVBuilder keeps `CVDocument.frontMatter` as a generator-agnostic string
 dictionary. `RenderingOptions.frontMatterProfile` only controls how that
@@ -59,11 +61,12 @@ materialize the selected rendering profile deterministically.
 
 - Toucan documents front matter as a section at the top of Markdown enclosed
   between `---` lines, with reserved keys including `id`, `type`, `slug`, and
-  `views`: <https://toucansites.com/docs/content-management/front-matter/>.
+  `views`:
+  [toucansites.com](https://toucansites.com/docs/content-management/front-matter/).
 - Hugo documents front matter as page metadata and supports YAML, TOML, and JSON;
   TOML examples use `+++` delimiters, and common fields include `date`, `draft`,
   `title`, `description`, `slug`, and taxonomy arrays:
-  <https://gohugo.io/content-management/front-matter/>.
+  [gohugo.io](https://gohugo.io/content-management/front-matter/).
 - Jekyll documents YAML front matter between triple-dashed lines, with variables
   such as `layout`, `permalink`, `published`, `date`, `categories`, and `tags`:
-  <https://jekyllrb.com/docs/front-matter/>.
+  [jekyllrb.com](https://jekyllrb.com/docs/front-matter/).

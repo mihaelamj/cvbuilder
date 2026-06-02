@@ -39,11 +39,17 @@ let packageProducts: [Product] = [
     ),
 ] + tileDownProducts
 
-let packageDependencies: [Package.Dependency] = []
+let packageDependencies: [Package.Dependency] = [
+    .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.3"),
+]
 
 let packageTargets: [Target] = [
     .target(
         name: "CVBuilder",
+        dependencies: [],
+    ),
+    .target(
+        name: "CVBuilderDocumentation",
         dependencies: [],
     ),
     .target(

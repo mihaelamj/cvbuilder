@@ -11,7 +11,7 @@ public extension JSONResume {
     /// This direction is lossy: per-project structure, seniority nuance beyond
     /// the role name, technical focus, rendering options, front matter, and
     /// identifiers have no JSON Resume representation. See
-    /// `docs/json-resume-interop.md` for the inventory.
+    /// the JSONResumeInterop catalog article for the inventory.
     init(cvDocument document: CVDocument) {
         let cv = document.cv
 

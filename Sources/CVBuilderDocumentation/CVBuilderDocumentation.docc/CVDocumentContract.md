@@ -1,14 +1,25 @@
 # CVDocument Contract
 
-Status date: 2026-06-02
+The durable JSON contract for `cvbuilder`: top-level shape, decoding rules, and migration rules.
+
+## Overview
 
 `CVDocument` is the durable JSON contract for `cvbuilder`. The JSON document is
 the source of truth. Markdown and normalized JSON are generated artifacts.
 
-Machine-readable authoring metadata lives in
-[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json). The schema
-is an editor-facing companion to this document, not a renderer or scoring
-engine.
+Machine-readable authoring metadata lives in `Schemas/cvdocument.schema.json`.
+The schema is an editor-facing companion to this contract, not a renderer or
+scoring engine.
+
+Catalog diagrams are color-coded; the legend below defines each class and is the
+first diagram to read.
+
+![Color legend for every catalog diagram](legend)
+
+A `CVDocument` has five top-level branches. Every branch except the rendering
+options is canonical source data:
+
+![CVDocument structure](document-model)
 
 ## Contract Goals
 
@@ -101,16 +112,15 @@ Supported `mode` values:
 - `publicEvidenceHeavyTechnical`: contact, public evidence, experience, skills,
   education, links.
 
-See [docs/rendering-modes.md](rendering-modes.md) for the policy names,
-evidence mapping, and fixture coverage for each mode.
+See <doc:RenderingModes> for the policy names, evidence mapping, and fixture
+coverage for each mode.
 
-See [docs/json-workflow.md](json-workflow.md) for the file-driven CLI workflow,
-`--check` usage, front matter passthrough, and static-site-generator boundary.
+See <doc:JSONWorkflow> for the file-driven CLI workflow, `--check` usage, front
+matter passthrough, and static-site-generator boundary.
 
 `rendering.frontMatterProfile` selects how `frontMatter` is serialized before
 the Markdown body. Supported values are `generic`, `toucan`, `hugo`, and
-`jekyll`. See [front-matter-profiles.md](front-matter-profiles.md) for the
-profile contract.
+`jekyll`. See <doc:FrontMatterProfiles> for the profile contract.
 
 ## Decoding Rules
 
@@ -130,10 +140,10 @@ one, for example `cv.contactInfo.email` or `cv.experience[0].company`.
 `CVDocument` is the canonical publishing contract. The `cvbuilder` CLI only
 accepts `CVDocument` JSON.
 
-`MarkdownCVRenderer`, `StringCVRenderer`, `ConsoleCVRenderer`, and
-`CVRendering` are deprecated compatibility APIs for Swift callers that already
-hold a plain `CV`. They are not the schema contract and should not gain
-publishing metadata. New publishing features belong on `CVDocument` and
+`MarkdownCVRenderer`, `StringCVRenderer`, `ConsoleCVRenderer`, and `CVRendering`
+are deprecated compatibility APIs for Swift callers that already hold a plain
+`CV`. They are not the schema contract and should not gain publishing metadata.
+New publishing features belong on `CVDocument` and
 `Rendering.MarkdownDocumentRenderer`.
 
 `MarkdownCVRenderer.render(cv:)` and `CVBuilderTileDown.Renderer().render(cv:)`
@@ -151,8 +161,8 @@ canonical `CVDocument` rendering.
 - Keep normalized JSON deterministic by using sorted keys in CLI output.
 - Keep Markdown deterministic by preserving source order except where this
   contract explicitly states sorting, such as front matter keys.
-- Update this document, `CHANGELOG.md`, and schema tests in the same change as
-  any public contract change.
+- Update this article, `CHANGELOG.md`, and schema tests in the same change as any
+  public contract change.
 
 ## Fixture
 
@@ -162,8 +172,7 @@ evidence, rendering options, and technical focus. The fixture intentionally
 contains more work history than `recentCompanyCount` renders so tests can prove
 older jobs are omitted from generated Markdown.
 
-Additional test fixtures live under
-`Tests/CVBuilderTests/Fixtures/Documents/`:
+Additional test fixtures live under `Tests/CVBuilderTests/Fixtures/Documents/`:
 
 - `earlyCareerTechnical.json` proves education-first ordering and public
   evidence for early-career technical CVs.

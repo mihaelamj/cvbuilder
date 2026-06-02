@@ -1,37 +1,39 @@
-# Markdown-First Release Checklist
+# Release Checklist
 
-Status date: 2026-06-02
+The Markdown-first release gates, tag process, and the boundaries a CVBuilder release must preserve.
 
-This checklist prepares the first Markdown-first CVBuilder release tag. It does
-not expand the product boundary. CVBuilder remains a pure Swift, Markdown-first
+## Overview
+
+This checklist prepares a Markdown-first CVBuilder release tag. It does not
+expand the product boundary. CVBuilder remains a pure Swift, Markdown-first
 library and command-line tool.
 
-Historical tags `0.1.0` through `0.8.0` remain in the repository. The next
-release uses a `v0.9.0` tag so it is newer than the historical `0.8.0` boundary
-and matches the `v*` tag-triggered workflows.
+Historical tags `0.1.0` through `0.8.0` remain in the repository. The first
+Markdown-first release uses a `v0.9.0` tag so it is newer than the historical
+`0.8.0` boundary and matches the `v*` tag-triggered workflows.
 
 ## Release Boundary
 
 The Markdown-first release includes:
 
 - `CVDocument` as the canonical JSON data contract.
-- deterministic Markdown generation from `CVDocument`
-- normalized JSON output from the `cvbuilder` CLI
-- `--check` mode for stale generated Markdown or JSON
-- `CVBuilderTileDown` as a Linux-safe Markdown adapter
-- checked-in example data and generated Markdown fixtures
-- JSON Schema authoring metadata for `CVDocument`
-- schema drift checks for examples and fixtures
+- deterministic Markdown generation from `CVDocument`.
+- normalized JSON output from the `cvbuilder` CLI.
+- `--check` mode for stale generated Markdown or JSON.
+- `CVBuilderTileDown` as a Linux-safe Markdown adapter.
+- checked-in example data and generated Markdown fixtures.
+- JSON Schema authoring metadata for `CVDocument`.
+- schema drift checks for examples and fixtures.
 
 The Markdown-first release does not include:
 
-- PDF generation or rendering
-- HTML rendering
-- static-site generation or publishing
-- default Ignite participation
-- ATS scoring, resume optimizer claims, or parser gaming hints
+- PDF generation or rendering.
+- HTML rendering.
+- static-site generation or publishing.
+- default Ignite participation.
+- ATS scoring, resume optimizer claims, or parser gaming hints.
 - photos, demographic metadata, personality labels, culture-fit labels, fit
-  scores, skill bars, tables, or column layout in the canonical renderer
+  scores, skill bars, tables, or column layout in the canonical renderer.
 
 ## Local Release Gates
 
@@ -99,12 +101,12 @@ Before tagging:
    publication instructions, or maintainer-only process language.
 5. Confirm the changelog names the CLI, JSON Schema, schema drift checks,
    generated fixture freshness, consumer smoke checks, and Linux CI support.
-6. Confirm `docs/release-notes/v0.9.0.md` matches the final release commit.
+6. Confirm the release notes match the final release commit.
 
 For the first Markdown-first release, the expected tag is `v0.9.0` unless the
 maintainer chooses a different SemVer version.
 
-## Tag And Publish
+## Tag and Publish
 
 After the release commit is on `main` and GitHub checks are green:
 
@@ -132,33 +134,13 @@ After publishing:
 
 1. Confirm the tag points at the intended `main` commit.
 2. Confirm the GitHub Release links to the generated source archive.
-3. Confirm `README.md`, `docs/json-workflow.md`, and `docs/roadmap.md` still
-   describe the released behavior.
+3. Confirm `README.md` and the catalog still describe the released behavior.
 4. Open a follow-up issue for any release note correction instead of rewriting
    history.
 
 ## Published Release Proof
 
-Release: `v0.9.0`
-
-Published at: 2026-06-02 03:17 UTC
-
-GitHub Release: <https://github.com/mihaelamj/cvbuilder/releases/tag/v0.9.0>
-
-Tag object SHA: `7d5475702ec19db8eb5a72328d08d7d2fafdf114`
-
-Tag commit SHA: `828f90fd9834ba0a15550ca38208dbb11f022165`
-
-Tag commit subject: `docs(release): make v0.9.0 notes publishable`
-
-Tag-triggered workflow proof:
-
-- Style and namespacing:
-  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110649>
-- Swift Linux:
-  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110652>
-- Swift macOS:
-  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110656>
-
-All three tag-triggered workflows completed successfully for
-`828f90fd9834ba0a15550ca38208dbb11f022165`.
+The `v0.9.0` release was published on 2026-06-02. The GitHub Release and the
+tag-triggered Style, Swift macOS, and Swift Linux workflow runs are linked from
+<doc:ReleaseNotes>. Tag-triggered workflow proof and release URLs are recorded in
+the release issue (#70).

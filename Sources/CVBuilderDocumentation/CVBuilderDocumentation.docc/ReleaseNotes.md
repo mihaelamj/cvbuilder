@@ -1,10 +1,14 @@
-# CVBuilder v0.9.0 Release Notes
+# Release Notes: v0.9.0
+
+What ships in `v0.9.0`, the first Markdown-first release tag for the current CVBuilder package.
+
+## Overview
 
 These notes describe `v0.9.0`, the first Markdown-first release tag for the
 current CVBuilder package.
 
-Historical tags `0.1.0` through `0.8.0` remain in the repository. `v0.9.0` is
-the first Markdown-first public release after the current roadmap work.
+Historical tags `0.1.0` through `0.8.0` remain in the repository. `v0.9.0` is the
+first Markdown-first public release after the current roadmap work.
 
 ## What Ships
 
@@ -70,5 +74,5 @@ CVBuilder core does not include:
 
 ## Source
 
-Use `CHANGELOG.md` for the full change list and `docs/release-checklist.md` for
-the release process.
+Use `CHANGELOG.md` for the full change list and <doc:ReleaseChecklist> for the
+release process.

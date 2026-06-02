@@ -1,13 +1,12 @@
 # Deep Review Protocol
 
-Status date: 2026-05-31
+The search protocol, source list, inclusion and exclusion criteria, and confidence labels used for the deeper literature pass.
 
-Related issue: #10
-
-## Scope
+## Overview
 
 This protocol applies to CVBuilder's technical-CV schema and Markdown renderer.
-The output target is SSG-agnostic Markdown generated from structured CV data.
+The output target is static-site-generator-agnostic Markdown generated from
+structured CV data. Related issue: #10.
 
 ## Evidence Weighting
 
@@ -20,7 +19,7 @@ The output target is SSG-agnostic Markdown generated from structured CV data.
 
 ## Search Strategy Used
 
-Personnel selection / resume validity:
+Personnel selection and resume validity:
 
 - `resume screening validity`
 - `biodata resume screening`
@@ -28,7 +27,7 @@ Personnel selection / resume validity:
 - `recruiters perceptions resume information`
 - `resume personality inference`
 
-Bias/discrimination:
+Bias and discrimination:
 
 - `resume screening discrimination name`
 - `implicit age cues resumes`
@@ -49,7 +48,7 @@ Technical CVs:
 - `software engineering hiring technical roles`
 - `what makes a great software engineer`
 
-Parsing/ATS:
+Parsing and ATS:
 
 - `resume information extraction`
 - `resume parsing NER`
@@ -71,7 +70,7 @@ AI screening:
 - ScienceDirect landing pages
 - Springer Nature pages
 - Frontiers / MDPI / PLOS / SAGE / AEA / NBER pages
-- arXiv/ACL/AAAI only for newer LLM-screening work, explicitly lower
+- arXiv / ACL / AAAI only for newer LLM-screening work, explicitly lower
   confidence unless peer-reviewed
 
 ## Inclusion Criteria
@@ -98,12 +97,12 @@ AI screening:
 
 - High: peer-reviewed empirical paper, meta-analysis, or major field experiment
   directly relevant to CV/resume screening or software hiring.
-- Medium: peer-reviewed adjacent evidence where CVBuilder implication is an
+- Medium: peer-reviewed adjacent evidence where the CVBuilder implication is an
   inference.
 - Low: preprint or emerging AI-screening evidence; useful as a risk signal, not
   as a stable renderer rule by itself.
 
-## Contradiction And Uncertainty Log
+## Contradiction and Uncertainty Log
 
 Resume evidence versus application-form evidence:
 
@@ -114,8 +113,9 @@ Resume evidence versus application-form evidence:
 
 Public developer traces:
 
-- Technical hiring studies show GitHub/Stack Overflow can help evaluators, but
-  GitHub validity studies show public traces are incomplete and easy to misread.
+- Technical hiring studies show GitHub and Stack Overflow can help evaluators,
+  but GitHub validity studies show public traces are incomplete and easy to
+  misread.
 - CVBuilder response: support public technical evidence as optional structured
   summaries, not as a score or required field.
 
@@ -137,5 +137,5 @@ Personality and soft skills:
 
 - Recruiters infer personality and soft skills from resumes, but personality
   inference from resume artifacts is weak.
-- CVBuilder response: represent collaboration/communication through concrete
+- CVBuilder response: represent collaboration and communication through concrete
   work evidence, not trait adjectives.

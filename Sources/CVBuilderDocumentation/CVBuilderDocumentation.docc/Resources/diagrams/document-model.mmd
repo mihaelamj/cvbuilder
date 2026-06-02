@@ -1,0 +1,21 @@
+%% CVDocument structure. Every node is part of the canonical source of truth,
+%% except the rendering options that drive the transform. Colors: see legend.
+flowchart TD
+    DOC["CVDocument"]
+    FM["frontMatter<br/>String dictionary"]
+    CV["cv<br/>name, title, summary, contactInfo,<br/>experience, education, skills"]
+    LINKS["links<br/>profiles, downloads, companyURLs"]
+    PE["publicEvidence[]<br/>title, kind, role, summary, url"]
+    RO["rendering<br/>RenderingOptions"]
+
+    DOC --> FM
+    DOC --> CV
+    DOC --> LINKS
+    DOC --> PE
+    DOC --> RO
+
+    classDef source fill:#d2e3fc,stroke:#1967d2,color:#111;
+    classDef process fill:#feefc3,stroke:#e8710a,color:#111;
+
+    class DOC,FM,CV,LINKS,PE source;
+    class RO process;

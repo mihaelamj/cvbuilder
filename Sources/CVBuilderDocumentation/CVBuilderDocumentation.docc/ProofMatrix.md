@@ -1,24 +1,22 @@
-# CVBuilder Proof Matrix
+# Proof Matrix
 
-Status date: 2026-05-31
+The proof-grade rule audit: source-level evidence, keep/revise/downgrade decisions, and the surviving rule set for issue #3.
 
-Related issues: #11, #5, #3
+## Overview
 
-This document completes the proof-grade audit requested in #11. It verifies the
+This article completes the proof-grade audit requested in #11. It verifies the
 main CVBuilder technical-CV rules against source-level evidence, and marks weak
-or purely pragmatic rules as such.
+or purely pragmatic rules as such. Related issues: #11, #5, #3.
 
-This is not a claim that a CV can be made into a valid selection instrument.
-The strongest personnel-selection literature says the opposite: resumes are
-limited and bias-prone. CVBuilder's defensible role is narrower: keep CV data
-structured and render a clear, factual, low-noise Markdown artifact.
+This is not a claim that a CV can be made into a valid selection instrument. The
+strongest personnel-selection literature says the opposite: resumes are limited
+and bias-prone. CVBuilder's defensible role is narrower: keep CV data structured
+and render a clear, factual, low-noise Markdown artifact.
 
 ## Evidence Sources
 
 Rows below include method, population/sample, relevant finding, limitation, and
-the CVBuilder rule IDs supported.
-
-Rule IDs are listed in the next section.
+the CVBuilder rule IDs supported. Rule IDs are listed in the next section.
 
 | Source ID | Source | Method / sample / population | Relevant finding for CVBuilder | Limitations | Rule IDs |
 |---|---|---|---|---|---|
@@ -74,7 +72,7 @@ Rule IDs are listed in the next section.
 | R14 | Technical area/focus tags should attach to actual work, not become keyword stuffing. | Keep | Direct/adjacent technical evidence | E16, E18, E19, E20 | Add role/project technical-area tags and render them near the relevant work. |
 | R15 | CVBuilder should not optimize for a specific ATS/LLM; it should emit factual, low-noise, auditable Markdown. | Keep | Adjacent/emerging | E01, E02, E14, E21, E22, E28, E29, E30, E31 | Avoid ATS/LLM-specific scoring or gaming. Emit explicit, factual Markdown. |
 
-## Contradiction And Downgrade Log
+## Contradiction and Downgrade Log
 
 - R05 is useful information architecture, but no source directly proves that
   nesting projects under jobs improves hiring outcomes. It remains as a
@@ -97,7 +95,7 @@ Rejected folklore:
   structures unless parser tests prove safety.
 - No source in this audit supports keyword stuffing over contextual evidence.
 
-## Final Surviving Rule Set For #3
+## Final Surviving Rule Set for #3
 
 Evidence-backed or evidence-informed:
 
@@ -152,13 +150,13 @@ confirmed before they are treated as high-weight proof.
 | E44 | Zhang, Tu, Zhao et al., 2024, EMNLP 2024. https://aclanthology.org/2024.emnlp-main.540/ (arXiv 2409.19672) | ROOR benchmark; reading order as ordering relations injected into IE models. | Correct reading order improved extraction across 3 models and 8 cross-domain document IE/QA settings. | Visually-rich documents broadly, not resumes specifically. | R02, R11 |
 | E45 | Zhang, Guo, Tu et al., 2023, EMNLP 2023. DOI: https://doi.org/10.18653/v1/2023.emnlp-main.846 | Token Path Prediction; two revised real-world NER benchmarks on scanned documents. | Sequence-labeling extraction fails when reading order is scrambled; columns/tables are the canonical scrambler. | Scanned OCR setting; resumes a subset. | R02, R11 |
 | E46 | Iso, Pezeshkpour, Bhutani & Hruschka, 2025, NAACL 2025 (Industry). DOI: https://doi.org/10.18653/v1/2025.naacl-industry.55 | Evaluation of LLM job-resume matching for gender/race/education bias. | Explicit-attribute bias reduced in recent models, but implicit education-based bias persists. | Demographic bias focus; no format manipulation. | R15 |
-| E47 | Skondras, Zervas & Tzimas, 2025, Electronics (MDPI). DOI: 10.3390/electronics14244960 [UNVERIFIED DOI] | Chain-of-thought structured prompting for zero-shot resume-job matching. | Structuring/segmenting resume and job post before matching enabled effective zero-shot matching (up to about 87% for some occupations). | MDPI venue; single open model; DOI not confirmed. | R01 |
+| E47 | Skondras, Zervas & Tzimas, 2025, Electronics (MDPI). DOI: 10.3390/electronics14244960 (unverified DOI) | Chain-of-thought structured prompting for zero-shot resume-job matching. | Structuring/segmenting resume and job post before matching enabled effective zero-shot matching (up to about 87% for some occupations). | MDPI venue; single open model; DOI not confirmed. | R01 |
 | E48 | Zhang, Jensen, Sonniks & Plank, 2022, NAACL 2022. DOI: https://doi.org/10.18653/v1/2022.naacl-main.366 | SkillSpan corpus; 14.5K sentences, hard/soft skill spans; BERT baselines. | Skills are extractable structured spans (hard vs soft), but need domain-adapted models. | English job postings, not CVs; extraction not normalization. | R06, R14 |
 | E49 | Zhang, van der Goot & Plank, 2023, ACL 2023. DOI: https://doi.org/10.18653/v1/2023.acl-long.662 | ESCOXLM-R; ESCO-taxonomy-driven multilingual pretraining; 9 datasets, 4 languages. | Injecting the ESCO taxonomy set state of the art on skill identification; taxonomy normalization aids machine processing across languages. | Model-side; job-ad domain; benchmark not hiring outcomes. | R13, R19 |
-| E50 | SkiLLMo, 2025, ACM SAC 2025. DOI: https://doi.org/10.1145/3672608.3707960 [authors UNVERIFIED] | BERT segment filter + LLM extraction + ESCO normalization; expert evaluation. | 91% extraction precision, 80% standardization precision; normalization to ESCO is a distinct valuable step. | DOI verified; author list not confirmed; conference. | R13 |
+| E50 | SkiLLMo, 2025, ACM SAC 2025. DOI: https://doi.org/10.1145/3672608.3707960 (authors unverified) | BERT segment filter + LLM extraction + ESCO normalization; expert evaluation. | 91% extraction precision, 80% standardization precision; normalization to ESCO is a distinct valuable step. | DOI verified; author list not confirmed; conference. | R13 |
 | E51 | Bone, Gonzalez Ehlinger & Stephany, 2025, Technological Forecasting and Social Change. DOI: https://doi.org/10.1016/j.techfore.2025.124042 | Time-series analysis of about 11M UK vacancies, 2018-2024. | AI roles mention specific skills about 3x more than qualifications; degree requirements fell about 15%. | UK only; AI/green segments; posting language not hires. | R06, R14 |
 | E52 | Gugnani & Misra, 2020, AAAI. DOI: https://doi.org/10.1609/aaai.v34i08.7038 | Doc2Vec over 1.1M postings; explicit vs implicit (contextual) skills for resume-job matching. | Adding implicit skills inferred from work context raised matching 29.4% over explicit-only lists. | Single-organization system; MRR proxy not hire success. | R14, R06 |
-| E53 | Decorte, Van Hautte, Deleu, Develder & Demeester, 2023, RecSys-in-HR 2023 workshop. arXiv 2310.15636 [workshop] | 2,164 ESCO-labeled career histories; skill-based vs text-based vs hybrid. | Hybrid skill + work-context representation (43.0% recall@10) beat skill-only (35.2%) and text-only (39.6%). | Workshop tier; small dataset; prediction task. | R06, R13 |
+| E53 | Decorte, Van Hautte, Deleu, Develder & Demeester, 2023, RecSys-in-HR 2023 workshop. arXiv 2310.15636 (workshop) | 2,164 ESCO-labeled career histories; skill-based vs text-based vs hybrid. | Hybrid skill + work-context representation (43.0% recall@10) beat skill-only (35.2%) and text-only (39.6%). | Workshop tier; small dataset; prediction task. | R06, R13 |
 | E54 | Kristal, Nicks, Gloor & Hauser, 2022, Nature Human Behaviour. DOI: https://doi.org/10.1038/s41562-022-01485-6 | Pre-registered UK audit field experiment, N=9,022 applications, plus 2 lab studies. | Listing roles by years worked instead of start-end dates raised callbacks for applicants with career breaks (about +4.9pp vs unexplained gap, +2.9pp vs a no-gap dated resume); mechanism was better recall of accumulated experience. | UK; entry/return roles; does not isolate month vs year granularity. | R17 |
 | E55 | Kroft, Lange & Notowidigdo, 2013, Quarterly Journal of Economics. DOI: https://doi.org/10.1093/qje/qjt015 | Resume field experiment, about 12,000 resumes to about 3,000 US openings. | Callback falls sharply with visible unemployment-spell length, most within the first 8 months. | 2008-2011 recession-era US; spell length explicit by design. | R17 |
 | E56 | Bateson, 2023, PLOS ONE. DOI: https://doi.org/10.1371/journal.pone.0281449 | Pre-registered vignette experiment, 974 US adults, hospitality profiles. | An employment break cut selection about 20% and lowered trait ratings, with no meaningful difference by gap type (penalty attaches to existence, not cause). | Survey experiment; single sector; no date-format manipulation. | R17 |
@@ -166,9 +164,9 @@ confirmed before they are treated as high-weight proof.
 | E58 | Adamovic & Leibbrandt, 2023, The Leadership Quarterly. DOI: https://doi.org/10.1016/j.leaqua.2022.101655 | Correspondence field experiment, 12,000+ Australian applications across 6 name groups. | Non-English-named applicants received 57.4% fewer leadership callbacks holding content constant. | Australian market; callback not hire; pre-application stage. | R10, R19 |
 | E59 | Krause, Rinne & Zimmermann, 2012, IZA Journal of European Labor Studies. DOI: https://doi.org/10.1186/2193-9012-1-5 | Synthesis of European anonymous-application field experiments. | Removing name/photo/nationality can equalize interview chances; net effects context-dependent. | Older; mixed effects; some component studies small. | R10, R19 |
 | E60 | Sousa, Campos & Jorge, 2023, CIKM 2023. DOI: https://doi.org/10.1145/3583780.3615130 | TEI2GO; temporal-expression identification across 6 languages. | Locale date disambiguation (for example 03/10/2022) is a known, language-specific failure mode. | Identification emphasis; news-domain corpora not resumes. | R19 |
-| E61 | Mishra, He & Belli, 2020, AKBC workshop. arXiv 2008.03415 [workshop] | NER evaluated on synthetic name corpora across demographic groups. | NER accuracy is systematically lower for some name groups; underrepresented names are disproportionately dropped. | Synthetic corpora; pre-LLM models; workshop. | R19 |
-| E62 | Kesim & Deliahmetoglu, 2023. arXiv 2306.13062 [preprint] | Six transformer models for NER on Turkish IT resumes; 8 entity types. | Non-English resume NER is feasible at usable accuracy with language-adapted models when fields are discrete. | Single language/sector; preprint. | R19 |
-| E63 | Loessberg-Zahl, 2024. arXiv 2401.12941 [preprint] | English name recognizer; data/input ablations; names from 103 countries. | Char+word embeddings outperform on unseen non-Western names; detection is structure-dependent. | Single architecture; English-centric; preprint. | R19 |
+| E61 | Mishra, He & Belli, 2020, AKBC workshop. arXiv 2008.03415 (workshop) | NER evaluated on synthetic name corpora across demographic groups. | NER accuracy is systematically lower for some name groups; underrepresented names are disproportionately dropped. | Synthetic corpora; pre-LLM models; workshop. | R19 |
+| E62 | Kesim & Deliahmetoglu, 2023. arXiv 2306.13062 (preprint) | Six transformer models for NER on Turkish IT resumes; 8 entity types. | Non-English resume NER is feasible at usable accuracy with language-adapted models when fields are discrete. | Single language/sector; preprint. | R19 |
+| E63 | Loessberg-Zahl, 2024. arXiv 2401.12941 (preprint) | English name recognizer; data/input ablations; names from 103 countries. | Char+word embeddings outperform on unseen non-Western names; detection is structure-dependent. | Single architecture; English-centric; preprint. | R19 |
 | E64 | Osanami Torngren, Schutze, Van Belle & Nystrom, 2024, Frontiers in Sociology. DOI: https://doi.org/10.3389/fsoc.2024.1222850 | Eye-tracking vignette, 40 Swedish recruiters, 200 CV-views. | Dwell-time did not correlate with CV ratings; where recruiters looked longest did not predict choice. | Small N; finance/retail not tech; ordering not manipulated. | R02, R03, R13 |
 | E65 | Highhouse & Gallo, 1997, Human Performance. DOI: https://doi.org/10.1207/s15327043hup1001_2 | Controlled experiment, 117 raters, manipulated information order. | Recency, not primacy, predominated in this evaluative task; order-effect direction is task-dependent. | Older; student raters; behavioral episodes not CV sections. | R03, R04 |
 | E66 | Fousiani, Van Prooijen & Armenta, 2022, Frontiers in Psychology. DOI: https://doi.org/10.3389/fpsyg.2022.923329 | 260 recruiters plus two preregistered experiments. | Which attribute carries weight is context-dependent (competence vs morality by org goal). | Order controlled away, not tested; framing evidence only. | R03, R13 |

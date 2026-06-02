@@ -56,10 +56,15 @@ version_greater_than() {
   return 1
 }
 
+# Project-level documentation lives in the DocC catalog, not a freeform docs/ folder.
+DOCC="Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc"
+RELEASE_CHECKLIST="$DOCC/ReleaseChecklist.md"
+ROADMAP="$DOCC/Roadmap.md"
+
 require_file "CHANGELOG.md"
 require_file "README.md"
-require_file "docs/release-checklist.md"
-require_file "docs/roadmap.md"
+require_file "$RELEASE_CHECKLIST"
+require_file "$ROADMAP"
 
 CHANGELOG_VERSION="$(
   awk '
@@ -77,7 +82,7 @@ if [ -z "$CHANGELOG_VERSION" ]; then
   fail "CHANGELOG.md must have a top release section like '## [0.9.0] - YYYY-MM-DD'."
 else
   RELEASE_TAG="v$CHANGELOG_VERSION"
-  RELEASE_NOTES_PATH="docs/release-notes/$RELEASE_TAG.md"
+  RELEASE_NOTES_PATH="$DOCC/ReleaseNotes.md"
 
   if ! version_greater_than "$CHANGELOG_VERSION" "$HISTORICAL_LATEST_VERSION"; then
     fail "top changelog version $CHANGELOG_VERSION must be newer than historical $HISTORICAL_LATEST_VERSION."
@@ -85,20 +90,20 @@ else
 
   require_file "$RELEASE_NOTES_PATH"
   require_contains "README.md" "$RELEASE_NOTES_PATH" "README.md must link $RELEASE_NOTES_PATH."
-  require_contains "docs/roadmap.md" "$RELEASE_TAG" "docs/roadmap.md must mention $RELEASE_TAG."
-  require_contains "docs/release-checklist.md" "$RELEASE_NOTES_PATH" "release checklist must name $RELEASE_NOTES_PATH."
-  require_contains "docs/release-checklist.md" "git tag -a $RELEASE_TAG" "release checklist must tag $RELEASE_TAG."
-  require_contains "docs/release-checklist.md" "git push origin $RELEASE_TAG" "release checklist must push $RELEASE_TAG."
-  require_contains "docs/release-checklist.md" "historical \`$HISTORICAL_LATEST_VERSION\` boundary" "release checklist must document the historical tag boundary."
-  require_contains "$RELEASE_NOTES_PATH" "# CVBuilder $RELEASE_TAG Release Notes" "release notes title must use $RELEASE_TAG."
+  require_contains "$ROADMAP" "$RELEASE_TAG" "Roadmap article must mention $RELEASE_TAG."
+  require_contains "$RELEASE_CHECKLIST" "<doc:ReleaseNotes>" "release checklist must reference the ReleaseNotes article."
+  require_contains "$RELEASE_CHECKLIST" "git tag -a $RELEASE_TAG" "release checklist must tag $RELEASE_TAG."
+  require_contains "$RELEASE_CHECKLIST" "git push origin $RELEASE_TAG" "release checklist must push $RELEASE_TAG."
+  require_contains "$RELEASE_CHECKLIST" "historical \`$HISTORICAL_LATEST_VERSION\` boundary" "release checklist must document the historical tag boundary."
+  require_contains "$RELEASE_NOTES_PATH" "Release Notes: $RELEASE_TAG" "release notes title must use $RELEASE_TAG."
   require_contains "$RELEASE_NOTES_PATH" "CVBuilder \`$RELEASE_TAG\`" "release notes body must use $RELEASE_TAG."
 
   VERSION_REFERENCES="$(
     grep -RhoE 'v[0-9]+\.[0-9]+\.[0-9]+' \
       "$ROOT/README.md" \
-      "$ROOT/docs/release-checklist.md" \
-      "$ROOT/docs/release-notes" \
-      "$ROOT/docs/roadmap.md" 2>/dev/null |
+      "$ROOT/$RELEASE_CHECKLIST" \
+      "$ROOT/$RELEASE_NOTES_PATH" \
+      "$ROOT/$ROADMAP" 2>/dev/null |
       sort -u
   )"
 

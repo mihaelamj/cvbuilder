@@ -1,0 +1,22 @@
+%% How research becomes an enforced renderer contract. Colors: see legend.
+flowchart TD
+    LIT["Peer-reviewed literature<br/>E01-E66 source matrix"]
+    RULES["Surviving rules<br/>R01-R19 proof matrix"]
+    CODE["Renderer and model code"]
+    TESTS["Enforcing tests<br/>conformance matrix"]
+    X["No fit score, ranking,<br/>or demographic label"]
+
+    LIT --> RULES
+    RULES --> CODE
+    CODE --> TESTS
+    RULES -. forbids .-> X
+
+    classDef evidence fill:#e9d2fd,stroke:#8430ce,color:#111;
+    classDef process fill:#feefc3,stroke:#e8710a,color:#111;
+    classDef done fill:#e8eaed,stroke:#5f6368,color:#111;
+    classDef excluded fill:#fad2cf,stroke:#c5221f,color:#111;
+
+    class LIT,RULES evidence;
+    class CODE process;
+    class TESTS done;
+    class X excluded;

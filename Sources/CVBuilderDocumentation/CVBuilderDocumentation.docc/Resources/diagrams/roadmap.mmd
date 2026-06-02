@@ -1,0 +1,20 @@
+%% Roadmap epics in delivery order. Shipped epics are gray; the current
+%% documentation epic is in progress. Colors: see legend.
+flowchart TD
+    EVID["Evidence research<br/>#5, #12"]
+    FOUND["Linux Markdown foundation and data contract<br/>#26, #29, #30, #31"]
+    QUAL["Quality gates, fixtures, workflow docs<br/>#32, #40, #19, #20"]
+    CLIS["CLI help, JSON Schema, drift checks<br/>#48, #49, #50"]
+    REL["Release hardening and tag proof<br/>#51, #57, #58, #59, #60, #61"]
+    VER["Version reconciliation and guard<br/>#67, #68, #69, #70"]
+    CONF["Research-conformance matrix<br/>#74, #75, #76"]
+    AUTH["Authoring and publishing: CLI, front matter,<br/>JSON Resume, localization (#80, #81-#84)"]
+    DOCC["DocC documentation catalog<br/>#98, #99"]
+
+    EVID --> FOUND --> QUAL --> CLIS --> REL --> VER --> CONF --> AUTH --> DOCC
+
+    classDef done fill:#e8eaed,stroke:#5f6368,color:#111;
+    classDef active fill:#fef08a,stroke:#9a8400,color:#111;
+
+    class EVID,FOUND,QUAL,CLIS,REL,VER,CONF,AUTH done;
+    class DOCC active;

@@ -1,18 +1,29 @@
 # Rendering Modes
 
-Status date: 2026-06-01
+How `RenderingMode` selects the section-order policy for generated technical CV Markdown.
+
+## Overview
 
 `RenderingMode` selects the section-order policy for generated technical CV
 Markdown. It does not score candidates, infer traits, add demographic metadata,
 or optimize for a specific parser. The source of truth remains `CVDocument`.
 Front matter dialects are separate from section ordering and are documented in
-[front-matter-profiles.md](front-matter-profiles.md).
+<doc:FrontMatterProfiles>.
 
-The evidence basis is tracked in
-[docs/research/cvbuilder-proof-matrix.md](research/cvbuilder-proof-matrix.md).
-Rules marked evidence-backed or evidence-informed in this document must trace to
-that matrix. Rules marked pragmatic renderer convention are product choices used
-to keep Markdown deterministic and easy to consume.
+The evidence basis is tracked in <doc:ProofMatrix>. Rules marked evidence-backed
+or evidence-informed in this article must trace to that matrix. Rules marked
+pragmatic renderer convention are product choices used to keep Markdown
+deterministic and easy to consume.
+
+Every catalog diagram is color-coded; the legend below defines each class and is
+the first diagram to read.
+
+![Color legend for every catalog diagram](legend)
+
+The three modes differ only in section order. Each mode is an internally
+vertical chain:
+
+![Section order for each rendering mode](rendering-modes)
 
 ## Mode Policies
 

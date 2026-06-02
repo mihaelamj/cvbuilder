@@ -8,7 +8,7 @@ public extension CVDocument {
     /// so the renderer can show them. JSON Resume `projects` become
     /// `publicEvidence` items. Profile, contact, education, and skill data map
     /// onto their `CVDocument` equivalents. Fields with no `CVDocument` home are
-    /// dropped; see `docs/json-resume-interop.md` for the full inventory.
+    /// dropped; see the JSONResumeInterop catalog article for the full inventory.
     init(jsonResume resume: JSONResume) {
         let cv = CV(jsonResume: resume)
 

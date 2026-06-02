@@ -18,5 +18,6 @@ Check that the example is fresh:
 swift run cvbuilder --data Examples/democv/cv.json --out Examples/tiledown/democv.md --check
 ```
 
-The contract is documented in
-[docs/tiledown-markdown-contract.md](../../docs/tiledown-markdown-contract.md).
+The contract is documented in the
+[TileDown Markdown Contract](../../Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/TileDownMarkdownContract.md)
+catalog article.

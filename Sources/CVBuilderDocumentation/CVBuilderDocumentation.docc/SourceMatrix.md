@@ -1,12 +1,13 @@
-# CVBuilder Source Matrix
+# Source Matrix
 
-Status date: 2026-05-31
+The deeper literature review, grouped by theme, with each source's method, strength, and concrete CVBuilder implication.
 
-Related issue: #10
+## Overview
 
 This matrix summarizes the deeper literature review. It is not a proof-grade
-audit. The stricter proof-grade audit is tracked separately in
-`cvbuilder-proof-grade-audit.md`.
+audit. The stricter proof-grade audit is tracked in <doc:ProofGradeAudit>, and
+the final keep/revise/downgrade decisions live in <doc:ProofMatrix>. Related
+issue: #10.
 
 ## General CV / Resume Selection Evidence
 
@@ -26,9 +27,9 @@ audit. The stricter proof-grade audit is tracked separately in
 | 12 | Kang, DeCelles, Tilcsik, & Jun, 2016, Administrative Science Quarterly, "Whitened Resumes". DOI: https://doi.org/10.1177/0001839216639577 | Race, self-presentation, and labor market | Field/experimental work on racial concealment in resumes. | High for risk of identity signaling effects. | CVBuilder should avoid adding identity-signaling sections by default. Public evidence sections must be job-relevant, not affinity/decorative identity sections. |
 | 13 | Oreopoulos, 2011, American Economic Journal: Economic Policy, "Why Do Skilled Immigrants Struggle in the Labor Market?" DOI: https://doi.org/10.1257/pol.3.4.148 | Resume audit / immigrant discrimination | Field experiment with randomized resumes. | High for demographic and credential-cue caution. | Prefer normalized, explicit credential fields; avoid renderer embellishments that amplify non-job-relevant origin cues. |
 | 14 | Pisanelli, 2022, Economics Letters, "Your resume is your gatekeeper". DOI: https://doi.org/10.1016/j.econlet.2022.110892 | Automated screening and gender gaps | Field study on automated resume screening. | Medium-high; relevant to automation, but not renderer-specific. | Make generated Markdown parseable and structured. Avoid hidden semantics in layout. |
-| 15 | Buijsrogge, Derous, & Duyck, 2016, Human Performance, "Often biased but rarely in doubt: How initial reactions to stigmatized applicants affect interviewer confidence". DOI: https://doi.org/10.1080/08959285.2016.1165225 | Stigma and interviewer confidence | Interview-stage stigma / initial-reaction evidence. | Medium; adjacent evidence, not resume-specific. | Avoid CV-renderer features that invite early subjective impressions unrelated to job evidence. |
+| 15 | Buijsrogge, Derous, & Duyck, 2016, Human Performance, "Often biased but rarely in doubt". DOI: https://doi.org/10.1080/08959285.2016.1165225 | Stigma and interviewer confidence | Interview-stage stigma / initial-reaction evidence. | Medium; adjacent evidence, not resume-specific. | Avoid CV-renderer features that invite early subjective impressions unrelated to job evidence. |
 
-## Technical CVs, Parsing, And AI-Screening Evidence
+## Technical CVs, Parsing, and AI-Screening Evidence
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
@@ -70,11 +71,11 @@ The strongest source families are:
 
 Related issues: #86 (epic), #87-#94. This pass adds peer-reviewed sources found
 in a second literature review, grouped by theme. The proof-grade rows, new rule
-IDs (R16-R19), and rule qualifications live in `cvbuilder-proof-matrix.md`.
-Preprints and workshop papers are marked; one unverified DOI (Skondras 2025) and
-one unverified author list (SkiLLMo 2025) must be confirmed before high-weight use.
+IDs (R16-R19), and rule qualifications live in <doc:ProofMatrix>. Preprints and
+workshop papers are marked; one unverified DOI (Skondras 2025) and one unverified
+author list (SkiLLMo 2025) must be confirmed before high-weight use.
 
-### Accomplishment Content And Writing Quality
+### Accomplishment Content and Writing Quality
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
@@ -85,7 +86,7 @@ one unverified author list (SkiLLMo 2025) must be confirmed before high-weight u
 | 38 | Sterkens et al., 2023, PLoS One. DOI: https://doi.org/10.1371/journal.pone.0283280 | Resume errors | Factorial-survey experiment, 445 recruiters. | High. | Deterministic generation prevents the error class that demonstrably lowers interview odds. |
 | 39 | Petersheim et al., 2022, IEEE Transactions on Education. DOI: https://doi.org/10.1109/TE.2022.3199685 | CS-resume relevance | Recruiter vs student screening study. | Medium. | Surface high-signal technical items; do not pad. Domain-relevant to technical CVs. |
 
-### Accessibility And Semantic Structure
+### Accessibility and Semantic Structure
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
@@ -96,14 +97,14 @@ one unverified author list (SkiLLMo 2025) must be confirmed before high-weight u
 | 44 | Reuschel et al., 2023, JVIB. DOI: https://doi.org/10.1177/0145482X231216757 | Application-pipeline accessibility | 30 application sites, expert testers. | High (descriptive). | Structure/labeling failures are a top barrier class in the hiring pipeline. |
 | 45 | Hamideh Kerdar et al., 2024, Discover Computing. DOI: https://doi.org/10.1007/s10791-024-09460-7 | Accessibility review | Scoping review. | Medium-high. | Review-tier anchor that structure and navigation are central to AT usability. |
 
-### Current Parsing And LLM Screening
+### Current Parsing and LLM Screening
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
 | 46 | Zhang et al., 2024, EMNLP. https://aclanthology.org/2024.emnlp-main.540/ | Reading-order extraction | ROOR benchmark; ordering relations. | High. | Correct linear reading order measurably improves extraction; strengthens R02/R11. |
 | 47 | Zhang et al., 2023, EMNLP. DOI: https://doi.org/10.18653/v1/2023.emnlp-main.846 | Reading-order failure mode | Token Path Prediction; NER benchmarks. | High. | Columns/tables scramble reading order and break extraction; strengthens R11. |
 | 48 | Iso et al., 2025, NAACL (Industry). DOI: https://doi.org/10.18653/v1/2025.naacl-industry.55 | LLM matching bias | Bias evaluation of LLM job-resume matching. | High. | Screeners remain biased and shifting; do not game them (R15). |
-| 49 | Skondras et al., 2025, Electronics (MDPI). DOI: 10.3390/electronics14244960 [UNVERIFIED] | Structured prompting | Zero-shot resume-job matching via segmentation. | Medium. | Downstream pipelines normalize input into structured segments; mild support for R01. |
+| 49 | Skondras et al., 2025, Electronics (MDPI). DOI: 10.3390/electronics14244960 (unverified) | Structured prompting | Zero-shot resume-job matching via segmentation. | Medium. | Downstream pipelines normalize input into structured segments; mild support for R01. |
 
 ### Skills Representation
 
@@ -111,12 +112,12 @@ one unverified author list (SkiLLMo 2025) must be confirmed before high-weight u
 |---|---|---|---|---|---|
 | 50 | Zhang et al., 2022, NAACL. DOI: https://doi.org/10.18653/v1/2022.naacl-main.366 | Skill extraction | SkillSpan corpus and baselines. | High. | Treat skills as discrete typed entities (hard vs soft). |
 | 51 | Zhang et al., 2023, ACL. DOI: https://doi.org/10.18653/v1/2023.acl-long.662 | Taxonomy normalization | ESCOXLM-R multilingual pretraining. | High. | Optional normalized skill identifier (ESCO) makes skills machine-comparable. |
-| 52 | SkiLLMo, 2025, ACM SAC. DOI: https://doi.org/10.1145/3672608.3707960 [authors UNVERIFIED] | ESCO normalization | Extraction plus taxonomy matching. | Medium. | Corroborates that standardization to a taxonomy is a distinct valuable step. |
+| 52 | SkiLLMo, 2025, ACM SAC. DOI: https://doi.org/10.1145/3672608.3707960 (authors unverified) | ESCO normalization | Extraction plus taxonomy matching. | Medium. | Corroborates that standardization to a taxonomy is a distinct valuable step. |
 | 53 | Bone, Gonzalez Ehlinger & Stephany, 2025, Technological Forecasting and Social Change. DOI: https://doi.org/10.1016/j.techfore.2025.124042 | Skills-based hiring | about 11M UK vacancies. | High. | Modern technical hiring foregrounds specific skills tied to roles over credentials. |
 | 54 | Gugnani & Misra, 2020, AAAI. DOI: https://doi.org/10.1609/aaai.v34i08.7038 | Contextual skills | Implicit skill inference for matching. | High. | Contextual skills tied to work beat detached lists by about 29.4%; backs R14/R06. |
-| 55 | Decorte et al., 2023, RecSys-in-HR workshop. arXiv 2310.15636 [workshop] | Career representation | Hybrid skill plus work-context model. | Medium. | Keep a structured skills surface and anchor skills in work context. |
+| 55 | Decorte et al., 2023, RecSys-in-HR workshop. arXiv 2310.15636 (workshop) | Career representation | Hybrid skill plus work-context model. | Medium. | Keep a structured skills surface and anchor skills in work context. |
 
-### Employment Gaps And Date Presentation
+### Employment Gaps and Date Presentation
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
@@ -125,18 +126,18 @@ one unverified author list (SkiLLMo 2025) must be confirmed before high-weight u
 | 58 | Bateson, 2023, PLOS ONE. DOI: https://doi.org/10.1371/journal.pone.0281449 | Gap penalty | Pre-registered vignette, 974 adults. | Medium-high. | Penalty attaches to the gap's existence, not its cause; the renderer lever is presentation. |
 | 59 | Namingit, Blankenau & Schwab, 2021, Journal of Economic Behavior and Organization. DOI: https://doi.org/10.1016/j.jebo.2020.09.033 | Gap cause/disclosure | Resume audit with illness gap. | Medium-high. | Do not auto-render leave reasons; enriches R10. |
 
-### Localization And Name Handling
+### Localization and Name Handling
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|
 | 60 | Adamovic & Leibbrandt, 2023, The Leadership Quarterly. DOI: https://doi.org/10.1016/j.leaqua.2022.101655 | Name-origin bias | 12,000+ Australian applications. | High. | Localizing must not add origin signals (nationality, photo, transliteration). |
 | 61 | Krause, Rinne & Zimmermann, 2012, IZA Journal of European Labor Studies. DOI: https://doi.org/10.1186/2193-9012-1-5 | Anonymous applications | Synthesis of European experiments. | Medium-high. | Keep photo/DOB/nationality/marital-status opt-in and off by default. |
 | 62 | Sousa, Campos & Jorge, 2023, CIKM. DOI: https://doi.org/10.1145/3583780.3615130 | Locale date parsing | Multilingual temporal-expression models. | High. | Emit ISO 8601 machine value plus optional localized display; avoid ambiguous numeric dates. |
-| 63 | Mishra, He & Belli, 2020, AKBC workshop. arXiv 2008.03415 [workshop] | NER name bias | Demographic-name NER evaluation. | Medium-high. | Put the name in a fixed slot; do not rely on a parser recognizing the name string. |
-| 64 | Kesim & Deliahmetoglu, 2023. arXiv 2306.13062 [preprint] | Non-English resume NER | Turkish IT-resume NER. | Medium. | Keep date/degree/title/country/language as discrete delimited fields. |
-| 65 | Loessberg-Zahl, 2024. arXiv 2401.12941 [preprint] | Multicultural name detection | Name recognizer across 103 countries. | Medium. | Reinforces a structurally privileged name slot over morphology-based detection. |
+| 63 | Mishra, He & Belli, 2020, AKBC workshop. arXiv 2008.03415 (workshop) | NER name bias | Demographic-name NER evaluation. | Medium-high. | Put the name in a fixed slot; do not rely on a parser recognizing the name string. |
+| 64 | Kesim & Deliahmetoglu, 2023. arXiv 2306.13062 (preprint) | Non-English resume NER | Turkish IT-resume NER. | Medium. | Keep date/degree/title/country/language as discrete delimited fields. |
+| 65 | Loessberg-Zahl, 2024. arXiv 2401.12941 (preprint) | Multicultural name detection | Name recognizer across 103 countries. | Medium. | Reinforces a structurally privileged name slot over morphology-based detection. |
 
-### Recruiter Attention And Ordering
+### Recruiter Attention and Ordering
 
 | # | Source | Area | Evidence / method | Strength | CVBuilder implication |
 |---|---|---|---|---|---|

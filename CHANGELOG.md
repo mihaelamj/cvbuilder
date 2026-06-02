@@ -16,12 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - JSON Resume interop: a typed `jsonresume.org` model, `CVDocument(jsonResume:)`
   import, `JSONResume(cvDocument:)` export, the CLI `--from json-resume` input
   mode and `--format json-resume` output, round-trip fixtures, and the
-  `docs/json-resume-interop.md` mapping and lossy-field contract.
+  JSON Resume Interop catalog article mapping and lossy-field contract.
 - Rendered-output localization: `RenderingOptions.locale` selects the language
   for section labels, field labels, and month names from a deterministic,
   host-locale-independent label set. Ships English (default, byte-for-byte
   unchanged) and German, with a checked-in German fixture and
-  `docs/localization.md`.
+  the Localization catalog article.
 - Release-version consistency guard for changelog, release notes, release
   checklist, README, and roadmap drift.
 
