@@ -3,6 +3,8 @@ name: Style and namespacing
 on:
   push:
     branches: [main]
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 

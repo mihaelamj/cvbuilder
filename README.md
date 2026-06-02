@@ -160,7 +160,9 @@ Epic [#28](https://github.com/mihaelamj/cvbuilder/issues/28) tracks the product
 roadmap. Epic [#12](https://github.com/mihaelamj/cvbuilder/issues/12) tracked
 the evidence-backed implementation slices that hardened the renderer and JSON
 workflow. Epic [#47](https://github.com/mihaelamj/cvbuilder/issues/47) completed
-release-ready authoring and CLI usability.
+release-ready authoring and CLI usability. Epic
+[#57](https://github.com/mihaelamj/cvbuilder/issues/57) tracks first public
+release hardening and tag proof.
 
 ```mermaid
 flowchart TD
@@ -176,8 +178,12 @@ flowchart TD
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
     P12["Phase 12<br/>#51 Release checklist<br/>Done"]
+    P13["Phase 13<br/>#58 Release tag CI<br/>CI green"]
+    P14["Phase 14<br/>#61 Platform contract<br/>Next"]
+    P15["Phase 15<br/>#60 Consumer smoke<br/>Next"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Next"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -187,6 +193,8 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12 done;
+    class P13 review;
+    class P14,P15,P16 next;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
