@@ -14,6 +14,32 @@ The core package is built for macOS and Linux. `CVDocument` is the canonical
 source of truth for publishable CV data, front matter, links, public evidence,
 and rendering options.
 
+## Philosophy
+
+CVBuilder starts from the one finding the personnel-selection literature agrees
+on: a resume or CV is not a validated selection instrument. It is weak,
+bias-prone, and partly unstructured, and treating it as a measurement of
+candidate quality is unsupported. A CV generator must therefore not *pretend* to
+produce a score. That single premise rules out skill bars, fit scores,
+personality and culture-fit labels, inferred seniority, and ATS gaming before
+any feature is designed.
+
+What remains is a narrower, defensible job: keep the data structured and typed,
+and render a clear, factual, low-noise, deterministic Markdown artifact that
+makes job-relevant evidence easy to find, for both human readers and the parsers
+and assistive technology that read on their behalf. Deterministic output, a
+single clean reading order, escaped data, and proof-backed public evidence all
+follow from that goal.
+
+These are not opinions. Each renderer choice traces to peer-reviewed evidence or
+is explicitly labelled a pragmatic convention. The research was gathered under a
+documented review protocol (68 sources), audited rule by rule (keep, revise, or
+downgrade, with folklore rejected explicitly), and the surviving proof-grade
+rules are wired to named tests so policy drift fails the build. The full chain,
+from founding premise to enforced contract, lives in the
+[Research Overview](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ResearchOverview.md)
+and its source, proof, and conformance matrices.
+
 ## What Works Today
 
 CVBuilder currently renders inspectable Markdown from structured CV data. The
@@ -30,6 +56,15 @@ The generic renderer currently covers:
 - Optional explicit ordered work-entry selection for relevant older jobs before
   recency limits are applied.
 - JSON input with ergonomic defaults for missing optional arrays.
+- Deterministic, byte-stable normalized JSON: optional `id` fields may be
+  omitted and stay omitted, so the same input re-normalizes identically and
+  `--check` passes.
+- Model-boundary validation: `Period.SimpleDate` months are constrained to
+  1 through 12 and reversed periods are rejected when decoding, matching the
+  JSON Schema; field values cannot inject Markdown headings or thematic breaks.
+- Content-based value identity: skills deduplicate by name and category, and
+  same-named employers merge into one experience entry.
+- JSON Resume import (`--from json-resume`) and export (`--format json-resume`).
 - CLI output checks for checked-in generated Markdown.
 - Linux TileDown compatibility through a Markdown-only adapter.
 
@@ -130,6 +165,18 @@ Write normalized JSON:
 swift run cvbuilder --data cv.json --out cv.normalized.json --format json
 ```
 
+Import a JSON Resume document and render Markdown:
+
+```sh
+swift run cvbuilder --data resume.json --from json-resume --out cv/index.md
+```
+
+Export a `CVDocument` to JSON Resume:
+
+```sh
+swift run cvbuilder --data cv.json --format json-resume --out resume.json
+```
+
 Check a generated Markdown file:
 
 ```sh
@@ -145,7 +192,9 @@ cat cv.json | swift run cvbuilder --data - --out -
 ## JSON Input
 
 The CLI reads one `CVDocument` JSON file. Missing optional arrays default to
-empty values. This small document is valid input:
+empty values, and optional `id` fields may be omitted (an omitted `id` stays
+omitted in normalized output, so the document re-normalizes byte-for-byte). This
+small document is valid input:
 
 ```json
 {
@@ -257,11 +306,16 @@ The test suite validates generated Markdown through fixture and behavior checks:
 - Resource-backed JSON fixtures cover minimal, early-career, hostile Markdown,
   and full senior technical CV documents.
 - Hostile text tests ensure generated Markdown treats source data as data, not
-  structure.
-- JSON schema tests check defaults for omitted optional arrays and rejection of
-  explicit invalid nulls.
-- CLI tests check Markdown output, normalized JSON output, and stale-file
-  detection.
+  structure, including setext heading underlines that would otherwise forge a
+  heading.
+- JSON schema tests check defaults for omitted optional arrays, rejection of
+  explicit invalid nulls, and rejection of out-of-range months and reversed
+  periods at the decode boundary.
+- Determinism tests assert that a document which omits IDs re-normalizes to
+  byte-identical JSON across runs, and value-identity tests assert skills
+  deduplicate by name and category and same-named employers merge.
+- CLI tests check Markdown output, normalized JSON output, JSON Resume import
+  and export, relative-URL acceptance, and stale-file detection.
 - Linux-only TileDown tests compare adapter output to canonical Markdown output
   and the checked-in TileDown example.
 
