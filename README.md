@@ -180,8 +180,8 @@ flowchart TD
     P12["Phase 12<br/>#51 Release checklist<br/>Done"]
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
-    P15["Phase 15<br/>#60 Consumer smoke<br/>CI green"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>Next"]
+    P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>In progress"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
@@ -192,9 +192,8 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14 done;
-    class P15 review;
-    class P16 next;
+    class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15 done;
+    class P16 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -278,6 +277,8 @@ swift build --target CVBuilderTileDown
   workflow, CI checks, SSG integration, and product boundaries.
 - [docs/release-checklist.md](docs/release-checklist.md): first usable release
   gates, tag process, release-note expectations, and boundaries.
+- [docs/release-notes/v0.1.0.md](docs/release-notes/v0.1.0.md): draft notes
+  for the first public release tag.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
 - [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
