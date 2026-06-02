@@ -64,6 +64,9 @@ The generic renderer currently covers:
   JSON Schema; field values cannot inject Markdown headings or thematic breaks.
 - Content-based value identity: skills deduplicate by name and category, and
   same-named employers merge into one experience entry.
+- Structured results-oriented `Project.accomplishments`, rendered verbatim with
+  no fabricated metrics, and an opt-in duration-period mode (`3 yrs`) that never
+  derives inter-role gaps.
 - JSON Resume import (`--from json-resume`) and export (`--format json-resume`).
 - CLI output checks for checked-in generated Markdown.
 - Linux TileDown compatibility through a Markdown-only adapter.
@@ -245,7 +248,12 @@ authoring and publishing experience. Epic
 [#132](https://github.com/mihaelamj/cvbuilder/issues/132) completed the
 first-principles source-code audit hardening (#108-#131): deterministic
 identity and dates, escaping and empty-field guards, JSON Resume fidelity,
-validator parity, and the packaging/CI gates.
+validator parity, and the packaging/CI gates. Epic
+[#98](https://github.com/mihaelamj/cvbuilder/issues/98) brought the repo up to
+the canonical standards (DocC catalog, Mermaid pipeline, doc-comment coverage,
+the brutal-5 labels, and R16-R19 enforcement), and epic
+[#86](https://github.com/mihaelamj/cvbuilder/issues/86) completed the second
+proof-grade research-enrichment pass.
 
 ```mermaid
 flowchart TD
@@ -303,16 +311,17 @@ Epic status (color moves with state, per github-discipline Rule 1.8):
 ```mermaid
 flowchart TD
     Shipped["Shipped epics<br/>#12 #28 #47 #57 #67 #76 #80 #132<br/>Done"]
-    E98["Epic #98<br/>Standards catch-up<br/>Active"]
-    E86["Epic #86<br/>Research enrichment pass 2<br/>Active"]
+    E98["Epic #98<br/>Standards catch-up<br/>Done"]
+    E86["Epic #86<br/>Research enrichment pass 2<br/>Done"]
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
     class Shipped done;
-    class E98,E86 active;
+    class E98,E86 done;
 ```
 
-Each open epic's issue body carries its own color-coded child-status diagram.
+All epics are shipped; no epic is currently open. Each epic's issue body carries
+its own color-coded child-status diagram.
 
 See the [Roadmap](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Roadmap.md)
 catalog article for the full roadmap.
