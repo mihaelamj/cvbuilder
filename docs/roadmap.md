@@ -82,11 +82,10 @@ Relevant links:
 - Issue #60: closed clean SwiftPM consumer smoke test in PR #64.
 - Issue #59: closed initial changelog and release notes draft in PR #65.
 - PR #65: merged the initial release notes draft.
-- Issue #67: active release version history reconciliation epic.
+- Issue #67: release version history reconciliation epic is complete.
 - Issue #68: release version docs reconciliation is done after PR #71.
 - Issue #69: release version consistency guard is done after PR #72.
-- Issue #70: release publication proof correction is in review in PR #77 after
-  the pre-publication tag was removed.
+- Issue #70: release publication proof is done for `v0.9.0`.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -110,8 +109,7 @@ Ordered roadmap issues:
 16. #59 - done: prepare the changelog and release notes draft.
 17. #68 - done: reconcile release version docs with existing tag history.
 18. #69 - done: add release version consistency guard.
-19. #70 - correction review in PR #77: prepare release publication proof for
-    reconciled version.
+19. #70 - done: prepare release publication proof for reconciled version.
 
 ```mermaid
 flowchart TD
@@ -133,7 +131,7 @@ flowchart TD
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
-    P19["Phase 19<br/>#70 Publish proof<br/>Correction review"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Done"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
@@ -147,7 +145,7 @@ flowchart TD
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
     class P17 done;
     class P18 done;
-    class P19 review;
+    class P19 done;
 ```
 
 ## Roadmap
@@ -540,16 +538,15 @@ Issue: [#70](https://github.com/mihaelamj/cvbuilder/issues/70).
 
 Deliverables:
 
-- create the reconciled release tag after `main` checks are green: pending
-- publish the matching GitHub Release: pending
-- record tag-triggered workflow proof and release URLs: pending
+- create the reconciled release tag after `main` checks are green: done
+- publish the matching GitHub Release: done
+- record tag-triggered workflow proof and release URLs: done
 
 Acceptance:
 
-- tag points at the intended `main` commit: pending
-- Style, Swift macOS, and Swift Linux tag workflows pass: pending
-- roadmap and epic issue state match the published release: pre-publication
-  correction is in review in PR #77; published release state is pending
+- tag points at the intended `main` commit: done
+- Style, Swift macOS, and Swift Linux tag workflows pass: done
+- roadmap and epic issue state match the published release: done
 
 ## Research Rules
 

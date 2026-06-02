@@ -136,3 +136,29 @@ After publishing:
    describe the released behavior.
 4. Open a follow-up issue for any release note correction instead of rewriting
    history.
+
+## Published Release Proof
+
+Release: `v0.9.0`
+
+Published at: 2026-06-02 03:17 UTC
+
+GitHub Release: <https://github.com/mihaelamj/cvbuilder/releases/tag/v0.9.0>
+
+Tag object SHA: `7d5475702ec19db8eb5a72328d08d7d2fafdf114`
+
+Tag commit SHA: `828f90fd9834ba0a15550ca38208dbb11f022165`
+
+Tag commit subject: `docs(release): make v0.9.0 notes publishable`
+
+Tag-triggered workflow proof:
+
+- Style and namespacing:
+  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110649>
+- Swift Linux:
+  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110652>
+- Swift macOS:
+  <https://github.com/mihaelamj/cvbuilder/actions/runs/26796110656>
+
+All three tag-triggered workflows completed successfully for
+`828f90fd9834ba0a15550ca38208dbb11f022165`.
