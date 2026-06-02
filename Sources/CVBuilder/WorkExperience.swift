@@ -1,5 +1,8 @@
 import Foundation
 
+/// A company-level experience entry: the employer, the highest role held, the
+/// overall period, the nested project experiences, and an optional aggregated
+/// technical focus.
 public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let company: Company

@@ -1,6 +1,10 @@
 import Foundation
 
+/// A start and end for work or education. Both bounds are optional
+/// `SimpleDate`s: an absent bound means an open-ended or ongoing period, and
+/// decoding rejects a reversed period (`start` later than `end`).
 public struct Period: Codable, Identifiable, Equatable, Hashable, Sendable {
+    /// A month-and-year date. `month` is validated to `1...12` when decoding.
     public struct SimpleDate: Codable, Identifiable, Hashable, Equatable, Sendable {
         public let month: Int
         public let year: Int

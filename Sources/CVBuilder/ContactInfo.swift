@@ -1,5 +1,8 @@
 import Foundation
 
+/// Contact details for a CV: email, phone, location, and optional LinkedIn,
+/// GitHub, and website URLs. Renderers show these as factual contact lines and
+/// links; the optional URLs may be relative.
 public struct ContactInfo: Codable, Hashable, Sendable {
     public let email: String
     public let phone: String

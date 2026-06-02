@@ -1,5 +1,8 @@
 import Foundation
 
+/// A project as performed under a specific role and period, nested within a
+/// `WorkExperience`. Carries the underlying `Project` plus the role and period
+/// it was done under, and an optional local `TechnicalFocus`.
 public struct ProjectExperience: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let project: Project

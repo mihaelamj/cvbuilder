@@ -1,5 +1,7 @@
 import Foundation
 
+/// A job role: a `title` plus a `Seniority` level. `Role.none` is the unset
+/// placeholder, which renderers skip rather than showing `Junior Unknown`.
 public struct Role: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let title: String
