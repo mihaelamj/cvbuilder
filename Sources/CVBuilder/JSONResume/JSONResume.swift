@@ -10,7 +10,7 @@ import Foundation
 /// The model is a faithful, lossless representation of the JSON Resume schema
 /// for those sections. Mapping logic and the lossy-field inventory live in the
 /// conversion extensions (`JSONResume+CVDocument` for import and
-/// `CVDocument+JSONResume` for export) and in `docs/json-resume-interop.md`.
+/// `CVDocument+JSONResume` for export) and in the JSONResumeInterop catalog article.
 public struct JSONResume: Codable, Equatable, Sendable {
     /// Identity, contact data, and public profile links.
     public let basics: Basics

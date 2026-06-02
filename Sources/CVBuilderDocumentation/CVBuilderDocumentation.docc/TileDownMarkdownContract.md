@@ -1,6 +1,8 @@
 # TileDown Markdown Contract
 
-Status date: 2026-06-01
+The Linux-facing `CVBuilderTileDown` adapter: guarantees, front matter behavior, and fixture workflow.
+
+## Overview
 
 `CVBuilderTileDown` is the Linux-facing adapter for TileDown publishing
 workflows. The adapter is deliberately small: it turns `CVDocument` data into a
@@ -45,12 +47,14 @@ Front matter comes from `CVDocument.frontMatter` and is serialized according to
   profile-specific delimiters, key ordering, and value coercion.
 - The TileDown adapter does not add, remove, or rename front matter keys.
 - The TileDown adapter does not override the selected front matter profile.
-- TileDown-specific conventions should be represented as ordinary
-  `frontMatter` keys in the source `CVDocument`.
+- TileDown-specific conventions should be represented as ordinary `frontMatter`
+  keys in the source `CVDocument`.
 
 The adapter does not parse or validate TileDown configuration. That boundary is
 intentional: `cvbuilder` owns CV data and Markdown generation, while TileDown or
 the surrounding workflow owns publishing configuration.
+
+See <doc:FrontMatterProfiles> for delimiters, key ordering, and value coercion.
 
 ## Markdown Shape
 

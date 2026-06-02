@@ -1,0 +1,19 @@
+%% Section order for each rendering mode. Each mode is an internally vertical
+%% chain. Section boxes are generated artifact sections. Colors: see legend.
+flowchart TD
+    subgraph EX["experiencedTechnical"]
+        direction TB
+        E0["Contact"] --> E1["Experience"] --> E2["Public Evidence"] --> E3["Skills"] --> E4["Education"] --> E5["Links"]
+    end
+    subgraph EC["earlyCareerTechnical"]
+        direction TB
+        C0["Contact"] --> C1["Education"] --> C2["Public Evidence"] --> C3["Experience"] --> C4["Skills"] --> C5["Links"]
+    end
+    subgraph PH["publicEvidenceHeavyTechnical"]
+        direction TB
+        P0["Contact"] --> P1["Public Evidence"] --> P2["Experience"] --> P3["Skills"] --> P4["Education"] --> P5["Links"]
+    end
+
+    classDef output fill:#ceead6,stroke:#137333,color:#111;
+
+    class E0,E1,E2,E3,E4,E5,C0,C1,C2,C3,C4,C5,P0,P1,P2,P3,P4,P5 output;

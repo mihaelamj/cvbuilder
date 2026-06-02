@@ -1,0 +1,33 @@
+%% Authoring-to-output pipeline. Colors are defined in the legend diagram.
+flowchart TD
+    A["Typed CV or hand-written<br/>CVDocument JSON"]
+    JR["JSON Resume document"]
+    D["CVDocument<br/>canonical source of truth"]
+    CLI["cvbuilder CLI and<br/>Rendering.MarkdownDocumentRenderer"]
+    MD["Deterministic Markdown"]
+    NJ["Normalized JSON"]
+    JX["JSON Resume export"]
+    SSG["Static site generator,<br/>TileDown, or checked-in page"]
+    X["PDF, HTML, ATS scoring, fit labels"]
+
+    A --> D
+    JR -->|--from json-resume| D
+    D --> CLI
+    CLI --> MD
+    CLI --> NJ
+    CLI --> JX
+    MD --> SSG
+    JX --> SSG
+    CLI -. out of scope .-> X
+
+    classDef source fill:#d2e3fc,stroke:#1967d2,color:#111;
+    classDef process fill:#feefc3,stroke:#e8710a,color:#111;
+    classDef output fill:#ceead6,stroke:#137333,color:#111;
+    classDef external fill:#cbf0f8,stroke:#007b83,color:#111;
+    classDef excluded fill:#fad2cf,stroke:#c5221f,color:#111;
+
+    class A,JR,D source;
+    class CLI process;
+    class MD,NJ,JX output;
+    class SSG external;
+    class X excluded;

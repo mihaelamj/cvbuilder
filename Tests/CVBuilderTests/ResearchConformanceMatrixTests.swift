@@ -9,7 +9,9 @@ struct ResearchConformanceMatrixTests {
         let repositoryRoot = repositoryRootURL()
         let knownTestNames = try discoveredTestNames(in: repositoryRoot.appendingPathComponent("Tests"))
         let document = try String(
-            contentsOf: repositoryRoot.appendingPathComponent("docs/research/cvbuilder-conformance-matrix.md"),
+            contentsOf: repositoryRoot.appendingPathComponent(
+                "Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ConformanceMatrix.md",
+            ),
             encoding: .utf8,
         )
 

@@ -1,5 +1,9 @@
 # Localization
 
+How `RenderingOptions.locale` renders non-English section labels and dates while keeping output byte-for-byte deterministic.
+
+## Overview
+
 CVBuilder can render a `CVDocument` with non-English section labels, field
 labels, and month names while keeping output byte-for-byte deterministic. The
 candidate's own data (name, summary, descriptions) is never translated; only the
@@ -10,7 +14,7 @@ driven by `RenderingOptions.locale`. The deprecated `CVRendering` renderers
 (`StringCVRenderer`, `ConsoleCVRenderer`) are English-only and ignore the
 locale.
 
-## Selecting a locale
+## Selecting a Locale
 
 Set `rendering.locale` in the document, or `RenderingOptions(locale:)` in code:
 
@@ -35,7 +39,7 @@ Supported locales:
 When `locale` is omitted it defaults to `en`, and English output is identical to
 every prior release (byte-for-byte stable).
 
-## What gets localized
+## What Gets Localized
 
 - Section headings: Contact, Experience, Education, Public Evidence, Skills,
   Links, Projects.
@@ -62,7 +66,7 @@ Each locale has a checked-in fixture and golden Markdown under
 `Tests/CVBuilderTests/Fixtures/Localization/`, asserted byte-for-byte, and the
 locale enum is kept in lockstep with the JSON Schema by a drift test.
 
-## Adding a locale
+## Adding a Locale
 
 1. Add a case to `RenderingLocale` with its BCP-47 code as the raw value.
 2. Return a complete `RenderingLabels` set from `RenderingLocale.labels`.

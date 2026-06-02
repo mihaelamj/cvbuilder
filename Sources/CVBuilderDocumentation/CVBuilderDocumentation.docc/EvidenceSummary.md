@@ -1,15 +1,12 @@
-# CVBuilder Evidence Summary
+# Evidence Summary
 
-Status date: 2026-05-31
+First-pass research conclusions and the implementation rules they produced for CVBuilder's schema and renderer.
 
-Related issues: #5, #6, #7, #8, #9, #10, #11
+## Overview
 
-Implementation target: #3
-
-## Scope
-
-This document summarizes the research-backed constraints for CVBuilder's
-technical-CV schema and Markdown renderer.
+This article summarizes the research-backed constraints for CVBuilder's
+technical-CV schema and Markdown renderer. Related issues: #5, #6, #7, #8, #9,
+#10, #11. Implementation target: #3.
 
 CVBuilder should generate a publishable Markdown CV from structured data. It
 should not perform PDF rendering and should not depend on a specific
@@ -44,7 +41,7 @@ The strongest findings were:
 - Omitted arrays should decode as empty values.
 - Hand-authored JSON should not require UUIDs; synthesize IDs on decode when
   omitted.
-- `frontMatter: [String: String]` should be SSG-agnostic passthrough.
+- `frontMatter: [String: String]` should be a generator-agnostic passthrough.
 - Rendering must be deterministic so `--check` can compare exact output.
 
 ### Schema Coverage
@@ -109,7 +106,7 @@ Avoid:
 - age, birthdate, nationality, marital status, or decorative demographic
   metadata
 
-### Markdown And Parser Rules
+### Markdown and Parser Rules
 
 - Emit plain CommonMark-compatible Markdown.
 - Use one source-order reading path.
@@ -181,5 +178,5 @@ Implementation should test:
 - early-career ordering differs intentionally from experienced ordering
 - no tables/columns/images are used for core facts
 - repeated renders are byte-for-byte deterministic
-- renderer never emits prohibited scoring/personality/demographic fields
+- the renderer never emits prohibited scoring/personality/demographic fields
 - Linux CI runs schema, renderer, and CLI tests

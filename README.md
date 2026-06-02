@@ -90,8 +90,9 @@ let markdown = CVBuilderTileDown.Renderer().render(document)
 
 The TileDown adapter returns Markdown only. It does not run TileDown, render
 PDF, render HTML, write files, or import Apple UI frameworks. The full adapter
-contract is documented in
-[docs/tiledown-markdown-contract.md](docs/tiledown-markdown-contract.md).
+contract is documented in the
+[TileDown Markdown Contract](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/TileDownMarkdownContract.md)
+catalog article.
 
 Run the CV CLI:
 
@@ -170,13 +171,14 @@ empty values. This small document is valid input:
 ```
 
 The full data contract, Markdown behavior, decoding defaults, and migration
-rules are documented in
-[docs/cvdocument-contract.md](docs/cvdocument-contract.md). A complete
-handwritten fixture lives at [Examples/democv/cv.json](Examples/democv/cv.json).
-Editor-oriented schema metadata lives at
-[Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json).
-The file-driven authoring flow is documented in
-[docs/json-workflow.md](docs/json-workflow.md).
+rules are documented in the
+[CVDocument Contract](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/CVDocumentContract.md)
+catalog article. A complete handwritten fixture lives at
+[Examples/democv/cv.json](Examples/democv/cv.json). Editor-oriented schema
+metadata lives at [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json).
+The file-driven authoring flow is documented in the
+[JSON Workflow](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/JSONWorkflow.md)
+catalog article.
 
 ## CVBuilder roadmap
 
@@ -241,7 +243,8 @@ flowchart TD
     class P25 done;
 ```
 
-See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
+See the [Roadmap](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Roadmap.md)
+catalog article for the full roadmap.
 
 ## Validation
 
@@ -313,35 +316,54 @@ swift build --target CVBuilderTileDown
 
 ## Documentation
 
+Project documentation is a Swift-DocC catalog under
+[`Sources/CVBuilderDocumentation`](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc).
+It is the single source of truth and is the canonical, fully cross-linked
+reading experience. Build it locally:
+
+```sh
+swift package generate-documentation --target CVBuilderDocumentation
+swift package --disable-sandbox preview-documentation \
+    --target CVBuilderDocumentation --port 8765
+```
+
+Repository policy and machine-readable files:
+
 - [CHANGELOG.md](CHANGELOG.md): notable user-facing changes.
 - [CONTRIBUTING.md](CONTRIBUTING.md): contribution rules and local checks.
 - [SUPPORT.md](SUPPORT.md): where to file bugs, feature requests, and security issues.
-- [docs/roadmap.md](docs/roadmap.md): product roadmap and ordered issue plan.
-- [docs/cvdocument-contract.md](docs/cvdocument-contract.md): JSON schema,
-  Markdown behavior, and migration rules.
-- [docs/json-workflow.md](docs/json-workflow.md): file-driven JSON to Markdown
-  workflow, CI checks, SSG integration, and product boundaries.
-- [docs/front-matter-profiles.md](docs/front-matter-profiles.md): generic,
-  Toucan, Hugo, and Jekyll front matter profiles.
-- [docs/release-checklist.md](docs/release-checklist.md): Markdown-first
-  release gates, tag process, release-note expectations, and boundaries.
-- [docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md): release
-  notes for the first Markdown-first release tag.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
-- [docs/rendering-modes.md](docs/rendering-modes.md): rendering policy names,
-  evidence mapping, and mode fixture coverage.
-- [docs/tiledown-markdown-contract.md](docs/tiledown-markdown-contract.md):
-  Linux adapter guarantees, front matter behavior, and fixture workflow.
 - [Examples/tiledown/democv.md](Examples/tiledown/democv.md): generated
   TileDown-oriented Markdown example.
-- [docs/research/README.md](docs/research/README.md): research map.
-- [docs/research/cvbuilder-evidence-summary.md](docs/research/cvbuilder-evidence-summary.md):
-  evidence summary for technical CV decisions.
-- [docs/research/cvbuilder-proof-matrix.md](docs/research/cvbuilder-proof-matrix.md):
-  source-to-claim proof matrix.
-- [docs/research/cvbuilder-deep-review-protocol.md](docs/research/cvbuilder-deep-review-protocol.md):
-  deeper research protocol.
+
+Catalog articles (each renders in DocC; source Markdown is linked here):
+
+- [Roadmap](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Roadmap.md):
+  product roadmap and ordered issue plan.
+- [CVDocument Contract](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/CVDocumentContract.md):
+  JSON contract, Markdown behavior, and migration rules.
+- [JSON Workflow](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/JSONWorkflow.md):
+  file-driven JSON to Markdown workflow, CI checks, SSG integration, and boundaries.
+- [Rendering Modes](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/RenderingModes.md):
+  rendering policy names, evidence mapping, and mode fixture coverage.
+- [Front Matter Profiles](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/FrontMatterProfiles.md):
+  generic, Toucan, Hugo, and Jekyll front matter profiles.
+- [Localization](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Localization.md):
+  locale-selectable labels and deterministic dates.
+- [TileDown Markdown Contract](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/TileDownMarkdownContract.md):
+  Linux adapter guarantees, front matter behavior, and fixture workflow.
+- [JSON Resume Interop](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/JSONResumeInterop.md):
+  import and export mapping, round-trip guarantee, and lossy fields.
+- [Release Checklist](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ReleaseChecklist.md):
+  Markdown-first release gates, tag process, and boundaries.
+- [Release Notes](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ReleaseNotes.md):
+  notes for the first Markdown-first release tag.
+- [Research Overview](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ResearchOverview.md):
+  the evidence behind renderer policy, organized from first principles, with the
+  source, proof, and conformance matrices.
+- [Maintaining the Docs](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/MaintainingTheDocs.md):
+  the if-you-change-X-update-Y contract and the diagram pipeline.
 
 ## Platform Boundaries
 

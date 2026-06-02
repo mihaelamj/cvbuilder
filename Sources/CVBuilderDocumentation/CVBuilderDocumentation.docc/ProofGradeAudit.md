@@ -1,11 +1,11 @@
-# Proof-Grade Scientific Evidence Audit
+# Proof-Grade Evidence Audit
 
-Status date: 2026-05-31
+The audit plan: evidence standard, the proof packet schema, the claims to prove or reject, and acceptance criteria.
 
-Related issue: #11
+## Overview
 
-This document defines the proof-grade audit. The completed proof matrix and
-final rule decisions live in `cvbuilder-proof-matrix.md`.
+This article defines the proof-grade audit. The completed proof matrix and final
+rule decisions live in <doc:ProofMatrix>. Related issue: #11.
 
 ## Goal
 
@@ -67,7 +67,7 @@ Do not use long copyrighted excerpts. Short source snippets are allowed only
 when needed and must remain minimal; otherwise paraphrase findings and cite the
 source.
 
-## Claims To Prove Or Reject
+## Claims to Prove or Reject
 
 Audit these specific CVBuilder rules:
 
@@ -92,7 +92,7 @@ Audit these specific CVBuilder rules:
 15. CVBuilder should not optimize for a specific ATS/LLM; it should emit
     factual, low-noise, auditable Markdown.
 
-## Suggested Source Families To Re-check
+## Suggested Source Families to Re-check
 
 - Personnel-selection validity: Schmidt & Hunter; Sackett et al.; structured
   forms/biodata literature.
@@ -125,8 +125,8 @@ Audit these specific CVBuilder rules:
   documents why the available literature is thinner.
 - At least 10 sources are technical/software-engineering-specific or
   parser-specific.
-- Every source row includes method, sample/population, limitation, and
-  CVBuilder implication.
+- Every source row includes method, sample/population, limitation, and CVBuilder
+  implication.
 - Unsupported resume folklore is rejected explicitly.
 - The final #3 update contains no rule presented as evidence-backed unless the
   proof matrix supports it.

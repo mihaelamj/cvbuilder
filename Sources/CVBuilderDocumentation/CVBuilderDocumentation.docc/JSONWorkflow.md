@@ -1,8 +1,10 @@
-# JSON To Markdown Workflow
+# JSON to Markdown Workflow
 
-Status date: 2026-06-02
+The supported file-driven path from one `CVDocument` JSON file to deterministic Markdown.
 
-This document describes the supported file-driven CVBuilder workflow:
+## Overview
+
+This article describes the supported file-driven CVBuilder workflow:
 
 1. Write one `CVDocument` JSON file.
 2. Generate deterministic Markdown with the `cvbuilder` CLI.
@@ -12,6 +14,15 @@ This document describes the supported file-driven CVBuilder workflow:
 
 `CVDocument` remains the source of truth. Markdown and normalized JSON are
 generated artifacts.
+
+Catalog diagrams are color-coded; the legend below defines each class and is the
+first diagram to read.
+
+![Color legend for every catalog diagram](legend)
+
+The authoring-to-output pipeline, end to end:
+
+![Authoring-to-output pipeline](pipeline)
 
 ## Boundary
 
@@ -69,14 +80,12 @@ expanded document.
 }
 ```
 
-The full field contract is in
-[cvdocument-contract.md](cvdocument-contract.md). A complete senior technical
-fixture is in [Examples/democv/cv.json](../Examples/democv/cv.json).
+The full field contract is in <doc:CVDocumentContract>. A complete senior
+technical fixture is in `Examples/democv/cv.json`.
 
 For editor completion or validation, use the checked-in JSON Schema at
-[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json). The schema
-describes the public `CVDocument` contract only; it does not add rendering
-targets or scoring behavior.
+`Schemas/cvdocument.schema.json`. The schema describes the public `CVDocument`
+contract only; it does not add rendering targets or scoring behavior.
 
 To verify that the checked-in examples and fixtures still match the schema, run:
 
@@ -115,7 +124,7 @@ Validation checks the input against the public JSON Schema, then decodes it as
 `$.cv.experience[0].period.start.month`; decode failures use the same
 coding-path diagnostics as rendering, such as `cv.contactInfo.email`.
 
-## Print The JSON Schema
+## Print the JSON Schema
 
 Print the canonical schema to stdout:
 
@@ -123,11 +132,10 @@ Print the canonical schema to stdout:
 swift run cvbuilder -- --print-schema
 ```
 
-The command emits the same bytes as
-[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json), so editors
+The command emits the same bytes as `Schemas/cvdocument.schema.json`, so editors
 and CI can retrieve the schema through the CLI.
 
-## Scaffold A Starter Document
+## Scaffold a Starter Document
 
 Create the minimal starter document shown in this guide:
 
@@ -162,9 +170,8 @@ git diff -- cv/index.md
 swift run cvbuilder --data cv.json --out cv/index.md --check
 ```
 
-The same pattern is used by
-[scripts/check-generated-fixtures.sh](../scripts/check-generated-fixtures.sh)
-for the checked-in demo output.
+The same pattern is used by `scripts/check-generated-fixtures.sh` for the
+checked-in demo output.
 
 ## Write Normalized JSON
 
@@ -218,8 +225,8 @@ swift run cvbuilder --data cv.json --out cv/index.md --front-matter-profile hugo
 ```
 
 Supported values are `generic`, `toucan`, `hugo`, and `jekyll`. See
-[front-matter-profiles.md](front-matter-profiles.md) for delimiters, key
-ordering, and value coercion rules.
+<doc:FrontMatterProfiles> for delimiters, key ordering, and value coercion
+rules.
 
 ## Static Site Integration
 
@@ -241,8 +248,7 @@ swift run cvbuilder --data content/cv/cv.json --out content/cv/index.md
 Then let the site generator consume `content/cv/index.md`. CVBuilder does not
 run the site generator, choose a theme, inject layouts, or publish the site.
 
-For TileDown-oriented workflows, see
-[tiledown-markdown-contract.md](tiledown-markdown-contract.md). The TileDown
+For TileDown-oriented workflows, see <doc:TileDownMarkdownContract>. The TileDown
 adapter is Markdown-only and Linux-only.
 
 ## Rendering Modes
@@ -267,8 +273,7 @@ Supported modes:
 - `publicEvidenceHeavyTechnical`: contact, public evidence, experience, skills,
   education, links.
 
-Mode policies and evidence mapping are documented in
-[rendering-modes.md](rendering-modes.md).
+Mode policies and evidence mapping are documented in <doc:RenderingModes>.
 
 ## Public Technical Evidence
 
@@ -296,9 +301,8 @@ rankings, inferred seniority, or fit labels to public artifacts.
 
 ## Research Boundary
 
-The implementation rules come from the research documents in
-[docs/research](research/README.md). The primary implementation map is
-[cvbuilder-proof-matrix.md](research/cvbuilder-proof-matrix.md).
+The implementation rules come from the research documents collected in
+<doc:ResearchOverview>. The primary implementation map is <doc:ProofMatrix>.
 
 The research supports a narrow product claim:
 

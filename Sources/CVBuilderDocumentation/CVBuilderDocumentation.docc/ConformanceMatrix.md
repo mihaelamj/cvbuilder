@@ -1,18 +1,19 @@
-# CVBuilder Research Conformance Matrix
+# Research Conformance Matrix
 
-Status date: 2026-06-02
+A regression contract mapping each surviving research rule R01 through R15 to code locations and enforcing tests.
 
-Related issues: #75, #76, #11, #3
+## Overview
 
-This document makes the surviving research rules from
-`cvbuilder-proof-matrix.md` traceable to implementation files and enforcing
-tests. The matrix is not a new research claim. It is a regression contract:
-each surviving rule R01 through R15 must have at least one implementation
-location and at least one named test.
+This article makes the surviving research rules from <doc:ProofMatrix> traceable
+to implementation files and enforcing tests. The matrix is not a new research
+claim. It is a regression contract: each surviving rule R01 through R15 must have
+at least one implementation location and at least one named test.
 
-`ResearchConformanceMatrixTests` checks this document against the Swift-side
-rule mapping. The test fails when a rule is missing, a code path no longer
-exists, or a referenced test name is stale.
+`ResearchConformanceMatrixTests` checks this mapping on the Swift side. The test
+fails when a rule is missing, a code path no longer exists, or a referenced test
+name is stale.
+
+Related issues: #75, #76, #11, #3.
 
 ## Matrix
 
@@ -36,8 +37,8 @@ exists, or a referenced test name is stale.
 
 ## Maintenance
 
-When a renderer policy changes, update this matrix in the same PR as the code
-or test change. A rule may map to more than one test, but it may not map to
-zero tests. If the project intentionally weakens or retires a research rule,
-change `cvbuilder-proof-matrix.md` first, then update this matrix and the test
-mapping in the same PR.
+When a renderer policy changes, update this matrix in the same PR as the code or
+test change. A rule may map to more than one test, but it may not map to zero
+tests. If the project intentionally weakens or retires a research rule, change
+<doc:ProofMatrix> first, then update this matrix and the test mapping in the same
+PR.

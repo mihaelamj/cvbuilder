@@ -75,7 +75,8 @@ if (cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh" 2>/dev
 fi
 
 RELEASE_ROOT="$PLATFORM_TMP/release"
-mkdir -p "$RELEASE_ROOT/docs/release-notes"
+RELEASE_DOCC="$RELEASE_ROOT/Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc"
+mkdir -p "$RELEASE_DOCC"
 
 cat > "$RELEASE_ROOT/CHANGELOG.md" <<'MARKDOWN'
 # Changelog
@@ -86,22 +87,22 @@ cat > "$RELEASE_ROOT/CHANGELOG.md" <<'MARKDOWN'
 MARKDOWN
 
 cat > "$RELEASE_ROOT/README.md" <<'MARKDOWN'
-[docs/release-notes/v0.9.0.md](docs/release-notes/v0.9.0.md)
+[Release notes](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/ReleaseNotes.md)
 MARKDOWN
 
-cat > "$RELEASE_ROOT/docs/roadmap.md" <<'MARKDOWN'
+cat > "$RELEASE_DOCC/Roadmap.md" <<'MARKDOWN'
 The release is v0.9.0.
 MARKDOWN
 
-cat > "$RELEASE_ROOT/docs/release-checklist.md" <<'MARKDOWN'
-Confirm `docs/release-notes/v0.9.0.md`.
+cat > "$RELEASE_DOCC/ReleaseChecklist.md" <<'MARKDOWN'
+Confirm the <doc:ReleaseNotes> article.
 Historical tags end at the historical `0.8.0` boundary.
 git tag -a v0.9.0 -m "CVBuilder v0.9.0"
 git push origin v0.9.0
 MARKDOWN
 
-cat > "$RELEASE_ROOT/docs/release-notes/v0.9.0.md" <<'MARKDOWN'
-# CVBuilder v0.9.0 Release Notes
+cat > "$RELEASE_DOCC/ReleaseNotes.md" <<'MARKDOWN'
+# Release Notes: v0.9.0
 
 CVBuilder `v0.9.0` ships Markdown.
 MARKDOWN
