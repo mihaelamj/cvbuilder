@@ -21,6 +21,66 @@ TileDown adapter, and runs on macOS and Linux. `CVDocument` is the single source
 of truth for CV data, front matter, links, public evidence, and rendering
 options.
 
+## Why this exists
+
+"A CV is just a CV, why automate it?" Because the mechanics quietly break in
+ways the wording never fixes:
+
+- Most people keep a CV in a Word file or a site template and edit it by hand,
+  then end up with three versions that disagree on dates and job titles.
+- Hand-built layout (columns, tables, skill bars, photos) confuses the parsers
+  and screen readers that read a CV before any human does, so decorative
+  formatting scores you worse, not better.
+- "Improvements" pile up: invented metrics, fit scores, personality labels. The
+  hiring research treats these as noise at best and bias at worst.
+
+CVBuilder does not write your CV. It fixes the mechanics. You keep one typed
+`CVDocument` as the single source of truth, and it renders clean, deterministic
+Markdown that any static site generator or Markdown viewer can publish and that
+parsers and assistive technology can read without tripping. It starts from the
+position that a CV is not a validated selection instrument, so it refuses to
+fake one: no scores, no skill bars, no personality or fit labels, no ATS gaming.
+Every rendering decision traces to peer-reviewed evidence or is openly labelled
+a pragmatic convention. The result is a CV you can version, diff, and regenerate
+that says the same thing everywhere.
+
+Reach for it when you want to keep your CV in version control, publish it to a
+personal site or a checked-in page, generate role-specific variants from one
+source, or move a resume in and out of the JSON Resume format without losing
+data.
+
+```mermaid
+flowchart TD
+    Leg["Legend &nbsp;·&nbsp; blue = your data &nbsp;·&nbsp; orange = the engine &nbsp;·&nbsp; green = output &nbsp;·&nbsp; teal = who reads it"]:::legend
+
+    CVD["CVDocument<br/>typed Swift, or one JSON file"]:::source
+    JRin["JSON Resume<br/>optional import"]:::source
+
+    Eng["cvbuilder<br/>deterministic renderer + validator"]:::engine
+
+    MD["Markdown<br/>escaped, single reading order"]:::output
+    NJ["Normalized JSON<br/>byte-stable, passes --check"]:::output
+    JRout["JSON Resume<br/>export"]:::output
+
+    SSG["Static sites<br/>Hugo, Jekyll, Toucan, TileDown"]:::consumer
+    PPL["Humans, ATS parsers,<br/>screen readers"]:::consumer
+
+    CVD --> Eng
+    JRin --> Eng
+    Eng --> MD
+    Eng --> NJ
+    Eng --> JRout
+    MD --> SSG
+    MD --> PPL
+    JRout --> PPL
+
+    classDef legend fill:#fafafa,stroke:#9e9e9e,color:#111;
+    classDef source fill:#e8f0fe,stroke:#1a73e8,color:#111;
+    classDef engine fill:#fff3e0,stroke:#ef6c00,color:#111;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,color:#111;
+    classDef consumer fill:#e0f7fa,stroke:#00838f,color:#111;
+```
+
 ## What it does
 
 Give it structured CV data:
