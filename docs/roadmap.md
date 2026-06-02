@@ -74,7 +74,7 @@ Relevant links:
 - PR #55: merged first-release checklist.
 - Issue #57: active first public release hardening and tag proof epic.
 - Issue #58: closed tag-triggered release CI gates in PR #62.
-- Issue #61: package platform contract alignment in review in PR #63.
+- Issue #61: CI-green package platform contract alignment in PR #63.
 - Issue #60: next clean SwiftPM consumer smoke test.
 - Issue #59: next `v0.1.0` changelog and release notes.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -95,7 +95,7 @@ Ordered roadmap issues:
 11. #50 - done: add schema drift checks for examples and fixtures.
 12. #51 - done: prepare first-release checklist and release notes.
 13. #58 - done: add tag-triggered release CI gates.
-14. #61 - in review: align the package platform contract with supported platforms.
+14. #61 - CI green: align the package platform contract with supported platforms.
 15. #60 - next: add a clean SwiftPM consumer smoke test.
 16. #59 - next: prepare `v0.1.0` changelog and release notes.
 
@@ -114,7 +114,7 @@ flowchart TD
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
     P12["Phase 12<br/>#51 Release checklist<br/>Done"]
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
-    P14["Phase 14<br/>#61 Platform contract<br/>In review"]
+    P14["Phase 14<br/>#61 Platform contract<br/>CI green"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Next"]
     P16["Phase 16<br/>#59 v0.1.0 notes<br/>Next"]
 
@@ -425,15 +425,15 @@ Issue: [#61](https://github.com/mihaelamj/cvbuilder/issues/61).
 
 Deliverables:
 
-- align `Package.swift` with documented supported platforms: in review
-- keep README and docs consistent with package metadata: in review
-- add drift protection if practical: in review
+- align `Package.swift` with documented supported platforms: CI green
+- keep README and docs consistent with package metadata: CI green
+- add drift protection if practical: CI green
 
 Acceptance:
 
-- package metadata no longer implies unsupported iOS support: in review
-- macOS and Linux builds still pass: in review
-- no Apple UI framework or PDF dependency is introduced: in review
+- package metadata no longer implies unsupported iOS support: CI green
+- macOS and Linux builds still pass: CI green
+- no Apple UI framework or PDF dependency is introduced: CI green
 
 ### Phase 15: Add Clean SwiftPM Consumer Smoke Test
 
