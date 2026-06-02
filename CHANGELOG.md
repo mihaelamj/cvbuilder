@@ -47,6 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Empty or whitespace fields no longer produce degenerate Markdown: a link with
+  an empty label falls back to its destination as the visible text (never
+  `[](url)`), a public-evidence item with an empty title and url falls back to
+  its kind heading (never a bare `### `), and the education line emits only the
+  present side of degree/field (never a dangling ` in ` connector) (#130).
+- A project with the unset placeholder role no longer renders a
+  `Role: Junior Unknown` line, and company-URL lookup tolerates trailing
+  whitespace in the key so a heading still links (#125).
 - `CV.createFromProjects` now sorts current companies ahead of finished ones, so
   an ongoing role rendered as "... - Present" appears at the top of the
   experience list instead of below older completed roles. The legacy
