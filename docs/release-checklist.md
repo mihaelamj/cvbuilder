@@ -36,6 +36,7 @@ Run these from the repository root before creating a tag:
 ```sh
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
+bash scripts/check-platform-contract.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-schema-drift.sh
 bash scripts/check-generated-fixtures.sh

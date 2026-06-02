@@ -10,6 +10,7 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 ```sh
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
+bash scripts/check-platform-contract.sh
 bash scripts/test-quality-gates.sh
 bash scripts/check-generated-fixtures.sh
 swiftformat . --config .swiftformat --lint
@@ -56,6 +57,7 @@ committed files.
 - Keep one focused change per PR.
 - Add tests for behavior changes.
 - Run `bash scripts/check-style.sh`, `bash scripts/check-namespacing.sh`,
+  `bash scripts/check-platform-contract.sh`,
   `bash scripts/test-quality-gates.sh`,
   `bash scripts/check-generated-fixtures.sh`,
   `swiftformat . --config .swiftformat --lint`,

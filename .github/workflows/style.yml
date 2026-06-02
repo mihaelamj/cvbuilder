@@ -25,6 +25,9 @@ jobs:
       - name: Namespacing gate
         run: bash scripts/check-namespacing.sh
 
+      - name: Platform contract gate
+        run: bash scripts/check-platform-contract.sh
+
       - name: Quality gate tests
         run: bash scripts/test-quality-gates.sh
 
