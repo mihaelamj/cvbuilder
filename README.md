@@ -298,6 +298,22 @@ flowchart TD
     class P26 done;
 ```
 
+Epic status (color moves with state, per github-discipline Rule 1.8):
+
+```mermaid
+flowchart TD
+    Shipped["Shipped epics<br/>#12 #28 #47 #57 #67 #76 #80 #132<br/>Done"]
+    E98["Epic #98<br/>Standards catch-up<br/>Active"]
+    E86["Epic #86<br/>Research enrichment pass 2<br/>Active"]
+
+    classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
+    classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
+    class Shipped done;
+    class E98,E86 active;
+```
+
+Each open epic's issue body carries its own color-coded child-status diagram.
+
 See the [Roadmap](Sources/CVBuilderDocumentation/CVBuilderDocumentation.docc/Roadmap.md)
 catalog article for the full roadmap.
 
