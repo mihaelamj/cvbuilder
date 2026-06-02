@@ -351,6 +351,34 @@ struct MarkdownDocumentRendererTests {
         #expect(!output.split(separator: "\n").contains { String($0) == underline })
     }
 
+    @Test("empty or separator-only tags/categories render as an empty array, never a string")
+    func emptyTagsAndCategoriesRenderAsEmptyArray() {
+        for key in ["tags", "categories"] {
+            for value in ["", "  ", ","] {
+                let toucan = renderedFrontMatter([key: value], profile: .toucan)
+                let jekyll = renderedFrontMatter([key: value], profile: .jekyll)
+                let hugo = renderedFrontMatter([key: value], profile: .hugo)
+
+                #expect(toucan.contains("\(key): []"))
+                #expect(jekyll.contains("\(key): []"))
+                #expect(hugo.contains("\(key) = []"))
+
+                // Never a string scalar and never the raw separator string.
+                #expect(!toucan.contains("\(key): \""))
+                #expect(!hugo.contains("\(key) = \""))
+            }
+        }
+    }
+
+    @Test("tags/categories with empty middle elements drop the blanks")
+    func tagsDropEmptyMiddleElements() {
+        for key in ["tags", "categories"] {
+            #expect(renderedFrontMatter([key: "a,,b"], profile: .toucan).contains("\(key):\n  - \"a\"\n  - \"b\""))
+            #expect(renderedFrontMatter([key: "a,,b"], profile: .jekyll).contains("\(key):\n  - \"a\"\n  - \"b\""))
+            #expect(renderedFrontMatter([key: "a,,b"], profile: .hugo).contains("\(key) = [\"a\", \"b\"]"))
+        }
+    }
+
     @Test("front matter keys and scalar values are quoted and single-line")
     func frontMatterScalarsAreQuotedAndSingleLine() {
         let document = makeHostileDocument(
@@ -467,6 +495,14 @@ struct MarkdownDocumentRendererTests {
 
         return count
     }
+}
+
+private func renderedFrontMatter(_ frontMatter: [String: String], profile: FrontMatterProfile) -> String {
+    let document = makeMinimalDocument(
+        frontMatter: frontMatter,
+        rendering: RenderingOptions(frontMatterProfile: profile),
+    )
+    return Rendering.MarkdownDocumentRenderer().render(document)
 }
 
 private func makeFrontMatterProfileDocument(profile: FrontMatterProfile?) -> CVDocument {

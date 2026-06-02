@@ -43,6 +43,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Front-matter `tags` and `categories` always render as an array under the
+  static-site-generator profiles, including the empty and separator-only cases
+  (an empty sequence: `[]` in TOML, `key: []` in YAML). Previously an empty or
+  separator-only value fell through to a string scalar and leaked the raw
+  separator, giving the key a non-uniform type; non-empty rendering is
+  unchanged (#120).
 - The CLI schema validator's `uri` format check now mirrors the model decoder,
   which accepts relative URLs (site-root paths, anchors, relative paths). It
   rejects only strings Foundation cannot parse into a URL, so `--validate` no
