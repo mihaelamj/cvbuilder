@@ -308,10 +308,12 @@ private let researchConformanceEntries: [ResearchConformanceEntry] = [
         codeLocations: [
             "Sources/CVBuilder/Rendering/Rendering.MarkdownDocumentRenderer.Formatting.swift",
             "Sources/CVBuilder/Period.swift",
+            "Sources/CVBuilder/Document/RenderingOptions.swift",
         ],
         testNames: [
             "date rendering emits no auto-computed gaps or durations",
             "partial periods render the present bound, not a fabricated range",
+            "the optional duration-period mode renders whole-year tenure on request",
         ],
     ),
     ResearchConformanceEntry(

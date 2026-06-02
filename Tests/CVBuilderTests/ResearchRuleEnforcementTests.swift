@@ -56,6 +56,20 @@ struct ResearchRuleEnforcementTests {
         #expect(renderer.render(document).contains("Jan 2016 - Dec 2018"))
     }
 
+    @Test("the optional duration-period mode renders whole-year tenure on request")
+    func durationPeriodModeRendersTenure() {
+        let role = Role(title: "Engineer", seniority: .senior)
+        let work = workExperience("Acme", role: role, start: (1, 2021), end: (1, 2024))
+        let document = CVDocument(cv: cv(experience: [work]), rendering: RenderingOptions(useDurationPeriods: true))
+
+        let output = renderer.render(document)
+
+        // Opt-in duration replaces the date range; it is derived only from the
+        // typed start and end, not from a gap between roles.
+        #expect(output.contains("3 yrs"))
+        #expect(!output.contains("Jan 2021 - Jan 2024"))
+    }
+
     // MARK: - R18 accomplishment content renders faithfully, never inflated
 
     @Test("accomplishment content renders verbatim without fabricated metrics")

@@ -188,6 +188,13 @@ extension Rendering.MarkdownDocumentRenderer {
 
 extension Rendering.MarkdownDocumentRenderer {
     func format(_ period: Period, isCurrent: Bool) -> String {
+        // Optional duration mode (R17): when both bounds are present, render the
+        // whole-year tenure (`3 yrs`) instead of a date range. A period missing a
+        // bound falls through to the date form.
+        if usesDurationPeriods, let start = period.start, let end = period.end {
+            return durationText(from: start, to: end)
+        }
+
         let startText = period.start.map(format)
         let endText = period.end.map(format)
 
@@ -226,6 +233,15 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         return "\(monthNames[date.month - 1]) \(date.year)"
+    }
+
+    /// Whole-year tenure between two dates, rounded to at least one year. Used by
+    /// the optional duration-period mode; the renderer derives this only from the
+    /// typed start and end, never as a gap between roles.
+    func durationText(from start: Period.SimpleDate, to end: Period.SimpleDate) -> String {
+        let totalMonths = (end.year * 12 + end.month) - (start.year * 12 + start.month)
+        let years = max(1, Int((Double(totalMonths) / 12.0).rounded()))
+        return years == 1 ? "1 yr" : "\(years) yrs"
     }
 
     func orderedSkillCategories(_ skills: [Tech]) -> [Tech.Category?] {

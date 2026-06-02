@@ -29,6 +29,12 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
     /// When `false`, the renderer emits empty optional section headings to make
     /// the intended document skeleton explicit.
     public let omitEmptySections: Bool
+    /// Whether periods render as a duration (`3 yrs`) instead of a date range.
+    ///
+    /// Defaults to `false` (date-range form). When `true`, a period with both a
+    /// start and end renders its whole-year tenure; periods missing a bound fall
+    /// back to the date form. The renderer still never derives inter-role gaps.
+    public let useDurationPeriods: Bool
 
     private enum CodingKeys: String, CodingKey {
         case frontMatterProfile
@@ -40,6 +46,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         case nestProjectsUnderRoles
         case compactGroupedSkills
         case omitEmptySections
+        case useDurationPeriods
     }
 
     public init(
@@ -52,6 +59,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         nestProjectsUnderRoles: Bool = true,
         compactGroupedSkills: Bool = true,
         omitEmptySections: Bool = true,
+        useDurationPeriods: Bool = false,
     ) {
         self.frontMatterProfile = frontMatterProfile
         self.mode = mode
@@ -62,6 +70,7 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
         self.nestProjectsUnderRoles = nestProjectsUnderRoles
         self.compactGroupedSkills = compactGroupedSkills
         self.omitEmptySections = omitEmptySections
+        self.useDurationPeriods = useDurationPeriods
     }
 
     public init(from decoder: Decoder) throws {
@@ -103,6 +112,11 @@ public struct RenderingOptions: Codable, Equatable, Sendable {
             Bool.self,
             forKey: .omitEmptySections,
             defaultIfMissing: true,
+        )
+        useDurationPeriods = try container.decode(
+            Bool.self,
+            forKey: .useDurationPeriods,
+            defaultIfMissing: false,
         )
     }
 }
