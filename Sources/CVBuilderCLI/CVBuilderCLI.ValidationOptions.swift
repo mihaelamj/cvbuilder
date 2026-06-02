@@ -1,51 +1,31 @@
 public extension CVBuilderCLI {
-    /// Parsed command-line options for a `cvbuilder` invocation.
-    struct Options: Equatable, Sendable {
-        /// Path to the input `CVDocument` JSON file.
+    /// Parsed options for `cvbuilder --validate`.
+    struct ValidationOptions: Equatable, Sendable {
+        /// Path to the input `CVDocument` JSON file or `-` for standard input.
         public let dataPath: String
-        /// Path where the rendered Markdown or normalized JSON should be written or checked.
-        public let outputPath: String
-        /// Output format selected by `--format`; defaults to Markdown.
-        public let format: Format
-        /// Whether the command should compare output without writing.
-        public let check: Bool
 
-        /// Creates validated command options for programmatic execution.
-        public init(
-            dataPath: String,
-            outputPath: String,
-            format: Format = .markdown,
-            check: Bool = false,
-        ) throws {
+        /// Creates validated validation options for programmatic execution.
+        public init(dataPath: String) throws {
             guard !dataPath.isEmpty else {
                 throw Failure.missingValue(option: "--data")
             }
 
-            guard !outputPath.isEmpty else {
-                throw Failure.missingValue(option: "--out")
-            }
-
             self.dataPath = dataPath
-            self.outputPath = outputPath
-            self.format = format
-            self.check = check
         }
 
-        /// Parses command-line arguments after the executable name.
-        public static func parse(_ arguments: [String]) throws -> Options {
+        /// Parses command-line arguments for validation mode.
+        public static func parse(_ arguments: [String]) throws -> ValidationOptions {
             var parser = Parser(arguments: arguments)
             return try parser.parse()
         }
     }
 }
 
-private extension CVBuilderCLI.Options {
+private extension CVBuilderCLI.ValidationOptions {
     struct Parser {
         let arguments: [String]
         var dataPath: String?
-        var outputPath: String?
-        var format = CVBuilderCLI.Format.markdown
-        var check = false
+        var sawValidate = false
         var index: Int
 
         init(arguments: [String]) {
@@ -53,17 +33,25 @@ private extension CVBuilderCLI.Options {
             index = arguments.startIndex
         }
 
-        mutating func parse() throws -> CVBuilderCLI.Options {
+        mutating func parse() throws -> CVBuilderCLI.ValidationOptions {
             while index < arguments.endIndex {
                 try consume(arguments[index])
             }
 
-            return try makeOptions()
+            guard sawValidate else {
+                throw CVBuilderCLI.Failure.missingRequiredOption("--validate")
+            }
+
+            guard let dataPath else {
+                throw CVBuilderCLI.Failure.missingRequiredOption("--data <path>")
+            }
+
+            return try CVBuilderCLI.ValidationOptions(dataPath: dataPath)
         }
 
         mutating func consume(_ argument: String) throws {
-            if argument == "--check" {
-                check = true
+            if argument == "--validate" {
+                sawValidate = true
                 advance()
                 return
             }
@@ -90,10 +78,6 @@ private extension CVBuilderCLI.Options {
             switch option {
             case "--data":
                 dataPath = try requiredAssignedValue(value, option: option)
-            case "--out":
-                outputPath = try requiredAssignedValue(value, option: option)
-            case "--format":
-                format = try CVBuilderCLI.Format(argument: requiredAssignedValue(value, option: option))
             default:
                 if option.hasPrefix("-") {
                     throw CVBuilderCLI.Failure.unknownOption(option)
@@ -109,27 +93,11 @@ private extension CVBuilderCLI.Options {
             switch argument {
             case "--data":
                 dataPath = try nextValue(option: argument)
-            case "--out":
-                outputPath = try nextValue(option: argument)
-            case "--format":
-                format = try CVBuilderCLI.Format(argument: nextValue(option: argument))
             default:
                 return false
             }
 
             return true
-        }
-
-        func makeOptions() throws -> CVBuilderCLI.Options {
-            guard let dataPath else {
-                throw CVBuilderCLI.Failure.missingRequiredOption("--data <path>")
-            }
-
-            guard let outputPath else {
-                throw CVBuilderCLI.Failure.missingRequiredOption("--out <path>")
-            }
-
-            return try CVBuilderCLI.Options(dataPath: dataPath, outputPath: outputPath, format: format, check: check)
         }
 
         func requiredAssignedValue(_ value: String, option: String) throws -> String {

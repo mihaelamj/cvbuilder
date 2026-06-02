@@ -95,6 +95,53 @@ swift run cvbuilder --data cv.json --out cv/index.md
 The command creates parent directories for `--out` when needed and writes one
 Markdown file. Markdown output includes a trailing newline.
 
+To compose in shell pipelines, read from stdin with `--data -` and write to
+stdout with `--out -`:
+
+```sh
+cat cv.json | swift run cvbuilder --data - --out -
+```
+
+## Validate Input
+
+Validate a `CVDocument` without writing generated output:
+
+```sh
+swift run cvbuilder --data cv.json --validate
+```
+
+Validation checks the input against the public JSON Schema, then decodes it as
+`CVDocument`. Schema failures report JSON paths such as
+`$.cv.experience[0].period.start.month`; decode failures use the same
+coding-path diagnostics as rendering, such as `cv.contactInfo.email`.
+
+## Print The JSON Schema
+
+Print the canonical schema to stdout:
+
+```sh
+swift run cvbuilder -- --print-schema
+```
+
+The command emits the same bytes as
+[Schemas/cvdocument.schema.json](../Schemas/cvdocument.schema.json), so editors
+and CI can retrieve the schema through the CLI.
+
+## Scaffold A Starter Document
+
+Create the minimal starter document shown in this guide:
+
+```sh
+swift run cvbuilder -- --init cv.json
+```
+
+`--init` refuses to overwrite an existing file. Pass `--force` only when you
+intend to replace it:
+
+```sh
+swift run cvbuilder -- --init cv.json --force
+```
+
 ## Check Generated Output
 
 Use `--check` to fail when checked-in Markdown is stale:

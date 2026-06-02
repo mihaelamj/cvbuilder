@@ -1,0 +1,338 @@
+import Foundation
+
+extension CVBuilderCLI {
+    enum SchemaDocument {
+        static let data = Data((json + "\n").utf8)
+
+        private static let json = #"""
+        {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "https://raw.githubusercontent.com/mihaelamj/cvbuilder/main/Schemas/cvdocument.schema.json",
+          "title": "CVDocument",
+          "description": "Machine-readable schema for CVBuilder's Markdown-first CVDocument JSON contract.",
+          "type": "object",
+          "required": ["cv"],
+          "properties": {
+            "frontMatter": {
+              "type": "object",
+              "description": "Static-site front matter emitted before the Markdown body. Keys and values are strings.",
+              "additionalProperties": { "type": "string" },
+              "default": {}
+            },
+            "cv": { "$ref": "#/$defs/cv" },
+            "links": {
+              "$ref": "#/$defs/documentLinks",
+              "default": {}
+            },
+            "publicEvidence": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/publicEvidence" },
+              "default": []
+            },
+            "rendering": {
+              "$ref": "#/$defs/renderingOptions",
+              "default": {}
+            }
+          },
+          "$defs": {
+            "uuid": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "nullableUri": {
+              "type": ["string", "null"],
+              "format": "uri"
+            },
+            "nullableString": {
+              "type": ["string", "null"]
+            },
+            "nullableInteger": {
+              "type": ["integer", "null"]
+            },
+            "stringArray": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": []
+            },
+            "cv": {
+              "type": "object",
+              "required": ["name", "title", "summary", "contactInfo"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "name": { "type": "string" },
+                "title": { "type": "string" },
+                "summary": { "type": "string" },
+                "contactInfo": { "$ref": "#/$defs/contactInfo" },
+                "experience": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/workExperience" },
+                  "default": []
+                },
+                "education": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/education" },
+                  "default": []
+                },
+                "skills": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/tech" },
+                  "default": []
+                }
+              }
+            },
+            "contactInfo": {
+              "type": "object",
+              "required": ["email", "phone", "location"],
+              "properties": {
+                "email": { "type": "string" },
+                "phone": { "type": "string" },
+                "linkedIn": { "$ref": "#/$defs/nullableUri" },
+                "github": { "$ref": "#/$defs/nullableUri" },
+                "website": { "$ref": "#/$defs/nullableUri" },
+                "location": { "type": "string" }
+              }
+            },
+            "company": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "name": { "type": "string" }
+              }
+            },
+            "role": {
+              "type": "object",
+              "required": ["title", "seniority"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "title": { "type": "string" },
+                "seniority": {
+                  "type": "string",
+                  "enum": ["Intern", "Junior", "Mid", "Senior", "Lead", "Principal", "Chief"]
+                }
+              }
+            },
+            "period": {
+              "type": "object",
+              "required": ["start", "end"],
+              "properties": {
+                "start": { "$ref": "#/$defs/simpleDate" },
+                "end": { "$ref": "#/$defs/simpleDate" }
+              }
+            },
+            "simpleDate": {
+              "type": "object",
+              "required": ["month", "year"],
+              "properties": {
+                "month": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                "year": { "type": "integer" }
+              }
+            },
+            "technicalFocus": {
+              "type": "object",
+              "properties": {
+                "areas": { "$ref": "#/$defs/stringArray" },
+                "tags": { "$ref": "#/$defs/stringArray" }
+              },
+              "default": {}
+            },
+            "nullableTechnicalFocus": {
+              "anyOf": [
+                { "$ref": "#/$defs/technicalFocus" },
+                { "type": "null" }
+              ]
+            },
+            "tech": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "name": { "type": "string" },
+                "category": {
+                  "enum": ["language", "framework", "tool", "platform", "concept", "other", null]
+                }
+              }
+            },
+            "workExperience": {
+              "type": "object",
+              "required": ["company", "role", "period"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "company": { "$ref": "#/$defs/company" },
+                "role": { "$ref": "#/$defs/role" },
+                "period": { "$ref": "#/$defs/period" },
+                "projects": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/projectExperience" },
+                  "default": []
+                },
+                "isCurrent": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "technicalFocus": { "$ref": "#/$defs/nullableTechnicalFocus" }
+              }
+            },
+            "projectExperience": {
+              "type": "object",
+              "required": ["project", "role", "period"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "project": { "$ref": "#/$defs/project" },
+                "role": { "$ref": "#/$defs/role" },
+                "period": { "$ref": "#/$defs/period" },
+                "technicalFocus": { "$ref": "#/$defs/nullableTechnicalFocus" }
+              }
+            },
+            "project": {
+              "type": "object",
+              "required": ["name", "company", "role", "period"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "name": { "type": "string" },
+                "company": { "$ref": "#/$defs/company" },
+                "descriptions": { "$ref": "#/$defs/stringArray" },
+                "techs": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/tech" },
+                  "default": []
+                },
+                "role": { "$ref": "#/$defs/role" },
+                "period": { "$ref": "#/$defs/period" },
+                "urls": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": { "$ref": "#/$defs/uri" }
+                    },
+                    { "type": "null" }
+                  ]
+                },
+                "isCurrent": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "technicalFocus": { "$ref": "#/$defs/nullableTechnicalFocus" }
+              }
+            },
+            "education": {
+              "type": "object",
+              "required": ["institution", "degree", "field", "period"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "institution": { "type": "string" },
+                "degree": { "type": "string" },
+                "field": { "type": "string" },
+                "period": { "$ref": "#/$defs/period" }
+              }
+            },
+            "link": {
+              "type": "object",
+              "required": ["label", "url"],
+              "properties": {
+                "label": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            },
+            "documentLinks": {
+              "type": "object",
+              "properties": {
+                "profiles": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/link" },
+                  "default": []
+                },
+                "downloads": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/link" },
+                  "default": []
+                },
+                "companyURLs": {
+                  "type": "object",
+                  "additionalProperties": { "type": "string" },
+                  "default": {}
+                }
+              },
+              "default": {}
+            },
+            "publicEvidence": {
+              "type": "object",
+              "required": ["title", "kind", "role", "summary", "url"],
+              "properties": {
+                "id": { "$ref": "#/$defs/uuid" },
+                "title": { "type": "string" },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "openSource",
+                    "talk",
+                    "publication",
+                    "app",
+                    "package",
+                    "technicalWriting",
+                    "project",
+                    "other"
+                  ]
+                },
+                "role": { "type": "string" },
+                "summary": { "type": "string" },
+                "url": { "type": "string" },
+                "technologies": { "$ref": "#/$defs/stringArray" },
+                "date": { "$ref": "#/$defs/nullableString" },
+                "period": {
+                  "anyOf": [
+                    { "$ref": "#/$defs/period" },
+                    { "type": "null" }
+                  ]
+                },
+                "highlights": { "$ref": "#/$defs/stringArray" },
+                "technicalFocus": { "$ref": "#/$defs/nullableTechnicalFocus" }
+              }
+            },
+            "renderingOptions": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "type": "string",
+                  "enum": [
+                    "experiencedTechnical",
+                    "earlyCareerTechnical",
+                    "publicEvidenceHeavyTechnical"
+                  ],
+                  "default": "experiencedTechnical"
+                },
+                "recentCompanyCount": { "$ref": "#/$defs/nullableInteger" },
+                "selectedExperienceIDs": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/uuid" },
+                  "default": []
+                },
+                "maxBulletsPerProject": { "$ref": "#/$defs/nullableInteger" },
+                "nestProjectsUnderRoles": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "compactGroupedSkills": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "omitEmptySections": {
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "default": {}
+            }
+          }
+        }
+        """#
+    }
+}

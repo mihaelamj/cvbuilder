@@ -99,6 +99,24 @@ Run the CV CLI:
 swift run cvbuilder --data cv.json --out cv/index.md
 ```
 
+Validate a CVDocument without writing output:
+
+```sh
+swift run cvbuilder --data cv.json --validate
+```
+
+Print the checked-in JSON Schema:
+
+```sh
+swift run cvbuilder -- --print-schema
+```
+
+Create a starter JSON document:
+
+```sh
+swift run cvbuilder -- --init cv.json
+```
+
 Show CLI usage:
 
 ```sh
@@ -115,6 +133,12 @@ Check a generated Markdown file:
 
 ```sh
 swift run cvbuilder --data cv.json --out cv/index.md --check
+```
+
+Compose through standard input and output:
+
+```sh
+cat cv.json | swift run cvbuilder --data - --out -
 ```
 
 ## JSON Input
@@ -164,7 +188,9 @@ release-ready authoring and CLI usability. Epic
 [#57](https://github.com/mihaelamj/cvbuilder/issues/57) completed first public
 release hardening and tag proof. Epic
 [#67](https://github.com/mihaelamj/cvbuilder/issues/67) reconciles release
-version history before publication.
+version history before publication. Epic
+[#80](https://github.com/mihaelamj/cvbuilder/issues/80) is active for the
+authoring and publishing experience.
 
 ```mermaid
 flowchart TD
@@ -189,8 +215,12 @@ flowchart TD
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
+    P22["Phase 22<br/>#81 CLI authoring<br/>Active"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Next"]
+    P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
+    P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
-    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
 
     classDef done fill:#e8f5e9,stroke:#2e7d32,color:#111;
     classDef active fill:#fff3e0,stroke:#ef6c00,color:#111;
@@ -205,6 +235,9 @@ flowchart TD
     class P19 done;
     class P20 done;
     class P21 done;
+    class P22 active;
+    class P23 next;
+    class P24,P25 todo;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
