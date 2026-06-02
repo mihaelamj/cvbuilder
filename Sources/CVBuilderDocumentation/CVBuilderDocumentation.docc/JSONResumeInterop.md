@@ -97,10 +97,19 @@ remaining document links in order.
 | `work[].summary` + `highlights` | one synthesized nested project's `descriptions` | `summary` first, then `highlights`, so the renderer shows them and export splits them back. |
 
 Seniority inference recognizes a leading `Intern`, `Junior`, `Mid`, `Senior`,
-`Lead`, `Principal`, or `Chief` word. `Senior iOS Engineer` becomes seniority
-`.senior` with title `iOS Engineer`; export rejoins them as the role name
-`Senior iOS Engineer`, so the position round-trips. A position with no
-recognized leading word defaults to `.mid`.
+`Lead`, `Principal`, or `Chief` word, matched case-insensitively, in a
+multi-word position. `Senior iOS Engineer` becomes seniority `.senior` with
+title `iOS Engineer`; export rejoins them as `Senior iOS Engineer`, so the
+position round-trips. A position with no recognized leading word, a single-word
+position (including a lone seniority word such as `Principal`), and an absent or
+empty position all default to `.mid`, and export emits the title alone, so they
+round-trip without a fabricated `Mid` prefix or trailing space.
+
+Three position cases are deliberately lossy or normalizing: a leading word
+matched case-insensitively re-emits in canonical casing (`senior` becomes
+`Senior`); internal runs of whitespace in the title collapse to a single space;
+and an explicit leading `Mid ` is dropped on export, because it is
+indistinguishable from the no-seniority default.
 
 ### education
 
@@ -161,8 +170,10 @@ outside the supported subset `S`:
 - Recognized-network casing other than `LinkedIn` and `GitHub` (for example
   `linkedin`), which export re-cases canonically.
 - `skills[].level` and `skills[].keywords` group names.
-- `work[].position` with no recognized leading seniority word; export prefixes
-  the inferred `Mid`.
+- `work[].position` casing of a recognized leading seniority word (re-cased
+  canonically), internal whitespace in the title (collapsed to single spaces),
+  and an explicit leading `Mid ` (dropped, as it is indistinguishable from the
+  no-seniority default).
 - Dates in `YYYY-MM-DD` (day dropped) or `YYYY` (month defaulted to `01`).
 - `projects[].entity`, which has no public-evidence home, and second and later
   `projects[].roles`.
@@ -177,7 +188,11 @@ This direction is structurally lossy. The following `CVDocument` data has no
 JSON Resume representation and is dropped on export:
 
 - All `id` values (`UUID`s are regenerated on a later import).
-- Role seniority beyond what the role name encodes.
+- Role seniority beyond what the position string encodes. In particular, a
+  `.mid` role whose `title` begins with a recognized seniority word (for example
+  `Role(seniority: .mid, title: "Senior Engineer")`) exports as the bare title,
+  so a later import infers that leading word as the seniority. `.mid` is the
+  no-seniority default and is indistinguishable from an authored `.mid`.
 - Per-project structure within a role: a role's nested projects are flattened
   into a single `summary` plus `highlights`, losing project boundaries, names,
   and per-project technologies, URLs, and dates.
