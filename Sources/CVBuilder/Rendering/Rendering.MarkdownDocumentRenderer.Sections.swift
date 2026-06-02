@@ -109,7 +109,9 @@ extension Rendering.MarkdownDocumentRenderer {
         var lines = ["## \(labels.education)"]
         for item in education {
             lines.append("### \(escapedMarkdownText(item.institution))")
-            lines.append("\(escapedMarkdownText(item.degree))\(labels.degreeFieldConnector)\(escapedMarkdownText(item.field))")
+            if let degreeFieldLine = degreeFieldLine(degree: item.degree, field: item.field) {
+                lines.append(degreeFieldLine)
+            }
             lines.append(format(item.period, isCurrent: false))
         }
 
@@ -124,7 +126,10 @@ extension Rendering.MarkdownDocumentRenderer {
 
         var lines = ["## \(labels.publicEvidence)"]
         for item in evidence {
-            lines.append("### \(linkedText(item.title, destination: item.url))")
+            // Never emit a bare `### ` heading: when the title and url are both
+            // empty, fall back to the evidence kind so the block keeps a heading.
+            let headingText = linkedText(item.title, destination: item.url)
+            lines.append("### \(headingText.isEmpty ? label(for: item.kind) : headingText)")
             lines.append("\(labels.kind): \(label(for: item.kind))")
             appendLine(labels.role, value: item.role, to: &lines)
             appendEvidenceDate(item, to: &lines)
@@ -218,7 +223,9 @@ extension Rendering.MarkdownDocumentRenderer {
         let project = projectExperience.project
         lines.append("\(headingLevel) \(escapedMarkdownText(project.name))")
         lines.append(format(projectExperience.period, isCurrent: project.isCurrent))
-        appendLine(labels.role, value: projectExperience.role.name, to: &lines)
+        if !projectExperience.role.isPlaceholder {
+            appendLine(labels.role, value: projectExperience.role.name, to: &lines)
+        }
 
         for description in limitedDescriptions(project.descriptions, maxCount: options.maxBulletsPerProject) {
             appendParagraph(description, to: &lines)
@@ -227,6 +234,25 @@ extension Rendering.MarkdownDocumentRenderer {
         appendLabelledList(labels.technologies, values: project.techs.map(\.name), to: &lines)
         appendFocus(projectExperience.technicalFocus, project.technicalFocus, to: &lines)
         appendProjectLinks(project.urls, to: &lines)
+    }
+
+    /// Builds the education `degree in field` line, emitting only the present
+    /// side so an empty degree or field never leaks a dangling connector
+    /// (`MSc in `, ` in CS`, or ` in `). Returns `nil` when both are empty.
+    func degreeFieldLine(degree: String, field: String) -> String? {
+        let escapedDegree = escapedMarkdownText(degree)
+        let escapedField = escapedMarkdownText(field)
+
+        switch (escapedDegree.isEmpty, escapedField.isEmpty) {
+        case (false, false):
+            return "\(escapedDegree)\(labels.degreeFieldConnector)\(escapedField)"
+        case (false, true):
+            return escapedDegree
+        case (true, false):
+            return escapedField
+        case (true, true):
+            return nil
+        }
     }
 
     func appendProjectLinks(_ urls: [URL]?, to lines: inout [String]) {

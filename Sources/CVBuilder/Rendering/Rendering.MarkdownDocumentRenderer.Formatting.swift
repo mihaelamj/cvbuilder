@@ -2,7 +2,7 @@ import Foundation
 
 extension Rendering.MarkdownDocumentRenderer {
     func workHeading(_ work: WorkExperience, links: DocumentLinks) -> String {
-        let company = if let url = links.companyURLs[work.company.name], !url.isEmpty {
+        let company = if let url = companyURL(for: work.company.name, in: links.companyURLs) {
             linkedText(work.company.name, destination: url)
         } else {
             escapedMarkdownText(work.company.name)
@@ -11,13 +11,39 @@ extension Rendering.MarkdownDocumentRenderer {
         return "\(company) - \(escapedMarkdownText(work.role.name))"
     }
 
+    /// Looks up a company URL by name, preferring an exact key match but falling
+    /// back to a whitespace-insensitive match so a key like `"Acme "` still links
+    /// the heading `"Acme"`. Returns `nil` when no non-empty URL is found.
+    func companyURL(for name: String, in companyURLs: [String: String]) -> String? {
+        if let url = companyURLs[name], !url.isEmpty {
+            return url
+        }
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let match = companyURLs
+            .filter { !$0.value.isEmpty && $0.key.trimmingCharacters(in: .whitespacesAndNewlines) == trimmedName }
+            .min { $0.key < $1.key }
+
+        return match?.value
+    }
+
     func linkedText(_ label: String, destination: String) -> String {
         let escapedLabel = escapedMarkdownText(label)
         guard let encodedDestination = encodedLinkDestination(destination) else {
             return escapedLabel
         }
 
-        return "[\(escapedLabel)](\(encodedDestination))"
+        // Never emit a blank-label link `[](dest)` / `[ ](dest)`: when the label
+        // is empty or whitespace, show the destination itself as the visible
+        // text. If even that is blank (e.g. a control-character-only
+        // destination), return empty so callers can omit or substitute the link
+        // rather than render a blank label.
+        let visibleLabel = escapedLabel.isEmpty ? escapedMarkdownText(destination) : escapedLabel
+        guard !visibleLabel.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return ""
+        }
+
+        return "[\(visibleLabel)](\(encodedDestination))"
     }
 
     func appendLine(_ label: String, value: String, to lines: inout [String]) {

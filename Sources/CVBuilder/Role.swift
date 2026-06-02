@@ -61,6 +61,14 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     /// Common role factory methods
     public static let none = Role(title: "Unknown", seniority: .junior)
 
+    /// Whether this is the unset placeholder role (`Role.none`) or has no title,
+    /// so renderers can skip an otherwise meaningless `Role: Junior Unknown`
+    /// line for a project that never had a real role.
+    public var isPlaceholder: Bool {
+        title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            || (title == Role.none.title && seniority == Role.none.seniority)
+    }
+
     /// Helper to compare roles by seniority
     public static func hasHigherSeniority(_ role1: Role, than role2: Role) -> Bool {
         role1.seniority > role2.seniority
