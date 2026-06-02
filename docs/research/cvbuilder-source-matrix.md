@@ -65,3 +65,81 @@ The strongest source families are:
 - GitHub mining validity studies
 - resume parsing / section extraction studies
 - bias and demographic cue studies
+
+## Enrichment Pass 2 (status date 2026-06-02)
+
+Related issues: #86 (epic), #87-#94. This pass adds peer-reviewed sources found
+in a second literature review, grouped by theme. The proof-grade rows, new rule
+IDs (R16-R19), and rule qualifications live in `cvbuilder-proof-matrix.md`.
+Preprints and workshop papers are marked; one unverified DOI (Skondras 2025) and
+one unverified author list (SkiLLMo 2025) must be confirmed before high-weight use.
+
+### Accomplishment Content And Writing Quality
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 34 | Thoms et al., 1999, Journal of Business and Psychology. DOI: https://doi.org/10.1023/A:1022974232557 | Accomplishment vs duty content | Resume-characteristic study predicting interview invitations. | Medium. | Support structured accomplishment (action + outcome) fields; this is the primary anchor for R18. |
+| 35 | Waung et al., 2017, Journal of Business and Psychology. DOI: https://doi.org/10.1007/s10869-016-9470-9 | Impression-management intensity | Content analysis plus controlled experiment. | Medium-high. | Render accomplishments faithfully but never auto-inflate; high-intensity self-promotion backfires. |
+| 36 | Wiles, Munyikwa & Horton, 2025, Management Science. DOI: https://doi.org/10.1287/mnsc.2024.04528 | Writing clarity and outcomes | Field experiment, about 480,000 jobseekers. | High. | Optimize for readable, error-free, deterministic output over volume. |
+| 37 | Tsai et al., 2011, Applied Psychology. DOI: https://doi.org/10.1111/j.1464-0597.2010.00434.x | Content relevance and fit | Field study, 216 recruiters. | High. | Prioritize role-relevant experience and education fields over exhaustive listing. |
+| 38 | Sterkens et al., 2023, PLoS One. DOI: https://doi.org/10.1371/journal.pone.0283280 | Resume errors | Factorial-survey experiment, 445 recruiters. | High. | Deterministic generation prevents the error class that demonstrably lowers interview odds. |
+| 39 | Petersheim et al., 2022, IEEE Transactions on Education. DOI: https://doi.org/10.1109/TE.2022.3199685 | CS-resume relevance | Recruiter vs student screening study. | Medium. | Surface high-signal technical items; do not pad. Domain-relevant to technical CVs. |
+
+### Accessibility And Semantic Structure
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 40 | Watanabe, 2007, W4A. DOI: https://doi.org/10.1145/1243441.1243473 | Heading usability | Controlled experiment, blind and sighted users. | High. | Correct heading hierarchy is a usability good in its own right; anchors R16. |
+| 41 | Williams et al., 2019, ACM TACCESS. DOI: https://doi.org/10.1145/3342282 | Linear vs tabular reading | Screen-reader look-up/synthesis experiment. | High. | Empirical (not just WCAG) backing for single reading order and no tables for core facts. |
+| 42 | Silva et al., 2024, ACM TACCESS. DOI: https://doi.org/10.1145/3649223 | Headings and cognitive load | Tool plus 8-user study. | Medium-high. | Authored headings reduce cognitive load and aid structural overview. |
+| 43 | Yu et al., 2025, ASSETS. DOI: https://doi.org/10.1145/3663547.3746353 | Logical ordering | 7-user restructured-HTML study. | Medium. | Predictable section ordering and clear heading labels aid comprehension. |
+| 44 | Reuschel et al., 2023, JVIB. DOI: https://doi.org/10.1177/0145482X231216757 | Application-pipeline accessibility | 30 application sites, expert testers. | High (descriptive). | Structure/labeling failures are a top barrier class in the hiring pipeline. |
+| 45 | Hamideh Kerdar et al., 2024, Discover Computing. DOI: https://doi.org/10.1007/s10791-024-09460-7 | Accessibility review | Scoping review. | Medium-high. | Review-tier anchor that structure and navigation are central to AT usability. |
+
+### Current Parsing And LLM Screening
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 46 | Zhang et al., 2024, EMNLP. https://aclanthology.org/2024.emnlp-main.540/ | Reading-order extraction | ROOR benchmark; ordering relations. | High. | Correct linear reading order measurably improves extraction; strengthens R02/R11. |
+| 47 | Zhang et al., 2023, EMNLP. DOI: https://doi.org/10.18653/v1/2023.emnlp-main.846 | Reading-order failure mode | Token Path Prediction; NER benchmarks. | High. | Columns/tables scramble reading order and break extraction; strengthens R11. |
+| 48 | Iso et al., 2025, NAACL (Industry). DOI: https://doi.org/10.18653/v1/2025.naacl-industry.55 | LLM matching bias | Bias evaluation of LLM job-resume matching. | High. | Screeners remain biased and shifting; do not game them (R15). |
+| 49 | Skondras et al., 2025, Electronics (MDPI). DOI: 10.3390/electronics14244960 [UNVERIFIED] | Structured prompting | Zero-shot resume-job matching via segmentation. | Medium. | Downstream pipelines normalize input into structured segments; mild support for R01. |
+
+### Skills Representation
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 50 | Zhang et al., 2022, NAACL. DOI: https://doi.org/10.18653/v1/2022.naacl-main.366 | Skill extraction | SkillSpan corpus and baselines. | High. | Treat skills as discrete typed entities (hard vs soft). |
+| 51 | Zhang et al., 2023, ACL. DOI: https://doi.org/10.18653/v1/2023.acl-long.662 | Taxonomy normalization | ESCOXLM-R multilingual pretraining. | High. | Optional normalized skill identifier (ESCO) makes skills machine-comparable. |
+| 52 | SkiLLMo, 2025, ACM SAC. DOI: https://doi.org/10.1145/3672608.3707960 [authors UNVERIFIED] | ESCO normalization | Extraction plus taxonomy matching. | Medium. | Corroborates that standardization to a taxonomy is a distinct valuable step. |
+| 53 | Bone, Gonzalez Ehlinger & Stephany, 2025, Technological Forecasting and Social Change. DOI: https://doi.org/10.1016/j.techfore.2025.124042 | Skills-based hiring | about 11M UK vacancies. | High. | Modern technical hiring foregrounds specific skills tied to roles over credentials. |
+| 54 | Gugnani & Misra, 2020, AAAI. DOI: https://doi.org/10.1609/aaai.v34i08.7038 | Contextual skills | Implicit skill inference for matching. | High. | Contextual skills tied to work beat detached lists by about 29.4%; backs R14/R06. |
+| 55 | Decorte et al., 2023, RecSys-in-HR workshop. arXiv 2310.15636 [workshop] | Career representation | Hybrid skill plus work-context model. | Medium. | Keep a structured skills surface and anchor skills in work context. |
+
+### Employment Gaps And Date Presentation
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 56 | Kristal et al., 2022, Nature Human Behaviour. DOI: https://doi.org/10.1038/s41562-022-01485-6 | Dates vs duration framing | Pre-registered audit, N=9,022 plus labs. | High. | Offer a duration-based period mode; do not auto-expose gaps; anchors R17. |
+| 57 | Kroft, Lange & Notowidigdo, 2013, Quarterly Journal of Economics. DOI: https://doi.org/10.1093/qje/qjt015 | Gap-length penalty | about 12,000-resume field experiment. | High. | Visible gap length is the penalized signal; default away from gap-revealing precision. |
+| 58 | Bateson, 2023, PLOS ONE. DOI: https://doi.org/10.1371/journal.pone.0281449 | Gap penalty | Pre-registered vignette, 974 adults. | Medium-high. | Penalty attaches to the gap's existence, not its cause; the renderer lever is presentation. |
+| 59 | Namingit, Blankenau & Schwab, 2021, Journal of Economic Behavior and Organization. DOI: https://doi.org/10.1016/j.jebo.2020.09.033 | Gap cause/disclosure | Resume audit with illness gap. | Medium-high. | Do not auto-render leave reasons; enriches R10. |
+
+### Localization And Name Handling
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 60 | Adamovic & Leibbrandt, 2023, The Leadership Quarterly. DOI: https://doi.org/10.1016/j.leaqua.2022.101655 | Name-origin bias | 12,000+ Australian applications. | High. | Localizing must not add origin signals (nationality, photo, transliteration). |
+| 61 | Krause, Rinne & Zimmermann, 2012, IZA Journal of European Labor Studies. DOI: https://doi.org/10.1186/2193-9012-1-5 | Anonymous applications | Synthesis of European experiments. | Medium-high. | Keep photo/DOB/nationality/marital-status opt-in and off by default. |
+| 62 | Sousa, Campos & Jorge, 2023, CIKM. DOI: https://doi.org/10.1145/3583780.3615130 | Locale date parsing | Multilingual temporal-expression models. | High. | Emit ISO 8601 machine value plus optional localized display; avoid ambiguous numeric dates. |
+| 63 | Mishra, He & Belli, 2020, AKBC workshop. arXiv 2008.03415 [workshop] | NER name bias | Demographic-name NER evaluation. | Medium-high. | Put the name in a fixed slot; do not rely on a parser recognizing the name string. |
+| 64 | Kesim & Deliahmetoglu, 2023. arXiv 2306.13062 [preprint] | Non-English resume NER | Turkish IT-resume NER. | Medium. | Keep date/degree/title/country/language as discrete delimited fields. |
+| 65 | Loessberg-Zahl, 2024. arXiv 2401.12941 [preprint] | Multicultural name detection | Name recognizer across 103 countries. | Medium. | Reinforces a structurally privileged name slot over morphology-based detection. |
+
+### Recruiter Attention And Ordering
+
+| # | Source | Area | Evidence / method | Strength | CVBuilder implication |
+|---|---|---|---|---|---|
+| 66 | Osanami Torngren et al., 2024, Frontiers in Sociology. DOI: https://doi.org/10.3389/fsoc.2024.1222850 | Eye-tracking | 40 recruiters, 200 CV-views. | High. | Dwell-time does not predict the decision; top placement is a sensible default, not a causal lever. |
+| 67 | Highhouse & Gallo, 1997, Human Performance. DOI: https://doi.org/10.1207/s15327043hup1001_2 | Serial-position effects | Controlled order-manipulation experiment. | High. | Order-effect direction is task-dependent (often recency); R03/R04 are heuristics, not primacy guarantees. |
+| 68 | Fousiani, Van Prooijen & Armenta, 2022, Frontiers in Psychology. DOI: https://doi.org/10.3389/fpsyg.2022.923329 | Context-dependent weighting | 260 recruiters plus 2 experiments. | High (verified), weak as ordering evidence. | Which section matters most is employer-dependent; undercuts any universal fixed order. |
