@@ -92,10 +92,9 @@ group owns one step, and the diagram shows the flow. Colors follow the legend.
    keep, revise, or downgrade it; reject folklore explicitly. Owned by
    <doc:ProofGradeAudit> (the audit standard and proof-packet schema) and
    <doc:ProofMatrix> (the source-level audit and the surviving R01-R19 rule set).
-4. **Enforcement.** Map the proof-grade rules R01-R15 to code and a named test so
+4. **Enforcement.** Map the proof-grade rules R01-R19 to code and a named test so
    drift fails the build. Owned by <doc:ConformanceMatrix>. The enrichment-pass-2
-   rules R16-R19 are evidence-surviving but not yet wired to code and tests; that
-   conformance work is tracked separately.
+   rules R16-R19 are now wired to enforcing tests alongside R01-R15.
 
 <doc:EvidenceSummary> is the synthesis across all four steps: the first-pass
 findings and the implementation rules they produced, in one place.
