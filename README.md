@@ -173,8 +173,8 @@ flowchart TD
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
-    P10["Phase 10<br/>#49 JSON Schema<br/>CI green"]
-    P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>In progress"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
@@ -186,9 +186,9 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9 done;
-    class P10 review;
-    class P11,P12 next;
+    class P5,P6,P7,P8,P9,P10 done;
+    class P11 active;
+    class P12 next;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
@@ -221,6 +221,13 @@ swift build --product cvbuilder
 swift test
 ```
 
+The schema drift check validates the checked-in example and fixture JSON files
+against the public `CVDocument` JSON Schema:
+
+```sh
+bash scripts/check-schema-drift.sh
+```
+
 The same core package is expected to build on macOS and Linux. GitHub CI runs
 style, macOS Swift, and Linux Swift workflows.
 
@@ -230,6 +237,7 @@ Useful local checks from the repository root:
 bash scripts/check-style.sh
 bash scripts/check-namespacing.sh
 bash scripts/test-quality-gates.sh
+bash scripts/check-schema-drift.sh
 bash scripts/check-generated-fixtures.sh
 swiftformat . --config .swiftformat --lint
 swiftlint --config .swiftlint.yml --strict

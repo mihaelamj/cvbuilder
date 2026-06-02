@@ -78,6 +78,12 @@ For editor completion or validation, use the checked-in JSON Schema at
 describes the public `CVDocument` contract only; it does not add rendering
 targets or scoring behavior.
 
+To verify that the checked-in examples and fixtures still match the schema, run:
+
+```sh
+bash scripts/check-schema-drift.sh
+```
+
 ## Generate Markdown
 
 Generate Markdown from the JSON file:

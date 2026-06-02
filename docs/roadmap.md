@@ -67,8 +67,8 @@ Relevant links:
   #45.
 - Issue #47: active release-ready authoring and CLI usability epic.
 - Issue #48: closed CLI help output.
-- Issue #49: CI-green machine-readable `CVDocument` JSON Schema in PR #53.
-- Issue #50: next schema drift checks.
+- Issue #49: closed machine-readable `CVDocument` JSON Schema in PR #53.
+- Issue #50: active schema drift checks.
 - Issue #51: next first-release checklist.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -84,8 +84,8 @@ Ordered roadmap issues:
 7. #19 - done: add evidence-backed renderer fixture proofs.
 8. #20 - done: document the JSON workflow and research-backed boundaries.
 9. #48 - done: add user-facing CLI help output.
-10. #49 - CI green: add a machine-readable `CVDocument` JSON Schema.
-11. #50 - next: add schema drift checks for examples and fixtures.
+10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
+11. #50 - in progress: add schema drift checks for examples and fixtures.
 12. #51 - next: prepare first-release checklist and release notes.
 
 ```mermaid
@@ -99,8 +99,8 @@ flowchart TD
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
-    P10["Phase 10<br/>#49 JSON Schema<br/>CI green"]
-    P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
+    P11["Phase 11<br/>#50 Schema drift checks<br/>In progress"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
@@ -112,9 +112,9 @@ flowchart TD
     classDef partial fill:#e0f7fa,stroke:#00838f,color:#111;
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
-    class P5,P6,P7,P8,P9 done;
-    class P10 review;
-    class P11,P12 next;
+    class P5,P6,P7,P8,P9,P10 done;
+    class P11 active;
+    class P12 next;
 ```
 
 ## Roadmap
@@ -336,15 +336,15 @@ Issue: [#49](https://github.com/mihaelamj/cvbuilder/issues/49).
 
 Deliverables:
 
-- add a checked-in JSON Schema for `CVDocument`: CI green
-- document schema usage for authoring workflows: CI green
-- keep schema claims within the Markdown-only CVBuilder boundary: CI green
+- add a checked-in JSON Schema for `CVDocument`: done
+- document schema usage for authoring workflows: done
+- keep schema claims within the Markdown-only CVBuilder boundary: done
 
 Acceptance:
 
-- schema is valid JSON: CI green
-- schema reflects `docs/cvdocument-contract.md`: CI green
-- docs link users to the schema: CI green
+- schema is valid JSON: done
+- schema reflects `docs/cvdocument-contract.md`: done
+- docs link users to the schema: done
 
 ### Phase 11: Add Schema Drift Checks
 
@@ -355,14 +355,14 @@ Issue: [#50](https://github.com/mihaelamj/cvbuilder/issues/50).
 
 Deliverables:
 
-- add a local drift check or Swift test for schema and fixtures: next
-- run the check in CI: next
-- document any user-facing command: next
+- add a local drift check or Swift test for schema and fixtures: in progress
+- run the check in CI: in progress
+- document any user-facing command: in progress
 
 Acceptance:
 
-- malformed or disconnected schema changes fail verification: next
-- Linux CI proves the check: next
+- malformed or disconnected schema changes fail verification: in progress
+- Linux CI proves the check: in progress
 
 ### Phase 12: Prepare First Release Checklist
 
