@@ -34,6 +34,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deprecated the legacy `CVRendering`, `MarkdownCVRenderer`,
   `StringCVRenderer`, and `ConsoleCVRenderer` APIs in favor of `CVDocument` and
   `Rendering.MarkdownDocumentRenderer`.
+- Model `id` fields are now `UUID?` and default to omitted instead of a freshly
+  synthesized `UUID()`. Omitted IDs stay omitted through decode and encode, an
+  explicit JSON `null` is still rejected, and explicit IDs round-trip unchanged.
+- `Tech` value identity is now its `name` and `category`, and `Company` value
+  identity is now its `name`, so deduplication and grouping key on the semantic
+  fields rather than a per-instance identifier.
+
+### Fixed
+
+- Normalized JSON is deterministic for documents that omit IDs: the same input
+  now produces byte-identical output across runs, so `--check` against the
+  CLI's own output passes (#119).
+- Skills no longer render twice when projects share a technology: skill
+  deduplication keys on `name` and `category` instead of synthesized identity
+  (#114).
+- `CV.createFromProjects` merges all projects at the same-named company into a
+  single experience entry even when each `Company` value was constructed
+  separately, instead of splitting one employer into duplicate headings (#131).
 
 ## [0.9.0] - 2026-06-02
 

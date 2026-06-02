@@ -1,7 +1,7 @@
 import Foundation
 
 public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let company: Company
     public let role: Role // Keep highest role for company-level summary
     public let period: Period
@@ -20,7 +20,7 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         company: Company,
         role: Role,
         period: Period,
@@ -40,7 +40,7 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         company = try container.decode(Company.self, forKey: .company)
         role = try container.decode(Role.self, forKey: .role)
         period = try container.decode(Period.self, forKey: .period)

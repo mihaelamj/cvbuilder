@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Role: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let title: String
     public let seniority: Seniority
 
@@ -11,7 +11,7 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
         case seniority
     }
 
-    public init(id: UUID = UUID(), title: String, seniority: Seniority) {
+    public init(id: UUID? = nil, title: String, seniority: Seniority) {
         self.id = id
         self.title = title
         self.seniority = seniority
@@ -20,7 +20,7 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         seniority = try container.decode(Seniority.self, forKey: .seniority)
     }

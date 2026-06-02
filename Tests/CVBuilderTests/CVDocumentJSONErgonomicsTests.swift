@@ -17,7 +17,7 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.cv.experience.isEmpty)
         #expect(document.cv.education.isEmpty)
         #expect(document.cv.skills.isEmpty)
-        #expect(document.cv.id.uuidString.count == 36)
+        #expect(document.cv.id == nil)
         try expectNormalizedRoundTrip(document)
     }
 
@@ -84,12 +84,12 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(document.rendering.nestProjectsUnderRoles)
         #expect(document.rendering.compactGroupedSkills)
         #expect(document.rendering.omitEmptySections)
-        #expect(work.id.uuidString.count == 36)
-        #expect(work.company.id.uuidString.count == 36)
-        #expect(work.role.id.uuidString.count == 36)
-        #expect(education.id.uuidString.count == 36)
-        #expect(skill.id.uuidString.count == 36)
-        #expect(evidence.id.uuidString.count == 36)
+        #expect(work.id == nil)
+        #expect(work.company.id == nil)
+        #expect(work.role.id == nil)
+        #expect(education.id == nil)
+        #expect(skill.id == nil)
+        #expect(evidence.id == nil)
         try expectNormalizedRoundTrip(document)
     }
 
@@ -112,8 +112,8 @@ struct CVDocumentJSONErgonomicsTests {
         #expect(project.techs.isEmpty)
         #expect(project.urls == nil)
         #expect(project.isCurrent == false)
-        #expect(project.id.uuidString.count == 36)
-        #expect(projectExperience.id.uuidString.count == 36)
+        #expect(project.id == nil)
+        #expect(projectExperience.id == nil)
         try expectNormalizedRoundTrip(document)
     }
 

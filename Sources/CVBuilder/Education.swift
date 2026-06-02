@@ -1,7 +1,7 @@
 import Foundation
 
 public struct Education: Codable, Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public let id: UUID?
     public let institution: String
     public let degree: String
     public let field: String
@@ -16,7 +16,7 @@ public struct Education: Codable, Identifiable, Hashable, Sendable {
     }
 
     public init(
-        id: UUID = UUID(),
+        id: UUID? = nil,
         institution: String,
         degree: String,
         field: String,
@@ -32,7 +32,7 @@ public struct Education: Codable, Identifiable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decode(UUID.self, forKey: .id, defaultIfMissing: UUID())
+        id = try container.decodeOmittable(UUID.self, forKey: .id)
         institution = try container.decode(String.self, forKey: .institution)
         degree = try container.decode(String.self, forKey: .degree)
         field = try container.decode(String.self, forKey: .field)
