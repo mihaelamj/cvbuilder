@@ -187,7 +187,7 @@ flowchart TD
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
     P18["Phase 18<br/>#69 Version guard<br/>Done"]
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
-    P20["Phase 20<br/>#74 Legacy CV path<br/>Active"]
+    P20["Phase 20<br/>#74 Legacy CV path<br/>In review"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Next"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21
@@ -203,7 +203,7 @@ flowchart TD
     class P17 done;
     class P18 done;
     class P19 done;
-    class P20 active;
+    class P20 review;
     class P21 next;
 ```
 
