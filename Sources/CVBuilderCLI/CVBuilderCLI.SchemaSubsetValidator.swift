@@ -185,7 +185,11 @@ extension CVBuilderCLI {
             case "uuid":
                 return UUID(uuidString: string) == nil ? ["\(path) is not a UUID"] : []
             case "uri":
-                return URL(string: string)?.scheme == nil ? ["\(path) is not an absolute URI"] : []
+                // Mirror the model decoder, whose `URL` fields accept relative
+                // URLs (site-root paths, anchors). Only reject strings Foundation
+                // cannot parse into a URL at all, so the validator never rejects a
+                // document the decoder accepts and the renderer renders.
+                return URL(string: string) == nil ? ["\(path) is not a valid URI"] : []
             default:
                 return []
             }
