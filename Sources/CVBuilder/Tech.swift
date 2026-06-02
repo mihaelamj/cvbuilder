@@ -9,6 +9,9 @@ import Foundation
  ```
  */
 
+/// A technology or skill with an optional `Category`. Value identity is
+/// `name` + `category`, so two entries naming the same technology in the same
+/// category are the same skill and deduplicate by meaning, not by `id`.
 public struct Tech: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let name: String

@@ -1,5 +1,7 @@
 import Foundation
 
+/// A single education entry: institution, degree, field of study, and the
+/// period attended. Rendered in the Education section as a factual record.
 public struct Education: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let institution: String

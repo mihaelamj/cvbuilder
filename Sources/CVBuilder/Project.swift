@@ -1,5 +1,8 @@
 import Foundation
 
+/// A concrete piece of work at a company: descriptions, technologies, role,
+/// period, and optional URLs and technical focus. Construct one directly or
+/// with the fluent `Project.Builder`.
 public struct Project: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let name: String

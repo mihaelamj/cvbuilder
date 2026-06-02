@@ -1,5 +1,8 @@
 import Foundation
 
+/// Canonical resume facts: identity, contact information, work experience,
+/// education, and skills. This is the core data a `CVDocument` publishes;
+/// `createFromProjects` builds one by grouping projects into companies.
 public struct CV: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let name: String

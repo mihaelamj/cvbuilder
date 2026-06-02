@@ -1,5 +1,8 @@
 import Foundation
 
+/// An employer. Value identity is the `name`, so projects at the same-named
+/// company group into one experience entry regardless of how each `Company`
+/// value was constructed or whether its `id` was supplied.
 public struct Company: Codable, Identifiable, Hashable, Sendable {
     public let id: UUID?
     public let name: String

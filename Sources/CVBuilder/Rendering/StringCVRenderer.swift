@@ -1,5 +1,8 @@
 import Foundation
 
+/// Deprecated plain-text `CV` renderer. Produces an English-only,
+/// non-Markdown string (used by `ConsoleCVRenderer`). Use `CVDocument` with
+/// `Rendering.MarkdownDocumentRenderer` for canonical, localized output.
 @available(*, deprecated, message: "Use CVDocument with Rendering.MarkdownDocumentRenderer.")
 public struct StringCVRenderer: CVRendering, Sendable {
     public var experienceTitle: String {
@@ -12,6 +15,7 @@ public struct StringCVRenderer: CVRendering, Sendable {
 
     public init() {}
 
+    /// Renders the CV as a plain-text string, current experience first.
     public func render(cv resume: CV) -> String {
         var output = ""
 
@@ -82,11 +86,13 @@ public struct StringCVRenderer: CVRendering, Sendable {
         return output
     }
 
+    /// Renders the CV and writes the plain text to `url` as UTF-8.
     public func save(to url: URL, cv resume: CV) throws {
         let content = render(cv: resume)
         try content.write(to: url, atomically: true, encoding: .utf8)
     }
 
+    /// Renders the CV and prints the plain text to standard output.
     public func printToConsole(cv resume: CV) {
         print(render(cv: resume))
     }
