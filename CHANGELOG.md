@@ -47,6 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Removed the unused, divergent `Period.formattedDateRange` (a `M/YYYY` layout
+  inconsistent with the canonical `Mon YYYY` output) and documented
+  `WorkExperience.formattedDateRange` as the intentionally English-only path for
+  the deprecated `CVRendering` renderers (which have no locale). The canonical
+  `Rendering.MarkdownDocumentRenderer` remains the localized source of truth
+  (#118).
 - The `CVBuilderDocumentation` target now depends on `CVBuilder` so DocC symbol
   links resolve, and macOS CI builds the catalog and fails on any DocC warning,
   so a broken reference no longer ships undetected (#127).

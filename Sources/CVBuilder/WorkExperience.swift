@@ -49,6 +49,11 @@ public struct WorkExperience: Codable, Identifiable, Hashable, Sendable {
         technicalFocus = try container.decodeIfPresent(TechnicalFocus.self, forKey: .technicalFocus)
     }
 
+    /// Renders the period for the deprecated `CVRendering` string/console
+    /// renderers, which have no locale. It is intentionally English-only
+    /// (English month abbreviations and the literal `Present`). The canonical,
+    /// localized formatting lives in `Rendering.MarkdownDocumentRenderer`; use
+    /// `CVDocument` for locale-aware output.
     public var formattedDateRange: String {
         let startString = period.start.map(Self.format)
         if isCurrent {
