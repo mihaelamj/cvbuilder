@@ -67,6 +67,10 @@ extension Rendering.MarkdownDocumentRenderer {
         }
 
         if let values = frontMatterArray(key: key, value: value) {
+            guard !values.isEmpty else {
+                return ["\(yamlKey): []"]
+            }
+
             return ["\(yamlKey):"] + values.map { "  - \(escapedFrontMatterScalar($0))" }
         }
 
@@ -110,12 +114,14 @@ extension Rendering.MarkdownDocumentRenderer {
             return nil
         }
 
-        let values = value
+        // Always return an array for these keys, never nil. An empty or
+        // separator-only value yields an empty array so the field renders as an
+        // empty sequence rather than falling through to a string scalar (which
+        // would leak the raw separator and give the key a non-uniform type).
+        return value
             .split(separator: ",")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
-
-        return values.isEmpty ? nil : values
     }
 
     private func escapedTOMLKey(_ key: String) -> String {
