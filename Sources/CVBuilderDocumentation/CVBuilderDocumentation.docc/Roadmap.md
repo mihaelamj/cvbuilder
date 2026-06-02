@@ -63,6 +63,9 @@ Landed on `main`:
   JSON Resume interop, and localization. Source-code audit epic #132 (#108-#131)
   complete: deterministic identity and dates, escaping and empty-field guards,
   JSON Resume fidelity, validator parity, and packaging/CI gates.
+  Standards-catch-up epic #98 (DocC catalog, Mermaid pipeline, doc-comment
+  coverage, brutal-5 labels, R16-R19 enforcement) and research-enrichment epic
+  #86 (#87-#94, R16-R19 plus qualifications) complete.
 
 ## Ordered Roadmap Issues
 
