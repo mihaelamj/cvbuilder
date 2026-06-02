@@ -39,3 +39,37 @@ if PR_BODY="$PLACEHOLDER_BODY" bash scripts/check-pr-roadmap.sh 2>/dev/null; the
   echo "quality-gates: placeholder Roadmap section was accepted" >&2
   exit 1
 fi
+
+ROOT=$(pwd)
+PLATFORM_TMP=$(mktemp -d)
+trap 'rm -rf "$PLATFORM_TMP"' EXIT
+
+cat > "$PLATFORM_TMP/Package.swift" <<'SWIFT'
+let packagePlatforms: [SupportedPlatform] = [
+    .macOS(.v13),
+]
+SWIFT
+
+(cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh")
+
+cat > "$PLATFORM_TMP/Package.swift" <<'SWIFT'
+let packagePlatforms: [SupportedPlatform] = [
+    .macOS(.v13),
+    .iOS(.v16),
+]
+SWIFT
+
+if (cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh" 2>/dev/null); then
+  echo "quality-gates: unsupported iOS platform declaration was accepted" >&2
+  exit 1
+fi
+
+cat > "$PLATFORM_TMP/Package.swift" <<'SWIFT'
+let packagePlatforms: [SupportedPlatform] = [
+]
+SWIFT
+
+if (cd "$PLATFORM_TMP" && bash "$ROOT/scripts/check-platform-contract.sh" 2>/dev/null); then
+  echo "quality-gates: missing macOS platform declaration was accepted" >&2
+  exit 1
+fi

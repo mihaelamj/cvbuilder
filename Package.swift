@@ -4,7 +4,6 @@ import PackageDescription
 
 let packagePlatforms: [SupportedPlatform] = [
     .macOS(.v13),
-    .iOS(.v16),
 ]
 
 #if os(Linux)

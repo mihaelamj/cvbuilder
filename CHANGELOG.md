@@ -35,10 +35,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `CVDocument` JSON Schema.
 - First usable release checklist covering local gates, GitHub checks, changelog
   prep, tag steps, release-note expectations, and product boundaries.
+- Platform contract guard that keeps unsupported iOS metadata out of the first
+  release until iOS support is tested and documented.
 
 ### Changed
 
 - Removed default Ignite participation from the package graph.
+- Removed unsupported iOS platform metadata from `Package.swift`; the first
+  release claims macOS and Linux only.
 - Kept PDF rendering, ATS scoring, resume optimizer claims, and HTML rendering
   outside the core package.
 - Made `RenderingOptions.omitEmptySections` control whether empty optional
