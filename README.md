@@ -215,8 +215,8 @@ flowchart TD
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
-    P22["Phase 22<br/>#81 CLI authoring<br/>Review"]
-    P23["Phase 23<br/>#82 Front matter profiles<br/>Next"]
+    P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Active"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
@@ -235,8 +235,8 @@ flowchart TD
     class P19 done;
     class P20 done;
     class P21 done;
-    class P22 review;
-    class P23 next;
+    class P22 done;
+    class P23 active;
     class P24,P25 todo;
 ```
 

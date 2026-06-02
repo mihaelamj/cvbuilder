@@ -61,7 +61,8 @@ core package.
 - Epic #76 is complete after PR #85.
 - Issues #74 and #75 are done.
 - Epic #80 is active for the authoring and publishing experience.
-- Issue #81 is in PR review for CLI authoring ergonomics.
+- Issue #81 is done after PR #97.
+- Issue #82 is active for static-site-generator front-matter profiles.
 
 Relevant links:
 
@@ -95,8 +96,8 @@ Relevant links:
 - Issue #74: legacy CV render path R12/R15 conformance is done after PR #79.
 - Issue #75: research-conformance matrix is done after PR #85.
 - Issue #80: active authoring and publishing experience epic.
-- Issue #81: CLI authoring experience is in PR review.
-- Issue #82: next static-site-generator front-matter profiles.
+- Issue #81: CLI authoring experience is done after PR #97.
+- Issue #82: active static-site-generator front-matter profiles.
 - Issue #83: future JSON Resume interop.
 - Issue #84: future rendered-output localization.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -125,8 +126,8 @@ Ordered roadmap issues:
 19. #70 - done: prepare release publication proof for reconciled version.
 20. #74 - done: make the public legacy CV render path R12/R15 conformant.
 21. #75 - done: add research-conformance matrix mapping R01 to R15.
-22. #81 - review: add CLI authoring validation, scaffolding, schema printing, and stream IO.
-23. #82 - next: add static-site-generator front-matter profiles.
+22. #81 - done: add CLI authoring validation, scaffolding, schema printing, and stream IO.
+23. #82 - active: add static-site-generator front-matter profiles.
 24. #83 - todo: add JSON Resume import and export interop.
 25. #84 - todo: add deterministic rendered-output localization.
 
@@ -153,8 +154,8 @@ flowchart TD
     P19["Phase 19<br/>#70 Publish proof<br/>Done"]
     P20["Phase 20<br/>#74 Legacy CV path<br/>Done"]
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
-    P22["Phase 22<br/>#81 CLI authoring<br/>Review"]
-    P23["Phase 23<br/>#82 Front matter profiles<br/>Next"]
+    P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
+    P23["Phase 23<br/>#82 Front matter profiles<br/>Active"]
     P24["Phase 24<br/>#83 JSON Resume interop<br/>Todo"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
@@ -173,8 +174,8 @@ flowchart TD
     class P19 done;
     class P20 done;
     class P21 done;
-    class P22 review;
-    class P23 next;
+    class P22 done;
+    class P23 active;
     class P24,P25 todo;
 ```
 
@@ -633,20 +634,20 @@ Issue: [#81](https://github.com/mihaelamj/cvbuilder/issues/81).
 
 Deliverables:
 
-- add `--validate` schema and decode validation with diagnostics: review
-- add `--print-schema` stdout schema output: review
+- add `--validate` schema and decode validation with diagnostics: done
+- add `--print-schema` stdout schema output: done
 - add `--init <path>` starter JSON scaffolding with overwrite protection:
-  review
-- support stdin with `--data -` and stdout with `--out -`: review
-- update CLI help and JSON workflow docs: review
+  done
+- support stdin with `--data -` and stdout with `--out -`: done
+- update CLI help and JSON workflow docs: done
 
 Acceptance:
 
-- validation decodes without writing and reports schema or coding paths: review
-- schema output matches `Schemas/cvdocument.schema.json`: review
+- validation decodes without writing and reports schema or coding paths: done
+- schema output matches `Schemas/cvdocument.schema.json`: done
 - scaffolding writes the documented minimal document and protects existing
-  files: review
-- stream IO is covered by CLI tests: review
+  files: done
+- stream IO is covered by CLI tests: done
 
 ### Phase 23: Add Static-Site Front-Matter Profiles
 
@@ -657,15 +658,15 @@ Issue: [#82](https://github.com/mihaelamj/cvbuilder/issues/82).
 
 Deliverables:
 
-- add Toucan, Hugo, and Jekyll front-matter profiles: next
-- add checked-in per-profile fixtures: next
-- document the profile contract and key mapping: next
+- add Toucan, Hugo, and Jekyll front-matter profiles: active
+- add checked-in per-profile fixtures: active
+- document the profile contract and key mapping: active
 
 Acceptance:
 
-- each profile is byte-for-byte deterministic: next
-- default front matter remains unchanged without a selected profile: next
-- no HTML, templating, shell-out, or layout behavior is introduced: next
+- each profile is byte-for-byte deterministic: active
+- default front matter remains unchanged without a selected profile: active
+- no HTML, templating, shell-out, or layout behavior is introduced: active
 
 ### Phase 24: Add JSON Resume Interop
 
