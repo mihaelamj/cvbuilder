@@ -384,8 +384,13 @@ swift package --disable-sandbox preview-documentation \
 Repository policy and machine-readable files:
 
 - [CHANGELOG.md](CHANGELOG.md): notable user-facing changes.
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md): the Contributor Covenant standard for
+  participation.
 - [CONTRIBUTING.md](CONTRIBUTING.md): contribution rules and local checks.
+- [SECURITY.md](SECURITY.md): how to report a vulnerability privately and the
+  supported versions.
 - [SUPPORT.md](SUPPORT.md): where to file bugs, feature requests, and security issues.
+- [LICENSE](LICENSE): the project license.
 - [Schemas/cvdocument.schema.json](Schemas/cvdocument.schema.json):
   machine-readable JSON Schema for editor validation and completion.
 - [Examples/tiledown/democv.md](Examples/tiledown/democv.md): generated
