@@ -47,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- JSON Resume seniority inference matches the leading position word
+  case-insensitively, and export reconstructs the position without a fabricated
+  `Mid` prefix or trailing space. A position with no recognized seniority word,
+  a single-word position, and an absent or empty position now round-trip
+  cleanly (#111).
 - JSON Resume import no longer fabricates sentinel dates for absent optional
   dates. A `work`/`education`/`projects` entry missing `startDate` and/or
   `endDate` round-trips with those fields still absent, instead of emitting a

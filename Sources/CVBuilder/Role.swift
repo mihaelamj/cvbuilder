@@ -31,7 +31,7 @@ public struct Role: Codable, Identifiable, Hashable, Sendable {
     }
 
     /// Seniority level enum (can be extended)
-    public enum Seniority: String, Codable, Comparable, Sendable {
+    public enum Seniority: String, Codable, Comparable, CaseIterable, Sendable {
         case intern = "Intern"
         case junior = "Junior"
         case mid = "Mid"

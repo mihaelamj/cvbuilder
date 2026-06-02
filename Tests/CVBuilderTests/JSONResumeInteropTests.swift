@@ -194,6 +194,56 @@ struct JSONResumeInteropTests {
         #expect(JSONResumeSeniority.split(position: "Engineer") == (.mid, "Engineer"))
     }
 
+    @Test("seniority matches case-insensitively", arguments: [
+        "senior iOS Engineer", "SENIOR iOS Engineer", "Senior iOS Engineer",
+    ])
+    func seniorityMatchesCaseInsensitively(_ position: String) {
+        #expect(JSONResumeSeniority.split(position: position) == (.senior, "iOS Engineer"))
+    }
+
+    @Test("a single seniority word and an empty position carry no inferred seniority")
+    func singleWordAndEmptyPositionsDefaultToMid() {
+        #expect(JSONResumeSeniority.split(position: "Senior") == (.mid, "Senior"))
+        #expect(JSONResumeSeniority.split(position: "Principal") == (.mid, "Principal"))
+        #expect(JSONResumeSeniority.split(position: "") == (.mid, ""))
+    }
+
+    @Test("position reconstruction omits the prefix for the mid default")
+    func positionReconstruction() {
+        #expect(JSONResumeSeniority.position(seniority: .senior, title: "iOS Engineer") == "Senior iOS Engineer")
+        #expect(JSONResumeSeniority.position(seniority: .mid, title: "iOS Engineer") == "iOS Engineer")
+        #expect(JSONResumeSeniority.position(seniority: .mid, title: "") == "")
+    }
+
+    @Test("positions without a recognized seniority round-trip without a fabricated Mid")
+    func positionsRoundTripWithoutFabricatedMid() throws {
+        let noSeniority = try reExported(#"{"work":[{"name":"X","position":"iOS Engineer","summary":"s"}]}"#)
+        #expect(noSeniority.contains("\"position\" : \"iOS Engineer\""))
+        #expect(!noSeniority.contains("Mid"))
+
+        let singleWord = try reExported(#"{"work":[{"name":"X","position":"Principal","summary":"s"}]}"#)
+        #expect(singleWord.contains("\"position\" : \"Principal\""))
+        #expect(!singleWord.contains("Mid"))
+
+        let recognized = try reExported(#"{"work":[{"name":"X","position":"Senior iOS Engineer","summary":"s"}]}"#)
+        #expect(recognized.contains("\"position\" : \"Senior iOS Engineer\""))
+    }
+
+    @Test("an absent position re-exports absent, with no Mid prefix or trailing space")
+    func absentPositionRoundTripsAbsent() throws {
+        let exported = try reExported(#"{"work":[{"name":"X","summary":"s"}]}"#)
+
+        #expect(!exported.contains("\"position\""))
+        #expect(!exported.contains("Mid"))
+    }
+
+    @Test("a case-different seniority re-exports in canonical casing (documented normalization)")
+    func caseInsensitiveSeniorityNormalizesCasing() throws {
+        let exported = try reExported(#"{"work":[{"name":"X","position":"senior engineer","summary":"s"}]}"#)
+
+        #expect(exported.contains("\"position\" : \"Senior engineer\""))
+    }
+
     // MARK: Helpers
 
     private func loadResume(_ relativePath: String) throws -> JSONResume {

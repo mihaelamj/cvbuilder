@@ -42,7 +42,7 @@ extension JSONResume.Work {
 
         self.init(
             name: work.company.name,
-            position: work.role.name,
+            position: JSONResumeSeniority.position(seniority: work.role.seniority, title: work.role.title),
             url: companyURLs[work.company.name] ?? "",
             startDate: JSONResumeDate.string(from: work.period.start),
             endDate: work.isCurrent ? "" : JSONResumeDate.string(from: work.period.end),
