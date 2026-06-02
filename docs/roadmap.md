@@ -76,7 +76,7 @@ Relevant links:
 - Issue #58: closed tag-triggered release CI gates in PR #62.
 - Issue #61: closed package platform contract alignment in PR #63.
 - Issue #60: closed clean SwiftPM consumer smoke test in PR #64.
-- Issue #59: active `v0.1.0` changelog and release notes.
+- Issue #59: `v0.1.0` changelog and release notes in review in PR #65.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -97,7 +97,7 @@ Ordered roadmap issues:
 13. #58 - done: add tag-triggered release CI gates.
 14. #61 - done: align the package platform contract with supported platforms.
 15. #60 - done: add a clean SwiftPM consumer smoke test.
-16. #59 - in progress: prepare `v0.1.0` changelog and release notes.
+16. #59 - in review: prepare `v0.1.0` changelog and release notes.
 
 ```mermaid
 flowchart TD
@@ -116,7 +116,7 @@ flowchart TD
     P13["Phase 13<br/>#58 Release tag CI<br/>Done"]
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
-    P16["Phase 16<br/>#59 v0.1.0 notes<br/>In progress"]
+    P16["Phase 16<br/>#59 v0.1.0 notes<br/>In review"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16
 
@@ -128,7 +128,7 @@ flowchart TD
     classDef todo fill:#eef3ff,stroke:#3367d6,color:#111;
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15 done;
-    class P16 active;
+    class P16 review;
 ```
 
 ## Roadmap
@@ -462,17 +462,17 @@ Issue: [#59](https://github.com/mihaelamj/cvbuilder/issues/59).
 
 Deliverables:
 
-- move changelog content into a `v0.1.0` release section: in progress
-- keep a fresh empty `Unreleased` section: in progress
-- draft release notes with supported behavior and boundaries: in progress
+- move changelog content into a `v0.1.0` release section: in review
+- keep a fresh empty `Unreleased` section: in review
+- draft release notes with supported behavior and boundaries: in review
 
 Acceptance:
 
-- release notes mention Markdown and JSON only: in progress
+- release notes mention Markdown and JSON only: in review
 - release notes mention style, macOS, Linux, schema drift, fixture freshness, and
-  consumer proof gates: in progress
+  consumer proof gates: in review
 - release notes avoid unsupported PDF, HTML, scoring, optimizer, or static-site
-  claims: in progress
+  claims: in review
 
 ## Research Rules
 
