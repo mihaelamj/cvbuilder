@@ -184,7 +184,7 @@ flowchart TD
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
-    P17["Phase 17<br/>#68 Version history docs<br/>In review"]
+    P17["Phase 17<br/>#68 Version history docs<br/>CI green"]
     P18["Phase 18<br/>#69 Version guard<br/>Next"]
     P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 

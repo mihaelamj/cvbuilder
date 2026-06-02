@@ -83,7 +83,7 @@ Relevant links:
 - Issue #59: closed initial changelog and release notes draft in PR #65.
 - PR #65: merged the initial release notes draft.
 - Issue #67: active release version history reconciliation epic.
-- Issue #68: release version docs reconciliation is in review in PR #71.
+- Issue #68: release version docs reconciliation is CI-green in PR #71.
 - Issue #69: next release version consistency guard.
 - Issue #70: future release publication proof.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -107,7 +107,7 @@ Ordered roadmap issues:
 14. #61 - done: align the package platform contract with supported platforms.
 15. #60 - done: add a clean SwiftPM consumer smoke test.
 16. #59 - done: prepare the changelog and release notes draft.
-17. #68 - in review: reconcile release version docs with existing tag history.
+17. #68 - CI-green: reconcile release version docs with existing tag history.
 18. #69 - next: add release version consistency guard.
 19. #70 - todo: prepare release publication proof for reconciled version.
 
@@ -129,7 +129,7 @@ flowchart TD
     P14["Phase 14<br/>#61 Platform contract<br/>Done"]
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
-    P17["Phase 17<br/>#68 Version history docs<br/>In review"]
+    P17["Phase 17<br/>#68 Version history docs<br/>CI green"]
     P18["Phase 18<br/>#69 Version guard<br/>Next"]
     P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
 
@@ -501,19 +501,19 @@ Issue: [#68](https://github.com/mihaelamj/cvbuilder/issues/68).
 Deliverables:
 
 - update release documentation to use the reconciled next release version:
-  in review in PR #71
+  CI-green in PR #71
 - preserve the historical `0.1.0` through `0.8.0` tag boundary in docs: in
-  review in PR #71
-- rename release notes to match the reconciled `v0.9.0` tag: in review in
+  CI-green in PR #71
+- rename release notes to match the reconciled `v0.9.0` tag: CI-green in
   PR #71
-- update README and roadmap Mermaid state: in review in PR #71
+- update README and roadmap Mermaid state: CI-green in PR #71
 
 Acceptance:
 
-- next-release version claims are consistent across release docs: in review in
+- next-release version claims are consistent across release docs: CI-green in
   PR #71
 - the older `0.8.0` tag boundary is documented without rewriting history:
-  in review in PR #71
+  CI-green in PR #71
 - critic loop and local verification pass before PR merge: done
 
 ### Phase 18: Add Release Version Consistency Guard
