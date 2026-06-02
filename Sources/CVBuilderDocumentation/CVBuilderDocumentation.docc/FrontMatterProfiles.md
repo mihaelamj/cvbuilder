@@ -24,17 +24,27 @@ generator execution.
 
 All source values remain strings in `CVDocument.frontMatter`.
 
-Profile rendering applies deterministic coercion for conventional keys:
+Profile rendering applies deterministic coercion that is specific to each
+profile's declared key contract, not global:
 
-- `draft` and `published` render as booleans only when the source value is
-  exactly `true` or `false`, ignoring case and surrounding whitespace.
-- `tags` and `categories` render as arrays by splitting the source value on
-  commas and trimming whitespace.
+- Boolean keys are `draft` (Toucan, Hugo) and `published` (Jekyll). A profile
+  folds only the boolean key it declares, so it never mistypes a key another
+  profile owns (Hugo has no `published`; Jekyll has no `draft`).
+- A boolean value is recognized case-insensitively from the common
+  static-site-generator spellings: `true`/`false`, `yes`/`no`, `1`/`0`, and
+  `on`/`off`. Any other value renders as a quoted string rather than guessing a
+  boolean.
+- Array keys are `tags` (Toucan, Hugo, Jekyll) and `categories` (Hugo, Jekyll).
+  A declared array key splits the source value on commas, trims whitespace, and
+  always renders as a sequence (an empty or separator-only value renders as an
+  empty array, never a string).
 - Other values render as quoted strings.
 - Unknown keys are preserved and sorted after the profile's preferred keys.
 
-The generic profile preserves the pre-profile behavior: every value renders as
-a quoted string and every key is sorted alphabetically.
+The generic profile coerces nothing: every value renders as a quoted string and
+every key is sorted alphabetically. A value such as `draft` or `tags` is
+therefore a typed boolean or array under an SSG profile but a quoted string
+under generic, by design.
 
 ## CLI Override
 

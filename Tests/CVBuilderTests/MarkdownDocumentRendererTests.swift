@@ -351,32 +351,61 @@ struct MarkdownDocumentRendererTests {
         #expect(!output.split(separator: "\n").contains { String($0) == underline })
     }
 
-    @Test("empty or separator-only tags/categories render as an empty array, never a string")
-    func emptyTagsAndCategoriesRenderAsEmptyArray() {
-        for key in ["tags", "categories"] {
-            for value in ["", "  ", ","] {
-                let toucan = renderedFrontMatter([key: value], profile: .toucan)
-                let jekyll = renderedFrontMatter([key: value], profile: .jekyll)
-                let hugo = renderedFrontMatter([key: value], profile: .hugo)
+    @Test("array keys render an empty array under the profiles that declare them")
+    func emptyArrayKeysRenderEmptyArray() {
+        for value in ["", "  ", ","] {
+            // `tags` is an array key in Toucan, Jekyll (YAML), and Hugo (TOML).
+            #expect(renderedFrontMatter(["tags": value], profile: .toucan).contains("tags: []"))
+            #expect(renderedFrontMatter(["tags": value], profile: .jekyll).contains("tags: []"))
+            #expect(renderedFrontMatter(["tags": value], profile: .hugo).contains("tags = []"))
+            // `categories` is an array key in Jekyll and Hugo, but not Toucan.
+            #expect(renderedFrontMatter(["categories": value], profile: .jekyll).contains("categories: []"))
+            #expect(renderedFrontMatter(["categories": value], profile: .hugo).contains("categories = []"))
 
-                #expect(toucan.contains("\(key): []"))
-                #expect(jekyll.contains("\(key): []"))
-                #expect(hugo.contains("\(key) = []"))
-
-                // Never a string scalar and never the raw separator string.
-                #expect(!toucan.contains("\(key): \""))
-                #expect(!hugo.contains("\(key) = \""))
-            }
+            // Never a string scalar and never the raw separator string.
+            #expect(!renderedFrontMatter(["tags": value], profile: .toucan).contains("tags: \""))
+            #expect(!renderedFrontMatter(["tags": value], profile: .hugo).contains("tags = \""))
         }
     }
 
-    @Test("tags/categories with empty middle elements drop the blanks")
-    func tagsDropEmptyMiddleElements() {
-        for key in ["tags", "categories"] {
-            #expect(renderedFrontMatter([key: "a,,b"], profile: .toucan).contains("\(key):\n  - \"a\"\n  - \"b\""))
-            #expect(renderedFrontMatter([key: "a,,b"], profile: .jekyll).contains("\(key):\n  - \"a\"\n  - \"b\""))
-            #expect(renderedFrontMatter([key: "a,,b"], profile: .hugo).contains("\(key) = [\"a\", \"b\"]"))
-        }
+    @Test("array keys with empty middle elements drop the blanks")
+    func arrayKeysDropEmptyMiddleElements() {
+        #expect(renderedFrontMatter(["tags": "a,,b"], profile: .toucan).contains("tags:\n  - \"a\"\n  - \"b\""))
+        #expect(renderedFrontMatter(["tags": "a,,b"], profile: .jekyll).contains("tags:\n  - \"a\"\n  - \"b\""))
+        #expect(renderedFrontMatter(["tags": "a,,b"], profile: .hugo).contains("tags = [\"a\", \"b\"]"))
+        #expect(renderedFrontMatter(["categories": "a,,b"], profile: .jekyll).contains("categories:\n  - \"a\"\n  - \"b\""))
+        #expect(renderedFrontMatter(["categories": "a,,b"], profile: .hugo).contains("categories = [\"a\", \"b\"]"))
+
+        // Toucan does not declare `categories`, so it stays a scalar there.
+        #expect(renderedFrontMatter(["categories": "a, b"], profile: .toucan).contains("categories: \"a, b\""))
+    }
+
+    @Test("boolean coercion is per-profile and accepts wider spellings")
+    func booleanCoercionIsPerProfile() {
+        // `draft` is a boolean key in Toucan and Hugo, not Jekyll.
+        #expect(renderedFrontMatter(["draft": "true"], profile: .toucan).contains("draft: true"))
+        #expect(renderedFrontMatter(["draft": "true"], profile: .hugo).contains("draft = true"))
+        #expect(renderedFrontMatter(["draft": "true"], profile: .jekyll).contains("draft: \"true\""))
+
+        // `published` is a boolean key in Jekyll, not Hugo.
+        #expect(renderedFrontMatter(["published": "false"], profile: .jekyll).contains("published: false"))
+        #expect(renderedFrontMatter(["published": "false"], profile: .hugo).contains("published = \"false\""))
+
+        // Wider boolean spellings coerce for a declared boolean key.
+        #expect(renderedFrontMatter(["draft": "yes"], profile: .hugo).contains("draft = true"))
+        #expect(renderedFrontMatter(["draft": "no"], profile: .toucan).contains("draft: false"))
+        #expect(renderedFrontMatter(["draft": "1"], profile: .hugo).contains("draft = true"))
+
+        // An unrecognized boolean spelling falls back to a quoted scalar.
+        #expect(renderedFrontMatter(["draft": "maybe"], profile: .hugo).contains("draft = \"maybe\""))
+    }
+
+    @Test("the generic profile coerces nothing")
+    func genericProfileCoercesNothing() {
+        let generic = renderedFrontMatter(["draft": "true", "tags": "a, b"], profile: .generic)
+
+        #expect(generic.contains("draft: \"true\""))
+        #expect(generic.contains("tags: \"a, b\""))
     }
 
     @Test("front matter keys and scalar values are quoted and single-line")

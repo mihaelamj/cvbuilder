@@ -47,6 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Front-matter boolean and array coercion is now per-profile rather than global:
+  Toucan and Hugo fold `draft`, Jekyll folds `published`, and a profile no longer
+  mistypes a key it does not declare. Booleans accept the common static-site
+  spellings (`true`/`false`, `yes`/`no`, `1`/`0`, `on`/`off`, case-insensitive);
+  an unrecognized value renders as a quoted string instead of a wrong-typed one.
+  The generic profile coerces nothing, documented and fixture-locked (#121).
 - JSON Resume import no longer applies one employer's URL to another when two
   `work` entries share a `name`: a conflicting company URL is dropped for that
   name instead of corrupting the surviving entry, and same-name entries that
