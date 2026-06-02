@@ -33,7 +33,15 @@ enum JSONResumeDate {
     }
 
     /// Renders month and year as the canonical `YYYY-MM` form.
+    ///
+    /// An out-of-range month (only reachable for an in-memory value that
+    /// bypassed `SimpleDate` decode validation) falls back to the valid `YYYY`
+    /// form, which re-imports cleanly, instead of emitting a non-ISO `0050-13`.
     static func string(from date: Period.SimpleDate) -> String {
-        String(format: "%04d-%02d", date.year, date.month)
+        guard (1 ... 12).contains(date.month) else {
+            return String(format: "%04d", date.year)
+        }
+
+        return String(format: "%04d-%02d", date.year, date.month)
     }
 }

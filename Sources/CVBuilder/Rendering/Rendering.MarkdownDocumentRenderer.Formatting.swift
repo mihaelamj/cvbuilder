@@ -156,16 +156,28 @@ extension Rendering.MarkdownDocumentRenderer {
 extension Rendering.MarkdownDocumentRenderer {
     func format(_ period: Period, isCurrent: Bool) -> String {
         let start = format(period.start)
-        let end = isCurrent ? labels.present : format(period.end)
 
-        return "\(start) - \(end)"
+        guard !isCurrent else {
+            return "\(start) - \(labels.present)"
+        }
+
+        // Equal start and end collapse to a single token (e.g. "Jan 2024"),
+        // rather than rendering the redundant "Jan 2024 - Jan 2024".
+        guard period.start != period.end else {
+            return start
+        }
+
+        return "\(start) - \(format(period.end))"
     }
 
     func format(_ date: Period.SimpleDate) -> String {
         let monthNames = labels.monthNames
 
+        // Decoding validates `month` to 1...12; this guard stays defensive for
+        // in-memory values and falls back to a valid year-only token instead of
+        // a malformed "2024-13" ISO string.
         guard (1 ... monthNames.count).contains(date.month) else {
-            return "\(date.year)-\(String(format: "%02d", date.month))"
+            return "\(date.year)"
         }
 
         return "\(monthNames[date.month - 1]) \(date.year)"
