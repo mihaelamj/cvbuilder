@@ -7,6 +7,8 @@ public extension CVBuilderCLI {
         public let dataPath: String
         /// Path where the rendered Markdown or normalized JSON should be written or checked.
         public let outputPath: String
+        /// Input format selected by `--from`; defaults to canonical `CVDocument` JSON.
+        public let from: InputFormat
         /// Output format selected by `--format`; defaults to Markdown.
         public let format: Format
         /// Optional front matter profile override selected by the CLI.
@@ -18,6 +20,7 @@ public extension CVBuilderCLI {
         public init(
             dataPath: String,
             outputPath: String,
+            from: InputFormat = .cvDocument,
             format: Format = .markdown,
             frontMatterProfile: FrontMatterProfile? = nil,
             check: Bool = false,
@@ -32,6 +35,7 @@ public extension CVBuilderCLI {
 
             self.dataPath = dataPath
             self.outputPath = outputPath
+            self.from = from
             self.format = format
             self.frontMatterProfile = frontMatterProfile
             self.check = check
@@ -50,6 +54,7 @@ private extension CVBuilderCLI.Options {
         let arguments: [String]
         var dataPath: String?
         var outputPath: String?
+        var from = CVBuilderCLI.InputFormat.cvDocument
         var format = CVBuilderCLI.Format.markdown
         var frontMatterProfile: FrontMatterProfile?
         var check = false
@@ -99,6 +104,8 @@ private extension CVBuilderCLI.Options {
                 dataPath = try requiredAssignedValue(value, option: option)
             case "--out":
                 outputPath = try requiredAssignedValue(value, option: option)
+            case "--from":
+                from = try CVBuilderCLI.InputFormat(argument: requiredAssignedValue(value, option: option))
             case "--format":
                 format = try CVBuilderCLI.Format(argument: requiredAssignedValue(value, option: option))
             case "--front-matter-profile":
@@ -120,6 +127,8 @@ private extension CVBuilderCLI.Options {
                 dataPath = try nextValue(option: argument)
             case "--out":
                 outputPath = try nextValue(option: argument)
+            case "--from":
+                from = try CVBuilderCLI.InputFormat(argument: nextValue(option: argument))
             case "--format":
                 format = try CVBuilderCLI.Format(argument: nextValue(option: argument))
             case "--front-matter-profile":
@@ -143,6 +152,7 @@ private extension CVBuilderCLI.Options {
             return try CVBuilderCLI.Options(
                 dataPath: dataPath,
                 outputPath: outputPath,
+                from: from,
                 format: format,
                 frontMatterProfile: frontMatterProfile,
                 check: check,

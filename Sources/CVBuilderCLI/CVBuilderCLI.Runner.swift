@@ -32,7 +32,7 @@ public extension CVBuilderCLI {
         /// Executes the command options by writing or checking the requested output.
         public func run(_ options: Options) throws {
             let document = try document(
-                readDocument(atPath: options.dataPath),
+                readInputDocument(atPath: options.dataPath, from: options.from),
                 overridingFrontMatterProfile: options.frontMatterProfile,
             )
             let output = try output(for: document, format: options.format)
@@ -47,7 +47,7 @@ public extension CVBuilderCLI {
 
         /// Validates the input document without writing generated output.
         public func validate(_ options: ValidationOptions) throws {
-            _ = try readDocument(atPath: options.dataPath)
+            _ = try readInputDocument(atPath: options.dataPath, from: options.from)
         }
 
         /// Writes the canonical embedded JSON Schema to standard output.
@@ -71,25 +71,24 @@ public extension CVBuilderCLI {
                 "\(Rendering.MarkdownDocumentRenderer().render(document))\n"
             case .json:
                 try "\(normalizedJSON(for: document))\n"
+            case .jsonResume:
+                try "\(normalizedJSON(for: JSONResume(cvDocument: document)))\n"
+            }
+        }
+
+        private func readInputDocument(atPath path: String, from inputFormat: InputFormat) throws -> CVDocument {
+            switch inputFormat {
+            case .cvDocument:
+                try readDocument(atPath: path)
+            case .jsonResume:
+                try readJSONResumeDocument(atPath: path)
             }
         }
 
         private func readDocument(atPath path: String) throws -> CVDocument {
-            let inputData: Data
-
-            do {
-                inputData = try readData(atPath: path)
-            } catch {
-                throw Failure.inputReadFailed(path: path, reason: error.localizedDescription)
-            }
-
+            let inputData = try readInputData(atPath: path)
             try validateInputData(inputData, path: path)
-
-            do {
-                return try JSONDecoder().decode(CVDocument.self, from: inputData)
-            } catch {
-                throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
-            }
+            return try decodeJSON(CVDocument.self, from: inputData, path: path)
         }
 
         private func validateInputData(_ data: Data, path: String) throws {
@@ -117,10 +116,32 @@ public extension CVBuilderCLI {
             }
         }
 
-        private func normalizedJSON(for document: CVDocument) throws -> String {
+        private func readJSONResumeDocument(atPath path: String) throws -> CVDocument {
+            let inputData = try readInputData(atPath: path)
+            let resume = try decodeJSON(JSONResume.self, from: inputData, path: path)
+            return CVDocument(jsonResume: resume)
+        }
+
+        private func readInputData(atPath path: String) throws -> Data {
+            do {
+                return try readData(atPath: path)
+            } catch {
+                throw Failure.inputReadFailed(path: path, reason: error.localizedDescription)
+            }
+        }
+
+        private func decodeJSON<Value: Decodable>(_ type: Value.Type, from data: Data, path: String) throws -> Value {
+            do {
+                return try JSONDecoder().decode(type, from: data)
+            } catch {
+                throw Failure.invalidJSON(path: path, reason: decodingFailureReason(for: error))
+            }
+        }
+
+        private func normalizedJSON(for value: some Encodable) throws -> String {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-            let data = try encoder.encode(document)
+            let data = try encoder.encode(value)
             guard let output = String(data: data, encoding: .utf8) else {
                 throw Failure.outputEncodingFailed
             }

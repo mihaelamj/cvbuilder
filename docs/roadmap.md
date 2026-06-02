@@ -63,7 +63,7 @@ core package.
 - Epic #80 is active for the authoring and publishing experience.
 - Issue #81 is done after PR #97.
 - Issue #82 is done after PR #104.
-- Issue #83 is active for JSON Resume interop.
+- Issue #83 is done for JSON Resume interop.
 
 Relevant links:
 
@@ -99,7 +99,7 @@ Relevant links:
 - Issue #80: active authoring and publishing experience epic.
 - Issue #81: CLI authoring experience is done after PR #97.
 - Issue #82: static-site-generator front-matter profiles are done after PR #104.
-- Issue #83: active JSON Resume interop.
+- Issue #83: JSON Resume import and export interop is done.
 - Issue #84: future rendered-output localization.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
@@ -129,7 +129,7 @@ Ordered roadmap issues:
 21. #75 - done: add research-conformance matrix mapping R01 to R15.
 22. #81 - done: add CLI authoring validation, scaffolding, schema printing, and stream IO.
 23. #82 - done: add static-site-generator front-matter profiles.
-24. #83 - active: add JSON Resume import and export interop.
+24. #83 - done: add JSON Resume import and export interop.
 25. #84 - todo: add deterministic rendered-output localization.
 
 ```mermaid
@@ -157,7 +157,7 @@ flowchart TD
     P21["Phase 21<br/>#75 Conformance matrix<br/>Done"]
     P22["Phase 22<br/>#81 CLI authoring<br/>Done"]
     P23["Phase 23<br/>#82 Front matter profiles<br/>Done"]
-    P24["Phase 24<br/>#83 JSON Resume interop<br/>Active"]
+    P24["Phase 24<br/>#83 JSON Resume interop<br/>Done"]
     P25["Phase 25<br/>#84 Localization<br/>Todo"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19 --> P20 --> P21 --> P22 --> P23 --> P24 --> P25
@@ -679,15 +679,15 @@ Issue: [#83](https://github.com/mihaelamj/cvbuilder/issues/83).
 
 Deliverables:
 
-- add a typed JSON Resume model: active
-- document mapping and lossy fields: active
-- add import, export, and round-trip fixtures: active
+- add a typed JSON Resume model: done
+- document mapping and lossy fields: done
+- add import, export, and round-trip fixtures: done
 
 Acceptance:
 
-- a JSON Resume sample imports and renders deterministic Markdown: active
-- a `CVDocument` exports to schema-valid JSON Resume: active
-- no ATS, scoring, or fit claims are introduced: active
+- a JSON Resume sample imports and renders deterministic Markdown: done
+- a `CVDocument` exports to schema-valid JSON Resume: done
+- no ATS, scoring, or fit claims are introduced: done
 
 ### Phase 25: Add Deterministic Localization
 
