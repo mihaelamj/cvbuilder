@@ -67,7 +67,7 @@ Relevant links:
   #45.
 - Issue #47: active release-ready authoring and CLI usability epic.
 - Issue #48: closed CLI help output.
-- Issue #49: in-review machine-readable `CVDocument` JSON Schema in PR #53.
+- Issue #49: CI-green machine-readable `CVDocument` JSON Schema in PR #53.
 - Issue #50: next schema drift checks.
 - Issue #51: next first-release checklist.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
@@ -84,7 +84,7 @@ Ordered roadmap issues:
 7. #19 - done: add evidence-backed renderer fixture proofs.
 8. #20 - done: document the JSON workflow and research-backed boundaries.
 9. #48 - done: add user-facing CLI help output.
-10. #49 - in review: add a machine-readable `CVDocument` JSON Schema.
+10. #49 - CI green: add a machine-readable `CVDocument` JSON Schema.
 11. #50 - next: add schema drift checks for examples and fixtures.
 12. #51 - next: prepare first-release checklist and release notes.
 
@@ -99,7 +99,7 @@ flowchart TD
     P7["Phase 7<br/>#19 Evidence fixture proofs<br/>Done"]
     P8["Phase 8<br/>#20 Workflow documentation<br/>Done"]
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
-    P10["Phase 10<br/>#49 JSON Schema<br/>In review"]
+    P10["Phase 10<br/>#49 JSON Schema<br/>CI green"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Next"]
     P12["Phase 12<br/>#51 Release checklist<br/>Next"]
 
@@ -336,15 +336,15 @@ Issue: [#49](https://github.com/mihaelamj/cvbuilder/issues/49).
 
 Deliverables:
 
-- add a checked-in JSON Schema for `CVDocument`: in review
-- document schema usage for authoring workflows: in review
-- keep schema claims within the Markdown-only CVBuilder boundary: in review
+- add a checked-in JSON Schema for `CVDocument`: CI green
+- document schema usage for authoring workflows: CI green
+- keep schema claims within the Markdown-only CVBuilder boundary: CI green
 
 Acceptance:
 
-- schema is valid JSON: in review
-- schema reflects `docs/cvdocument-contract.md`: in review
-- docs link users to the schema: in review
+- schema is valid JSON: CI green
+- schema reflects `docs/cvdocument-contract.md`: CI green
+- docs link users to the schema: CI green
 
 ### Phase 11: Add Schema Drift Checks
 
