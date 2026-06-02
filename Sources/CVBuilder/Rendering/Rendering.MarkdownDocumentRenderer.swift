@@ -8,11 +8,24 @@ public extension Rendering {
     /// does not render tables, columns, images, scores, demographic metadata, or
     /// inferred fit labels.
     struct MarkdownDocumentRenderer: Sendable {
+        /// Localized strings for headings, labels, and month names.
+        ///
+        /// Resolved from the document's `RenderingOptions.locale` at the start of
+        /// `render(_:)`; defaults to English so a directly constructed renderer
+        /// keeps the original output.
+        var labels: RenderingLabels = .english
+
         /// Creates a renderer with the default evidence-backed Markdown policy.
         public init() {}
 
         /// Returns deterministic Markdown for the supplied document.
         public func render(_ document: CVDocument) -> String {
+            var renderer = self
+            renderer.labels = document.rendering.locale.labels
+            return renderer.renderDocument(document)
+        }
+
+        private func renderDocument(_ document: CVDocument) -> String {
             var writer = Writer()
 
             renderFrontMatter(

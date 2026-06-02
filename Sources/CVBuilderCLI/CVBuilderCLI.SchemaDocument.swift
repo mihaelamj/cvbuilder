@@ -314,6 +314,11 @@ extension CVBuilderCLI {
                   ],
                   "default": "experiencedTechnical"
                 },
+                "locale": {
+                  "type": "string",
+                  "enum": ["en", "de"],
+                  "default": "en"
+                },
                 "recentCompanyCount": { "$ref": "#/$defs/nullableInteger" },
                 "selectedExperienceIDs": {
                   "type": "array",

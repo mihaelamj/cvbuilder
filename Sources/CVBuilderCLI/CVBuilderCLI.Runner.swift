@@ -165,6 +165,7 @@ public extension CVBuilderCLI {
                 rendering: RenderingOptions(
                     frontMatterProfile: profile,
                     mode: document.rendering.mode,
+                    locale: document.rendering.locale,
                     recentCompanyCount: document.rendering.recentCompanyCount,
                     selectedExperienceIDs: document.rendering.selectedExperienceIDs,
                     maxBulletsPerProject: document.rendering.maxBulletsPerProject,
