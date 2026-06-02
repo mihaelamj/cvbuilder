@@ -69,7 +69,7 @@ Relevant links:
 - Issue #48: closed CLI help output.
 - Issue #49: closed machine-readable `CVDocument` JSON Schema in PR #53.
 - Issue #50: closed schema drift checks in PR #54.
-- Issue #51: first-release checklist in review in PR #55.
+- Issue #51: CI-green first-release checklist in PR #55.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -86,7 +86,7 @@ Ordered roadmap issues:
 9. #48 - done: add user-facing CLI help output.
 10. #49 - done: add a machine-readable `CVDocument` JSON Schema.
 11. #50 - done: add schema drift checks for examples and fixtures.
-12. #51 - in review: prepare first-release checklist and release notes.
+12. #51 - CI green: prepare first-release checklist and release notes.
 
 ```mermaid
 flowchart TD
@@ -101,7 +101,7 @@ flowchart TD
     P9["Phase 9<br/>#48 CLI help<br/>Done"]
     P10["Phase 10<br/>#49 JSON Schema<br/>Done"]
     P11["Phase 11<br/>#50 Schema drift checks<br/>Done"]
-    P12["Phase 12<br/>#51 Release checklist<br/>In review"]
+    P12["Phase 12<br/>#51 Release checklist<br/>CI green"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12
 
@@ -371,15 +371,15 @@ Issue: [#51](https://github.com/mihaelamj/cvbuilder/issues/51).
 
 Deliverables:
 
-- document first-release steps: in review
-- update release notes or changelog prep: in review
-- name required local and GitHub checks: in review
+- document first-release steps: CI green
+- update release notes or changelog prep: CI green
+- name required local and GitHub checks: CI green
 
 Acceptance:
 
-- release checklist includes Linux and macOS CI: in review
-- release checklist includes generated fixture freshness: in review
-- release docs preserve Markdown-only product boundaries: in review
+- release checklist includes Linux and macOS CI: CI green
+- release checklist includes generated fixture freshness: CI green
+- release docs preserve Markdown-only product boundaries: CI green
 
 ## Research Rules
 
