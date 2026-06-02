@@ -84,8 +84,8 @@ Relevant links:
 - PR #65: merged the initial release notes draft.
 - Issue #67: active release version history reconciliation epic.
 - Issue #68: release version docs reconciliation is done after PR #71.
-- Issue #69: release version consistency guard is CI-green in PR #72.
-- Issue #70: future release publication proof.
+- Issue #69: release version consistency guard is done after PR #72.
+- Issue #70: active release publication proof.
 - PR #27: merged Linux TileDown Markdown adapter implementation.
 - PR #34: merged technical CV rendering modes implementation.
 
@@ -108,8 +108,8 @@ Ordered roadmap issues:
 15. #60 - done: add a clean SwiftPM consumer smoke test.
 16. #59 - done: prepare the changelog and release notes draft.
 17. #68 - done: reconcile release version docs with existing tag history.
-18. #69 - CI-green: add release version consistency guard.
-19. #70 - todo: prepare release publication proof for reconciled version.
+18. #69 - done: add release version consistency guard.
+19. #70 - active: prepare release publication proof for reconciled version.
 
 ```mermaid
 flowchart TD
@@ -130,8 +130,8 @@ flowchart TD
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
-    P18["Phase 18<br/>#69 Version guard<br/>CI green"]
-    P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
+    P18["Phase 18<br/>#69 Version guard<br/>Done"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Active"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
@@ -144,8 +144,8 @@ flowchart TD
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
     class P17 done;
-    class P18 review;
-    class P19 todo;
+    class P18 done;
+    class P19 active;
 ```
 
 ## Roadmap
@@ -519,15 +519,15 @@ Issue: [#69](https://github.com/mihaelamj/cvbuilder/issues/69).
 
 Deliverables:
 
-- add a local release-version consistency command: CI-green in PR #72
-- wire the guard into CI: CI-green in PR #72
-- document the command in README and release checklist: CI-green in PR #72
+- add a local release-version consistency command: done
+- wire the guard into CI: done
+- document the command in README and release checklist: done
 
 Acceptance:
 
-- stale mixed release versions fail verification: CI-green in PR #72
+- stale mixed release versions fail verification: done
 - documented next release cannot be lower than the historical tag boundary:
-  CI-green in PR #72
+  done
 
 ### Phase 19: Prepare Release Publication Proof
 
@@ -538,15 +538,15 @@ Issue: [#70](https://github.com/mihaelamj/cvbuilder/issues/70).
 
 Deliverables:
 
-- create the reconciled release tag after `main` checks are green: todo
-- publish the matching GitHub Release: todo
-- record tag-triggered workflow proof and release URLs: todo
+- create the reconciled release tag after `main` checks are green: active
+- publish the matching GitHub Release: active
+- record tag-triggered workflow proof and release URLs: active
 
 Acceptance:
 
-- tag points at the intended `main` commit: todo
-- Style, Swift macOS, and Swift Linux tag workflows pass: todo
-- roadmap and epic issue state match the published release: todo
+- tag points at the intended `main` commit: active
+- Style, Swift macOS, and Swift Linux tag workflows pass: active
+- roadmap and epic issue state match the published release: active
 
 ## Research Rules
 

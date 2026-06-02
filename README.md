@@ -185,8 +185,8 @@ flowchart TD
     P15["Phase 15<br/>#60 Consumer smoke<br/>Done"]
     P16["Phase 16<br/>#59 Release notes draft<br/>Done"]
     P17["Phase 17<br/>#68 Version history docs<br/>Done"]
-    P18["Phase 18<br/>#69 Version guard<br/>CI green"]
-    P19["Phase 19<br/>#70 Publish proof<br/>Todo"]
+    P18["Phase 18<br/>#69 Version guard<br/>Done"]
+    P19["Phase 19<br/>#70 Publish proof<br/>Active"]
 
     P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9 --> P10 --> P11 --> P12 --> P13 --> P14 --> P15 --> P16 --> P17 --> P18 --> P19
 
@@ -199,8 +199,8 @@ flowchart TD
     class P1,P2,P3,P4 done;
     class P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16 done;
     class P17 done;
-    class P18 review;
-    class P19 todo;
+    class P18 done;
+    class P19 active;
 ```
 
 See [docs/roadmap.md](docs/roadmap.md) for the full roadmap.
