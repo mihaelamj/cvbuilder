@@ -68,7 +68,7 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
         // Create WorkExperience entries
         let experiences: [WorkExperience] = grouped.compactMap { company, companyProjects in
             let projectExperiences = companyProjects.map {
-                ProjectExperience(project: $0, role: $0.role, period: $0.period)
+                ProjectExperience(project: $0, role: $0.role, period: $0.period, technicalFocus: $0.technicalFocus)
             }
 
             guard let firstProjectExperience = projectExperiences.first else {
@@ -92,10 +92,18 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
                     Period.SimpleDate.isAscending($0.period.start, before: $1.period.start)
                 },
                 isCurrent: isCurrent,
+                technicalFocus: aggregatedTechnicalFocus(companyProjects),
             )
         }
-        // Most recent first; an absent end (ongoing) sorts ahead of dated ends.
-        .sorted { Period.SimpleDate.isAscending($1.period.end, before: $0.period.end) }
+        // Current companies first, then most recent by end date (an absent end,
+        // i.e. ongoing, sorts ahead of dated ends).
+        .sorted { lhs, rhs in
+            if lhs.isCurrent != rhs.isCurrent {
+                return lhs.isCurrent
+            }
+
+            return Period.SimpleDate.isAscending(rhs.period.end, before: lhs.period.end)
+        }
 
         let uniqueSkills = Tech.deduplicatedAndSorted(projects.flatMap(\.techs))
 
@@ -108,6 +116,30 @@ public struct CV: Codable, Identifiable, Hashable, Sendable {
             education: education,
             skills: uniqueSkills,
         )
+    }
+
+    /// Aggregates the projects' technical focuses into one company-level focus,
+    /// unioning areas and tags in first-seen order with duplicates removed.
+    /// Returns `nil` when no project carries any focus, so the role heading
+    /// shows a `Technical focus` line only when there is data to show.
+    private static func aggregatedTechnicalFocus(_ projects: [Project]) -> TechnicalFocus? {
+        var areas: [String] = []
+        var tags: [String] = []
+
+        for focus in projects.compactMap(\.technicalFocus) {
+            for area in focus.areas where !areas.contains(area) {
+                areas.append(area)
+            }
+            for tag in focus.tags where !tags.contains(tag) {
+                tags.append(tag)
+            }
+        }
+
+        guard !areas.isEmpty || !tags.isEmpty else {
+            return nil
+        }
+
+        return TechnicalFocus(areas: areas, tags: tags)
     }
 
     /// Optional helper if you still want to print or debug flat project info
