@@ -46,6 +46,8 @@ public extension Rendering {
                         options: document.rendering,
                         writer: &writer,
                     )
+                case .projects:
+                    renderProjects(document.cv.experience, options: document.rendering, writer: &writer)
                 case .education:
                     renderEducation(document.cv.education, options: document.rendering, writer: &writer)
                 case .publicEvidence:
